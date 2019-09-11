@@ -44,7 +44,7 @@ class Register extends React.Component {
 
   render() {
     return (
-      <div className="container register">
+      <div className="container register mobileView">
         <div className="row justify-content-center">
           <div className="col text-center">
             <div className="mt-5">

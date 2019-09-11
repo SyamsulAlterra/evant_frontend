@@ -7,6 +7,18 @@
 .login .registerButton {
   background-color: white;
 }
-.container {
+.mobileView {
   width: 375px;
+}
+.calendarCell {
+  height: 40px;
+  width: 40px;
+  font-size: 10px;
+}
+table {
+  margin: 0px auto;
+}
+.Calendar .button {
+  width: 90px;
+  font-size: 12px;
 }
