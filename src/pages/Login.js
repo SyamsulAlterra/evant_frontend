@@ -31,7 +31,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div class="container login">
+      <div class="container login mobileView">
         <div class="row justify-content-center">
           <div class="col text-center">
             <h2 className="mt-2 mb-0 underline">Evant</h2>
