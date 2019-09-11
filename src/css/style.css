@@ -1,0 +1,12 @@
+.login .centering {
+  margin: 0px auto;
+}
+.login .box {
+  width: 20%;
+}
+.login .registerButton {
+  background-color: white;
+}
+.container {
+  width: 375px;
+}
