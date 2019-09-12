@@ -1,6 +1,6 @@
 import React from "react";
 
-class InvitaionCard extends React.Component {
+class InvitationCard extends React.Component {
   render() {
     return (
       <div className="container mobileView invitationCard">
@@ -28,4 +28,4 @@ class InvitaionCard extends React.Component {
   }
 }
 
-export default InvitaionCard;
+export default InvitationCard;
