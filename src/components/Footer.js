@@ -22,7 +22,7 @@ class Footer extends React.Component {
               </Link>
             </div>
             <div className="col-3 bg-info text-center">
-              <Link to="/event">
+              <Link to="/events">
                 <img className="m-3" src={calendar}></img>
               </Link>
             </div>
