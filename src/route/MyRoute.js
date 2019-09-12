@@ -9,6 +9,7 @@ import Invitations from "../pages/Invitations";
 import Events from "../pages/Events";
 import HomePage from "../pages/HomePage";
 import ProfilPage from "../pages/ProfilePage";
+import FormEditProfile from "../components/FormEditProfile";
 
 class MyRoute extends React.Component {
   render() {

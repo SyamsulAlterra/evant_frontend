@@ -13,27 +13,27 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div className="container footer bg-info">
-        <div className="container bg-info mobileView text-center">
-          <div className="row">
-            <div className="col-3 bg-info text-center">
+      <div className="container footer bg-info mobileView text-center p-0">
+        <div className="bg-info mobileView text-center">
+          <div className="row mobileView p-0">
+            <div className="col-3 bg-info text-center p-0">
               <Link to="/home">
-                <img className="m-3" src={houseIcon}></img>
+                <img className="my-3" src={houseIcon}></img>
               </Link>
             </div>
-            <div className="col-3 bg-info text-center">
+            <div className="col-3 bg-info text-center p-0">
               <Link to="/events">
-                <img className="m-3" src={calendar}></img>
+                <img className="my-3" src={calendar}></img>
               </Link>
             </div>
-            <div className="col-3 bg-info text-center">
+            <div className="col-3 bg-info text-center p-0">
               <Link to="/invitations">
-                <img className="m-3" src={invitation}></img>
+                <img className="my-3" src={invitation}></img>
               </Link>
             </div>
-            <div className="col-3 bg-info text-center">
+            <div className="col-3 bg-info text-center p-0">
               <Link to="/profile">
-                <img className="m-3" src={profile}></img>
+                <img className="my-3" src={profile}></img>
               </Link>
             </div>
           </div>
