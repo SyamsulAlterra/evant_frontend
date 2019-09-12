@@ -1,10 +1,33 @@
 import React from "react";
 import CollapseEvent from "../components/CollapseEvents";
+import { connect } from "unistore/react";
+import axios from "axios";
 
 class Events extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      listEvent: []
+    };
   }
+
+  componentDidMount = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+    await axios
+      .get(this.props.baseUrl + "events/ongoing", config)
+      .then(response => {
+        console.log(response.data);
+        this.setState({ listEvent: response.data });
+        console.log("state list event", this.state.listEvent);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
@@ -31,10 +54,14 @@ class Events extends React.Component {
             aria-labelledby="headingOne"
             data-parent="#accordionExample"
           >
-            {[...Array(2).keys()].map(index => {
+            {this.state.listEvent.map((value, index) => {
               return (
                 <div className="border">
-                  <CollapseEvent id={index} />
+                  <CollapseEvent
+                    id={value.event_id}
+                    eventName={value.event_name}
+                    category={value.category}
+                  />
                 </div>
               );
             })}
@@ -45,4 +72,4 @@ class Events extends React.Component {
   }
 }
 
-export default Events;
+export default connect("baseUrl")(Events);
