@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../components/Button";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 class Login extends React.Component {
   constructor(props) {
@@ -21,8 +21,19 @@ class Login extends React.Component {
     this.setState({ password: inputPassword });
   };
 
-  handleClick = () => {
-    console.log(this.state);
+  handleClick = async e => {
+    e.preventDefault();
+    const self = this;
+    await axios
+      .post("http://0.0.0.0:5000/api/users/login", {
+        username: self.state.username,
+        password: self.state.password
+      })
+      .then(response => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_id", response.data.user_id);
+        self.props.history.push("/calendar");
+      });
   };
 
   handleRegister = () => {
@@ -60,10 +71,9 @@ class Login extends React.Component {
                 </button>
               </div>
               <div className="col-auto">
-                <Button
-                  buttonName="Login"
-                  handleClick={this.handleClick}
-                ></Button>
+                <button className="btn m-0" onClick={this.handleClick}>
+                  Login
+                </button>
               </div>
             </div>
           </div>
