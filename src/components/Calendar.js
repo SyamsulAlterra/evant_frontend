@@ -7,13 +7,14 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      yearPreference: 2017,
       dayInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
       offset: 0,
       totalDays: 0,
       todayDate: 0,
-      month: 0,
-      year: 0,
+      month: 9,
+      year: 2019,
+      currentMonth: 9,
+      currentYear: 2019,
       monthDictionary: [
         "January",
         "February",
@@ -66,25 +67,32 @@ class Calendar extends React.Component {
     await this.setState({ totalDays: this.state.dayInMonth[month - 1] });
   };
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     let today = new Date();
     await this.setState({ todayDate: today.getDate() });
-    await this.setState({ month: today.getMonth() + 1 });
-    await this.setState({ year: today.getFullYear() });
+    await this.setState({
+      month: today.getMonth() + 1,
+      currentMonth: today.getMonth() + 1
+    });
+    await this.setState({
+      year: today.getFullYear(),
+      currentYear: today.getFullYear()
+    });
 
     this.populateCalendar(this.state.month, this.state.year);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (
-      this.state.month != prevState.month ||
-      this.state.year != prevState.year
+      this.state.month !== prevState.month ||
+      this.state.year !== prevState.year
     ) {
       this.populateCalendar(this.state.month, this.state.year);
     }
   };
 
   render() {
+    console.log(this.state.todayDate);
     let weeks;
     if (this.state.offset + this.state.totalDays > 35) {
       weeks = [1, 2, 3, 4, 5, 6];
@@ -101,10 +109,11 @@ class Calendar extends React.Component {
     return (
       <div className="Calendar mt-5">
         <div className="text-right mx-5">
-          <img src=""></img>
+          <img src="" alt=""></img>
           <select
             className="button centering p-0 mx-1 my-3"
             onChange={this.handleMonth}
+            defaultValue={this.state.month}
           >
             {this.state.monthDictionary.map((intMonth, i) => {
               return <option value={i + 1}>{intMonth}</option>;
@@ -119,7 +128,14 @@ class Calendar extends React.Component {
             })}
           </select>
         </div>
-        <CalendarGrid dates={days}></CalendarGrid>
+        <CalendarGrid
+          dates={days}
+          month={this.state.month}
+          year={this.state.year}
+          today={this.state.todayDate}
+          currentMonth={this.state.currentMonth}
+          currentYear={this.state.currentYear}
+        ></CalendarGrid>
         {weeks.map(week => {
           const tes = dates.map(date => {
             let currentDate = 7 * (week - 1) + date;
@@ -129,13 +145,20 @@ class Calendar extends React.Component {
             ) {
               return "";
             } else {
-              return (currentDate - this.state.offset).toString();
+              let todayDateString = (
+                currentDate - this.state.offset
+              ).toString();
+              return todayDateString;
             }
           });
           return (
             <CalendarGrid
               dates={tes}
-              todayDate={this.state.todayDate}
+              month={this.state.month}
+              year={this.state.year}
+              today={this.state.todayDate}
+              currentMonth={this.state.currentMonth}
+              currentYear={this.state.currentYear}
             ></CalendarGrid>
           );
         })}

@@ -22,3 +22,12 @@ table {
   width: 90px;
   font-size: 12px;
 }
+.today {
+  background-color: orange !important;
+}
+.invitationCard {
+  font-size: 10px;
+}
+.invitationCard a {
+  font-size: 10px;
+}
