@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../components/Button";
+import { connect } from "unistore/react";
 import Axios from "axios";
 
 class Register extends React.Component {
@@ -65,7 +66,7 @@ class Register extends React.Component {
   handleClick = async () => {
     console.log(this.state);
     let config = {
-      url: "http://0.0.0.0:5000/api/users/register",
+      url: this.props.baseUrl + "/users/register",
       method: "post",
       data: {
         username: this.state.username,
@@ -167,4 +168,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default connect("baseUrl")(Register);
