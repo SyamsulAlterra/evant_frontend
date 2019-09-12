@@ -38,7 +38,8 @@ class Events extends React.Component {
 
   render() {
     return (
-      <div className="eventContent">
+      <div className="container eventContent mobileView p-0">
+        <h1 className="text-center">My Event</h1>
         <div className="accordion ongoingEvent" id="accordionExample">
           <div className="card">
             <div className="card-header" id="headingOne">
