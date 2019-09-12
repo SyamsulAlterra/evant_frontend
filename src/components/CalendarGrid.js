@@ -10,7 +10,14 @@ class CalendarGrid extends React.Component {
             {this.props.dates.map(day => {
               return (
                 <td className="p-0">
-                  <CalendarCell value={day}></CalendarCell>
+                  <CalendarCell
+                    dates={day}
+                    month={this.props.month}
+                    year={this.props.year}
+                    today={this.props.today}
+                    currentMonth={this.props.currentMonth}
+                    currentYear={this.props.currentYear}
+                  ></CalendarCell>
                 </td>
               );
             })}
