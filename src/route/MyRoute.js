@@ -8,6 +8,7 @@ import CalendarPage from "../pages/CalendarPage";
 import Invitations from "../pages/Invitations";
 import Events from "../pages/Events";
 import HomePage from "../pages/HomePage";
+import ProfilPage from "../pages/ProfilePage";
 
 class MyRoute extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class MyRoute extends React.Component {
             <Route exact path="/invitations" component={Invitations} />
             <Route exact path="/events" component={Events} />
             <Route exact path="/home" component={HomePage} />
+            <Route exact path="/profile" component={ProfilPage} />
           </Switch>
         </Provider>
       </Router>
