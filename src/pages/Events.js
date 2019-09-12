@@ -1,5 +1,7 @@
 import React from "react";
 import CollapseEvent from "../components/CollapseEvents";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { connect } from "unistore/react";
 import axios from "axios";
 
@@ -39,6 +41,7 @@ class Events extends React.Component {
   render() {
     return (
       <div className="container eventContent mobileView p-0">
+        <Header></Header>
         <h1 className="text-center">My Event</h1>
         <div className="accordion ongoingEvent" id="accordionExample">
           <div className="card">
@@ -114,6 +117,7 @@ class Events extends React.Component {
             </div>
           </div>
         </div>
+        <Footer></Footer>
       </div>
     );
   }
