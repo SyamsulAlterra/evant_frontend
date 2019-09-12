@@ -32,27 +32,8 @@ class Calendar extends React.Component {
     };
   }
 
-  isLeapYear = year => {
-    if (year % 4 === 0 && year % 100 !== 0) {
-      return true;
-    } else if (year % 4 === 0 && (year % 100 === 0 && year % 400 === 0)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  handleMonth = e => {
-    let pickedMonth = e.target.value;
-    this.setState({ month: parseInt(pickedMonth) });
-  };
-
-  handleYear = e => {
-    let pickedYear = e.target.value;
-    this.setState({ year: parseInt(pickedYear) });
-  };
-
   populateCalendar = async (month, year) => {
+    //populate calendar table
     let date = new Date(year, month - 1);
     this.setState({ offset: date.getDay() });
     if (this.isLeapYear(year)) {
@@ -67,6 +48,33 @@ class Calendar extends React.Component {
     await this.setState({ totalDays: this.state.dayInMonth[month - 1] });
   };
 
+  isLeapYear = year => {
+    //check wether year is leap year
+    if (year % 4 === 0 && year % 100 !== 0) {
+      return true;
+    } else if (year % 4 === 0 && (year % 100 === 0 && year % 400 === 0)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /*
+   * handle when user input month and year
+   */
+  handleMonth = e => {
+    let pickedMonth = e.target.value;
+    this.setState({ month: parseInt(pickedMonth) });
+  };
+
+  handleYear = e => {
+    let pickedYear = e.target.value;
+    this.setState({ year: parseInt(pickedYear) });
+  };
+
+  /*
+   * component lifecycle
+   */
   componentWillMount = async () => {
     let today = new Date();
     await this.setState({ todayDate: today.getDate() });
@@ -92,7 +100,6 @@ class Calendar extends React.Component {
   };
 
   render() {
-    console.log(this.state.todayDate);
     let weeks;
     if (this.state.offset + this.state.totalDays > 35) {
       weeks = [1, 2, 3, 4, 5, 6];
@@ -115,8 +122,16 @@ class Calendar extends React.Component {
             onChange={this.handleMonth}
             defaultValue={this.state.month}
           >
-            {this.state.monthDictionary.map((intMonth, i) => {
-              return <option value={i + 1}>{intMonth}</option>;
+            {this.state.monthDictionary.map((month, i) => {
+              if (i + 1 === this.state.currentMonth) {
+                return (
+                  <option value={i + 1} selected="selected">
+                    {month}
+                  </option>
+                );
+              } else {
+                return <option value={i + 1}>{month}</option>;
+              }
             })}
           </select>
           <select
@@ -145,10 +160,8 @@ class Calendar extends React.Component {
             ) {
               return "";
             } else {
-              let todayDateString = (
-                currentDate - this.state.offset
-              ).toString();
-              return todayDateString;
+              let dateString = (currentDate - this.state.offset).toString();
+              return dateString;
             }
           });
           return (
