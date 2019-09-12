@@ -6,64 +6,26 @@ class CalendarCell extends React.Component {
     this.state = {
       cellClass: "",
       modalMessage: "",
-      cellStatus: -99
+      cellStatus: 0,
+      todayDate: "",
+      date: ""
     };
   }
 
-  componentWillReceiveProps = async () => {
-    const todayDate = await `${this.props.today}/${this.props.currentMonth}/${this.props.currentYear}`;
-    const date = await `${this.props.dates}/${this.props.month}/${this.props.year}`;
-    if (todayDate === date) {
-      await this.setState({ cellClass: "today" });
-    } else if (this.state.cellStatus === 1) {
-      await this.setState({ cellClass: "bg-success" });
-    } else if (this.state.cellStatus === -1) {
-      await this.setState({ cellClass: "bg-danger" });
-    }
-
-    const invalidDates = await ["S", "M", "T", "W", "T", "F", "S"];
-    const isDateInvalid = invalidDates.filter(date => {
-      return this.props.dates === date;
-    });
-
-    if (this.props.dates === "" || isDateInvalid.length > 0) {
-      await this.setState({
-        modalMessage: "Please kindly check your date, invalid choice"
-      });
-    } else if (this.state.cellStatus === 0) {
-      await this.setState({
-        modalMessage: `Are you sure want to MARK ${date} as available?`
-      });
-    } else if (this.state.cellStatus === 1) {
-      await this.setState({
-        modalMessage: `Are you sure want to UNMARK ${date} as available?`
-      });
-    } else if (this.state.cellStatus === -1) {
-      await this.setState({
-        modalMessage: `The date is already book`
-      });
-    }
-  };
-
   componentWillUpdate = async (prevProps, prevState) => {
-    if (prevState.cellStatus !== this.state.cellStatus) {
-      console.log(prevState.cellStatus, this.state.cellStatus);
-      const date = `${this.props.dates}/${this.props.month}/${this.props.year}`;
+    if (prevProps !== this.props) {
+      await this.setState({ cellClass: "" });
+      const todayDate = await `${this.props.today}/${this.props.currentMonth}/${this.props.currentYear}`;
+      const date = await `${this.props.dates}/${this.props.month}/${this.props.year}`;
+
+      if (todayDate === date) {
+        this.setState({ cellClass: "today" });
+      }
+    } else if (prevState.cellStatus !== this.state.cellStatus) {
+      console.log(prevState, this.state);
+      this.setState({ cellClass: "" });
       if (this.state.cellStatus === 1) {
-        await this.setState({
-          cellClass: "bg-success",
-          modalMessage: `Are you sure want to UNMARK ${date} as available?`
-        });
-      } else if (this.state.cellStatus === -1) {
-        await this.setState({
-          cellClass: "bg-danger",
-          modalMessage: `The date is already book`
-        });
-      } else {
-        await this.setState({
-          cellClass: "",
-          modalMessage: `Are you sure want to MARK ${date} as available?`
-        });
+        this.setState({ cellClass: "bg-success" });
       }
     }
   };
@@ -71,12 +33,16 @@ class CalendarCell extends React.Component {
   handleClick = async input => {
     if (this.state.cellStatus === 0) {
       await this.setState({ cellStatus: 1 });
-    } else if (this.state.cellStatus === 1 || this.state.cellStatus === -99) {
+    } else if (this.state.cellStatus === 1) {
       await this.setState({ cellStatus: 0 });
     }
 
     let result = input + "/" + this.props.month + "/" + this.props.year;
     console.log(result);
+  };
+
+  showCellStatus = () => {
+    console.log(this.state.cellStatus);
   };
 
   render() {

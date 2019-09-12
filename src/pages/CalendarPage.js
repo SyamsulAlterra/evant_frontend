@@ -7,7 +7,7 @@ class CalendarPage extends React.Component {
     return (
       <div className="container mobileView calendarPage p-0">
         <div className="row no-gutters">
-          <div className="col">
+          <div className="col mobileView">
             <Calendar></Calendar>
           </div>
         </div>

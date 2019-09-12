@@ -13,10 +13,10 @@ class InvitationCard extends React.Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </p>
-                <a href="#" className="btn btn-primary m-2 text-right">
+                <a href="/calendar" className="btn btn-primary m-2 text-right">
                   Accept
                 </a>
-                <a href="#" className="btn btn-primary m-2 text-right">
+                <a href="/calendar" className="btn btn-primary m-2 text-right">
                   Decline
                 </a>
               </div>
