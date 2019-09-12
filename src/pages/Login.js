@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
 import axios from "axios";
 
 class Login extends React.Component {
@@ -25,7 +26,7 @@ class Login extends React.Component {
     e.preventDefault();
     const self = this;
     await axios
-      .post("http://0.0.0.0:5000/api/users/login", {
+      .post(this.props.baseUrl + "users/login", {
         username: self.state.username,
         password: self.state.password
       })
@@ -38,6 +39,10 @@ class Login extends React.Component {
 
   handleRegister = () => {
     this.props.history.push("/register");
+  };
+
+  componentDidMount = () => {
+    console.log(this.props.baseUrl);
   };
 
   render() {
@@ -83,4 +88,4 @@ class Login extends React.Component {
   }
 }
 
-export default withRouter(Login);
+export default connect("baseUrl")(withRouter(Login));
