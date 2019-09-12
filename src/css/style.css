@@ -31,3 +31,17 @@ table {
 .invitationCard a {
   font-size: 10px;
 }
+.calendarDetail {
+  width: 280px;
+  height: 200px;
+  margin: 0px auto;
+  overflow: scroll;
+}
+.eventDetail {
+  font-size: 8px;
+}
+.todayButton {
+  height: 20px;
+  width: 50px;
+  font-size: 10px;
+}
