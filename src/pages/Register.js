@@ -66,7 +66,7 @@ class Register extends React.Component {
   handleClick = async () => {
     console.log(this.state);
     let config = {
-      url: this.props.baseUrl + "/users/register",
+      url: this.props.baseUrl + "users/register",
       method: "post",
       data: {
         username: this.state.username,
