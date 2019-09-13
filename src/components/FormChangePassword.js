@@ -13,8 +13,12 @@ class FormChangePassword extends React.Component {
           <p className="m-0">
             Please kindly check your new password before proceed
           </p>
-          <input type="text" className="m-2" placeholder="address"></input>
-          <input type="text" className="m-2" placeholder="phone"></input>
+          <input type="text" className="m-2" placeholder="New Password"></input>
+          <input
+            type="text"
+            className="m-2"
+            placeholder="Confirm New Password"
+          ></input>
         </form>
       </div>
     );
