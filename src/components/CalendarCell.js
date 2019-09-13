@@ -1,4 +1,7 @@
 import React from "react";
+import Axios from "axios";
+import { connect } from "unistore/react";
+import { actions } from "../Store";
 
 class CalendarCell extends React.Component {
   constructor(props) {
@@ -8,9 +11,30 @@ class CalendarCell extends React.Component {
       modalMessage: "",
       cellStatus: 0,
       todayDate: "",
-      date: ""
+      date: "",
+      availableDates: []
     };
   }
+  formatDate = date => {
+    const dateDictionary = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    let d = date.slice(0, 2);
+    let m = parseInt(date.slice(3, 5));
+    let y = date.slice(6, 10);
+    return `${dateDictionary[m - 1]} ${d}, ${y}`;
+  };
 
   componentWillUpdate = async (prevProps, prevState) => {
     if (prevProps !== this.props) {
@@ -18,31 +42,62 @@ class CalendarCell extends React.Component {
       const todayDate = await `${this.props.today}/${this.props.currentMonth}/${this.props.currentYear}`;
       const date = await `${this.props.dates}/${this.props.month}/${this.props.year}`;
 
+      let available = this.props.availableDates.filter(availableDate => {
+        return availableDate === date;
+      });
+
+      console.log(date, todayDate);
+
       if (todayDate === date) {
         this.setState({ cellClass: "today" });
+      } else if (available.length > 0) {
+        this.setState({
+          cellClass: "bg-success",
+          modalMessage: `unmark ${this.formatDate(date)}`
+        });
+      } else if (available.length == 0) {
+        this.setState({
+          modalMessage: `mark ${this.formatDate(date)}`
+        });
       }
-    } else if (prevState.cellStatus !== this.state.cellStatus) {
-      console.log(prevState, this.state);
-      this.setState({ cellClass: "" });
-      if (this.state.cellStatus === 1) {
-        this.setState({ cellClass: "bg-success" });
+    } else if (prevState.availableDates !== this.state.availableDates) {
+      await this.setState({ cellClass: "" });
+      const date = await `${this.props.dates}/${this.props.month}/${this.props.year}`;
+
+      let available = this.state.availableDates.filter(availableDate => {
+        return availableDate === date;
+      });
+
+      if (available.length > 0) {
+        this.setState({
+          cellClass: "bg-success",
+          modalMessage: `unmark ${this.formatDate(date)}`
+        });
+      } else if (available.length == 0) {
+        this.setState({
+          modalMessage: `mark ${this.formatDate(date)}`
+        });
       }
     }
   };
 
   handleClick = async input => {
-    if (this.state.cellStatus === 0) {
-      await this.setState({ cellStatus: 1 });
-    } else if (this.state.cellStatus === 1) {
-      await this.setState({ cellStatus: 0 });
-    }
+    const date = await `${input}/${this.props.month}/${this.props.year}`;
 
-    let result = input + "/" + this.props.month + "/" + this.props.year;
-    console.log(result);
-  };
+    let config = {
+      url: this.props.baseUrl + "date",
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      data: {
+        date: date
+      }
+    };
 
-  showCellStatus = () => {
-    console.log(this.state.cellStatus);
+    let response = await Axios(config);
+    console.log(response.data);
+    window.location.reload();
   };
 
   render() {
@@ -95,4 +150,7 @@ class CalendarCell extends React.Component {
   }
 }
 
-export default CalendarCell;
+export default connect(
+  "baseUrl",
+  actions
+)(CalendarCell);

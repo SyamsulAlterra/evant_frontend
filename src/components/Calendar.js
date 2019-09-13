@@ -32,6 +32,14 @@ class Calendar extends React.Component {
     };
   }
 
+  twoDigitString = number => {
+    if (number < 10) {
+      return `0${number}`;
+    } else {
+      return `${number}`;
+    }
+  };
+
   populateCalendar = async (month, year) => {
     //populate calendar table
     let date = new Date(year, month - 1);
@@ -59,12 +67,9 @@ class Calendar extends React.Component {
     }
   };
 
-  /*
-   * handle when user input month and year
-   */
   handleMonth = e => {
     let pickedMonth = e.target.value;
-    this.setState({ month: parseInt(pickedMonth) });
+    this.setState({ month: pickedMonth });
   };
 
   handleYear = e => {
@@ -72,9 +77,6 @@ class Calendar extends React.Component {
     this.setState({ year: parseInt(pickedYear) });
   };
 
-  /*
-   * component lifecycle
-   */
   componentWillMount = async () => {
     let today = new Date();
     await this.setState({ todayDate: today.getDate() });
@@ -120,7 +122,6 @@ class Calendar extends React.Component {
           <select
             className="button centering p-0 mx-1 my-3"
             onChange={this.handleMonth}
-            defaultValue={this.state.month}
           >
             {this.state.monthDictionary.map((month, i) => {
               if (i + 1 === this.state.currentMonth) {
@@ -145,11 +146,12 @@ class Calendar extends React.Component {
         </div>
         <CalendarGrid
           dates={days}
-          month={this.state.month}
+          month={this.twoDigitString(this.state.month)}
           year={this.state.year}
           today={this.state.todayDate}
           currentMonth={this.state.currentMonth}
           currentYear={this.state.currentYear}
+          availableDates={this.props.availableDates}
         ></CalendarGrid>
         {weeks.map(week => {
           const tes = dates.map(date => {
@@ -160,18 +162,21 @@ class Calendar extends React.Component {
             ) {
               return "";
             } else {
-              let dateString = (currentDate - this.state.offset).toString();
+              let dateString = this.twoDigitString(
+                currentDate - this.state.offset
+              );
               return dateString;
             }
           });
           return (
             <CalendarGrid
               dates={tes}
-              month={this.state.month}
+              month={this.twoDigitString(this.state.month)}
               year={this.state.year}
-              today={this.state.todayDate}
-              currentMonth={this.state.currentMonth}
+              today={this.twoDigitString(this.state.todayDate)}
+              currentMonth={this.twoDigitString(this.state.currentMonth)}
               currentYear={this.state.currentYear}
+              availableDates={this.props.availableDates}
             ></CalendarGrid>
           );
         })}
