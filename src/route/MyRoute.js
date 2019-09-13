@@ -21,8 +21,8 @@ class MyRoute extends React.Component {
             <Route exact path="/invitations" component={Invitations} />
             <Route exact path="/events" component={Events} />
             <Route exact path="/home" component={HomePage} />
-            <Route path="/events/:id" component={EventDetails} />
             <Route exact path="/profile" component={ProfilPage} />
+            <Route path="/events/:id" component={EventDetails} />
           </Switch>
         </Provider>
       </Router>

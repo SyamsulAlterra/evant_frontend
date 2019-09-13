@@ -8,7 +8,7 @@ class CalendarTitle extends React.Component {
           <tr>
             {["S", "M", "T", "W", "T", "F", "S"].map(num => {
               return (
-                <td className="calendarCell text-right bg-info border">
+                <td className="calendarCell text-right bg-info border px-2">
                   <p>{num}</p>
                 </td>
               );
