@@ -4,26 +4,61 @@ import { connect } from "unistore/react";
 import { Link } from "react-router-dom";
 import { actions } from "../Store";
 import FriendsCard from "../components/FriendsCard";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import * as moment from "moment";
+
 
 class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       category: "holiday",
-      eventName: ""
+      eventName: "",
+      date: null,
+      duration: 0
     };
   }
 
   handleCategory = async e => {
     let inputCategory = e.target.value;
     await this.setState({ category: inputCategory });
-    console.log("category", this.state.category);
+  };
+
+  componentDidMount = () => {
+    console.log(this.state.startDate);
   };
 
   handleEventName = async e => {
     let inputEventName = e.target.value;
     await this.setState({ eventName: inputEventName });
-    console.log("eventname", this.state.eventName);
+  };
+
+  handleStartDate = async date => {
+    await this.setState({
+      startDate: date,
+      startDateFromatted: this.convert(date)
+    });
+    console.log("data", this.state.startDateFromatted);
+    console.log("tipe", typeof this.state.startDateFromatted);
+  };
+
+  handleEndDate = async date => {
+    await this.setState({
+      endDate: date,
+      endDateFormatted: this.convert(date)
+    });
+    console.log("data", this.state.endDateFormatted);
+    console.log("tipe", typeof this.state.endDateFormatted);
+  };
+
+  handleDuration = async e => {
+    let duration = e.target.value;
+    await this.setState({
+      duration: parseInt(duration)
+    });
+    console.log("value duration", this.state.duration);
+    console.log("tipe duration", typeof this.state.duration);
   };
 
   createEvent = async e => {
@@ -39,7 +74,10 @@ class CreateEvent extends React.Component {
         this.props.baseUrl + "events",
         {
           category: self.state.category,
-          event_name: self.state.eventName
+          event_name: self.state.eventName,
+          start_date_parameter: self.state.startDateFromatted,
+          end_date_parameter: self.state.endDateFormatted,
+          duration: self.state.duration
         },
         config
       )
@@ -49,10 +87,34 @@ class CreateEvent extends React.Component {
       });
   };
 
+
   cancelEvent = async () => {
     await this.props.clearParticipantsOnGlobal();
     this.props.history.push("/home");
   };
+
+  // method to convert date before inserted into database
+  convert(str) {
+    let dateString = str.toString();
+    const months = {
+        Jan: "01",
+        Feb: "02",
+        Mar: "03",
+        Apr: "04",
+        May: "05",
+        Jun: "06",
+        Jul: "07",
+        Aug: "08",
+        Sep: "09",
+        Oct: "10",
+        Nov: "11",
+        Dec: "12"
+      },
+      date = dateString.split(" ");
+
+    return [date[2], months[date[1]], date[3]].join("/");
+  }
+
 
   render() {
     return (
@@ -105,6 +167,36 @@ class CreateEvent extends React.Component {
                 </div>
               );
             })}
+          </div>
+          <div className="row startDate-section justify-content-center">
+            <div className="col-12 text-center">
+              Start Date <br />
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleStartDate}
+                dateFormat="dd/MM/yyyy"
+              />
+            </div>
+          </div>
+          <div className="row startDate-section justify-content-center">
+            <div className="col-12 text-center">
+              End Date <br />
+              <DatePicker
+                selected={this.state.endDate}
+                onChange={this.handleEndDate}
+                dateFormat="dd/MM/yyyy"
+              />
+            </div>
+          </div>
+          <div className="row duration justify-content-center">
+            <div className="col-12 text-center">Duration</div>
+            <div className="col-12 text-center">
+              <input
+                type="text"
+                placeholder="duration"
+                onChange={this.handleDuration}
+              />
+            </div>
           </div>
           <div className="row justify-content-center">
             <button className="btn btn-success m-1" onClick={this.cancelEvent}>
