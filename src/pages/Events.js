@@ -55,7 +55,7 @@ class Events extends React.Component {
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                  Ongoing Events
+                  Ongoing Events ({this.state.listEvent.length})
                 </button>
               </h2>
             </div>
@@ -71,6 +71,7 @@ class Events extends React.Component {
                   <div className="border">
                     <CollapseEvent
                       id={value.event_id}
+                      creatorName={value.creator_name}
                       eventName={value.event_name}
                       category={value.category}
                     />
