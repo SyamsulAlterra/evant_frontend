@@ -27,6 +27,8 @@ class InviteFriends extends React.Component {
     this.setState({ allUser: response.data });
   };
 
+  back = () => {};
+
   render() {
     return (
       <div className="InviteFriends">
@@ -43,6 +45,11 @@ class InviteFriends extends React.Component {
           {this.state.allUser.map(user => {
             return <FriendsCard user={user}></FriendsCard>;
           })}
+        </div>
+        <div className="text-center">
+          <button className="m-3" onClick={this.back}>
+            Cancel
+          </button>
         </div>
         <Footer></Footer>
       </div>

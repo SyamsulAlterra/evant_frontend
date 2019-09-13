@@ -3,15 +3,30 @@ import houseIcon from "../images/house.png";
 import calendar from "../images/calendar.png";
 import invitation from "../images/invitation.png";
 import profile from "../images/profile.png";
+import { actions } from "../Store";
 
 import { Link, withRouter } from "react-router-dom";
+import Axios from "axios";
+import { connect } from "unistore/react";
 
 class Footer extends React.Component {
-  handleClick = () => {
-    this.props.handleClick();
+  componentDidMount = async (prevProps, prevState) => {
+    let config = {
+      url: this.props.baseUrl + "invitations",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    let response = await Axios(config);
+    await this.props.setInvitationsOnGlobal(response.data);
+    // if (prevProps.invitations !== this.state.invitations) {
+    // }
   };
 
   render() {
+    console.log(this.props.invitations);
     return (
       <div className="container footer bg-info text-center p-0">
         <div className="bg-info container mobileView text-center">
@@ -29,6 +44,9 @@ class Footer extends React.Component {
             <div className="col-3 bg-info text-center p-0">
               <Link to="/invitations">
                 <img alt="" className="my-3" src={invitation}></img>
+                <span className="text-dark">
+                  {this.props.invitations.length}
+                </span>
               </Link>
             </div>
             <div className="col-3 bg-info text-center p-0">
@@ -43,4 +61,7 @@ class Footer extends React.Component {
   }
 }
 
-export default withRouter(Footer);
+export default connect(
+  "baseUrl, invitations",
+  actions
+)(withRouter(Footer));
