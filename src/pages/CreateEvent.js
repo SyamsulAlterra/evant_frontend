@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "unistore/react";
+import { Link } from "react-router-dom";
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -84,9 +85,9 @@ class CreateEvent extends React.Component {
             <div className="search-user col-8 text-center">
               <input type="text" placeholder="search"></input>
             </div>
-            <div className="button-add col-4 text-center">
+            <Link to="/invite" className="button-add col-4 text-center">
               <button className="btn m-1">invite user</button>
-            </div>
+            </Link>
           </div>
           <div className="row justify-content-center">
             {[...Array(5).keys()].map(value => {
