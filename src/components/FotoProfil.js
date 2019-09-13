@@ -10,9 +10,9 @@ class FotoProfil extends React.Component {
             <img className="" src={fotoProfil} alt=""></img>
           </div>
           <div className="col-9 p-0">
-            <span className="px-2">Muhammad Syamsul Arifin</span>
+            <span className="px-2">{localStorage.getItem("fullname")}</span>
             <br></br>
-            <span className="px-2">@username</span>
+            <span className="px-2">@{localStorage.getItem("username")}</span>
             <br></br>
           </div>
         </div>
