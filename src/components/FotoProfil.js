@@ -19,7 +19,7 @@ class FotoProfil extends React.Component {
               <br></br>
             </div>
           </div>
-          <Link to="/events/create" className="col-4 p-0 text-center plain">
+          <Link to="/invite" className="col-4 p-0 text-center plain">
             <img src={plus} alt="" className="text-center mt-2"></img>
             <p className="m-0 text-center plain">create</p>
           </Link>
