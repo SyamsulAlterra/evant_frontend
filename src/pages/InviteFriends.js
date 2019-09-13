@@ -6,15 +6,30 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import FriendsCard from "../components/FriendsCard";
 import searchFriends from "../images/searchFriends.png";
+import { withRouter } from "react-router-dom";
 
 class InviteFriends extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allUser: []
+      uninvitedUser: []
     };
   }
-  componentDidMount = async () => {
+
+  // componentDidMount = async () => {
+  //   let config = {
+  //     url: this.props.baseUrl + "users",
+  //     method: "get",
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token")
+  //     }
+  //   };
+
+  //   let response = await Axios(config);
+  //   this.setState({ uninvitedUser: response.data });
+  // };
+
+  componentDidMount = async (prevProps, prevState) => {
     let config = {
       url: this.props.baseUrl + "users",
       method: "get",
@@ -24,10 +39,38 @@ class InviteFriends extends React.Component {
     };
 
     let response = await Axios(config);
-    this.setState({ allUser: response.data });
+    if (this.props.participants.length === 0) {
+      let result = response.data.filter(user => {
+        return user.user_id.toString() !== localStorage.getItem("user_id");
+      });
+      await this.setState({ uninvitedUser: result });
+    } else {
+      let result = response.data.filter(user => {
+        let dup = this.props.participants.filter(participant => {
+          console.log(
+            participant.user_id,
+            user.user_id,
+            participant.user_id === user.user_id
+          );
+          return participant.user_id === user.user_id;
+        });
+
+        console.log(dup);
+        return dup.length === 0;
+      });
+
+      let resultFiltered = result.filter(user => {
+        return user.user_id.toString() !== localStorage.getItem("user_id");
+      });
+
+      console.log(resultFiltered);
+      this.setState({ uninvitedUser: resultFiltered });
+    }
   };
 
-  back = () => {};
+  goBack = () => {
+    this.props.history.push("/events/create");
+  };
 
   render() {
     return (
@@ -42,12 +85,12 @@ class InviteFriends extends React.Component {
           <img className="searchFriends mx-2" alt="" src={searchFriends}></img>
         </div>
         <div className="container mobileView text-center">
-          {this.state.allUser.map(user => {
+          {this.state.uninvitedUser.map(user => {
             return <FriendsCard user={user}></FriendsCard>;
           })}
         </div>
         <div className="text-center">
-          <button className="m-3" onClick={this.back}>
+          <button className="m-3" onClick={this.goBack}>
             Cancel
           </button>
         </div>
@@ -58,6 +101,6 @@ class InviteFriends extends React.Component {
 }
 
 export default connect(
-  "baseUrl",
+  "baseUrl, participants",
   actions
-)(InviteFriends);
+)(withRouter(InviteFriends));

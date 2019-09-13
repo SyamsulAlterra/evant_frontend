@@ -26,7 +26,6 @@ class Footer extends React.Component {
   };
 
   render() {
-    console.log(this.props.invitations);
     return (
       <div className="container footer bg-info text-center p-0">
         <div className="bg-info container mobileView text-center">

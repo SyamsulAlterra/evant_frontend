@@ -2,9 +2,12 @@ import React from "react";
 import axios from "axios";
 import { connect } from "unistore/react";
 import { Link } from "react-router-dom";
+import { actions } from "../Store";
+import FriendsCard from "../components/FriendsCard";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as moment from "moment";
+
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -84,6 +87,12 @@ class CreateEvent extends React.Component {
       });
   };
 
+
+  cancelEvent = async () => {
+    await this.props.clearParticipantsOnGlobal();
+    this.props.history.push("/home");
+  };
+
   // method to convert date before inserted into database
   convert(str) {
     let dateString = str.toString();
@@ -105,6 +114,7 @@ class CreateEvent extends React.Component {
 
     return [date[2], months[date[1]], date[3]].join("/");
   }
+
 
   render() {
     return (
@@ -149,10 +159,10 @@ class CreateEvent extends React.Component {
             </Link>
           </div>
           <div className="row justify-content-center">
-            {[...Array(5).keys()].map(value => {
+            {this.props.participants.map(value => {
               return (
                 <div className="col-12 text-center">
-                  Invited User {value}
+                  <FriendsCard user={value}></FriendsCard>
                   <br />
                 </div>
               );
@@ -189,7 +199,9 @@ class CreateEvent extends React.Component {
             </div>
           </div>
           <div className="row justify-content-center">
-            <button className="btn btn-success m-1">cancel</button>
+            <button className="btn btn-success m-1" onClick={this.cancelEvent}>
+              cancel
+            </button>
             <button className="btn btn-success m-1" onClick={this.createEvent}>
               create
             </button>
@@ -200,4 +212,7 @@ class CreateEvent extends React.Component {
   }
 }
 
-export default connect("baseUrl")(CreateEvent);
+export default connect(
+  "baseUrl, participants",
+  actions
+)(CreateEvent);
