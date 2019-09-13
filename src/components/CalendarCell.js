@@ -9,10 +9,8 @@ class CalendarCell extends React.Component {
     this.state = {
       cellClass: "",
       modalMessage: "",
-      cellStatus: 0,
       todayDate: "",
-      date: "",
-      availableDates: []
+      date: ""
     };
   }
   formatDate = date => {
@@ -36,6 +34,30 @@ class CalendarCell extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
 
+  forwardDate = (date1, date2) => {
+    let dates = [date1, date2];
+    let d = dates.map(date => {
+      return parseInt(date.slice(0, 2));
+    });
+
+    let m = dates.map(date => {
+      return parseInt(date.slice(3, 5));
+    });
+
+    let y = dates.map(date => {
+      return parseInt(date.slice(6, 9));
+    });
+
+    if (y[1] > y[0]) {
+      return true;
+    } else if (m[1] > m[0] && y[1] === y[0]) {
+      return true;
+    } else if (d[1] >= d[0] && m[1] === m[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   componentWillUpdate = async (prevProps, prevState) => {
     if (prevProps !== this.props) {
       await this.setState({ cellClass: "" });
@@ -46,58 +68,82 @@ class CalendarCell extends React.Component {
         return availableDate === date;
       });
 
-      console.log(date, todayDate);
-
-      if (todayDate === date) {
-        this.setState({ cellClass: "today" });
-      } else if (available.length > 0) {
+      if (!this.forwardDate(todayDate, date) && this.props.dates !== "") {
         this.setState({
-          cellClass: "bg-success",
-          modalMessage: `unmark ${this.formatDate(date)}`
+          cellClass: "bg-secondary",
+          modalMessage: "cannot mark passed date"
         });
-      } else if (available.length == 0) {
-        this.setState({
-          modalMessage: `mark ${this.formatDate(date)}`
-        });
-      }
-    } else if (prevState.availableDates !== this.state.availableDates) {
-      await this.setState({ cellClass: "" });
-      const date = await `${this.props.dates}/${this.props.month}/${this.props.year}`;
-
-      let available = this.state.availableDates.filter(availableDate => {
-        return availableDate === date;
-      });
-
-      if (available.length > 0) {
-        this.setState({
-          cellClass: "bg-success",
-          modalMessage: `unmark ${this.formatDate(date)}`
-        });
-      } else if (available.length == 0) {
-        this.setState({
-          modalMessage: `mark ${this.formatDate(date)}`
-        });
+      } else {
+        if (todayDate === date) {
+          this.setState({ cellClass: "today" });
+          this.setState({ modalMessage: "Sorry, you cannot mark today" });
+        } else if (this.props.dates === "") {
+          this.setState({ cellClass: "" });
+          this.setState({ modalMessage: "Oops, invalid date" });
+        } else if (available.length > 0) {
+          this.setState({
+            cellClass: "bg-success",
+            modalMessage: `unmark ${this.formatDate(date)}`
+          });
+        } else if (available.length === 0) {
+          this.setState({
+            modalMessage: `mark ${this.formatDate(date)}`
+          });
+        }
       }
     }
   };
 
-  handleClick = async input => {
+  handleMark = async input => {
     const date = await `${input}/${this.props.month}/${this.props.year}`;
 
-    let config = {
-      url: this.props.baseUrl + "date",
-      method: "post",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      },
-      data: {
-        date: date
-      }
-    };
+    if (this.state.modalMessage.split(" ")[0] === "mark") {
+      let configMark = {
+        url: this.props.baseUrl + "date",
+        method: "post",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        data: {
+          date: date
+        }
+      };
 
-    let response = await Axios(config);
-    console.log(response.data);
-    window.location.reload();
+      let configGet = {
+        url: this.props.baseUrl + "date",
+        method: "get",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      };
+
+      await Axios(configMark);
+      let responseGet = await Axios(configGet);
+      await this.props.setAvailableDatesOnGlobal(responseGet.data);
+    } else {
+      let configUnmark = {
+        url: this.props.baseUrl + "date",
+        method: "delete",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        data: {
+          date: date
+        }
+      };
+
+      let configGet = {
+        url: this.props.baseUrl + "date",
+        method: "get",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      };
+
+      await Axios(configUnmark);
+      let responseGet = await Axios(configGet);
+      await this.props.setAvailableDatesOnGlobal(responseGet.data);
+    }
   };
 
   render() {
@@ -136,10 +182,10 @@ class CalendarCell extends React.Component {
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onClick={() => this.handleClick(this.props.dates)}
+                  onClick={() => this.handleMark(this.props.dates)}
                   data-dismiss="modal"
                 >
-                  OK
+                  Yes
                 </button>
               </div>
             </div>
@@ -151,6 +197,6 @@ class CalendarCell extends React.Component {
 }
 
 export default connect(
-  "baseUrl",
+  "baseUrl, availableDates",
   actions
 )(CalendarCell);

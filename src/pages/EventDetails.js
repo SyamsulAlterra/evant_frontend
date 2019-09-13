@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "unistore/react";
-import axios from "axios";
 
 class EventDetails extends React.Component {
   render() {

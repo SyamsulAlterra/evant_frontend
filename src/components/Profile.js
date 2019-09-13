@@ -68,7 +68,6 @@ class Profile extends React.Component {
 
   editPassword = async e => {
     e.preventDefault();
-    const self = this;
     if (this.state.password === this.state.confirmPassword) {
       await axios.put(
         this.props.baseUrl +
@@ -95,7 +94,7 @@ class Profile extends React.Component {
                 </h3>
               </div>
               <div className="avatar my-5">
-                <img src={fotoProfil} className="profileImage m-3"></img>
+                <img src={fotoProfil} className="profileImage m-3" alt=""></img>
               </div>
               <div className="text-left p-0">
                 <div className="username mb-3">
@@ -108,6 +107,7 @@ class Profile extends React.Component {
                     <div className="col-5">
                       <img
                         src={editIcon}
+                        alt=""
                         height="15px"
                         width="15px"
                         data-toggle="modal"
@@ -129,6 +129,7 @@ class Profile extends React.Component {
                       <img
                         src={editIcon}
                         height="15px"
+                        alt=""
                         width="15px"
                         data-toggle="modal"
                         data-target="#editAddress"
@@ -148,6 +149,7 @@ class Profile extends React.Component {
                     <div className="col-5">
                       <img
                         src={editIcon}
+                        alt=""
                         height="15px"
                         width="15px"
                         data-toggle="modal"
@@ -169,6 +171,7 @@ class Profile extends React.Component {
                     <div className="col-5">
                       <img
                         src={editIcon}
+                        alt=""
                         height="15px"
                         width="15px"
                         data-toggle="modal"

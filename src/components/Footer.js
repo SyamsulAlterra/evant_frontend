@@ -18,22 +18,22 @@ class Footer extends React.Component {
           <div className="row mobileView p-0">
             <div className="col-3 bg-info text-center p-0">
               <Link to="/home">
-                <img className="my-3" src={houseIcon}></img>
+                <img alt="" className="my-3" src={houseIcon}></img>
               </Link>
             </div>
             <div className="col-3 bg-info text-center p-0">
               <Link to="/events">
-                <img className="my-3" src={calendar}></img>
+                <img alt="" className="my-3" src={calendar}></img>
               </Link>
             </div>
             <div className="col-3 bg-info text-center p-0">
               <Link to="/invitations">
-                <img className="my-3" src={invitation}></img>
+                <img alt="" className="my-3" src={invitation}></img>
               </Link>
             </div>
             <div className="col-3 bg-info text-center p-0">
               <Link to="/profile">
-                <img className="my-3" src={profile}></img>
+                <img alt="" className="my-3" src={profile}></img>
               </Link>
             </div>
           </div>
