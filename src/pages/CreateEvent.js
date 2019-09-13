@@ -48,9 +48,9 @@ class CreateEvent extends React.Component {
 
   render() {
     return (
-      <div className="createEvent-content mobileView">
+      <div className="createEvent-content">
         <h1 className="text-center">CREATE EVENT PAGE</h1>
-        <div className="container">
+        <div className="container mobileView">
           <div className="row justify-content-center mb-3">
             <div className="event-name col-8 text-center">
               <label for="exampleFormControlSelect1">Event Name</label>
