@@ -2,6 +2,8 @@ import React from "react";
 import CalendarGrid from "./CalendarGrid";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
+import CalendarDetail from "./CalendarDetail";
+import CalendarTitle from "./CalendarTitle";
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -109,18 +111,17 @@ class Calendar extends React.Component {
       weeks = [1, 2, 3, 4, 5];
     }
     const dates = [1, 2, 3, 4, 5, 6, 7];
-    const days = ["S", "M", "T", "W", "T", "F", "S"];
     const totalYear = [...Array(12).keys()];
     const yearChoices = totalYear.map(inc => {
-      return 2019 + inc;
+      return this.state.currentYear + inc;
     });
 
     return (
-      <div className="Calendar mt-0">
+      <div className="Calendar container mobileView p-0 mt-0">
         <div className="text-right mx-5">
           <img src="" alt=""></img>
           <select
-            className="button centering p-0 mx-1 my-3"
+            className="button centering p-0 mx-1 my-3 optionMonth"
             onChange={this.handleMonth}
           >
             {this.state.monthDictionary.map((month, i) => {
@@ -144,15 +145,7 @@ class Calendar extends React.Component {
             })}
           </select>
         </div>
-        <CalendarGrid
-          dates={days}
-          month={this.twoDigitString(this.state.month)}
-          year={this.state.year}
-          today={this.state.todayDate}
-          currentMonth={this.state.currentMonth}
-          currentYear={this.state.currentYear}
-          availableDates={this.props.availableDates}
-        ></CalendarGrid>
+        <CalendarTitle></CalendarTitle>
         {weeks.map(week => {
           const tes = dates.map(date => {
             let currentDate = 7 * (week - 1) + date;
@@ -176,10 +169,11 @@ class Calendar extends React.Component {
               today={this.twoDigitString(this.state.todayDate)}
               currentMonth={this.twoDigitString(this.state.currentMonth)}
               currentYear={this.state.currentYear}
-              availableDates={this.props.availableDates}
+              // availableDates={this.props.availableDates}
             ></CalendarGrid>
           );
         })}
+        <CalendarDetail></CalendarDetail>
       </div>
     );
   }

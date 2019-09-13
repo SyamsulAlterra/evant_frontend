@@ -7,7 +7,7 @@ class FotoProfil extends React.Component {
       <div className="container mobileView p-0 fotoProfil">
         <div className="row mt-3 mx-3">
           <div className="col-auto p-0">
-            <img className="" src={fotoProfil}></img>
+            <img className="" src={fotoProfil} alt=""></img>
           </div>
           <div className="col-9 p-0">
             <span className="px-2">{localStorage.getItem("fullname")}</span>
