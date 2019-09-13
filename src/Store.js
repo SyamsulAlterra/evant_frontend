@@ -3,7 +3,8 @@ import createStore from "unistore";
 export let Store = createStore({
   baseUrl: "http://0.0.0.0:5000/api/",
   availableDates: ["dummy"],
-  invitations: []
+  invitations: [],
+  participants: []
 });
 
 export const actions = Store => ({
@@ -12,5 +13,11 @@ export const actions = Store => ({
   },
   setInvitationsOnGlobal: (state, invitations) => {
     return { invitations: invitations };
+  },
+  setParticipantsOnGlobal: (state, participants) => {
+    state.participants.push(participants);
+  },
+  clearParticipantsOnGlobal: () => {
+    return { participants: [] };
   }
 });

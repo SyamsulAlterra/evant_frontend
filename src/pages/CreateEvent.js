@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { connect } from "unistore/react";
 import { Link } from "react-router-dom";
+import { actions } from "../Store";
+import FriendsCard from "../components/FriendsCard";
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -47,6 +49,11 @@ class CreateEvent extends React.Component {
       });
   };
 
+  cancelEvent = async () => {
+    await this.props.clearParticipantsOnGlobal();
+    this.props.history.push("/home");
+  };
+
   render() {
     return (
       <div className="createEvent-content">
@@ -90,17 +97,19 @@ class CreateEvent extends React.Component {
             </Link>
           </div>
           <div className="row justify-content-center">
-            {[...Array(5).keys()].map(value => {
+            {this.props.participants.map(value => {
               return (
                 <div className="col-12 text-center">
-                  Invited User {value}
+                  <FriendsCard user={value}></FriendsCard>
                   <br />
                 </div>
               );
             })}
           </div>
           <div className="row justify-content-center">
-            <button className="btn btn-success m-1">cancel</button>
+            <button className="btn btn-success m-1" onClick={this.cancelEvent}>
+              cancel
+            </button>
             <button className="btn btn-success m-1" onClick={this.createEvent}>
               create
             </button>
@@ -111,4 +120,7 @@ class CreateEvent extends React.Component {
   }
 }
 
-export default connect("baseUrl")(CreateEvent);
+export default connect(
+  "baseUrl, participants",
+  actions
+)(CreateEvent);

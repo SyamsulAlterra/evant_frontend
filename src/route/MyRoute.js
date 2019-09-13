@@ -12,7 +12,6 @@ import ProfilPage from "../pages/ProfilePage";
 import InviteFriends from "../pages/InviteFriends";
 import CreateEvent from "../pages/CreateEvent";
 
-
 class MyRoute extends React.Component {
   render() {
     return (
