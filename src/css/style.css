@@ -69,3 +69,18 @@ table {
   text-decoration: none;
   color: black;
 }
+.InviteFriends .avatar {
+  width: 25px;
+  height: 25px;
+}
+.centering {
+  margin: 0px auto;
+}
+.inviteButton {
+  width: 15px;
+  height: 15px;
+}
+.searchFriends {
+  width: 26px;
+  height: 26px;
+}

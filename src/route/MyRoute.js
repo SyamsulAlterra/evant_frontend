@@ -9,7 +9,9 @@ import Events from "../pages/Events";
 import HomePage from "../pages/HomePage";
 import EventDetails from "../pages/EventDetails";
 import ProfilPage from "../pages/ProfilePage";
+import InviteFriends from "../pages/InviteFriends";
 import CreateEvent from "../pages/CreateEvent";
+
 
 class MyRoute extends React.Component {
   render() {
@@ -24,6 +26,7 @@ class MyRoute extends React.Component {
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/events/create" component={CreateEvent} />
             <Route exact path="/profile" component={ProfilPage} />
+            <Route exact path="/invite" component={InviteFriends} />
             <Route path="/events/:id" component={EventDetails} />
           </Switch>
         </Provider>
