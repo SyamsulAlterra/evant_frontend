@@ -11,7 +11,7 @@ class Profile extends React.Component {
           <div className="row border my-4">
             <div className="col text-center">
               <h3 className="mt-4 mb-0">Muhammad Syamsul Arifin</h3>
-              <img src={fotoProfil} className="profileImage m-3"></img>
+              <img src={fotoProfil} className="profileImage m-3" alt=""></img>
               <div className="text-left p-0">
                 <span className="m-0">username: @culcalcul</span>
                 <br></br>

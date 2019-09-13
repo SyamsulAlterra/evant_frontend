@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "unistore/react";
 
 class CalendarDetail extends React.Component {
   formatDate = date => {
@@ -58,4 +59,7 @@ class CalendarDetail extends React.Component {
   }
 }
 
-export default CalendarDetail;
+export default connect(
+  "availableDates",
+  connect
+)(CalendarDetail);

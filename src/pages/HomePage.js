@@ -1,22 +1,21 @@
 import React from "react";
-import CalendarPage from "./CalendarPage";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import CalendarDetail from "../components/CalendarDetail";
 import FotoProfil from "../components/FotoProfil";
 import Axios from "axios";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
+import Calendar from "../components/Calendar";
 
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      availableDates: []
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     availableDates: []
+  //   };
+  // }
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     let config = {
       url: this.props.baseUrl + "date",
       method: "get",
@@ -26,17 +25,16 @@ class HomePage extends React.Component {
     };
 
     let response = await Axios(config);
-    await this.setState({ availableDates: response.data });
+    await this.props.setAvailableDatesOnGlobal(response.data);
+    // await this.setState({ availableDates: response.data });
   };
   render() {
     return (
       <div className="HomePage">
         <Header></Header>
         <FotoProfil></FotoProfil>
-        <CalendarPage availableDates={this.state.availableDates}></CalendarPage>
-        <CalendarDetail
-          availableDates={this.state.availableDates}
-        ></CalendarDetail>
+        {/* <Calendar availableDates={this.state.availableDates}></Calendar> */}
+        <Calendar></Calendar>
         <Footer></Footer>
       </div>
     );
