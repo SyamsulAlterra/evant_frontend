@@ -31,10 +31,16 @@ class Login extends React.Component {
         password: self.state.password
       })
       .then(response => {
-        console.log(response.data.user);
+        console.log(response.data);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.user["user_id"]);
-        self.props.history.push("/calendar");
+        localStorage.setItem("address", response.data.user["address"]);
+        localStorage.setItem("email", response.data.user["email"]);
+        localStorage.setItem("fullname", response.data.user["fullname"]);
+        localStorage.setItem("gender", response.data.user["gender"]);
+        localStorage.setItem("phone", response.data.user["phone"]);
+        localStorage.setItem("username", response.data.user["username"]);
+        self.props.history.push("/home");
       });
   };
 

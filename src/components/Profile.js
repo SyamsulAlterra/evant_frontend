@@ -10,18 +10,29 @@ class Profile extends React.Component {
         <div className="container mobileView">
           <div className="row border my-4">
             <div className="col text-center">
-              <h3 className="mt-4 mb-0">Muhammad Syamsul Arifin</h3>
+              <h3 className="mt-4 mb-0">{localStorage.getItem("fullname")}</h3>
               <img src={fotoProfil} className="profileImage m-3"></img>
               <div className="text-left p-0">
-                <span className="m-0">username: @culcalcul</span>
+                <span className="m-0">
+                  username: {localStorage.getItem("username")}
+                </span>
                 <br></br>
-                <span className="m-0">address: Jln Mandalajati No. 13</span>
+                <span className="m-0">
+                  address: {localStorage.getItem("address")}
+                </span>
                 <br></br>
-                <span className="m-0">email: syamsul@alterra.id</span>
+                <span className="m-0">
+                  email: {localStorage.getItem("email")}
+                </span>
                 <br></br>
-                <span className="m-0">phone: 0856XXX</span>
+                <span className="m-0">
+                  phone: {localStorage.getItem("phone")}
+                </span>
                 <br></br>
-                <span className="m-0">gender: Male</span>
+                <span className="m-0">
+                  gender:{" "}
+                  {localStorage.getItem("gender") === true ? "male" : "female"}
+                </span>
                 <br></br>
               </div>
               <div className="row">

@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../components/Button";
 import { connect } from "unistore/react";
-import Axios from "axios";
+import axios from "axios";
 
 class Register extends React.Component {
   constructor(props) {
@@ -79,7 +79,7 @@ class Register extends React.Component {
       }
     };
 
-    let register = await Axios(config);
+    let register = await axios(config);
     console.log(register);
   };
 
