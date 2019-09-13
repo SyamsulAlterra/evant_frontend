@@ -45,9 +45,14 @@ table {
   width: 50px;
   font-size: 10px;
 }
-.fotoProfil img {
+.fotoProfil .marginLeft {
   height: 50px;
   width: 50px;
+  margin-left: 2rem;
+}
+.fotoProfil img {
+  height: 30px;
+  width: 30px;
 }
 .footer img {
   height: 30px;
@@ -59,4 +64,8 @@ table {
 }
 .optionMonth {
   width: 120px !important;
+}
+.fotoProfil .plain {
+  text-decoration: none;
+  color: black;
 }

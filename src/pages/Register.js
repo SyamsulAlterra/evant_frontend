@@ -2,6 +2,8 @@ import React from "react";
 import Button from "../components/Button";
 import { connect } from "unistore/react";
 import axios from "axios";
+import { actions } from "../Store";
+import { withRouter } from "react-router-dom";
 
 class Register extends React.Component {
   constructor(props) {
@@ -64,7 +66,7 @@ class Register extends React.Component {
   };
 
   handleClick = async () => {
-    console.log(this.state);
+    // console.log(this.state);
     let config = {
       url: this.props.baseUrl + "users/register",
       method: "post",
@@ -79,8 +81,14 @@ class Register extends React.Component {
       }
     };
 
-    let register = await axios(config);
-    console.log(register);
+    await axios(config)
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch(() => {
+        alert("tes");
+      });
+    // console.log("tes");
   };
 
   render() {
@@ -168,4 +176,7 @@ class Register extends React.Component {
   }
 }
 
-export default connect("baseUrl")(Register);
+export default connect(
+  "baseUrl",
+  actions
+)(withRouter(Register));
