@@ -16,19 +16,6 @@ class InviteFriends extends React.Component {
     };
   }
 
-  // componentDidMount = async () => {
-  //   let config = {
-  //     url: this.props.baseUrl + "users",
-  //     method: "get",
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token")
-  //     }
-  //   };
-
-  //   let response = await Axios(config);
-  //   this.setState({ uninvitedUser: response.data });
-  // };
-
   componentDidMount = async (prevProps, prevState) => {
     let config = {
       url: this.props.baseUrl + "users",

@@ -4,7 +4,12 @@ export let Store = createStore({
   baseUrl: "http://0.0.0.0:5000/api/",
   availableDates: ["dummy"],
   invitations: [],
-  participants: []
+  participants: [],
+  eventName: "",
+  category: "",
+  startDate: "",
+  endDate: "",
+  duration: 0
 });
 
 export const actions = Store => ({
@@ -26,5 +31,29 @@ export const actions = Store => ({
     });
 
     return { participants: result };
+  },
+  setEventNameGlobal: (state, input) => {
+    return { eventName: input };
+  },
+  setCategoryGlobal: (state, input) => {
+    return { category: input };
+  },
+  setStartDateGlobal: (state, input) => {
+    return { startDate: input };
+  },
+  setEndDateGlobal: (state, input) => {
+    return { endDate: input };
+  },
+  setDurationGlobal: (state, input) => {
+    return { duration: input };
+  },
+  clearCreateEvent: state => {
+    return {
+      eventName: "",
+      category: "",
+      startDate: "",
+      endDate: "",
+      duration: 0
+    };
   }
 });

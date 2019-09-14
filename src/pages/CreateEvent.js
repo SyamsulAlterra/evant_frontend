@@ -3,93 +3,105 @@ import axios from "axios";
 import { connect } from "unistore/react";
 import { Link } from "react-router-dom";
 import { actions } from "../Store";
-import FriendsCard from "../components/FriendsCard";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as moment from "moment";
 import Header from "../components/Header";
 import KickFriend from "../components/KickFriend";
+import Axios from "axios";
 
 class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: "holiday",
-      eventName: "",
       date: null,
-      duration: 0
+      startDate: null,
+      endDate: null
     };
   }
 
   handleCategory = async e => {
     let inputCategory = e.target.value;
-    await this.setState({ category: inputCategory });
-  };
-
-  componentDidMount = () => {
-    console.log(this.state.startDate);
+    await this.props.setCategoryGlobal(inputCategory);
+    // await this.setState({ category: inputCategory });
   };
 
   handleEventName = async e => {
     let inputEventName = e.target.value;
-    await this.setState({ eventName: inputEventName });
+    await this.props.setEventNameGlobal(inputEventName);
+
+    // await this.setState({ eventName: inputEventName });
   };
 
   handleStartDate = async date => {
     await this.setState({
-      startDate: date,
-      startDateFromatted: this.convert(date)
+      startDate: this.convert(date)
     });
-    console.log("data", this.state.startDateFromatted);
-    console.log("tipe", typeof this.state.startDateFromatted);
+
+    await this.props.setStartDateGlobal(date);
   };
 
   handleEndDate = async date => {
     await this.setState({
-      endDate: date,
-      endDateFormatted: this.convert(date)
+      endDate: this.convert(date)
     });
-    console.log("data", this.state.endDateFormatted);
-    console.log("tipe", typeof this.state.endDateFormatted);
+
+    await this.props.setEndDateGlobal(date);
   };
 
   handleDuration = async e => {
     let duration = e.target.value;
-    await this.setState({
-      duration: parseInt(duration)
-    });
-    console.log("value duration", this.state.duration);
-    console.log("tipe duration", typeof this.state.duration);
+
+    await this.props.setDurationGlobal(parseInt(duration));
   };
 
   createEvent = async e => {
     e.preventDefault();
     const self = this;
-    const config = {
+    const configCreate = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-    await axios
-      .post(
-        this.props.baseUrl + "events",
-        {
-          category: self.state.category,
-          event_name: self.state.eventName,
-          start_date_parameter: self.state.startDateFromatted,
-          end_date_parameter: self.state.endDateFormatted,
-          duration: self.state.duration
+    await axios.post(
+      this.props.baseUrl + "events",
+      {
+        category: self.props.category,
+        event_name: self.props.eventName,
+        start_date_parameter: self.state.startDate,
+        end_date_parameter: self.state.endDate,
+        duration: self.props.duration
+      },
+      configCreate
+    );
+
+    let configInvite;
+
+    this.props.participants.map(async participant => {
+      configInvite = {
+        url: this.props.baseUrl + "invitations",
+        method: "post",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
         },
-        config
-      )
-      .then(response => {
-        console.log(response);
-        self.props.history.push("/home");
-      });
+        data: {
+          invited_id: participant.user_id
+        }
+      };
+
+      let response = await Axios(configInvite);
+      console.log(response.data);
+    });
+
+    alert(
+      "your event successfully created and all your invitations has been sent"
+    );
+    this.props.history.push("/events");
   };
 
   cancelEvent = async () => {
     await this.props.clearParticipantsOnGlobal();
+    await this.props.clearCreateEvent();
     this.props.history.push("/home");
   };
 
@@ -130,6 +142,7 @@ class CreateEvent extends React.Component {
                   type="text"
                   placeholder="event name"
                   onChange={this.handleEventName}
+                  value={this.props.eventName}
                 />
               </div>
             </div>
@@ -141,6 +154,7 @@ class CreateEvent extends React.Component {
                     className="form-control"
                     id="category"
                     onChange={this.handleCategory}
+                    value={this.props.category}
                   >
                     <option selected value="vacation">
                       Holiday
@@ -173,7 +187,7 @@ class CreateEvent extends React.Component {
               <div className="col-12 text-center">
                 Start Date <br />
                 <DatePicker
-                  selected={this.state.startDate}
+                  selected={this.props.startDate}
                   onChange={this.handleStartDate}
                   dateFormat="dd/MM/yyyy"
                 />
@@ -183,19 +197,20 @@ class CreateEvent extends React.Component {
               <div className="col-12 text-center">
                 End Date <br />
                 <DatePicker
-                  selected={this.state.endDate}
+                  selected={this.props.endDate}
                   onChange={this.handleEndDate}
                   dateFormat="dd/MM/yyyy"
                 />
               </div>
             </div>
             <div className="row duration justify-content-center">
-              <div className="col-12 text-center">Duration</div>
+              <div className="col-12 text-center">Duration (days)</div>
               <div className="col-12 text-center">
                 <input
                   type="text"
                   placeholder="duration"
                   onChange={this.handleDuration}
+                  value={this.props.duration}
                 />
               </div>
             </div>
@@ -221,6 +236,6 @@ class CreateEvent extends React.Component {
 }
 
 export default connect(
-  "baseUrl, participants",
+  "baseUrl, participants, eventName, category, startDate, endDate, duration",
   actions
 )(CreateEvent);
