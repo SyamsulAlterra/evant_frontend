@@ -23,17 +23,22 @@ class EventDetails extends React.Component {
       .get(this.props.baseUrl + "events/" + this.props.match.params.id, config)
       .then(response => {
         this.setState({ event: response.data });
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
       });
 
     await axios
-      .get(this.props.baseUrl + "events/list_of_participant/" + this.props.match.params.id, config)
+      .get(
+        this.props.baseUrl +
+          "events/list_of_participant/" +
+          this.props.match.params.id,
+        config
+      )
       .then(response => {
         this.setState({ participants: response.data });
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -55,14 +60,15 @@ class EventDetails extends React.Component {
       "Dec"
     ];
     if (date === undefined) {
-      return 'halo'
+      return "halo";
+    } else if (date === null) {
+      return date;
     }
     let d = date.slice(0, 2);
     let m = parseInt(date.slice(3, 5));
     let y = date.slice(6, 10);
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
-
 
   render() {
     return (
@@ -72,7 +78,7 @@ class EventDetails extends React.Component {
           <h6 className="text-center m-0">creator: $creator</h6>
           <div className="row justify-content-center">
             <div className="search-user col-8 text-center">
-              <input type="text" placeholder="search" className='my-3'></input>
+              <input type="text" placeholder="search" className="my-3"></input>
             </div>
           </div>
           <div className="participant border border-secondary p-3">
@@ -83,7 +89,7 @@ class EventDetails extends React.Component {
                 //   <div className="row justify-content-center">
                 //     <div className="col-8 border">
                 //       <div className="row">
-                //         <div className = "col-4"> 
+                //         <div className = "col-4">
                 //           {value.fullname}({value.username})
                 //       </div>
                 //       </div>
@@ -94,7 +100,9 @@ class EventDetails extends React.Component {
             })}
           </div>
           <div className="category my-3">
-            <h6 className="text-center">Category :{this.state.event.category}</h6>
+            <h6 className="text-center">
+              Category :{this.state.event.category}
+            </h6>
           </div>
           <div className="row justify-content-center mb-3">
             <div className="preferenceSelect col-8 text-center">
@@ -108,7 +116,7 @@ class EventDetails extends React.Component {
                 >
                   <option selected value="vacation">
                     Select your preference
-                    </option>
+                  </option>
                   <option value="Culture">Culture</option>
                   <option value="Religion">Religion</option>
                   <option value="Museum">Museum</option>
@@ -117,17 +125,21 @@ class EventDetails extends React.Component {
             </div>
           </div>
           <div className="dateSection text-center">
-            Range date : {this.formatDate(this.state.event.start_date_parameter)} - {this.formatDate(this.state.event.end_date_parameter)}
+            Range date :{" "}
+            {this.formatDate(this.state.event.start_date_parameter)} -{" "}
+            {this.formatDate(this.state.event.end_date_parameter)}
             <br />
             Event Duration : {this.state.event.duration} days
           </div>
           <div className="row justify-content-center mb-3">
             <div className="button-add col-8 text-center">
               <Link to="/#">
-                <button className="btn btn-primary m-1">Suggest Our Event</button>
+                <button className="btn btn-primary m-1">
+                  Suggest Our Event
+                </button>
               </Link>
-            </div >
-          </div >
+            </div>
+          </div>
         </div>
       </div>
     );
