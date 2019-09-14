@@ -76,7 +76,9 @@ class CalendarCell extends React.Component {
       } else {
         if (todayDate === date) {
           this.setState({ cellClass: "today" });
-          this.setState({ modalMessage: "Sorry, you cannot mark today" });
+          this.setState({
+            modalMessage: "Sorry, you cannot mark today's date"
+          });
         } else if (this.props.dates === "") {
           this.setState({ cellClass: "" });
           this.setState({ modalMessage: "Oops, invalid date" });
