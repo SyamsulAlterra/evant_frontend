@@ -1,6 +1,36 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
+import { actions } from "../Store";
+import Axios from "axios";
 
 class InvitationCard extends React.Component {
+  declineEvent = async input => {
+    let config = {
+      url: this.props.baseUrl + "invitations/reject/" + input.toString(),
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    await Axios(config);
+    window.location.reload();
+  };
+
+  acceptEvent = async input => {
+    let config = {
+      url: this.props.baseUrl + "invitations/accept/" + input.toString(),
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/events");
+  };
+
   render() {
     return (
       <div className="container mobileView invitationCard">
@@ -18,12 +48,24 @@ class InvitationCard extends React.Component {
                   <br></br>
                   category: {this.props.invitation.event_category} <br></br>
                 </p>
-                <a href="/calendar" className="btn btn-primary m-2 text-right">
-                  Accept
-                </a>
-                <a href="/calendar" className="btn btn-primary m-2 text-right">
-                  Decline
-                </a>
+                <div className="text-right">
+                  <Link
+                    className="btn btn-primary m-2 text-right"
+                    onClick={() =>
+                      this.acceptEvent(this.props.invitation.event_id)
+                    }
+                  >
+                    Accept
+                  </Link>
+                  <Link
+                    className="btn btn-primary m-2 text-right"
+                    onClick={() =>
+                      this.declineEvent(this.props.invitation.event_id)
+                    }
+                  >
+                    Decline
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -33,4 +75,7 @@ class InvitationCard extends React.Component {
   }
 }
 
-export default InvitationCard;
+export default connect(
+  "baseUrl",
+  actions
+)(withRouter(InvitationCard));
