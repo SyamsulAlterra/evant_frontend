@@ -22,16 +22,17 @@ class Events extends React.Component {
     };
     await axios
       .get(this.props.baseUrl + "events/ongoing", config)
-      .then(response => {
-        this.setState({ listEvent: response.data });
+      .then(async response => {
+        await this.setState({ listEvent: response.data });
       })
       .catch(error => {
         console.log(error);
       });
     await axios
       .get(this.props.baseUrl + "events/history", config)
-      .then(response => {
-        this.setState({ pastEvent: response.data });
+      .then(async response => {
+        await this.setState({ pastEvent: response.data });
+        console.log(this.state.pastEvent);
       })
       .catch(error => {
         console.log(error);
@@ -93,7 +94,7 @@ class Events extends React.Component {
                   aria-expanded="true"
                   aria-controls="collapseTwo"
                 >
-                  Events History
+                  Events History ({this.state.pastEvent.length})
                 </button>
               </h2>
             </div>

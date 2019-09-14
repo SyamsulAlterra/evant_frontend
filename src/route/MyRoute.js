@@ -11,6 +11,8 @@ import EventDetails from "../pages/EventDetails";
 import ProfilPage from "../pages/ProfilePage";
 import InviteFriends from "../pages/InviteFriends";
 import CreateEvent from "../pages/CreateEvent";
+import EventHistoryDetail from "../pages/EventHistoryDetail";
+import Transition from "../components/Transition";
 
 class MyRoute extends React.Component {
   render() {
@@ -26,6 +28,8 @@ class MyRoute extends React.Component {
             <Route exact path="/events/create" component={CreateEvent} />
             <Route exact path="/profile" component={ProfilPage} />
             <Route exact path="/invite" component={InviteFriends} />
+            <Route path="/transition/:id" component={Transition} />
+            <Route path="/history/:id" component={EventHistoryDetail} />
             <Route path="/events/:id" component={EventDetails} />
           </Switch>
         </Provider>

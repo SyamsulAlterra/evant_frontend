@@ -9,7 +9,7 @@ class CollapseEvents extends React.Component {
         Category: {this.props.category} <br />
         Created by: {this.props.creatorName}
         <div className="button-detail">
-          <Link to={"/events/" + this.props.id}>
+          <Link to={"/transition/" + this.props.id.toString()}>
             <button className="btn">See Event Detail</button>
           </Link>
         </div>
