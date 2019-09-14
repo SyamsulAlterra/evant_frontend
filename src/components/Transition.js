@@ -21,7 +21,9 @@ class Transition extends React.Component {
     let creator_id = response.data.creator_id;
     let destination;
     if (event_status === 0) {
-      if (localStorage.getItem("user_id") === creator_id) {
+      if (
+        localStorage.getItem("user_id").toString() === creator_id.toString()
+      ) {
         destination = `/events/${event_id}`;
       } else {
         destination = `/participant/${event_id}`;
