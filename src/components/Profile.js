@@ -185,7 +185,7 @@ class Profile extends React.Component {
                 <div className="gender">
                   <span className="m-0">
                     gender:{" "}
-                    {localStorage.getItem("gender") === true
+                    {localStorage.getItem("gender") === "true"
                       ? "male"
                       : "female"}
                   </span>

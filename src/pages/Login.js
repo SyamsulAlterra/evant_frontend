@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,6 +25,20 @@ class Login extends React.Component {
 
   handleClick = async e => {
     e.preventDefault();
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000
+    });
+    if (this.state.username === "") {
+      Swal.fire("Error", "Please fill your Username", "warning");
+      return false;
+    }
+    if (this.state.password === "") {
+      Swal.fire("Error", "Please fill your password", "warning");
+      return false;
+    }
     const self = this;
     await axios
       .post(this.props.baseUrl + "users/login", {
@@ -31,7 +46,6 @@ class Login extends React.Component {
         password: self.state.password
       })
       .then(response => {
-        console.log(response.data);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.user["user_id"]);
         localStorage.setItem("address", response.data.user["address"]);
@@ -41,6 +55,13 @@ class Login extends React.Component {
         localStorage.setItem("phone", response.data.user["phone"]);
         localStorage.setItem("username", response.data.user["username"]);
         self.props.history.push("/home");
+        Toast.fire({
+          type: "success",
+          title: "Welcome" + localStorage.getItem("fullname") + "!"
+        });
+      })
+      .catch(error => {
+        Swal.fire("Error", "Invalid username/password or not match", "error");
       });
   };
 
