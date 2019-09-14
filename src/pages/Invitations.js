@@ -22,7 +22,6 @@ class Invitations extends React.Component {
         <div className="Invitations">
           <Header></Header>
           {this.props.invitations.map(invitation => {
-            console.log(invitation);
             return <InvitationCard invitation={invitation}></InvitationCard>;
           })}
           <Footer></Footer>
