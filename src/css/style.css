@@ -88,3 +88,8 @@ table {
   height: 400px;
   overflow: scroll;
 }
+.checked,
+.cross {
+  width: 40px;
+  height: 40px;
+}

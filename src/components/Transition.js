@@ -15,11 +15,19 @@ class Transition extends React.Component {
       }
     };
     let response = await Axios(config);
+    console.log(response.data);
     let event_id = response.data.event_id;
     let event_status = response.data.status;
+    let creator_id = response.data.creator_id;
     let destination;
     if (event_status === 0) {
-      destination = `/events/${event_id}`;
+      if (
+        localStorage.getItem("user_id").toString() === creator_id.toString()
+      ) {
+        destination = `/events/${event_id}`;
+      } else {
+        destination = `/participant/${event_id}`;
+      }
     } else {
       destination = `/history/${event_id}`;
     }

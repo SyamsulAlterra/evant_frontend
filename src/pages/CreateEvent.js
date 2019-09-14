@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { actions } from "../Store";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import * as moment from "moment";
 import Header from "../components/Header";
 import KickFriend from "../components/KickFriend";
+import Swal from "sweetalert2";
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -94,8 +94,10 @@ class CreateEvent extends React.Component {
       console.log(response.data);
     });
 
-    alert(
-      "your event successfully created and all your invitations has been sent"
+    Swal.fire(
+      "Event Successfully Created!",
+      "Invitations has been sent!",
+      "success"
     );
     this.props.history.push("/events");
   };
