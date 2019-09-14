@@ -21,8 +21,9 @@ class Invitations extends React.Component {
       return (
         <div className="Invitations">
           <Header></Header>
-          {this.props.invitations.map(value => {
-            return <InvitationCard></InvitationCard>;
+          {this.props.invitations.map(invitation => {
+            console.log(invitation);
+            return <InvitationCard invitation={invitation}></InvitationCard>;
           })}
           <Footer></Footer>
         </div>
