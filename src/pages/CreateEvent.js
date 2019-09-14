@@ -8,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import * as moment from "moment";
 import Header from "../components/Header";
 import KickFriend from "../components/KickFriend";
-import Axios from "axios";
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -39,6 +38,7 @@ class CreateEvent extends React.Component {
     });
 
     await this.props.setStartDateGlobal(date);
+    console.log("start date", this.props.setStartDateGlobal);
   };
 
   handleEndDate = async date => {
@@ -47,12 +47,13 @@ class CreateEvent extends React.Component {
     });
 
     await this.props.setEndDateGlobal(date);
+    console.log("end date", this.props.setEndDateGlobal);
   };
 
   handleDuration = async e => {
     let duration = e.target.value;
 
-    await this.props.setDurationGlobal(parseInt(duration));
+    await this.props.setDurationGlobal(duration);
   };
 
   createEvent = async e => {
@@ -68,8 +69,8 @@ class CreateEvent extends React.Component {
       {
         category: self.props.category,
         event_name: self.props.eventName,
-        start_date_parameter: self.state.startDate,
-        end_date_parameter: self.state.endDate,
+        start_date_parameter: self.convert(self.props.startDate),
+        end_date_parameter: self.convert(self.props.endDate),
         duration: self.props.duration
       },
       configCreate
@@ -77,7 +78,7 @@ class CreateEvent extends React.Component {
 
     let configInvite;
 
-    this.props.participants.map(async participant => {
+    await this.props.participants.map(async participant => {
       configInvite = {
         url: this.props.baseUrl + "invitations",
         method: "post",
@@ -89,7 +90,7 @@ class CreateEvent extends React.Component {
         }
       };
 
-      let response = await Axios(configInvite);
+      let response = await axios(configInvite);
       console.log(response.data);
     });
 
