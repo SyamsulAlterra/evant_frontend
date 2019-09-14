@@ -57,7 +57,7 @@ class Login extends React.Component {
         self.props.history.push("/home");
         Toast.fire({
           type: "success",
-          title: "Welcome" + localStorage.getItem("fullname") + "!"
+          title: "Welcome " + localStorage.getItem("fullname") + "!"
         });
       })
       .catch(error => {
