@@ -19,5 +19,12 @@ export const actions = Store => ({
   },
   clearParticipantsOnGlobal: () => {
     return { participants: [] };
+  },
+  removeParticipantOnGlobal: (state, input) => {
+    let result = state.participants.filter(participant => {
+      return participant !== input;
+    });
+
+    return { participants: result };
   }
 });

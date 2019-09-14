@@ -7,7 +7,8 @@ import FriendsCard from "../components/FriendsCard";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as moment from "moment";
-
+import Header from "../components/Header";
+import KickFriend from "../components/KickFriend";
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -87,7 +88,6 @@ class CreateEvent extends React.Component {
       });
   };
 
-
   cancelEvent = async () => {
     await this.props.clearParticipantsOnGlobal();
     this.props.history.push("/home");
@@ -115,96 +115,104 @@ class CreateEvent extends React.Component {
     return [date[2], months[date[1]], date[3]].join("/");
   }
 
-
   render() {
     return (
       <div className="createEvent-content">
-        <h1 className="text-center">CREATE EVENT PAGE</h1>
-        <div className="container mobileView">
-          <div className="row justify-content-center mb-3">
-            <div className="event-name col-8 text-center">
-              <label for="exampleFormControlSelect1">Event Name</label>
-              <br />
-              <input
-                type="text"
-                placeholder="event name"
-                onChange={this.handleEventName}
-              />
+        <Header></Header>
+        <div className="border container my-3 p-3 mobileView">
+          <h3 className="text-center">CREATE EVENT</h3>
+          <div className="">
+            <div className="row justify-content-center mb-3">
+              <div className="event-name col-8 text-center">
+                <label for="exampleFormControlSelect1">Event Name</label>
+                <br />
+                <input
+                  type="text"
+                  placeholder="event name"
+                  onChange={this.handleEventName}
+                />
+              </div>
             </div>
-          </div>
-          <div className="row justify-content-center mb-3">
-            <div className="category-select col-8 text-center">
-              <label for="category">Select Category</label>
-              <span>
-                <select
-                  className="form-control"
-                  id="category"
-                  onChange={this.handleCategory}
-                >
-                  <option selected value="vacation">
-                    Holiday
-                  </option>
-                  <option value="eat">Eat Out</option>
-                  <option value="hiking">Hiking</option>
-                </select>
-              </span>
+            <div className="row justify-content-center mb-3">
+              <div className="category-select col-8 text-center">
+                <label for="category">Select Category</label>
+                <span>
+                  <select
+                    className="form-control"
+                    id="category"
+                    onChange={this.handleCategory}
+                  >
+                    <option selected value="vacation">
+                      Holiday
+                    </option>
+                    <option value="eat">Eat Out</option>
+                    <option value="hiking">Hiking</option>
+                  </select>
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="search-user col-8 text-center">
-              <input type="text" placeholder="search"></input>
+            <div className="row justify-content-center">
+              <div className="search-user col-8 text-center">
+                <input type="text" placeholder="search"></input>
+              </div>
+              <Link to="/invite" className="button-add col-4 text-center">
+                <button className="btn m-1">invite user</button>
+              </Link>
             </div>
-            <Link to="/invite" className="button-add col-4 text-center">
-              <button className="btn m-1">invite user</button>
-            </Link>
-          </div>
-          <div className="row justify-content-center">
-            {this.props.participants.map(value => {
-              return (
-                <div className="col-12 text-center">
-                  <FriendsCard user={value}></FriendsCard>
-                  <br />
-                </div>
-              );
-            })}
-          </div>
-          <div className="row startDate-section justify-content-center">
-            <div className="col-12 text-center">
-              Start Date <br />
-              <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleStartDate}
-                dateFormat="dd/MM/yyyy"
-              />
+            <div className="row justify-content-center">
+              {this.props.participants.map(value => {
+                return (
+                  <div className="col-12 text-center">
+                    <KickFriend className="m-0" user={value}></KickFriend>
+                    <br />
+                  </div>
+                );
+              })}
             </div>
-          </div>
-          <div className="row startDate-section justify-content-center">
-            <div className="col-12 text-center">
-              End Date <br />
-              <DatePicker
-                selected={this.state.endDate}
-                onChange={this.handleEndDate}
-                dateFormat="dd/MM/yyyy"
-              />
+            <div className="row startDate-section justify-content-center">
+              <div className="col-12 text-center">
+                Start Date <br />
+                <DatePicker
+                  selected={this.state.startDate}
+                  onChange={this.handleStartDate}
+                  dateFormat="dd/MM/yyyy"
+                />
+              </div>
             </div>
-          </div>
-          <div className="row duration justify-content-center">
-            <div className="col-12 text-center">Duration</div>
-            <div className="col-12 text-center">
-              <input
-                type="text"
-                placeholder="duration"
-                onChange={this.handleDuration}
-              />
+            <div className="row startDate-section justify-content-center">
+              <div className="col-12 text-center">
+                End Date <br />
+                <DatePicker
+                  selected={this.state.endDate}
+                  onChange={this.handleEndDate}
+                  dateFormat="dd/MM/yyyy"
+                />
+              </div>
             </div>
-          </div>
-          <div className="row justify-content-center">
-            <button className="btn btn-success m-1" onClick={this.cancelEvent}>
-              cancel
-            </button>
-            <button className="btn btn-success m-1" onClick={this.createEvent}>
-              create
-            </button>
+            <div className="row duration justify-content-center">
+              <div className="col-12 text-center">Duration</div>
+              <div className="col-12 text-center">
+                <input
+                  type="text"
+                  placeholder="duration"
+                  onChange={this.handleDuration}
+                />
+              </div>
+            </div>
+            <div className="row justify-content-center">
+              <button
+                className="btn btn-success m-1"
+                onClick={this.cancelEvent}
+              >
+                cancel
+              </button>
+              <button
+                className="btn btn-success m-1"
+                onClick={this.createEvent}
+              >
+                create
+              </button>
+            </div>
           </div>
         </div>
       </div>
