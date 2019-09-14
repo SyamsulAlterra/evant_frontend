@@ -1,6 +1,7 @@
 import React from "react";
 import avatar from "../images/avatar.png";
 import crown from "../images/crown.png";
+import check from "../images/check.png";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
@@ -63,7 +64,7 @@ class ParticipantCard extends React.Component {
                     </div>
                 </div>)
         } else {
-            if (this.state.userPreference === null) {
+            if (this.state.userPreference === "null") {
                 return (
                     <div className="invitationCard">
                         <div class="card my-2 centering">
@@ -91,7 +92,7 @@ class ParticipantCard extends React.Component {
                     <div className="invitationCard">
                         <div class="card my-2 centering">
                             <div class="card-body p-2">
-                                <div className='container bg-success'>
+                                <div className='container'>
                                     <div class="row">
                                         <div className="col-2 p-0">
                                             <img alt="" src={avatar} className="m-1 avatar"></img>
@@ -101,6 +102,7 @@ class ParticipantCard extends React.Component {
                                             <p class="m-0 text-left">@{this.props.user.username}</p>
                                         </div>
                                         <div className="col-4 p-0">
+                                            <img alt="" src={check} className="m-1 avatar"></img>
                                         </div>
                                     </div>
 
