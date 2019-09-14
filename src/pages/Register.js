@@ -46,9 +46,10 @@ class Register extends React.Component {
     this.setState({ confirmPassword: inputConfirmPassword });
   };
 
-  handlePhone = e => {
+  handlePhone = async e => {
     let inputPhone = e.target.value;
-    this.setState({ phone: inputPhone });
+    await this.setState({ phone: inputPhone });
+    console.log(typeof this.state.phone);
   };
 
   handleAddress = e => {
@@ -67,6 +68,7 @@ class Register extends React.Component {
   };
 
   handleClick = async () => {
+    const number = /^[0-9]+$/;
     if (this.state.name === "") {
       Swal.fire("Error", "Please fill your Full Name", "warning");
       return false;
@@ -95,7 +97,11 @@ class Register extends React.Component {
       Swal.fire("Error", "Please fill your Phone Number", "warning");
       return false;
     }
-    if (typeof this.state.phone !== Number) {
+    if (
+      !this.state.phone.match(number) ||
+      this.state.phone.length > 13 ||
+      this.state.phone.length < 10
+    ) {
       Swal.fire("Error", "Please fill a valid phone number", "warning");
       return false;
     }
@@ -117,7 +123,7 @@ class Register extends React.Component {
         gender: this.state.gender,
         fullname: this.state.name,
         address: this.state.address,
-        phone: this.state.phone
+        phone: this.state.phone.toString()
       }
     };
 
