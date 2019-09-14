@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
-import FriendsCard from "../components/FriendsCard";
+import searchFriends from "../images/searchFriends.png";
 import ParticipantCard from "../components/ParticipantCard";
 
 class EventDetails extends React.Component {
@@ -69,30 +69,7 @@ class EventDetails extends React.Component {
       <div className="eventDetailContent">
         <div className="border container my-3 p-3 mobileView">
           <h1 className="text-center">{this.state.event.event_name}</h1>
-          <h6 className="text-center m-0">creator: $creator</h6>
-          <div className="row justify-content-center">
-            <div className="search-user col-8 text-center">
-              <input type="text" placeholder="search" className='my-3'></input>
-            </div>
-          </div>
-          <div className="participant border border-secondary p-3">
-            {this.state.participants.map((value, index) => {
-              return (
-                <ParticipantCard user={value}></ParticipantCard>
-                // <div className="container my-3">
-                //   <div className="row justify-content-center">
-                //     <div className="col-8 border">
-                //       <div className="row">
-                //         <div className = "col-4"> 
-                //           {value.fullname}({value.username})
-                //       </div>
-                //       </div>
-                //     </div>
-                //   </div>
-                // </div>
-              );
-            })}
-          </div>
+          <h6 className="text-center m-0">creator: {this.state.event.creator_username}</h6>
           <div className="category my-3">
             <h6 className="text-center">Category :{this.state.event.category}</h6>
           </div>
@@ -128,8 +105,39 @@ class EventDetails extends React.Component {
               </Link>
             </div >
           </div >
+          <div className="row justify-content-center">
+            <div className="search-user text-center">
+              <input
+                type="text"
+                placeholder="search by username"
+                className="text-center my-3"
+              ></input>
+              <img className="searchFriends mx-2" alt="" src={searchFriends}></img>
+            </div>
+          </div>
+          <div className="participant border border-secondary p-3">
+            {this.state.participants.map((value, index) => {
+              console.log(value)
+              return (
+
+                <ParticipantCard user={value}></ParticipantCard>
+                // <div className="container my-3">
+                //   <div className="row justify-content-center">
+                //     <div className="col-8 border">
+                //       <div className="row">
+                //         <div className = "col-4"> 
+                //           {value.fullname}({value.username})
+                //       </div>
+                //       </div>
+                //     </div>
+                //   </div>
+                // </div>
+              );
+            })}
+          </div>
+
         </div>
-      </div>
+      </div >
     );
   }
 }
