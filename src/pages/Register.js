@@ -4,6 +4,7 @@ import { connect } from "unistore/react";
 import axios from "axios";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
+import Swal from "sweetalert2";
 
 class Register extends React.Component {
   constructor(props) {
@@ -66,7 +67,46 @@ class Register extends React.Component {
   };
 
   handleClick = async () => {
-    // console.log(this.state);
+    if (this.state.name === "") {
+      Swal.fire("Error", "Please fill your Full Name", "warning");
+      return false;
+    }
+    if (this.state.username === "") {
+      Swal.fire("Error", "Please fill your Username", "warning");
+      return false;
+    }
+    if (this.state.email === "") {
+      Swal.fire("Error", "Please fill your email", "warning");
+      return false;
+    }
+    if (this.state.password === "") {
+      Swal.fire("Error", "Please fill your password", "warning");
+      return false;
+    }
+    if (this.state.confirmPassword !== this.state.password) {
+      Swal.fire(
+        "Error",
+        "Your passwords doesn't match, please re-check",
+        "warning"
+      );
+      return false;
+    }
+    if (this.state.phone === "") {
+      Swal.fire("Error", "Please fill your Phone Number", "warning");
+      return false;
+    }
+    if (typeof this.state.phone !== Number) {
+      Swal.fire("Error", "Please fill a valid phone number", "warning");
+      return false;
+    }
+    if (this.state.address === "") {
+      Swal.fire("Error", "Please fill your address", "warning");
+      return false;
+    }
+    if (this.state.gender === "") {
+      Swal.fire("Error", "Please choose a gender", "warning");
+      return false;
+    }
     let config = {
       url: this.props.baseUrl + "users/register",
       method: "post",
