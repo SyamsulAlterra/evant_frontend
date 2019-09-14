@@ -84,3 +84,7 @@ table {
   width: 26px;
   height: 26px;
 }
+.participant {
+  height: 400px;
+  overflow: scroll;
+}

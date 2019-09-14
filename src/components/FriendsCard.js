@@ -1,7 +1,6 @@
 import React from "react";
 import avatar from "../images/avatar.png";
 import addFriend from "../images/addFriend.png";
-import Axios from "axios";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
@@ -11,20 +10,6 @@ class FriendsCard extends React.Component {
     console.log(input);
     this.props.setParticipantsOnGlobal(input);
     this.props.history.push("/events/create");
-    // console.log(this.props.user);
-    // let config = {
-    //   url: this.props.baseUrl + "invitations",
-    //   method: "post",
-    //   headers: {
-    //     Authorization: "Bearer " + localStorage.getItem("token")
-    //   },
-    //   data: {
-    //     invited_id: this.props.user.user_id
-    //   }
-    // };
-
-    // let response = await Axios(config);
-    // console.log(response.data);
   };
   render() {
     return (
