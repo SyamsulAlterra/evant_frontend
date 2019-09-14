@@ -75,6 +75,8 @@ class Events extends React.Component {
                       creatorName={value.creator_name}
                       eventName={value.event_name}
                       category={value.category}
+                      startDateParameter={value.start_date_parameter}
+                      endDateParameter={value.end_date_parameter}
                     />
                   </div>
                 );
@@ -112,6 +114,8 @@ class Events extends React.Component {
                       id={value.event_id}
                       eventName={value.event_name}
                       category={value.category}
+                      startDateParameter={value.start_date_parameter}
+                      endDateParameter={value.end_date_parameter}
                     />
                   </div>
                 );
