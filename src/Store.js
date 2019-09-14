@@ -9,7 +9,7 @@ export let Store = createStore({
   category: "",
   startDate: "",
   endDate: "",
-  duration: 0
+  duration: null
 });
 
 export const actions = Store => ({
