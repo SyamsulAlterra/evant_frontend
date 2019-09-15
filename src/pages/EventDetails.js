@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import searchFriends from "../images/searchFriends.png";
 import ParticipantCard from "../components/ParticipantCard";
+import { actions } from "../Store";
 
 class EventDetails extends React.Component {
   constructor(props) {
@@ -94,6 +95,36 @@ class EventDetails extends React.Component {
     console.log(putResponse.data)
   };
 
+  generateEvent = async e => {
+    e.preventDefault();
+
+    let generateDate = {
+      url: this.props.baseUrl + 'events/generate_date/' + this.props.match.params.id,
+      method: 'get',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    }
+
+    let dateResponse = await axios(generateDate)
+    console.log(dateResponse.data)
+
+    let generatePlace = {
+      url: this.props.baseUrl + 'recommendation/' + this.state.event.category + "/" + this.props.match.params.id,
+      method: 'get',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    }
+
+    let placeResponse = await axios(generatePlace)
+
+    await this.props.setPlaceOnGlobal(placeResponse.data)
+
+    console.log(placeResponse.data)
+    this.props.history.push(`/suggestion/${this.state.event.event_id}`);
+  }
+
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -136,7 +167,7 @@ class EventDetails extends React.Component {
           </div>
           <div className="row justify-content-center mb-3">
             <div className="preferenceSelect col-8 text-center">
-              <label for="preference"></label>
+              <label for="preference">Select your preference :</label>
               <span>
                 <select
                   className="form-control"
@@ -164,7 +195,7 @@ class EventDetails extends React.Component {
           <div className="row justify-content-center mb-3">
             <div className="button-add col-8 text-center">
               <Link to={`/suggestion/${this.state.event.event_id}`}>
-                <button className="btn btn-primary m-1">
+                <button className="btn btn-primary m-1" onClick={this.generateEvent}>
                   Suggest Our Event
                 </button>
               </Link>
@@ -197,4 +228,4 @@ class EventDetails extends React.Component {
   }
 }
 
-export default connect("baseUrl, eventName")(EventDetails);
+export default connect("baseUrl, place", actions)(withRouter(EventDetails));

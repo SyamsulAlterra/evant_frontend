@@ -90,18 +90,14 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="profile">
-        <div className="container mobileView">
+        <div className="container mobileView animated fadeIn">
           <div className="row border shadow my-4">
             <div className="col text-center">
               <div className="fullname">
                 <h3 className="my-5">{localStorage.getItem("fullname")}</h3>
               </div>
-              <div className="">
-                <img
-                  src={fotoProfil}
-                  className="profileImage my-3"
-                  alt=""
-                ></img>
+              <div className="profil-avatar mt-3 mb-5">
+                <img src={fotoProfil} className="profileImage" alt=""></img>
               </div>
               <div className="p-0">
                 <div className="username mb-3">
