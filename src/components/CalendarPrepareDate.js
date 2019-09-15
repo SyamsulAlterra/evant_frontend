@@ -39,6 +39,32 @@ class CalendarPrepareDate extends React.Component {
     };
   }
 
+  formatDate = date => {
+    const dateDictionary = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    if (date === undefined) {
+      return "";
+    } else if (date === null) {
+      return "";
+    }
+    let d = date.slice(0, 2);
+    let m = parseInt(date.slice(3, 5));
+    let y = date.slice(6, 10);
+    return `${dateDictionary[m - 1]} ${d}, ${y}`;
+  };
+
   twoDigitString = number => {
     if (number < 10) {
       return `0${number}`;
@@ -170,13 +196,14 @@ class CalendarPrepareDate extends React.Component {
     return (
       <div className="CalendarPrepareDate container mobileView p-0 mt-0">
         <div className="row justify-content-center">
-          <div className="col-6">
+          <div className="col-8">
             {" "}
             <br></br>
-            <h6>Your Available Date on</h6>
-            <h6>
-              {this.state.event.start_date_parameter} -
-              {this.state.event.end_date_parameter}
+            <h6 className="text-center">Your Available Date on</h6>
+            <h6 className="text-center">
+              {`${this.formatDate(
+                this.state.event.start_date_parameter
+              )} - ${this.formatDate(this.state.event.end_date_parameter)}`}
             </h6>
           </div>
         </div>

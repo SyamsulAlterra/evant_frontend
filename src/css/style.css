@@ -102,7 +102,6 @@ table {
   height: 40px;
 }
 
-
 .header-style {
   /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
   -moz-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
@@ -111,7 +110,7 @@ table {
 
 .header-style h4 {
   font-family: "Roboto", sans-serif;
-
+}
 .home-evant {
   color: black;
   font-weight: bold;
