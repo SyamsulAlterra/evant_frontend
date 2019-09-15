@@ -138,7 +138,7 @@ table {
   overflow: scroll;
 }
 .venue {
-  width: 100px;
+  width: 200px;
 }
 .places {
   height: 300px;
@@ -175,4 +175,7 @@ table {
 }
 select.form-control:not([size]):not([multiple]) {
   height: 25px;
+.suggestion {
+  width: 200px;
+
 }

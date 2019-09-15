@@ -5,6 +5,7 @@ export let Store = createStore({
   availableDates: ["dummy"],
   invitations: [],
   participants: [],
+  place: [],
   eventName: "",
   category: "",
   startDate: "",
@@ -60,5 +61,8 @@ export const actions = Store => ({
       endDate: "",
       duration: null
     };
+  },
+  setPlaceOnGlobal: (state, input) => {
+    return { place: input };
   }
 });
