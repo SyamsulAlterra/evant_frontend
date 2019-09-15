@@ -65,7 +65,7 @@ class Events extends React.Component {
                 id="collapseOne"
                 className="collapse"
                 aria-labelledby="headingOne"
-                data-parent="#accordionExample1"
+                data-parent="#accordionExample"
               >
                 {this.state.listEvent.map(value => {
                   return (
