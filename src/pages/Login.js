@@ -4,6 +4,8 @@ import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import GoogleButton from "react-google-button";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 import homeLogo from "../images/e.png";
 
 class Login extends React.Component {
@@ -15,6 +17,37 @@ class Login extends React.Component {
       display: false
     };
   }
+
+  responseGoogle = async response => {
+    console.log(response);
+    const req = {
+      method: "post",
+      url: this.props.baseUrl + "users/google_login",
+      headers: {},
+      data: {
+        email: response.profileObj.email,
+        token_google: response.tokenId
+      }
+    };
+
+    const self = this;
+    await axios(req)
+      .then(function(response) {
+        console.log("login as", response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_id", response.data.user["user_id"]);
+        localStorage.setItem("address", response.data.user["address"]);
+        localStorage.setItem("email", response.data.user["email"]);
+        localStorage.setItem("fullname", response.data.user["fullname"]);
+        localStorage.setItem("gender", response.data.user["gender"]);
+        localStorage.setItem("phone", response.data.user["phone"]);
+        localStorage.setItem("username", response.data.user["username"]);
+        self.props.history.push("/home");
+      })
+      .catch(function(error) {
+        console.log("ERROR", error);
+      });
+  };
 
   handleUsername = e => {
     let inputUsername = e.target.value;
@@ -124,6 +157,31 @@ class Login extends React.Component {
                       Don't have an acoount? click here to create an account
                     </small>
                   </Link>
+                </div>
+              </div>
+              <div className="row no-gutters">
+                <div className="col-auto">
+                  <GoogleLogin
+                    clientId="47584810358-62nmr7avsvoep7lagucvlb9hnj39h8jj.apps.googleusercontent.com"
+                    render={renderProps => (
+                      <div
+                        class="g-signin2"
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        This is my custom Google button
+                      </div>
+                    )}
+                    buttonText="Login"
+                    onSuccess={this.responseGoogle}
+                    onFailure={this.responseGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                  <GoogleLogout
+                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                    buttonText="Logout"
+                    onLogoutSuccess={this.logOut}
+                  ></GoogleLogout>
                 </div>
               </div>
             </div>
