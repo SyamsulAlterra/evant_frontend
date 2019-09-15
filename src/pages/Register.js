@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../components/Button";
 import { connect } from "unistore/react";
 import axios from "axios";
 import { actions } from "../Store";
@@ -160,7 +159,7 @@ class Register extends React.Component {
         <div className="container register mobileView">
           <div className="row justify-content-center">
             <div className="col text-center">
-              <div className="mt-5">
+              <div className="my-5">
                 <img
                   src={homeLogo}
                   alt=""
@@ -168,9 +167,12 @@ class Register extends React.Component {
                   width="75px"
                   height="75px"
                 />
-                <h1 className="underline mb-0 animated fadeInDownBig">Evant</h1>
-                <p className="mt-0 p-0 mb-5 animated fadeInDownBig">
-                  Decide When, Where, Who
+                <h1 className="underline mb-0 animated fadeInDownBig delay-1s register-evant">
+                  Evant
+                </h1>
+                <hr className="animated fadeIn shadow" />
+                <p className="mt-0 p-0 mb-5 animated fadeInDownBig delay-1s">
+                  Decide When, Where, and Who
                 </p>
                 <div className="col-12">
                   <form

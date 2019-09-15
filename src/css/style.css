@@ -119,6 +119,10 @@ table {
   background-color: black;
   color: white;
 }
+.register-evant {
+  font-weight: bold;
+  color: black;
+}
 .display-enter {
   opacity: 0;
 }
