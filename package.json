@@ -16,6 +16,7 @@
     "react-datepicker": "^2.9.6",
     "react-dom": "^16.9.0",
     "react-event-calendar": "^0.3.0",
+    "react-reveal": "^1.2.2",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
@@ -24,7 +25,7 @@
     "unistore": "^3.4.1"
   },
   "scripts": {
-    "start": "PORT=4000 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

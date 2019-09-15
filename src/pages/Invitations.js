@@ -9,7 +9,7 @@ class Invitations extends React.Component {
   render() {
     if (this.props.invitations.length < 1) {
       return (
-        <div className="Invitations">
+        <div className="Invitations animated fadeIn">
           <Header></Header>
           <h3 className="text-center">
             You don't have any event invitation(s) yet
