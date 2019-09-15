@@ -4,6 +4,8 @@ import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import GoogleButton from "react-google-button";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 import homeLogo from "../images/e.png";
 
 class Login extends React.Component {
@@ -15,6 +17,37 @@ class Login extends React.Component {
       display: false
     };
   }
+
+  responseGoogle = async response => {
+    console.log(response);
+    const req = {
+      method: "post",
+      url: this.props.baseUrl + "users/google_login",
+      headers: {},
+      data: {
+        email: response.profileObj.email,
+        token_google: response.tokenId
+      }
+    };
+
+    const self = this;
+    await axios(req)
+      .then(function(response) {
+        console.log("login as", response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_id", response.data.user["user_id"]);
+        localStorage.setItem("address", response.data.user["address"]);
+        localStorage.setItem("email", response.data.user["email"]);
+        localStorage.setItem("fullname", response.data.user["fullname"]);
+        localStorage.setItem("gender", response.data.user["gender"]);
+        localStorage.setItem("phone", response.data.user["phone"]);
+        localStorage.setItem("username", response.data.user["username"]);
+        self.props.history.push("/home");
+      })
+      .catch(function(error) {
+        console.log("ERROR", error);
+      });
+  };
 
   handleUsername = e => {
     let inputUsername = e.target.value;
@@ -113,17 +146,42 @@ class Login extends React.Component {
               <div className="row no-gutters justify-content-center animated fadeIn">
                 <div className="col-auto">
                   <button
-                    className="btn login-button my-2 text-center"
+                    className="btn btn-outline-dark login-button my-2 text-center"
                     onClick={this.handleClick}
                   >
                     Login
                   </button>
                   <br />
-                  <Link to="/register">
-                    <small className="register-text">
-                      Don't have an acoount? click here to create an account
-                    </small>
-                  </Link>
+                  <div className="row justify-content-center mt-2">
+                    <div className="col text-center">
+                      <GoogleLogin
+                        clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                        render={renderProps => (
+                          <GoogleButton
+                            type="light"
+                            label="Sign In with Google"
+                            data-onsuccess="onSignIn"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                          />
+                        )}
+                        buttonText="Login"
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.responseGoogle}
+                        cookiePolicy={"single_host_origin"}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row justify-content-center mt-3">
+                  <div className="col text-center">
+                    <Link to="/register">
+                      <small className="register-text">
+                        Don't have an acoount? click here to create an account
+                      </small>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

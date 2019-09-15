@@ -178,8 +178,8 @@ table {
   width: 1000px;
 }
 
-.select.form-control:not([size]):not([multiple]) {
-  height: 25px;
+select.form-control:not([size]):not([multiple]) {
+  height: 34px;
 }
 
 .suggestion {
