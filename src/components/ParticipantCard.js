@@ -36,97 +36,84 @@ class ParticipantCard extends React.Component {
             return preference.user_id === this.props.user.id_participant
         })
         this.setState({ userPreference: checkPreference })
-      
-  render() {
-    if (this.props.user.status === "creator") {
-      return (
-        <div className="invitationCard">
-          <div class="card my-2 centering">
-            <div class="card-body p-2">
-              <div className="container">
-                <div class="row">
-                  <div className="col-2 p-0">
-                    <img alt="" src={avatar} className="m-1 avatar"></img>
-                  </div>
-                  <div className="col-6 p-0">
-                    <p class="m-0 text-left">{this.props.user.fullname}</p>
-                    <p class="m-0 text-left">@{this.props.user.username}</p>
-                  </div>
-                  <div className="col-4 p-0">
-                    <img alt="" src={crown} className="m-1 avatar"></img>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      if (this.state.userPreference === "null") {
-        return (
-          <div className="invitationCard">
-            <div class="card my-2 centering">
-              <div class="card-body p-2">
-                <div className="container">
-                  <div class="row">
-                    <div className="col-2 p-0">
-                      <img alt="" src={avatar} className="m-1 avatar"></img>
+
+        render() {
+            if (this.props.user.status === "creator") {
+                return (
+                    <div className="invitationCard">
+                        <div class="card my-2 centering">
+                            <div class="card-body p-2">
+                                <div className="container">
+                                    <div class="row">
+                                        <div className="col-2 p-0">
+                                            <img alt="" src={avatar} className="m-1 avatar"></img>
+                                        </div>
+                                        <div className="col-6 p-0">
+                                            <p class="m-0 text-left">{this.props.user.fullname}</p>
+                                            <p class="m-0 text-left">@{this.props.user.username}</p>
+                                        </div>
+                                        <div className="col-4 p-0">
+                                            <img alt="" src={crown} className="m-1 avatar"></img>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>)
-        } else {
-            if (this.state.userPreference === []) {
-                return (
-                    <div className="invitationCard">
-                        <div class="card my-2 centering">
-                            <div class="card-body p-2">
-                                <div className='container'>
-                                    <div class="row">
-                                        <div className="col-2 p-0">
-                                            <img alt="" src={avatar} className="m-1 avatar"></img>
+                );
+            } else {
+                if (this.state.userPreference === []) {
+                    return (
+                        <div className="invitationCard">
+                            <div class="card my-2 centering">
+                                <div class="card-body p-2">
+                                    <div className='container'>
+                                        <div class="row">
+                                            <div className="col-2 p-0">
+                                                <img alt="" src={avatar} className="m-1 avatar"></img>
+                                            </div>
+                                            <div className="col-6 p-0">
+                                                <p class="m-0 text-left">{this.props.user.fullname}</p>
+                                                <p class="m-0 text-left">@{this.props.user.username}</p>
+                                            </div>
+                                            <div className="col-4 p-0">
+                                            </div>
                                         </div>
-                                        <div className="col-6 p-0">
-                                            <p class="m-0 text-left">{this.props.user.fullname}</p>
-                                            <p class="m-0 text-left">@{this.props.user.username}</p>
-                                        </div>
-                                        <div className="col-4 p-0">
-                                        </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>)
-            }
-            else {
-                return (
-                    <div className="invitationCard">
-                        <div class="card my-2 centering">
-                            <div class="card-body p-2">
-                                <div className='container'>
-                                    <div class="row">
-                                        <div className="col-2 p-0">
-                                            <img alt="" src={avatar} className="m-1 avatar"></img>
+                        </div>)
+                }
+                else {
+                    return (
+                        <div className="invitationCard">
+                            <div class="card my-2 centering">
+                                <div class="card-body p-2">
+                                    <div className='container'>
+                                        <div class="row">
+                                            <div className="col-2 p-0">
+                                                <img alt="" src={avatar} className="m-1 avatar"></img>
+                                            </div>
+                                            <div className="col-6 p-0">
+                                                <p class="m-0 text-left">{this.props.user.fullname}</p>
+                                                <p class="m-0 text-left">@{this.props.user.username}</p>
+                                            </div>
+                                            <div className="col-4 p-0">
+                                                <img alt="" src={check} className="m-1 avatar"></img>
+                                            </div>
                                         </div>
-                                        <div className="col-6 p-0">
-                                            <p class="m-0 text-left">{this.props.user.fullname}</p>
-                                            <p class="m-0 text-left">@{this.props.user.username}</p>
-                                        </div>
-                                        <div className="col-4 p-0">
-                                            <img alt="" src={check} className="m-1 avatar"></img>
-                                        </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>)
+                        </div>)
+                }
             }
         }
     }
-  }
 }
-
 export default connect(
-  "baseUrl",
-  actions
+    "baseUrl",
+    actions
 )(withRouter(ParticipantCard));
