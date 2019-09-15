@@ -32,9 +32,9 @@ class ParticipantCard extends React.Component {
             });
 
         let checkPreference = this.state.preferences.filter(preference => {
-            return preference.checkPreference === this.props.user.id_participant
+            return preference.user_id === this.props.user.id_participant
         })
-        this.setState({ userPreference: checkPreference[0].preference })
+        this.setState({ userPreference: checkPreference })
 
     };
     render(
@@ -64,7 +64,7 @@ class ParticipantCard extends React.Component {
                     </div>
                 </div>)
         } else {
-            if (this.state.userPreference === "null") {
+            if (this.state.userPreference === []) {
                 return (
                     <div className="invitationCard">
                         <div class="card my-2 centering">
