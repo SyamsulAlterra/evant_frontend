@@ -177,9 +177,11 @@ table {
 .size-select {
   width: 1000px;
 }
-select.form-control:not([size]):not([multiple]) {
+
+.select.form-control:not([size]):not([multiple]) {
   height: 25px;
+}
+
 .suggestion {
   width: 200px;
-
 }
