@@ -4,6 +4,7 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import CalendarDetail from "./CalendarDetail";
 import CalendarTitle from "./CalendarTitle";
+import "bootstrap/dist/js/bootstrap.bundle";
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -121,7 +122,7 @@ class Calendar extends React.Component {
         <div className="text-right mx-5">
           <img src="" alt=""></img>
           <select
-            className="button centering p-0 mx-1 my-3 optionMonth"
+            className="button centering p-0 mx-1 my-3 optionMonth form-control size-select btn dropdown-toggle btn-outline-info"
             onChange={this.handleMonth}
           >
             {this.state.monthDictionary.map((month, i) => {
@@ -137,7 +138,7 @@ class Calendar extends React.Component {
             })}
           </select>
           <select
-            className="button centering p-0 mx-1 my-3"
+            className="button centering p-0 mx-1 my-3 form-control size-select btn-outline-info btn dropdown-toggle"
             onChange={this.handleYear}
           >
             {yearChoices.map(year => {
