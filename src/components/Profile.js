@@ -1,6 +1,11 @@
 import React from "react";
 import fotoProfil from "../images/profile.png";
 import editIcon from "../images/edit.png";
+import username from "../images/username.png";
+import address from "../images/address.png";
+import email from "../images/mail.png";
+import phone from "../images/phone.png";
+import gender from "../images/gender.png";
 import axios from "axios";
 import { connect } from "unistore/react";
 
@@ -100,8 +105,14 @@ class Profile extends React.Component {
                 <div className="username mb-3">
                   <div className="row justify-content-center">
                     <div className="col-7">
+                      <img
+                        src={username}
+                        height="20px"
+                        width="20px"
+                        className="float-left"
+                      />
                       <h6 className="m-0">
-                        username: {localStorage.getItem("username")}
+                        {localStorage.getItem("username")}
                       </h6>
                     </div>
                     <div className="col-5">
@@ -121,8 +132,14 @@ class Profile extends React.Component {
                 <div className="address mb-3">
                   <div className="row justify-content-center">
                     <div className="col-7">
+                      <img
+                        src={address}
+                        height="20px"
+                        width="20px"
+                        className="float-left"
+                      />
                       <h6 className="m-0">
-                        address: {localStorage.getItem("address")}
+                        &nbsp;{localStorage.getItem("address")}
                       </h6>
                     </div>
                     <div className="col-5">
@@ -142,8 +159,14 @@ class Profile extends React.Component {
                 <div className="email mb-3">
                   <div className="row justify-content-center">
                     <div className="col-7">
+                      <img
+                        src={email}
+                        height="20px"
+                        width="20px"
+                        className="float-left"
+                      />
                       <h6 className="m-0">
-                        email: {localStorage.getItem("email")}
+                        &nbsp;{localStorage.getItem("email")}
                       </h6>
                     </div>
                     <div className="col-5">
@@ -164,9 +187,13 @@ class Profile extends React.Component {
                 <div className="phone mb-3">
                   <div className="row justify-content-center">
                     <div className="col-7">
-                      <h6 className="m-0">
-                        phone: {localStorage.getItem("phone")}
-                      </h6>
+                      <img
+                        src={phone}
+                        height="20px"
+                        width="20px"
+                        className="float-left"
+                      />
+                      <h6 className="m-0">{localStorage.getItem("phone")}</h6>
                     </div>
                     <div className="col-5">
                       <img
@@ -183,8 +210,15 @@ class Profile extends React.Component {
                 </div>
                 <br />
                 <div className="gender">
+                  <img
+                    src={gender}
+                    height="20px"
+                    width="20px"
+                    className="float-left"
+                  />
                   <span className="m-0">
-                    gender:{" "}
+                    {" "}
+                    &nbsp;
                     {localStorage.getItem("gender") === "true"
                       ? "male"
                       : "female"}
