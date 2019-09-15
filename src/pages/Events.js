@@ -61,28 +61,26 @@ class Events extends React.Component {
                   </button>
                 </h2>
               </div>
-
-              <div
-                id="collapseOne"
-                className="collapse"
-                aria-labelledby="headingOne"
-                data-parent="#accordionExample"
-              >
-                {this.state.listEvent.map(value => {
-                  return (
-                    <div className="border">
-                      <CollapseEvent
-                        id={value.event_id}
-                        creatorName={value.creator_name}
-                        eventName={value.event_name}
-                        category={value.category}
-                        startDateParameter={value.start_date_parameter}
-                        endDateParameter={value.end_date_parameter}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+            <div
+              id="collapseOne"
+              className="collapse"
+              aria-labelledby="headingOne"
+              data-parent="#accordionExample1"
+            >
+              {this.state.listEvent.map(value => {
+                return (
+                  <div className="border">
+                    <CollapseEvent
+                      id={value.event_id}
+                      creatorName={value.creator_name}
+                      eventName={value.event_name}
+                      category={value.category}
+                      startDateParameter={value.start_date_parameter}
+                      endDateParameter={value.end_date_parameter}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="accordion pastEvent" id="accordionExample">

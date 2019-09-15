@@ -176,3 +176,7 @@ select.form-control:not([size]):not([multiple]) {
 .suggestion {
   width: 200px;
 }
+.h-50 {
+  height: 50px !important;
+}
+

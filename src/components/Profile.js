@@ -96,8 +96,12 @@ class Profile extends React.Component {
               <div className="fullname">
                 <h3 className="my-5">{localStorage.getItem("fullname")}</h3>
               </div>
-              <div className="profil-avatar mt-3 mb-5">
-                <img src={fotoProfil} className="profileImage" alt=""></img>
+              <div className="">
+                <img
+                  src={fotoProfil}
+                  className="profileImage my-3"
+                  alt=""
+                ></img>
               </div>
               <div className="p-0">
                 <div className="username mb-3">
