@@ -4,6 +4,7 @@ import { actions } from "../Store";
 import CalendarGrid from "./CalendarGrid";
 import CalendarTitle from "./CalendarTitle";
 import { Link, withRouter } from "react-router-dom";
+import "bootstrap/dist/js/bootstrap.bundle";
 import Axios from "axios";
 
 class CalendarPrepareDate extends React.Component {
@@ -192,6 +193,7 @@ class CalendarPrepareDate extends React.Component {
       weeks = [1, 2, 3, 4, 5];
     }
     const dates = [1, 2, 3, 4, 5, 6, 7];
+    console.log(this.state.year, this.state.months);
 
     return (
       <div className="CalendarPrepareDate container mobileView p-0 mt-0">
