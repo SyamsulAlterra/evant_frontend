@@ -1,0 +1,81 @@
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
+import { actions } from "../Store";
+import Axios from "axios";
+
+class InvitationCard extends React.Component {
+  declineEvent = async input => {
+    let config = {
+      url: this.props.baseUrl + "invitations/reject/" + input.toString(),
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    await Axios(config);
+    window.location.reload();
+  };
+
+  acceptEvent = async input => {
+    let config = {
+      url: this.props.baseUrl + "invitations/accept/" + input.toString(),
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/events");
+  };
+
+  render() {
+    return (
+      <div className="container mobileView invitationCard">
+        <div class="row m-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="card-title">
+                  You have been invited to "{this.props.invitation.event_name}"
+                </h6>
+                <p class="card-text">
+                  invited by: @{this.props.invitation.username_creator}{" "}
+                  <br></br>
+                  duration: {this.props.invitation.event_duration} days{" "}
+                  <br></br>
+                  category: {this.props.invitation.event_category} <br></br>
+                </p>
+                <div className="text-right">
+                  <Link
+                    className="btn btn-primary m-2 text-right"
+                    onClick={() =>
+                      this.acceptEvent(this.props.invitation.event_id)
+                    }
+                  >
+                    Accept
+                  </Link>
+                  <Link
+                    className="btn btn-primary m-2 text-right"
+                    onClick={() =>
+                      this.declineEvent(this.props.invitation.event_id)
+                    }
+                  >
+                    Decline
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default connect(
+  "baseUrl",
+  actions
+)(withRouter(InvitationCard));

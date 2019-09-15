@@ -1,50 +1,64 @@
 import createStore from "unistore";
 
 export let Store = createStore({
-  loginStatus: false,
-  username: "",
-  password: "",
-
-  userSignUp: "",
-  email: "",
-  passwordSignUp: "",
-  confirmPassword: "",
-
-  searchList: [],
-  searchText: "",
-  itemInBag: 0,
-  baseUrl: "https://api.syamsul.club"
+  baseUrl: "http://0.0.0.0:5000/api/",
+  availableDates: ["dummy"],
+  invitations: [],
+  participants: [],
+  eventName: "",
+  category: "",
+  startDate: "",
+  endDate: "",
+  duration: null,
+  events: [],
+  allBookedDates: []
 });
-export const actions = () => ({
-  setItemInBag(state, num) {
-    return { itemInBag: num };
-  },
-  setSearchText(state, t) {
-    return { searchText: t };
-  },
-  setSearchList(state, list) {
-    return { searchList: list };
-  },
-  setLoginStatus(state, status) {
-    return { loginStatus: status };
-  },
-  setUserName(state, name) {
-    return { username: name };
-  },
-  setPassword(state, pass) {
-    return { password: pass };
-  },
 
-  setUserSignUp(state, name) {
-    return { userSignUp: name };
+export const actions = Store => ({
+  setEventsAndBookedDatesOnGlobal: (state, events, bookedDate) => {
+    return { events: events, allBookedDates: bookedDate };
   },
-  setEmail(state, em) {
-    return { email: em };
+  setAvailableDatesOnGlobal: (state, dates) => {
+    return { availableDates: dates };
   },
-  setPasswordSignUp(state, pass) {
-    return { passwordSignUp: pass };
+  setInvitationsOnGlobal: (state, invitations) => {
+    return { invitations: invitations };
   },
-  setConfirmPassword(state, pass) {
-    return { confirmPassword: pass };
+  setParticipantsOnGlobal: (state, participants) => {
+    state.participants.push(participants);
+  },
+  clearParticipantsOnGlobal: () => {
+    return { participants: [] };
+  },
+  removeParticipantOnGlobal: (state, input) => {
+    let result = state.participants.filter(participant => {
+      return participant !== input;
+    });
+
+    return { participants: result };
+  },
+  setEventNameGlobal: (state, input) => {
+    return { eventName: input };
+  },
+  setCategoryGlobal: (state, input) => {
+    return { category: input };
+  },
+  setStartDateGlobal: (state, input) => {
+    return { startDate: input };
+  },
+  setEndDateGlobal: (state, input) => {
+    return { endDate: input };
+  },
+  setDurationGlobal: (state, input) => {
+    return { duration: input };
+  },
+  clearCreateEvent: state => {
+    return {
+      eventName: "",
+      category: "",
+      startDate: "",
+      endDate: "",
+      duration: null
+    };
   }
 });
