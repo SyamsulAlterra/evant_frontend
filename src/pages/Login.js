@@ -1,15 +1,18 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import homeLogo from "../images/e.png";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      display: false
     };
   }
 
@@ -32,11 +35,11 @@ class Login extends React.Component {
       timer: 2000
     });
     if (this.state.username === "") {
-      Swal.fire("Error", "Please fill your Username", "warning");
+      Swal.fire("Error", "Please fill in your Username", "warning");
       return false;
     }
     if (this.state.password === "") {
-      Swal.fire("Error", "Please fill your password", "warning");
+      Swal.fire("Error", "Please fill in your password", "warning");
       return false;
     }
     const self = this;
@@ -65,49 +68,68 @@ class Login extends React.Component {
       });
   };
 
-  handleRegister = () => {
-    this.props.history.push("/register");
+  componentDidMount = () => {
+    this.setState({ display: true });
   };
 
   render() {
     return (
-      <div class="container login mobileView">
-        <div class="row justify-content-center">
-          <div class="col text-center">
-            <h2 className="mt-2 mb-0 underline">Evant</h2>
-            <p className="my-0">login</p>
-            <form className="mt-2">
-              <input
-                type="text"
-                placeholder="Username"
-                className="m-2"
-                onChange={this.handleUsername}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                className="m-2"
-                onChange={this.handlePassword}
-              />
-            </form>
-            <div className="row no-gutters">
-              <div className="col-7 text-right mx-2">
-                <button
-                  className="btn m-0 registerButton"
-                  onClick={this.handleRegister}
-                >
-                  Register
-                </button>
+      <CSSTransition
+        in={this.state.display}
+        timeout={22000}
+        classNames="display"
+        unmountOnExit
+        appear
+      >
+        <div class="container login mobileView align-items-center">
+          <div class="row justify-content-center">
+            <div class="col text-center">
+              <h1 className="my-5 underline home-evant animated fadeIn">
+                Evant
+              </h1>
+              <div className="home-logo my-3">
+                <img
+                  src={homeLogo}
+                  alt=""
+                  className="text-center mt-3 mb-5 animated bounceInDown delay-1s"
+                  width="50%"
+                  height="50%"
+                />
               </div>
-              <div className="col-auto">
-                <button className="btn m-0" onClick={this.handleClick}>
-                  Login
-                </button>
+              <form className="mt-3 mb-0 animated fadeIn">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  className="m-2"
+                  onChange={this.handleUsername}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="m-2"
+                  onChange={this.handlePassword}
+                />
+              </form>
+              <div className="row no-gutters justify-content-center animated fadeIn">
+                <div className="col-auto">
+                  <button
+                    className="btn login-button my-1 text-center"
+                    onClick={this.handleClick}
+                  >
+                    Login
+                  </button>
+                  <br />
+                  <Link to="/register">
+                    <small className="register-text">
+                      Don't have an acoount? click here to create an account
+                    </small>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </CSSTransition>
     );
   }
 }
