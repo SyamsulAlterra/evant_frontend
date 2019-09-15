@@ -18,6 +18,11 @@ class Calendar extends React.Component {
       year: 2019,
       currentMonth: 9,
       currentYear: 2019,
+      startDate: null,
+      start: null,
+      end: null,
+      startYear: null,
+      endYear: null,
       monthDictionary: [
         "January",
         "February",
@@ -47,8 +52,11 @@ class Calendar extends React.Component {
 
   populateCalendar = async (month, year) => {
     //populate calendar table
-    let date = new Date(year, month - 1);
-    this.setState({ offset: date.getDay() });
+    let date = new Date(year, month - 1, 1);
+    this.setState({
+      offset: date.getDay()
+    });
+
     if (this.isLeapYear(year)) {
       await this.setState({
         dayInMonth: [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -79,10 +87,20 @@ class Calendar extends React.Component {
 
   handleYear = e => {
     let pickedYear = e.target.value;
+    //change the list of month based on year
+    this.setState({
+      monthDictionary: this.state.monthDictionary.slice(
+        this.state.prepareDateDict[pickedYear][0] - 1,
+        this.state.prepareDateDict[pickedYear][
+          this.state.prepareDateDict[pickedYear].length - 1
+        ]
+      )
+    });
     this.setState({ year: parseInt(pickedYear) });
   };
 
   componentWillMount = async () => {
+    // get event from page EventDetailParticipanta nd save in local state
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -98,6 +116,7 @@ class Calendar extends React.Component {
         console.log(error);
       });
 
+    //set the imperative parameter for generate date base on start_date_parameter, end_date_parameter
     await this.setState({
       start: parseInt(this.state.event.start_date_parameter.slice(3, 5))
     });
@@ -138,6 +157,18 @@ class Calendar extends React.Component {
 
     //set the range generate month and year in local state prepareDateDict
     await this.setState({ prepareDateDict: dates });
+    //cek this.state.month
+    console.log(this.state.month);
+
+    // change the state monthDictionary
+    await this.setState({
+      monthDictionary: this.state.monthDictionary.slice(
+        this.state.prepareDateDict[this.state.startYear][0] - 1,
+        this.state.prepareDateDict[this.state.startYear][
+          this.state.prepareDateDict[this.state.startYear].length - 1
+        ]
+      )
+    });
 
     await this.setState({ todayDate: today.getDate() });
     await this.setState({
@@ -149,7 +180,7 @@ class Calendar extends React.Component {
       currentYear: today.getFullYear()
     });
 
-    this.populateCalendar(this.state.month, this.state.year);
+    this.populateCalendar(this.state.start, this.state.startYear);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -160,6 +191,7 @@ class Calendar extends React.Component {
       this.populateCalendar(this.state.month, this.state.year);
     }
   };
+
   render() {
     let weeks;
     if (this.state.offset + this.state.totalDays > 35) {
@@ -196,11 +228,7 @@ class Calendar extends React.Component {
           >
             {this.state.monthDictionary.map((month, i) => {
               if (i + 1 === this.state.currentMonth) {
-                return (
-                  <option value={i + 1} selected="selected">
-                    {month}
-                  </option>
-                );
+                return <option value={i + 1}>{month}</option>;
               } else {
                 return <option value={i + 1}>{month}</option>;
               }
@@ -253,9 +281,9 @@ class Calendar extends React.Component {
             >
               Done
             </Link>
+            <br></br>
           </div>
         </div>
-        <br></br>
       </div>
     );
   }
