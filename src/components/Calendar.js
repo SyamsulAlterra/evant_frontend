@@ -4,6 +4,7 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import CalendarDetail from "./CalendarDetail";
 import CalendarTitle from "./CalendarTitle";
+import Axios from "axios";
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -91,7 +92,21 @@ class Calendar extends React.Component {
       currentYear: today.getFullYear()
     });
 
-    this.populateCalendar(this.state.month, this.state.year);
+    let config = {
+      url: this.props.baseUrl + "events/booked",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    let response = await Axios(config);
+    await this.props.setEventsAndBookedDatesOnGlobal(
+      response.data.booked_event,
+      response.data.all_booked_dates
+    );
+
+    await this.populateCalendar(this.state.month, this.state.year);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -169,10 +184,13 @@ class Calendar extends React.Component {
               today={this.twoDigitString(this.state.todayDate)}
               currentMonth={this.twoDigitString(this.state.currentMonth)}
               currentYear={this.state.currentYear}
-              // availableDates={this.props.availableDates}
             ></CalendarGrid>
           );
         })}
+        <div className="col-2 px-3 eventDetail mt-2 mx-5">
+          <div className="btn btn-warning"></div>
+          <p className="eventDetail">Today</p>
+        </div>
         <CalendarDetail></CalendarDetail>
       </div>
     );
@@ -180,6 +198,6 @@ class Calendar extends React.Component {
 }
 
 export default connect(
-  "totalLeapYear",
+  "totalLeapYear, events, baseUrl",
   actions
 )(Calendar);

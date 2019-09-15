@@ -9,10 +9,15 @@ export let Store = createStore({
   category: "",
   startDate: "",
   endDate: "",
-  duration: null
+  duration: null,
+  events: [],
+  allBookedDates: []
 });
 
 export const actions = Store => ({
+  setEventsAndBookedDatesOnGlobal: (state, events, bookedDate) => {
+    return { events: events, allBookedDates: bookedDate };
+  },
   setAvailableDatesOnGlobal: (state, dates) => {
     return { availableDates: dates };
   },
