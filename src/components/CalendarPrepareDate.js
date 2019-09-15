@@ -3,10 +3,10 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import CalendarGrid from "./CalendarGrid";
 import CalendarTitle from "./CalendarTitle";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, withRouter } from "react-router-dom";
+import Axios from "axios";
 
-class Calendar extends React.Component {
+class CalendarPrepareDate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +16,8 @@ class Calendar extends React.Component {
       todayDate: 0,
       month: 9,
       year: 2019,
+      months: [],
+      years: [],
       currentMonth: 9,
       currentYear: 2019,
       monthDictionary: [
@@ -83,71 +85,67 @@ class Calendar extends React.Component {
   };
 
   componentWillMount = async () => {
-    const config = {
+    let today = new Date();
+    await this.setState({ todayDate: today.getDate() });
+    await this.setState({
+      currentMonth: today.getMonth() + 1
+    });
+    await this.setState({
+      currentYear: today.getFullYear()
+    });
+
+    let config = {
+      url: this.props.baseUrl + "events/" + this.props.match.params.event_id,
+      method: "get",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-    await axios
-      .get(this.props.baseUrl + "events/" + this.props.event_id, config)
-      .then(response => {
-        this.setState({ event: response.data });
-        console.log("ini eventku", this.state.event);
-      })
-      .catch(error => {
-        console.log(error);
-      });
 
-    await this.setState({
-      start: parseInt(this.state.event.start_date_parameter.slice(3, 5))
-    });
-    await this.setState({
-      startDate: parseInt(this.state.event.start_date_parameter.slice(0, 2))
-    });
-    await this.setState({
-      month: parseInt(this.state.event.start_date_parameter.slice(3, 5))
-    });
-    await this.setState({
-      end: parseInt(this.state.event.end_date_parameter.slice(3, 5))
-    });
-    await this.setState({
-      startYear: parseInt(this.state.event.start_date_parameter.slice(6, 10))
-    });
-    await this.setState({
-      endYear: parseInt(this.state.event.end_date_parameter.slice(6, 10))
-    });
-    console.log("ini start monthku", this.state.start);
-    console.log("ini end monthku", this.state.end);
+    let response = await Axios(config);
+    await this.setState({ event: response.data });
 
-    let today = new Date();
-
-    let dates = {};
-    for (var i = this.state.startYear; i <= this.state.endYear; i++) {
-      var endMonth =
-        i != this.state.endYear ? 11 : parseInt(this.state.end) - 1;
-      var startMon =
-        i === this.state.startYear ? parseInt(this.state.start) - 1 : 0;
-      let dates_params = [];
-      for (var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j + 1) {
-        var month = j + 1;
-        var displayMonth = month < 10 ? "0" + month : month;
-        dates_params.push(parseInt(displayMonth));
+    config = {
+      url: this.props.baseUrl + "events/count",
+      method: "post",
+      data: {
+        start_date: this.state.event.start_date_parameter,
+        end_date: this.state.event.end_date_parameter
       }
-      dates[i.toString()] = dates_params;
-    }
+    };
 
-    //set the range generate month and year in local state prepareDateDict
-    await this.setState({ prepareDateDict: dates });
+    response = await Axios(config);
+    await this.setState({
+      months: response.data.month,
+      years: response.data.year,
+      month: parseInt(response.data.month[0]),
+      year: parseInt(response.data.year[0])
+    });
 
-    await this.setState({ todayDate: today.getDate() });
-    await this.setState({
-      month: today.getMonth() + 1,
-      currentMonth: today.getMonth() + 1
-    });
-    await this.setState({
-      year: today.getFullYear(),
-      currentYear: today.getFullYear()
-    });
+    config = {
+      url: this.props.baseUrl + "date",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    response = await Axios(config);
+    await this.props.setAvailableDatesOnGlobal(response.data);
+
+    config = {
+      url: this.props.baseUrl + "events/booked",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    response = await Axios(config);
+    await this.props.setEventsAndBookedDatesOnGlobal(
+      response.data.booked_event,
+      response.data.all_booked_dates
+    );
 
     this.populateCalendar(this.state.month, this.state.year);
   };
@@ -168,15 +166,9 @@ class Calendar extends React.Component {
       weeks = [1, 2, 3, 4, 5];
     }
     const dates = [1, 2, 3, 4, 5, 6, 7];
-    const totalYear = [
-      ...Array(Object.keys(this.state.prepareDateDict).length).keys()
-    ];
-    const yearChoices = totalYear.map(inc => {
-      return this.state.currentYear + inc;
-    });
 
     return (
-      <div className="Calendar container mobileView p-0 mt-0">
+      <div className="CalendarPrepareDate container mobileView p-0 mt-0">
         <div className="row justify-content-center">
           <div className="col-6">
             {" "}
@@ -194,15 +186,19 @@ class Calendar extends React.Component {
             className="button centering p-0 mx-1 my-3 optionMonth"
             onChange={this.handleMonth}
           >
-            {this.state.monthDictionary.map((month, i) => {
-              if (i + 1 === this.state.currentMonth) {
+            {this.state.months.map((month, i) => {
+              if (i === 0) {
                 return (
-                  <option value={i + 1} selected="selected">
-                    {month}
+                  <option value={parseInt(month)} selected="selected">
+                    {this.state.monthDictionary[month - 1]}
                   </option>
                 );
               } else {
-                return <option value={i + 1}>{month}</option>;
+                return (
+                  <option value={parseInt(month)}>
+                    {this.state.monthDictionary[month - 1]}
+                  </option>
+                );
               }
             })}
           </select>
@@ -210,7 +206,7 @@ class Calendar extends React.Component {
             className="button centering p-0 mx-1 my-3"
             onChange={this.handleYear}
           >
-            {yearChoices.map(year => {
+            {this.state.years.map(year => {
               return <option value={year}>{year}</option>;
             })}
           </select>
@@ -248,7 +244,6 @@ class Calendar extends React.Component {
             <Link
               to={"/participant/" + this.state.event.event_id}
               class="btn btn-outline-info"
-              href="#"
               role="button"
             >
               Done
@@ -264,4 +259,4 @@ class Calendar extends React.Component {
 export default connect(
   "totalLeapYear, baseUrl",
   actions
-)(Calendar);
+)(withRouter(CalendarPrepareDate));

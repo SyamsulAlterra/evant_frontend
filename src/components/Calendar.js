@@ -92,20 +92,6 @@ class Calendar extends React.Component {
       currentYear: today.getFullYear()
     });
 
-    let config = {
-      url: this.props.baseUrl + "events/booked",
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    let response = await Axios(config);
-    await this.props.setEventsAndBookedDatesOnGlobal(
-      response.data.booked_event,
-      response.data.all_booked_dates
-    );
-
     await this.populateCalendar(this.state.month, this.state.year);
   };
 
@@ -191,7 +177,10 @@ class Calendar extends React.Component {
           <div className="btn btn-warning"></div>
           <p className="eventDetail">Today</p>
         </div>
-        <CalendarDetail></CalendarDetail>
+        <CalendarDetail
+          selectedMonth={this.twoDigitString(this.state.month)}
+          selectedYear={this.state.year}
+        ></CalendarDetail>
       </div>
     );
   }

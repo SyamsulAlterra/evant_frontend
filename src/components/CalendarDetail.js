@@ -30,18 +30,18 @@ class CalendarDetail extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
 
-  componentDidMount = async () => {
-    let config = {
-      url: this.props.baseUrl + "events/booked",
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
+  // componentDidMount = async () => {
+  //   let config = {
+  //     url: this.props.baseUrl + "events/booked",
+  //     method: "get",
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token")
+  //     }
+  //   };
 
-    let response = await Axios(config);
-    this.setState({ events: response.data });
-  };
+  //   let response = await Axios(config);
+  //   this.setState({ events: response.data });
+  // };
 
   render() {
     return (
@@ -51,11 +51,13 @@ class CalendarDetail extends React.Component {
             <div className="col-5 px-3 eventDetail">
               <div className="btn btn-success mb-2"></div>
               {this.props.availableDates.map(data => {
-                return (
-                  <div>
-                    <p className="m-0 eventDetail">{this.formatDate(data)}</p>
-                  </div>
-                );
+                if (data.slice(3, 5) === this.props.selectedMonth) {
+                  return (
+                    <div>
+                      <p className="m-0 eventDetail">{this.formatDate(data)}</p>
+                    </div>
+                  );
+                }
               })}
             </div>
             <div className="col-7 px-3 eventDetail text-center">
