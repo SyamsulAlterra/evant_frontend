@@ -4,7 +4,6 @@ import calendar from "../images/calendar.png";
 import invitation from "../images/invitation.png";
 import profile from "../images/profile.png";
 import { actions } from "../Store";
-
 import { Link, withRouter } from "react-router-dom";
 import Axios from "axios";
 import { connect } from "unistore/react";
@@ -26,22 +25,22 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid footer bg-light text-center p-0">
+      <div className="container-fluid footer bg-light text-center p-0 fixed-bottom">
         <div className="bg-info container mobileView text-center">
           <div className="row mobileView p-0">
             <div className="col-3 bg-white text-center p-0">
               <Link to="/home">
-                <img alt="" className="my-3" src={houseIcon}></img>
+                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Home" src={houseIcon}></img>
               </Link>
             </div>
             <div className="col-3 bg-white text-center p-0">
               <Link to="/events">
-                <img alt="" className="my-3" src={calendar}></img>
+                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Event" src={calendar}></img>
               </Link>
             </div>
             <div className="col-3 bg-white text-center p-0">
               <Link to="/invitations">
-                <img alt="" className="my-3" src={invitation}></img>
+                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Invitation" src={invitation}></img>
                 <span className="text-dark">
                   {this.props.invitations.length}
                 </span>
@@ -49,7 +48,8 @@ class Footer extends React.Component {
             </div>
             <div className="col-3 bg-white text-center p-0">
               <Link to="/profile">
-                <img alt="" className="my-3" src={profile}></img>
+                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Profile" src={profile}></img>
+
               </Link>
             </div>
           </div>
