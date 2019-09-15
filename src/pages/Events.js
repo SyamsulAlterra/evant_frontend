@@ -44,7 +44,7 @@ class Events extends React.Component {
       <div className="container eventContent mobileView p-0">
         <Header></Header>
         <h1 className="text-center">My Event</h1>
-        <div className="accordion ongoingEvent" id="accordionExample">
+        <div className="accordion ongoingEvent" id="accordionExample1">
           <div className="card">
             <div className="card-header" id="headingOne">
               <h2 className="mb-0">
@@ -65,7 +65,7 @@ class Events extends React.Component {
               id="collapseOne"
               className="collapse"
               aria-labelledby="headingOne"
-              data-parent="#accordionExample"
+              data-parent="#accordionExample1"
             >
               {this.state.listEvent.map(value => {
                 return (

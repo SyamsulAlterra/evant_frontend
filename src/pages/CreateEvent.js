@@ -111,6 +111,8 @@ class CreateEvent extends React.Component {
       "Invitations has been sent!",
       "success"
     );
+    await this.props.clearParticipantsOnGlobal();
+    await this.props.clearCreateEvent();
     this.props.history.push("/events");
   };
 
@@ -184,7 +186,7 @@ class CreateEvent extends React.Component {
                     onChange={this.handleCategory}
                     value={this.props.category}
                   >
-                    <option selected value="vacation">
+                    <option selected="selected" value="vacation">
                       Holiday
                     </option>
                     <option value="eat">Eat Out</option>

@@ -7,7 +7,7 @@ export let Store = createStore({
   participants: [],
   place: [],
   eventName: "",
-  category: "",
+  category: "holiday",
   startDate: "",
   endDate: "",
   duration: null,
