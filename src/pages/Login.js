@@ -152,36 +152,35 @@ class Login extends React.Component {
                     Login
                   </button>
                   <br />
-                  <Link to="/register">
-                    <small className="register-text">
-                      Don't have an acoount? click here to create an account
-                    </small>
-                  </Link>
+                  <div className="row justify-content-center mt-2">
+                    <div className="col text-center">
+                      <GoogleLogin
+                        clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                        render={renderProps => (
+                          <GoogleButton
+                            label="Sign In with Google"
+                            data-onsuccess="onSignIn"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                          />
+                        )}
+                        buttonText="Login"
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.responseGoogle}
+                        cookiePolicy={"single_host_origin"}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="row no-gutters">
-                <div className="col-auto">
-                  <GoogleLogin
-                    clientId="47584810358-62nmr7avsvoep7lagucvlb9hnj39h8jj.apps.googleusercontent.com"
-                    render={renderProps => (
-                      <div
-                        class="g-signin2"
-                        onClick={renderProps.onClick}
-                        disabled={renderProps.disabled}
-                      >
-                        This is my custom Google button
-                      </div>
-                    )}
-                    buttonText="Login"
-                    onSuccess={this.responseGoogle}
-                    onFailure={this.responseGoogle}
-                    cookiePolicy={"single_host_origin"}
-                  />
-                  <GoogleLogout
-                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                    buttonText="Logout"
-                    onLogoutSuccess={this.logOut}
-                  ></GoogleLogout>
+
+                <div className="row justify-content-center mt-3">
+                  <div className="col text-center">
+                    <Link to="/register">
+                      <small className="register-text">
+                        Don't have an acoount? click here to create an account
+                      </small>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
