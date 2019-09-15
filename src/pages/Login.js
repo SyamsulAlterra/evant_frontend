@@ -113,7 +113,7 @@ class Login extends React.Component {
               <div className="row no-gutters justify-content-center animated fadeIn">
                 <div className="col-auto">
                   <button
-                    className="btn login-button my-1 text-center"
+                    className="btn login-button my-2 text-center"
                     onClick={this.handleClick}
                   >
                     Login
