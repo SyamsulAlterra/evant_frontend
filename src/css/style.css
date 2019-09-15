@@ -97,9 +97,9 @@ table {
 }
 
 .header-style {
-  -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
+  /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
   -moz-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
-  box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
+  box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73); */
 }
 
 .header-style h4 {
