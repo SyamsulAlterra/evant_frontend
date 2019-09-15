@@ -101,6 +101,17 @@ table {
   width: 40px;
   height: 40px;
 }
+
+.header-style {
+  /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
+  -moz-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
+  box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73); */
+}
+
+.header-style h4 {
+  font-family: "Roboto", sans-serif;
+}
+
 .home-evant {
   color: black;
   font-weight: bold;
@@ -131,7 +142,7 @@ table {
   overflow: scroll;
 }
 .venue {
-  width: 100px;
+  width: 200px;
 }
 .places {
   height: 300px;
@@ -154,4 +165,21 @@ table {
 .display-exit-active {
   opacity: 0;
   transition: opacity 200ms;
+}
+.header-style {
+  /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
+  -moz-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
+  box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73); */
+}
+.header-style h4 {
+  font-family: "Roboto", sans-serif;
+}
+.size-select {
+  width: 1000px;
+}
+select.form-control:not([size]):not([multiple]) {
+  height: 25px;
+.suggestion {
+  width: 200px;
+
 }

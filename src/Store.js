@@ -5,14 +5,20 @@ export let Store = createStore({
   availableDates: ["dummy"],
   invitations: [],
   participants: [],
+  place: [],
   eventName: "",
   category: "",
   startDate: "",
   endDate: "",
-  duration: null
+  duration: null,
+  events: [],
+  allBookedDates: []
 });
 
 export const actions = Store => ({
+  setEventsAndBookedDatesOnGlobal: (state, events, bookedDate) => {
+    return { events: events, allBookedDates: bookedDate };
+  },
   setAvailableDatesOnGlobal: (state, dates) => {
     return { availableDates: dates };
   },
@@ -55,5 +61,8 @@ export const actions = Store => ({
       endDate: "",
       duration: null
     };
+  },
+  setPlaceOnGlobal: (state, input) => {
+    return { place: input };
   }
 });

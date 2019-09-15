@@ -68,6 +68,10 @@ class CalendarCell extends React.Component {
         return availableDate === date;
       });
 
+      let booked = this.props.allBookedDates.filter(bookedDate => {
+        return bookedDate === date;
+      });
+
       if (!this.forwardDate(todayDate, date) && this.props.dates !== "") {
         this.setState({
           cellClass: "bg-secondary",
@@ -82,6 +86,11 @@ class CalendarCell extends React.Component {
         } else if (this.props.dates === "") {
           this.setState({ cellClass: "" });
           this.setState({ modalMessage: "Oops, invalid date" });
+        } else if (booked.length > 0) {
+          this.setState({
+            cellClass: "bg-danger",
+            modalMessage: "this date is currently booked"
+          });
         } else if (available.length > 0) {
           this.setState({
             cellClass: "bg-success",
@@ -89,6 +98,7 @@ class CalendarCell extends React.Component {
           });
         } else if (available.length === 0) {
           this.setState({
+            cellClass: "",
             modalMessage: `mark ${this.formatDate(date)}`
           });
         }
@@ -199,6 +209,6 @@ class CalendarCell extends React.Component {
 }
 
 export default connect(
-  "baseUrl, availableDates",
+  "baseUrl, availableDates, events, allBookedDates",
   actions
 )(CalendarCell);

@@ -16,6 +16,32 @@ class EventHistoryDetail extends React.Component {
       participant: []
     };
   }
+
+  formatDate = date => {
+    const dateDictionary = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    if (date === undefined) {
+      return "halo";
+    } else if (date === null) {
+      return date;
+    }
+    let d = date.slice(0, 2);
+    let m = parseInt(date.slice(3, 5));
+    let y = date.slice(6, 10);
+    return `${dateDictionary[m - 1]} ${d}, ${y}`;
+  };
   componentWillMount = async () => {
     let config = {
       url:
@@ -59,7 +85,8 @@ class EventHistoryDetail extends React.Component {
             category: {this.state.event.category}
           </h6>
           <h6 className="text-center m-0">
-            date: {this.state.event.start_date} - {this.state.event.end_date}
+            date: {this.formatDate(this.state.event.start_date)} -{" "}
+            {this.formatDate(this.state.event.end_date)}
           </h6>
           <div className="participant m-3 border">
             {this.state.participant.map((user, index) => {

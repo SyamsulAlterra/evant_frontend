@@ -25,7 +25,7 @@ class Suggestion extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
+    console.log(this.props.place)
     let response = await Axios(config);
     await this.setState({ event: response.data });
 
@@ -42,6 +42,31 @@ class Suggestion extends React.Component {
 
     response = await Axios(config);
     await this.setState({ participant: response.data });
+  };
+  formatDate = date => {
+    const dateDictionary = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    if (date === undefined) {
+      return "halo";
+    } else if (date === null) {
+      return date;
+    }
+    let d = date.slice(0, 2);
+    let m = parseInt(date.slice(3, 5));
+    let y = date.slice(6, 10);
+    return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
   render() {
     return (
@@ -60,7 +85,8 @@ class Suggestion extends React.Component {
           </h6>
           <h6 className="text-center m-0">
             Suggestion date: <br></br>
-            {this.state.event.start_date} - {this.state.event.end_date}
+            {this.formatDate(this.state.event.start_date)} -{" "}
+            {this.formatDate(this.state.event.end_date)}
           </h6>
           <div className="participant m-3 border">
             {this.state.participant.map((user, index) => {
@@ -87,14 +113,18 @@ class Suggestion extends React.Component {
           </div>
           <div className="text-center mb-3 border p-3 places">
             <table className="">
-              {[...Array(4).keys()].map(num => {
+              {this.props.place.map(num => {
                 return (
-                  <div className="m-3">
+                  <div className="m-3 suggestion">
                     <tr>
-                      <td className="p-3 border">
-                        <img alt="" src={avatar} className="venue"></img>
+                      <td className="p-1 border">
+                        <img alt="" src={num.photo} className="venue"></img>
+                        <p className="text-center m-0 centering suggestion">
+                          {num.place}
+                        </p>
+
                         <p className="text-center m-0 centering">
-                          $places name and address
+                          {num.place_location}
                         </p>
                         {/* <br></br> */}
                         <button className="btn btn-success">Choose</button>
@@ -111,4 +141,4 @@ class Suggestion extends React.Component {
   }
 }
 
-export default connect("baseUrl")(Suggestion);
+export default connect("baseUrl, place")(Suggestion);

@@ -5,12 +5,18 @@ import FotoProfil from "../components/FotoProfil";
 import Axios from "axios";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
-import Calendar from "../components/CalendarPrepareDate";
+import CalendarPrepareDate from "../components/CalendarPrepareDate";
 
-class HomePage extends React.Component {
+class EditDate extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      event: {}
+    };
+  }
   componentWillMount = async () => {
-    let config = {
-      url: this.props.baseUrl + "date",
+    const config = {
+      url: this.props.baseUrl + "events/" + this.props.match.params.event_id,
       method: "get",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -18,13 +24,18 @@ class HomePage extends React.Component {
     };
 
     let response = await Axios(config);
-    await this.props.setAvailableDatesOnGlobal(response.data);
+    this.setState({ event: response.data });
   };
+
   render() {
+    // console.log(this.state.event);
     return (
-      <div className="HomePage">
+      <div className="EditDate">
         <Header></Header>
-        <Calendar event_id={this.props.match.params.event_id}></Calendar>
+        <CalendarPrepareDate
+          start_date={this.state.event.start_date_parameter}
+          end_date={this.state.event.end_date_parameter}
+        ></CalendarPrepareDate>
         <Footer></Footer>
       </div>
     );
@@ -34,4 +45,4 @@ class HomePage extends React.Component {
 export default connect(
   "baseUrl",
   actions
-)(HomePage);
+)(EditDate);
