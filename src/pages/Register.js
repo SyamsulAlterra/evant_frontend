@@ -167,10 +167,10 @@ class Register extends React.Component {
                   width="75px"
                   height="75px"
                 />
-                <h1 className="underline mb-0 animated fadeInDownBig delay-1s register-evant">
+                <h1 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
                   Evant
                 </h1>
-                <hr className="animated fadeIn shadow" />
+                <hr className="animated fadeIn shadow" width="200px" />
                 <p className="mt-0 p-0 mb-5 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
                 </p>
