@@ -8,7 +8,9 @@ import { actions } from "../Store";
 import Calendar from "../components/Calendar";
 
 class HomePage extends React.Component {
+  state = { display: false };
   componentWillMount = async () => {
+    this.setState({ display: true });
     let config = {
       url: this.props.baseUrl + "date",
       method: "get",

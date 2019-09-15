@@ -1,10 +1,11 @@
 import React from "react";
-import Button from "../components/Button";
 import { connect } from "unistore/react";
 import axios from "axios";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
+import { TransitonGroup, CSSTransition } from "react-transition-group";
+import homeLogo from "../images/e.png";
 
 class Register extends React.Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class Register extends React.Component {
       confirmPassword: "",
       phone: "",
       address: "",
-      gender: ""
+      gender: "",
+      display: false
     };
   }
 
@@ -129,95 +131,130 @@ class Register extends React.Component {
 
     await axios(config)
       .then(() => {
+        Swal.fire(
+          "Account Created Successfully",
+          "Please proceed to login",
+          "success"
+        );
         this.props.history.push("/");
       })
       .catch(() => {
-        alert("tes");
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
       });
-    // console.log("tes");
+  };
+
+  componentDidMount = () => {
+    this.setState({ display: true });
   };
 
   render() {
     return (
-      <div className="container register mobileView">
-        <div className="row justify-content-center">
-          <div className="col text-center">
-            <div className="mt-5">
-              <h1 className="underline mb-0">Evant</h1>
-              <p className="mt-0 p-0">Decide When, Where, Who</p>
-              <form action="">
-                <input
-                  type="text"
-                  className="m-2"
-                  placeholder="Name"
-                  onChange={this.handleName}
+      <CSSTransition
+        in={this.state.display}
+        timeout={5000}
+        classNames="display"
+        unmountOnExit
+        appear
+      >
+        <div className="container register mobileView">
+          <div className="row justify-content-center">
+            <div className="col text-center">
+              <div className="my-5">
+                <img
+                  src={homeLogo}
+                  alt=""
+                  className="text-center mt-5 mb-0"
+                  width="75px"
+                  height="75px"
                 />
-                <input
-                  type="text"
-                  className="m-2"
-                  placeholder="Username"
-                  onChange={this.handleUsername}
-                />
-                <input
-                  type="email"
-                  className="m-2"
-                  placeholder="Email"
-                  onChange={this.handleEmail}
-                />
-                <input
-                  type="password"
-                  className="m-2"
-                  placeholder="Password"
-                  onChange={this.handlePassword}
-                />
-                <input
-                  type="password"
-                  className="m-2"
-                  placeholder="Confirm password"
-                  onChange={this.handleConfirmPassword}
-                />
-                <input
-                  type="text"
-                  className="m-2"
-                  placeholder="Phone"
-                  onChange={this.handlePhone}
-                />
-                <textarea
-                  type="text"
-                  className="m-2"
-                  placeholder="Address"
-                  onChange={this.handleAddress}
-                />
-                <br />
-                <div className="text-left mx-5 px-4">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value={true}
-                    onChange={this.handleGender}
-                    // checked="checked"
-                  />
-                  Male
-                  <br />
-                  <input
-                    type="radio"
-                    name="gender"
-                    value={false}
-                    onChange={this.handleGender}
-                    // checked="checked"
-                  />
-                  Female <br />
+                <h1 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
+                  Evant
+                </h1>
+                <hr className="animated fadeIn shadow" width="200px" />
+                <p className="mt-0 p-0 mb-5 animated fadeInDownBig delay-1s">
+                  Decide When, Where, and Who
+                </p>
+                <div className="col-12">
+                  <form
+                    action=""
+                    className="register-form form-group animated fadeIn"
+                  >
+                    <input
+                      type="text"
+                      className="mb-3 col-12"
+                      placeholder="Full Name"
+                      onChange={this.handleName}
+                    />
+                    <input
+                      type="text"
+                      className="mb-3 col-12"
+                      placeholder="Username"
+                      onChange={this.handleUsername}
+                    />
+                    <input
+                      type="email"
+                      className="mb-3 col-12"
+                      placeholder="Email"
+                      onChange={this.handleEmail}
+                    />
+                    <input
+                      type="password"
+                      className="mb-3 col-12"
+                      placeholder="Password"
+                      onChange={this.handlePassword}
+                    />
+                    <input
+                      type="password"
+                      className="mb-3 col-12"
+                      placeholder="Confirm password"
+                      onChange={this.handleConfirmPassword}
+                    />
+                    <input
+                      type="text"
+                      className="mb-3 col-12"
+                      placeholder="Phone"
+                      onChange={this.handlePhone}
+                    />
+                    <textarea
+                      type="text"
+                      className="mb-3 col-12"
+                      placeholder="Address"
+                      onChange={this.handleAddress}
+                    />
+                    <br />
+                    <div className="text-left mx-4 mb-4 px-4">
+                      <input
+                        type="radio"
+                        name="gender"
+                        value={true}
+                        onChange={this.handleGender}
+                      />
+                      Male
+                      <br />
+                      <input
+                        type="radio"
+                        name="gender"
+                        value={false}
+                        onChange={this.handleGender}
+                      />
+                      Female <br />
+                    </div>
+                  </form>
                 </div>
-              </form>
-              <Button
-                className="mt-5"
-                buttonName="Register"
-                handleClick={this.handleClick}
-              ></Button>
+                <div className="col-12">
+                  <button
+                    className="btn btn-block text-center register-button mb-5"
+                    onClick={this.handleClick}
+                    width="100%"
+                  >
+                    Register
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </CSSTransition>
     );
   }
 }

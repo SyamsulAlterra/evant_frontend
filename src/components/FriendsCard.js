@@ -7,7 +7,6 @@ import { withRouter } from "react-router-dom";
 
 class FriendsCard extends React.Component {
   addFriend = input => {
-    console.log(input);
     this.props.setParticipantsOnGlobal(input);
     this.props.history.push("/events/create");
   };

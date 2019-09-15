@@ -6,6 +6,7 @@ import { actions } from "../Store";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import KickFriend from "../components/KickFriend";
 import Swal from "sweetalert2";
 
@@ -15,9 +16,20 @@ class CreateEvent extends React.Component {
     this.state = {
       date: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      searchResult: []
     };
   }
+
+  componentDidMount = async () => {
+    await this.setState({ searchResult: this.props.participants });
+  };
+
+  componentWillUpdate = async (nextProps, prevState) => {
+    if (this.props.participants !== nextProps.participants) {
+      await this.setState({ searchResult: nextProps.participants });
+    }
+  };
 
   handleCategory = async e => {
     let inputCategory = e.target.value;
@@ -130,6 +142,18 @@ class CreateEvent extends React.Component {
     return [date[2], months[date[1]], date[3]].join("/");
   }
 
+  searchParticipant = e => {
+    let key = e.target.value;
+    let result = this.props.participants.filter(participant => {
+      let name = participant.fullname.search(key);
+      let username = participant.username.search(key);
+
+      return name !== -1 || username !== -1;
+    });
+
+    this.setState({ searchResult: result });
+  };
+
   render() {
     return (
       <div className="createEvent-content">
@@ -138,7 +162,7 @@ class CreateEvent extends React.Component {
           <h3 className="text-center">CREATE EVENT</h3>
           <div className="">
             <div className="row justify-content-center mb-3">
-              <div className="event-name col-8 text-center">
+              <div className="event-name col-12 text-center">
                 <label for="exampleFormControlSelect1">Event Name</label>
                 <br />
                 <input
@@ -146,11 +170,12 @@ class CreateEvent extends React.Component {
                   placeholder="event name"
                   onChange={this.handleEventName}
                   value={this.props.eventName}
+                  className="w-100"
                 />
               </div>
             </div>
             <div className="row justify-content-center mb-3">
-              <div className="category-select col-8 text-center">
+              <div className="category-select col-12 text-center">
                 <label for="category">Select Category</label>
                 <span>
                   <select
@@ -169,22 +194,27 @@ class CreateEvent extends React.Component {
               </div>
             </div>
             <div className="row justify-content-center">
-              <div className="search-user col-8 text-center">
-                <input type="text" placeholder="search"></input>
+              <div className="search-user col-8 text-center my-1">
+                <input
+                  type="text"
+                  placeholder="search participant"
+                  onChange={this.searchParticipant}
+                ></input>
               </div>
-              <Link to="/invite" className="button-add col-4 text-center">
-                <button className="btn m-1">invite user</button>
+              <Link to="/invite" className="button-add col-4 p-0 text-left">
+                <button className="btn btn-primary m-1">invite user</button>
               </Link>
             </div>
-            <div className="row justify-content-center">
-              {this.props.participants.map(value => {
-                return (
-                  <div className="col-12 text-center">
-                    <KickFriend className="m-0" user={value}></KickFriend>
-                    <br />
-                  </div>
-                );
-              })}
+            <div>
+              <div className="row justify-content-center invitedBox m-3">
+                {this.state.searchResult.map(value => {
+                  return (
+                    <div className="w-100 text-center">
+                      <KickFriend className="m-0" user={value}></KickFriend>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
             <div className="row startDate-section justify-content-center">
               <div className="col-12 text-center">
@@ -214,18 +244,19 @@ class CreateEvent extends React.Component {
                   placeholder="duration"
                   onChange={this.handleDuration}
                   value={this.props.duration}
+                  className="w-100"
                 />
               </div>
             </div>
             <div className="row justify-content-center">
               <button
-                className="btn btn-success m-1"
+                className="btn btn-success m-3"
                 onClick={this.cancelEvent}
               >
                 cancel
               </button>
               <button
-                className="btn btn-success m-1"
+                className="btn btn-success m-3"
                 onClick={this.createEvent}
               >
                 create
@@ -233,6 +264,7 @@ class CreateEvent extends React.Component {
             </div>
           </div>
         </div>
+        <Footer></Footer>
       </div>
     );
   }
