@@ -41,7 +41,7 @@ class Events extends React.Component {
 
   render() {
     return (
-      <div className="container eventContent mobileView p-0">
+      <div>
         <Header></Header>
         <h1 className="text-center">My Event</h1>
         <div className="accordion ongoingEvent" id="accordionExample1">
@@ -83,47 +83,47 @@ class Events extends React.Component {
               })}
             </div>
           </div>
-        </div>
-        <div className="accordion pastEvent" id="accordionExample">
-          <div className="card">
-            <div className="card-header" id="headingOne">
-              <h2 className="mb-0">
-                <button
-                  className="btn btn-link"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#collapseTwo"
-                  aria-expanded="true"
-                  aria-controls="collapseTwo"
-                >
-                  Events History ({this.state.pastEvent.length})
-                </button>
-              </h2>
-            </div>
+          <div className="accordion pastEvent" id="accordionExample">
+            <div className="card">
+              <div className="card-header" id="headingOne">
+                <h2 className="mb-0">
+                  <button
+                    className="btn btn-link"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseTwo"
+                    aria-expanded="true"
+                    aria-controls="collapseTwo"
+                  >
+                    Events History ({this.state.pastEvent.length})
+                  </button>
+                </h2>
+              </div>
 
-            <div
-              id="collapseTwo"
-              className="collapse"
-              aria-labelledby="headingTwo"
-              data-parent="#accordionExample"
-            >
-              {this.state.pastEvent.map(value => {
-                return (
-                  <div className="border">
-                    <CollapseEvent
-                      id={value.event_id}
-                      eventName={value.event_name}
-                      category={value.category}
-                      startDateParameter={value.start_date_parameter}
-                      endDateParameter={value.end_date_parameter}
-                    />
-                  </div>
-                );
-              })}
+              <div
+                id="collapseTwo"
+                className="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >
+                {this.state.pastEvent.map(value => {
+                  return (
+                    <div className="border">
+                      <CollapseEvent
+                        id={value.event_id}
+                        eventName={value.event_name}
+                        category={value.category}
+                        startDateParameter={value.start_date_parameter}
+                        endDateParameter={value.end_date_parameter}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
+          <Footer></Footer>
         </div>
-        <Footer></Footer>
       </div>
     );
   }
