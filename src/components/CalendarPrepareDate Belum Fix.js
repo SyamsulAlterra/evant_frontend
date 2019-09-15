@@ -3,10 +3,10 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import CalendarGrid from "./CalendarGrid";
 import CalendarTitle from "./CalendarTitle";
-import { Link, withRouter } from "react-router-dom";
-import Axios from "axios";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-class CalendarPrepareDate extends React.Component {
+class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,10 +16,13 @@ class CalendarPrepareDate extends React.Component {
       todayDate: 0,
       month: 9,
       year: 2019,
-      months: [],
-      years: [],
       currentMonth: 9,
       currentYear: 2019,
+      startDate: null,
+      start: null,
+      end: null,
+      startYear: null,
+      endYear: null,
       monthDictionary: [
         "January",
         "February",
@@ -39,32 +42,6 @@ class CalendarPrepareDate extends React.Component {
     };
   }
 
-  formatDate = date => {
-    const dateDictionary = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
-    if (date === undefined) {
-      return "";
-    } else if (date === null) {
-      return "";
-    }
-    let d = date.slice(0, 2);
-    let m = parseInt(date.slice(3, 5));
-    let y = date.slice(6, 10);
-    return `${dateDictionary[m - 1]} ${d}, ${y}`;
-  };
-
   twoDigitString = number => {
     if (number < 10) {
       return `0${number}`;
@@ -75,8 +52,11 @@ class CalendarPrepareDate extends React.Component {
 
   populateCalendar = async (month, year) => {
     //populate calendar table
-    let date = new Date(year, month - 1);
-    this.setState({ offset: date.getDay() });
+    let date = new Date(year, month - 1, 1);
+    this.setState({
+      offset: date.getDay()
+    });
+
     if (this.isLeapYear(year)) {
       await this.setState({
         dayInMonth: [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -107,73 +87,100 @@ class CalendarPrepareDate extends React.Component {
 
   handleYear = e => {
     let pickedYear = e.target.value;
+    //change the list of month based on year
+    this.setState({
+      monthDictionary: this.state.monthDictionary.slice(
+        this.state.prepareDateDict[pickedYear][0] - 1,
+        this.state.prepareDateDict[pickedYear][
+          this.state.prepareDateDict[pickedYear].length - 1
+        ]
+      )
+    });
     this.setState({ year: parseInt(pickedYear) });
   };
 
   componentWillMount = async () => {
+    // get event from page EventDetailParticipanta nd save in local state
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+    await axios
+      .get(this.props.baseUrl + "events/" + this.props.event_id, config)
+      .then(response => {
+        this.setState({ event: response.data });
+        console.log("ini eventku", this.state.event);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //set the imperative parameter for generate date base on start_date_parameter, end_date_parameter
+    await this.setState({
+      start: parseInt(this.state.event.start_date_parameter.slice(3, 5))
+    });
+    await this.setState({
+      startDate: parseInt(this.state.event.start_date_parameter.slice(0, 2))
+    });
+    await this.setState({
+      month: parseInt(this.state.event.start_date_parameter.slice(3, 5))
+    });
+    await this.setState({
+      end: parseInt(this.state.event.end_date_parameter.slice(3, 5))
+    });
+    await this.setState({
+      startYear: parseInt(this.state.event.start_date_parameter.slice(6, 10))
+    });
+    await this.setState({
+      endYear: parseInt(this.state.event.end_date_parameter.slice(6, 10))
+    });
+    console.log("ini start monthku", this.state.start);
+    console.log("ini end monthku", this.state.end);
+
     let today = new Date();
+
+    let dates = {};
+    for (var i = this.state.startYear; i <= this.state.endYear; i++) {
+      var endMonth =
+        i != this.state.endYear ? 11 : parseInt(this.state.end) - 1;
+      var startMon =
+        i === this.state.startYear ? parseInt(this.state.start) - 1 : 0;
+      let dates_params = [];
+      for (var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j + 1) {
+        var month = j + 1;
+        var displayMonth = month < 10 ? "0" + month : month;
+        dates_params.push(parseInt(displayMonth));
+      }
+      dates[i.toString()] = dates_params;
+    }
+
+    //set the range generate month and year in local state prepareDateDict
+    await this.setState({ prepareDateDict: dates });
+    //cek this.state.month
+    console.log(this.state.month);
+
+    // change the state monthDictionary
+    await this.setState({
+      monthDictionary: this.state.monthDictionary.slice(
+        this.state.prepareDateDict[this.state.startYear][0] - 1,
+        this.state.prepareDateDict[this.state.startYear][
+          this.state.prepareDateDict[this.state.startYear].length - 1
+        ]
+      )
+    });
+
     await this.setState({ todayDate: today.getDate() });
     await this.setState({
+      month: today.getMonth() + 1,
       currentMonth: today.getMonth() + 1
     });
     await this.setState({
+      year: today.getFullYear(),
       currentYear: today.getFullYear()
     });
 
-    let config = {
-      url: this.props.baseUrl + "events/" + this.props.match.params.event_id,
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    let response = await Axios(config);
-    await this.setState({ event: response.data });
-
-    config = {
-      url: this.props.baseUrl + "events/count",
-      method: "post",
-      data: {
-        start_date: this.state.event.start_date_parameter,
-        end_date: this.state.event.end_date_parameter
-      }
-    };
-
-    response = await Axios(config);
-    await this.setState({
-      months: response.data.month,
-      years: response.data.year,
-      month: parseInt(response.data.month[0]),
-      year: parseInt(response.data.year[0])
-    });
-
-    config = {
-      url: this.props.baseUrl + "date",
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    response = await Axios(config);
-    await this.props.setAvailableDatesOnGlobal(response.data);
-
-    config = {
-      url: this.props.baseUrl + "events/booked",
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    response = await Axios(config);
-    await this.props.setEventsAndBookedDatesOnGlobal(
-      response.data.booked_event,
-      response.data.all_booked_dates
-    );
-
-    this.populateCalendar(this.state.month, this.state.year);
+    this.populateCalendar(this.state.start, this.state.startYear);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -184,6 +191,7 @@ class CalendarPrepareDate extends React.Component {
       this.populateCalendar(this.state.month, this.state.year);
     }
   };
+
   render() {
     let weeks;
     if (this.state.offset + this.state.totalDays > 35) {
@@ -192,18 +200,23 @@ class CalendarPrepareDate extends React.Component {
       weeks = [1, 2, 3, 4, 5];
     }
     const dates = [1, 2, 3, 4, 5, 6, 7];
+    const totalYear = [
+      ...Array(Object.keys(this.state.prepareDateDict).length).keys()
+    ];
+    const yearChoices = totalYear.map(inc => {
+      return this.state.currentYear + inc;
+    });
 
     return (
-      <div className="CalendarPrepareDate container mobileView p-0 mt-0">
+      <div className="Calendar container mobileView p-0 mt-0">
         <div className="row justify-content-center">
-          <div className="col-8">
+          <div className="col-6">
             {" "}
             <br></br>
-            <h6 className="text-center">Your Available Date on</h6>
-            <h6 className="text-center">
-              {`${this.formatDate(
-                this.state.event.start_date_parameter
-              )} - ${this.formatDate(this.state.event.end_date_parameter)}`}
+            <h6>Your Available Date on</h6>
+            <h6>
+              {this.state.event.start_date_parameter} -
+              {this.state.event.end_date_parameter}
             </h6>
           </div>
         </div>
@@ -213,19 +226,11 @@ class CalendarPrepareDate extends React.Component {
             className="button centering p-0 mx-1 my-3 optionMonth"
             onChange={this.handleMonth}
           >
-            {this.state.months.map((month, i) => {
-              if (i === 0) {
-                return (
-                  <option value={parseInt(month)} selected="selected">
-                    {this.state.monthDictionary[month - 1]}
-                  </option>
-                );
+            {this.state.monthDictionary.map((month, i) => {
+              if (i + 1 === this.state.currentMonth) {
+                return <option value={i + 1}>{month}</option>;
               } else {
-                return (
-                  <option value={parseInt(month)}>
-                    {this.state.monthDictionary[month - 1]}
-                  </option>
-                );
+                return <option value={i + 1}>{month}</option>;
               }
             })}
           </select>
@@ -233,7 +238,7 @@ class CalendarPrepareDate extends React.Component {
             className="button centering p-0 mx-1 my-3"
             onChange={this.handleYear}
           >
-            {this.state.years.map(year => {
+            {yearChoices.map(year => {
               return <option value={year}>{year}</option>;
             })}
           </select>
@@ -271,13 +276,14 @@ class CalendarPrepareDate extends React.Component {
             <Link
               to={"/participant/" + this.state.event.event_id}
               class="btn btn-outline-info"
+              href="#"
               role="button"
             >
               Done
             </Link>
+            <br></br>
           </div>
         </div>
-        <br></br>
       </div>
     );
   }
@@ -286,4 +292,4 @@ class CalendarPrepareDate extends React.Component {
 export default connect(
   "totalLeapYear, baseUrl",
   actions
-)(withRouter(CalendarPrepareDate));
+)(Calendar);

@@ -17,7 +17,6 @@ class CalendarGrid extends React.Component {
                     today={this.props.today}
                     currentMonth={this.props.currentMonth}
                     currentYear={this.props.currentYear}
-                    availableDates={this.props.availableDates}
                   ></CalendarCell>
                 </td>
               );

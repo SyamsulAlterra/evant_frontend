@@ -8,7 +8,9 @@ import { actions } from "../Store";
 import Calendar from "../components/Calendar";
 
 class HomePage extends React.Component {
+  state = { display: false };
   componentWillMount = async () => {
+    this.setState({ display: true });
     let config = {
       url: this.props.baseUrl + "date",
       method: "get",
@@ -19,6 +21,20 @@ class HomePage extends React.Component {
 
     let response = await Axios(config);
     await this.props.setAvailableDatesOnGlobal(response.data);
+
+    config = {
+      url: this.props.baseUrl + "events/booked",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    response = await Axios(config);
+    await this.props.setEventsAndBookedDatesOnGlobal(
+      response.data.booked_event,
+      response.data.all_booked_dates
+    );
   };
   render() {
     return (
