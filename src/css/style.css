@@ -62,6 +62,10 @@ table {
   height: 30px;
   width: 30px;
 }
+.footer {
+  position: fixed;
+  bottom: 0;
+}
 .footer img {
   height: 30px;
   width: 30px;
@@ -101,17 +105,6 @@ table {
   width: 40px;
   height: 40px;
 }
-
-.header-style {
-  /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
-  -moz-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
-  box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73); */
-}
-
-.header-style h4 {
-  font-family: "Roboto", sans-serif;
-}
-
 .home-evant {
   color: black;
   font-weight: bold;
@@ -177,11 +170,9 @@ table {
 .size-select {
   width: 1000px;
 }
-
 select.form-control:not([size]):not([multiple]) {
   height: 34px;
 }
-
 .suggestion {
   width: 200px;
 }

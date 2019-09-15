@@ -43,7 +43,7 @@ class Events extends React.Component {
     return (
       <div>
         <Header></Header>
-        <div className="container eventContent mobileView p-0">
+        <div className="container eventContent mobileView pb-5">
           <h1 className="text-center">My Event</h1>
           <div className="accordion ongoingEvent" id="accordionExample">
             <div className="card">
@@ -124,8 +124,8 @@ class Events extends React.Component {
               </div>
             </div>
           </div>
-          <Footer></Footer>
         </div>
+        <Footer></Footer>
       </div>
     );
   }
