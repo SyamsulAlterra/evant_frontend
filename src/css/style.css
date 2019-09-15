@@ -98,9 +98,12 @@ table {
   overflow: scroll;
 }
 .venue {
-  width: 100px;
+  width: 200px;
 }
 .places {
   height: 300px;
   overflow: scroll;
+}
+.suggestion {
+  width: 200px;
 }

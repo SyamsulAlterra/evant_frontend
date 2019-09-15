@@ -25,7 +25,6 @@ class ParticipantCard extends React.Component {
             .get(this.props.baseUrl + "users/preferences/" + this.props.match.params.id, config)
             .then(response => {
                 this.setState({ preferences: response.data });
-                console.log(response.data)
             })
             .catch(error => {
                 console.log(error);
@@ -34,7 +33,8 @@ class ParticipantCard extends React.Component {
         let checkPreference = this.state.preferences.filter(preference => {
             return preference.user_id === this.props.user.id_participant
         })
-        this.setState({ userPreference: checkPreference })
+        await this.setState({ userPreference: checkPreference })
+        console.log(this.state.userPreference)
 
     };
     render(
@@ -64,7 +64,7 @@ class ParticipantCard extends React.Component {
                     </div>
                 </div>)
         } else {
-            if (this.state.userPreference === []) {
+            if (this.state.userPreference.length === 0) {
                 return (
                     <div className="invitationCard">
                         <div class="card my-2 centering">
