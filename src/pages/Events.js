@@ -43,46 +43,44 @@ class Events extends React.Component {
     return (
       <div>
         <Header></Header>
-        <div className="container eventContent mobileView p-0">
-          <h1 className="text-center">My Event</h1>
-          <div className="accordion ongoingEvent" id="accordionExample">
-            <div className="card">
-              <div className="card-header" id="headingOne">
-                <h2 className="mb-0">
-                  <button
-                    className="btn btn-link"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
-                  >
-                    Ongoing Events ({this.state.listEvent.length})
-                  </button>
-                </h2>
-              </div>
+        <h1 className="text-center">My Event</h1>
+        <div className="accordion ongoingEvent" id="accordionExample1">
+          <div className="card">
+            <div className="card-header" id="headingOne">
+              <h2 className="mb-0">
+                <button
+                  className="btn btn-link"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  Ongoing Events ({this.state.listEvent.length})
+                </button>
+              </h2>
+            </div>
 
-              <div
-                id="collapseOne"
-                className="collapse"
-                aria-labelledby="headingOne"
-                data-parent="#accordionExample"
-              >
-                {this.state.listEvent.map(value => {
-                  return (
-                    <div className="border">
-                      <CollapseEvent
-                        id={value.event_id}
-                        creatorName={value.creator_name}
-                        eventName={value.event_name}
-                        category={value.category}
-                        startDateParameter={value.start_date_parameter}
-                        endDateParameter={value.end_date_parameter}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+            <div
+              id="collapseOne"
+              className="collapse"
+              aria-labelledby="headingOne"
+              data-parent="#accordionExample1"
+            >
+              {this.state.listEvent.map(value => {
+                return (
+                  <div className="border">
+                    <CollapseEvent
+                      id={value.event_id}
+                      creatorName={value.creator_name}
+                      eventName={value.event_name}
+                      category={value.category}
+                      startDateParameter={value.start_date_parameter}
+                      endDateParameter={value.end_date_parameter}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="accordion pastEvent" id="accordionExample">
