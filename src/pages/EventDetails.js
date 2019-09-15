@@ -10,9 +10,12 @@ class EventDetails extends React.Component {
     super(props);
     this.state = {
       event: [],
-      participants: []
+      participants: [],
+      preference: "",
+      preferenceOptions: []
     };
   }
+
   componentDidMount = async () => {
     const config = {
       headers: {
@@ -23,7 +26,6 @@ class EventDetails extends React.Component {
       .get(this.props.baseUrl + "events/" + this.props.match.params.id, config)
       .then(response => {
         this.setState({ event: response.data });
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -32,18 +34,66 @@ class EventDetails extends React.Component {
     await axios
       .get(
         this.props.baseUrl +
-          "events/list_of_participant/" +
-          this.props.match.params.id,
+        "events/list_of_participant/" +
+        this.props.match.params.id,
         config
       )
       .then(response => {
         this.setState({ participants: response.data });
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
       });
+
+    let getPreference = {
+      url: this.props.baseUrl + 'category',
+      method: 'get',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+      params: {
+        category: this.state.event.category
+      }
+    }
+
+    let responsePreference = await axios(getPreference)
+    console.log(responsePreference.data)
+    this.setState({ preferenceOptions: responsePreference.data })
+
+    let postPreference = {
+      url: this.props.baseUrl + 'users/preferences',
+      method: 'post',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+      data: {
+        event_id: this.props.match.params.id,
+        preference: "Bogor"
+      }
+    }
+
+    let postResponse = await axios(postPreference)
+    console.log(postResponse.data)
   };
+
+  handlePreference = async e => {
+    await this.setState({ preference: e.target.value });
+
+    let putPreference = {
+      url: this.props.baseUrl + 'users/preferences/' + this.props.match.params.id,
+      method: 'put',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+      data: {
+        preference: this.state.preference
+      }
+    }
+
+    let putResponse = await axios(putPreference)
+    console.log(putResponse.data)
+  };
+
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -90,16 +140,16 @@ class EventDetails extends React.Component {
               <span>
                 <select
                   className="form-control"
-                  id="category"
-                  onChange={this.handleCategory}
-                  value={this.props.category}
+                  id="preference"
+                  onChange={this.handlePreference}
                 >
-                  <option selected value="vacation">
-                    Select your preference
-                  </option>
-                  <option value="Culture">Culture</option>
-                  <option value="Religion">Religion</option>
-                  <option value="Museum">Museum</option>
+                  {this.state.preferenceOptions.map((value, index) => {
+                    return (
+                      <option value={value.preference}>
+                        {value.preference}
+                      </option>
+                    )
+                  })}
                 </select>
               </span>
             </div>
@@ -136,20 +186,8 @@ class EventDetails extends React.Component {
           </div>
           <div className="participant border border-secondary p-3">
             {this.state.participants.map((value, index) => {
-              console.log(value);
               return (
                 <ParticipantCard user={value}></ParticipantCard>
-                // <div className="container my-3">
-                //   <div className="row justify-content-center">
-                //     <div className="col-8 border">
-                //       <div className="row">
-                //         <div className = "col-4">
-                //           {value.fullname}({value.username})
-                //       </div>
-                //       </div>
-                //     </div>
-                //   </div>
-                // </div>
               );
             })}
           </div>
