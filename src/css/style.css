@@ -93,3 +93,7 @@ table {
   width: 40px;
   height: 40px;
 }
+.invitedBox {
+  height: 300px;
+  overflow: scroll;
+}

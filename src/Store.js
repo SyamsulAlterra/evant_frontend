@@ -53,7 +53,7 @@ export const actions = Store => ({
       category: "",
       startDate: "",
       endDate: "",
-      duration: 0
+      duration: null
     };
   }
 });
