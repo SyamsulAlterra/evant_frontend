@@ -20,7 +20,8 @@ class Footer extends React.Component {
     };
 
     let response = await Axios(config);
-    await this.props.setInvitationsOnGlobal(response.data);
+    console.log("response", response.data);
+    this.props.setInvitationsOnGlobal(response.data);
   };
 
   render() {
