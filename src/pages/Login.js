@@ -146,7 +146,7 @@ class Login extends React.Component {
               <div className="row no-gutters justify-content-center animated fadeIn">
                 <div className="col-auto">
                   <button
-                    className="btn login-button my-2 text-center"
+                    className="btn btn-outline-dark login-button my-2 text-center"
                     onClick={this.handleClick}
                   >
                     Login
@@ -158,6 +158,7 @@ class Login extends React.Component {
                         clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                         render={renderProps => (
                           <GoogleButton
+                            type="light"
                             label="Sign In with Google"
                             data-onsuccess="onSignIn"
                             onClick={renderProps.onClick}
