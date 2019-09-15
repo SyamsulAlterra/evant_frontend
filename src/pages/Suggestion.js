@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
 
-class EventHistoryDetail extends React.Component {
+class Suggestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,17 +59,19 @@ class EventHistoryDetail extends React.Component {
             category: {this.state.event.category}
           </h6>
           <h6 className="text-center m-0">
-            date: {this.state.event.start_date} - {this.state.event.end_date}
+            Suggestion date: <br></br>
+            {this.state.event.start_date} - {this.state.event.end_date}
           </h6>
           <div className="participant m-3 border">
             {this.state.participant.map((user, index) => {
               return (
-                <div className="mx-5 my-2">
-                  <table>
+                <div className="mx-3 my-2 border">
+                  <table className="mx-5">
                     <tr>
                       <td className="p-2 w-25">
-                        <img src={avatar} alt="" className="avatar"></img>
+                        <img alt="" src={avatar} className="avatar"></img>
                       </td>
+
                       <td className="p-2 w-75">
                         <p className="m-0">{user.fullname}</p>
                         <p className="m-0">@{user.username}</p>
@@ -81,28 +83,32 @@ class EventHistoryDetail extends React.Component {
             })}
           </div>
           <div className="category">
-            <h3 className="text-center">Venue:</h3>
+            <h3 className="text-center">Place Suggestions:</h3>
           </div>
-          <div className="text-center mb-3">
-            <table className="border">
-              <div className="m-3">
-                <tr>
-                  <td className="p-3">
-                    <img alt="" src={avatar} className="venue"></img>
-                    <p className="text-center m-0 centering">
-                      $places name and address
-                    </p>
-                    {/* <br></br> */}
-                  </td>
-                </tr>
-              </div>
+          <div className="text-center mb-3 border p-3 places">
+            <table className="">
+              {[...Array(4).keys()].map(num => {
+                return (
+                  <div className="m-3">
+                    <tr>
+                      <td className="p-3 border">
+                        <img alt="" src={avatar} className="venue"></img>
+                        <p className="text-center m-0 centering">
+                          $places name and address
+                        </p>
+                        {/* <br></br> */}
+                        <button className="btn btn-success">Choose</button>
+                      </td>
+                    </tr>
+                  </div>
+                );
+              })}
             </table>
           </div>
         </div>
-        <Footer></Footer>
       </div>
     );
   }
 }
 
-export default connect("baseUrl")(EventHistoryDetail);
+export default connect("baseUrl")(Suggestion);
