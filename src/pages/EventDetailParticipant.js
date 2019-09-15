@@ -130,7 +130,10 @@ class EventDetailParticipant extends React.Component {
           </div>
           <div className="row justify-content-center mb-0">
             <div className="button-add col-8 text-center">
-              <Link to="/editDate" className="btn btn-primary m-1 w-100">
+              <Link
+                to={"/editDate/" + this.state.event.event_id}
+                className="btn btn-primary m-1 w-100"
+              >
                 Manage my date
               </Link>
             </div>
