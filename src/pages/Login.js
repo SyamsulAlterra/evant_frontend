@@ -6,6 +6,9 @@ import Swal from "sweetalert2";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import GoogleButton from "react-google-button";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import Button from "@material-ui/core/Button";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import "bootstrap/dist/js/bootstrap.bundle";
 import homeLogo from "../images/e.png";
 
 class Login extends React.Component {
@@ -14,9 +17,26 @@ class Login extends React.Component {
     this.state = {
       username: "",
       password: "",
-      display: false
+      display: false,
+      formData: {
+        username: "",
+        password: ""
+      },
+      submitted: false
     };
   }
+
+  handleChange = event => {
+    const { formData } = this.state;
+    formData[event.target.name] = event.target.value;
+    this.setState({ formData });
+  };
+
+  handleSubmit = () => {
+    this.setState({ submitted: true }, () => {
+      setTimeout(() => this.setState({ submitted: false }), 5000);
+    });
+  };
 
   responseGoogle = async response => {
     console.log(response);
@@ -129,7 +149,45 @@ class Login extends React.Component {
                   height="50%"
                 />
               </div>
-              <form className="mt-3 mb-0 animated fadeIn">
+              <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
+                <TextValidator
+                  label="Username"
+                  onChange={this.handleUsername}
+                  name="username"
+                  value={this.state.username}
+                  validators={["required"]}
+                  errorMessages={[
+                    "this field is required",
+                    "email is not valid"
+                  ]}
+                />
+                <br />
+                <TextValidator
+                  label="Password"
+                  onChange={this.handlePassword}
+                  name="password"
+                  type="password"
+                  value={this.state.password}
+                  validators={["required"]}
+                  errorMessages={["this field is required"]}
+                />
+                <br />
+                <div className="row no-gutters justify-content-center animated fadeIn mt-2">
+                  <div className="col-auto">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      type="submit"
+                      onClick={this.handleClick}
+                      disabled={this.state.submitted}
+                    >
+                      {(this.state.submitted && "Your form is submitted!") ||
+                        (!this.state.submitted && "LOGIN")}
+                    </Button>
+                  </div>
+                </div>
+              </ValidatorForm>
+              {/* <form className="mt-3 mb-0 animated fadeIn">
                 <input
                   type="text"
                   placeholder="Username"
@@ -142,15 +200,9 @@ class Login extends React.Component {
                   className="m-2"
                   onChange={this.handlePassword}
                 />
-              </form>
-              <div className="row no-gutters justify-content-center animated fadeIn">
+              </form> */}
+              <div className="row no-gutters justify-content-center animated fadeIn mt-2">
                 <div className="col-auto">
-                  <button
-                    className="btn btn-outline-dark login-button my-2 text-center"
-                    onClick={this.handleClick}
-                  >
-                    Login
-                  </button>
                   <br />
                   <div className="row justify-content-center mt-2">
                     <div className="col text-center">
