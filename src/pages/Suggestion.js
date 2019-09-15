@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "unistore/react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
 

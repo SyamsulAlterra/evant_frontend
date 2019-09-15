@@ -5,6 +5,8 @@ import axios from "axios";
 import searchFriends from "../images/searchFriends.png";
 import ParticipantCard from "../components/ParticipantCard";
 import { actions } from "../Store";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 class EventDetails extends React.Component {
   constructor(props) {
@@ -154,6 +156,7 @@ class EventDetails extends React.Component {
   render() {
     return (
       <div className="eventDetailContent">
+        <Header></Header>
         <div className="border container my-3 p-3 mobileView">
           <h1 className="text-center">{this.state.event.event_name}</h1>
 
@@ -223,6 +226,7 @@ class EventDetails extends React.Component {
             })}
           </div>
         </div>
+        <Footer></Footer>
       </div>
     );
   }
