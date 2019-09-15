@@ -97,3 +97,10 @@ table {
   height: 300px;
   overflow: scroll;
 }
+.venue {
+  width: 100px;
+}
+.places {
+  height: 300px;
+  overflow: scroll;
+}

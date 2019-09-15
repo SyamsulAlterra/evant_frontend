@@ -16,6 +16,7 @@ import Transition from "../components/Transition";
 import EditDate from "../pages/EditDate";
 import EventDetailParticipant from "../pages/EventDetailParticipant";
 import PrepareEdit from "../pages/PrepareEditTanggal";
+import Suggestion from "../pages/Suggestion";
 
 class MyRoute extends React.Component {
   render() {
@@ -32,11 +33,12 @@ class MyRoute extends React.Component {
             <Route exact path="/profile" component={ProfilPage} />
             <Route exact path="/invite" component={InviteFriends} />
             <Route exact path="/editDate" component={EditDate} />
+            <Route exact path="/prepareDate" component={PrepareEdit} />
+            <Route path="/suggestion/:id" component={Suggestion} />
             <Route path="/transition/:id" component={Transition} />
             <Route path="/history/:id" component={EventHistoryDetail} />
             <Route path="/events/:id" component={EventDetails} />
             <Route path="/participant/:id" component={EventDetailParticipant} />
-            <Route exact path="/prepareDate" component={PrepareEdit} />
           </Switch>
         </Provider>
       </Router>
