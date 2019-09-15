@@ -24,7 +24,7 @@ class Suggestion extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-    console.log(this.props.place)
+    console.log(this.props.place);
     let response = await Axios(config);
     await this.setState({ event: response.data });
 
@@ -66,6 +66,24 @@ class Suggestion extends React.Component {
     let m = parseInt(date.slice(3, 5));
     let y = date.slice(6, 10);
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
+  };
+  choosePlace = async input => {
+    console.log(input);
+    let config = {
+      url:
+        this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      data: {
+        place_name: input.place,
+        place_location: input.place_location
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/transition/" + this.props.match.params.id);
   };
   render() {
     return (
@@ -122,11 +140,15 @@ class Suggestion extends React.Component {
                           {num.place}
                         </p>
 
+                        <button
+                          className="btn btn-success"
+                          onClick={() => this.choosePlace(num)}
+                        >
+                          Choose
+                        </button>
                         <p className="text-center m-0 centering">
                           {num.place_location}
                         </p>
-                        {/* <br></br> */}
-                        <button className="btn btn-success">Choose</button>
                       </td>
                     </tr>
                   </div>
