@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import ParticipantCard from "../components/ParticipantCard";
@@ -7,6 +7,7 @@ import checked from "../images/checked.png";
 import error from "../images/error.png";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Axios from "axios";
 
 class EventDetailParticipant extends React.Component {
   constructor(props) {
@@ -14,11 +15,13 @@ class EventDetailParticipant extends React.Component {
     this.state = {
       event: [],
       participants: [],
-      searchResult: []
+      searchResult: [],
+      categories: [],
+      preference: ""
     };
   }
   componentDidMount = async () => {
-    const config = {
+    let config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
@@ -48,6 +51,23 @@ class EventDetailParticipant extends React.Component {
       .catch(error => {
         console.log(error);
       });
+
+    config = {
+      url: this.props.baseUrl + "category",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      params: {
+        category: this.state.event.category
+      }
+    };
+
+    let response = await Axios(config);
+    await this.setState({
+      categories: response.data,
+      preference: response.data[0].preference
+    });
   };
   formatDate = date => {
     const dateDictionary = [
@@ -87,9 +107,42 @@ class EventDetailParticipant extends React.Component {
 
     await this.setState({ searchResult: result });
   };
+  declineEvent = async () => {
+    let config = {
+      url:
+        this.props.baseUrl +
+        "invitations/decline/" +
+        this.props.match.params.id,
+      method: "delete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/events");
+  };
+  handleCategory = e => {
+    this.setState({ preference: e.target.value });
+  };
+  postPreference = async () => {
+    let config = {
+      url: this.props.baseUrl + "users/preferences",
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      data: {
+        preference: this.state.preference,
+        event_id: this.props.match.params.id
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/events");
+  };
 
   render() {
-    console.log(this.state.event);
     return (
       <div className="eventDetailContent">
         <Header></Header>
@@ -106,17 +159,26 @@ class EventDetailParticipant extends React.Component {
               <label for="preference"></label>
               <span>
                 <select
-                  className="form-control"
+                  className="form-control h-50"
                   id="category"
                   onChange={this.handleCategory}
-                  value={this.props.category}
+                  // value={this.props.category}
                 >
-                  <option selected value="vacation">
-                    Select your preference
-                  </option>
-                  <option value="Culture">Culture</option>
-                  <option value="Religion">Religion</option>
-                  <option value="Museum">Museum</option>
+                  {this.state.categories.map((category, i) => {
+                    if (i === 0) {
+                      return (
+                        <option value={category.preference} selected="selected">
+                          {category.preference}
+                        </option>
+                      );
+                    } else {
+                      return (
+                        <option value={category.preference}>
+                          {category.preference}
+                        </option>
+                      );
+                    }
+                  })}
                 </select>
               </span>
             </div>
@@ -155,16 +217,21 @@ class EventDetailParticipant extends React.Component {
           </div>
           <div className="container">
             <div className="row no-gutters">
-              <div className="col-6 text-center">
-                <img alt="" src={error} className="cross m-3"></img>
+              <Link className="col-6 text-center">
+                <img
+                  alt=""
+                  src={error}
+                  className="cross m-3"
+                  onClick={this.declineEvent}
+                ></img>
                 <br></br>
                 Decline
-              </div>
-              <div className="col-6 text-center">
+              </Link>
+              <Link className="col-6 text-center" onClick={this.postPreference}>
                 <img alt="" src={checked} className="checked m-3"></img>
                 <br></br>
                 Ok
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -174,4 +241,6 @@ class EventDetailParticipant extends React.Component {
   }
 }
 
-export default connect("baseUrl, eventName")(EventDetailParticipant);
+export default connect("baseUrl, eventName")(
+  withRouter(EventDetailParticipant)
+);

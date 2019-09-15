@@ -17,6 +17,7 @@ import EditDate from "../pages/EditDate";
 import EventDetailParticipant from "../pages/EventDetailParticipant";
 import PrepareEdit from "../pages/PrepareEditTanggal";
 import Suggestion from "../pages/Suggestion";
+import PendingEvent from "../components/PendingEvent";
 
 class MyRoute extends React.Component {
   render() {
@@ -35,6 +36,7 @@ class MyRoute extends React.Component {
             <Route exact path="/editDate/:event_id" component={EditDate} />
             <Route exact path="/prepareDate" component={PrepareEdit} />
             <Route path="/suggestion/:id" component={Suggestion} />
+            <Route path="/pending/:id" component={PendingEvent} />
             <Route path="/transition/:id" component={Transition} />
             <Route path="/history/:id" component={EventHistoryDetail} />
             <Route path="/events/:id" component={EventDetails} />

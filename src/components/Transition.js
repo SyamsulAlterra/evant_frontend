@@ -6,6 +6,7 @@ import Axios from "axios";
 
 class Transition extends React.Component {
   componentDidMount = async () => {
+    let currentUserId = localStorage.getItem("user_id").toString();
     let config = {
       url:
         this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
@@ -15,16 +16,32 @@ class Transition extends React.Component {
       }
     };
     let response = await Axios(config);
-    console.log(response.data);
     let event_id = response.data.event_id;
     let event_status = response.data.status;
     let creator_id = response.data.creator_id;
+
+    config = {
+      url:
+        this.props.baseUrl +
+        "users/preferences/" +
+        this.props.match.params.id.toString(),
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+    response = await Axios(config);
+    console.log(response.data);
+    let isFilled = response.data.filter(pref => {
+      return pref.user_id.toString() === currentUserId;
+    });
+
     let destination;
     if (event_status === 0) {
-      if (
-        localStorage.getItem("user_id").toString() === creator_id.toString()
-      ) {
+      if (currentUserId === creator_id.toString()) {
         destination = `/events/${event_id}`;
+      } else if (isFilled.length > 0) {
+        destination = `/pending/${event_id}`;
       } else {
         destination = `/participant/${event_id}`;
       }
