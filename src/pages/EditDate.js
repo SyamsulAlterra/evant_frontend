@@ -8,18 +8,18 @@ import { actions } from "../Store";
 import Calendar from "../components/CalendarPrepareDate";
 
 class HomePage extends React.Component {
-  // componentWillMount = async () => {
-  //   let config = {
-  //     url: this.props.baseUrl + "date",
-  //     method: "get",
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token")
-  //     }
-  //   };
+  componentWillMount = async () => {
+    let config = {
+      url: this.props.baseUrl + "date",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
 
-  //   let response = await Axios(config);
-  //   await this.props.setAvailableDatesOnGlobal(response.data);
-  // };
+    let response = await Axios(config);
+    await this.props.setAvailableDatesOnGlobal(response.data);
+  };
   render() {
     return (
       <div className="HomePage">
