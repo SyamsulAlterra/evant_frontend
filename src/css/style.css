@@ -136,6 +136,7 @@ table {
 .display-exit-active {
   opacity: 0;
   transition: opacity 200ms;
+}
 .invitedBox {
   height: 300px;
   overflow: scroll;
