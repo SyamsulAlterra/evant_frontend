@@ -91,17 +91,19 @@ class Profile extends React.Component {
     return (
       <div className="profile">
         <div className="container mobileView">
-          <div className="row border my-4">
+          <div className="row border shadow my-4">
             <div className="col text-center">
               <div className="fullname">
-                <h3 className="mt-4 mb-0">
-                  {localStorage.getItem("fullname")}
-                </h3>
+                <h3 className="my-5">{localStorage.getItem("fullname")}</h3>
               </div>
               <div className="">
-                <img src={fotoProfil} className="profileImage m-3" alt=""></img>
+                <img
+                  src={fotoProfil}
+                  className="profileImage my-3"
+                  alt=""
+                ></img>
               </div>
-              <div className="text-left p-0">
+              <div className="p-0">
                 <div className="username mb-3">
                   <div className="row justify-content-center">
                     <div className="col-7">
@@ -209,31 +211,35 @@ class Profile extends React.Component {
                   </div>
                 </div>
                 <br />
-                <div className="gender">
-                  <img
-                    src={gender}
-                    height="20px"
-                    width="20px"
-                    className="float-left"
-                  />
-                  <span className="m-0">
-                    {" "}
-                    &nbsp;
-                    {localStorage.getItem("gender") === "true"
-                      ? "male"
-                      : "female"}
-                  </span>
+                <div className="row justify-content-left">
+                  <div className="col-7">
+                    <div className="gender">
+                      <img
+                        src={gender}
+                        height="20px"
+                        width="20px"
+                        className="float-left"
+                      />
+                      <span className="m-0">
+                        {" "}
+                        &nbsp;
+                        {localStorage.getItem("gender") === "true"
+                          ? "male"
+                          : "female"}
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 <br />
               </div>
               <div className="row">
                 <div className="col-6 text-left">
                   <button
-                    className="btn btn-info my-3 p-1"
+                    className="btn my-3 p-1 change-pass-button"
                     data-toggle="modal"
                     data-target="#changePassword"
                   >
-                    Change Password
+                    <small>Change Password</small>
                   </button>
                 </div>
 
@@ -252,21 +258,21 @@ class Profile extends React.Component {
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                          Change Password
+                          Change Your Password
                         </h5>
                       </div>
                       <div class="modal-body">
                         <input
                           type="password"
                           className="m-2"
-                          placeholder="new password"
+                          placeholder="New Password"
                           onChange={this.handlePassword}
                         ></input>
                         <br />
                         <input
                           type="password"
                           className="m-2"
-                          placeholder="confirm new password"
+                          placeholder="Confirm New Password"
                           onChange={this.handleConfirmPassword}
                         ></input>
                       </div>
@@ -280,7 +286,7 @@ class Profile extends React.Component {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-primary"
+                          class="btn change-pass-button"
                           data-dismiss="modal"
                           onClick={this.editPassword}
                         >
@@ -304,14 +310,14 @@ class Profile extends React.Component {
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                          Edit Username
+                          Change Your Username
                         </h5>
                       </div>
                       <div class="modal-body">
                         <input
                           type="text"
                           className="m-2"
-                          placeholder="username"
+                          placeholder="New Username"
                           onChange={this.handleUsername}
                         ></input>
                       </div>
@@ -325,7 +331,7 @@ class Profile extends React.Component {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-primary"
+                          class="btn change-pass-button"
                           data-dismiss="modal"
                           onClick={this.editProfile}
                         >
@@ -349,14 +355,14 @@ class Profile extends React.Component {
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                          Edit Address
+                          Change Your Address
                         </h5>
                       </div>
                       <div class="modal-body">
                         <input
                           type="text"
                           className="m-2"
-                          placeholder="address"
+                          placeholder="New Address"
                           onChange={this.handleAddress}
                         ></input>
                       </div>
@@ -370,7 +376,7 @@ class Profile extends React.Component {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-primary"
+                          class="btn change-pass-button"
                           data-dismiss="modal"
                           onClick={this.editProfile}
                         >
@@ -394,14 +400,14 @@ class Profile extends React.Component {
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                          Edit Email
+                          Change Your Email
                         </h5>
                       </div>
                       <div class="modal-body">
                         <input
                           type="text"
                           className="m-2"
-                          placeholder="Email"
+                          placeholder="New Email"
                           onChange={this.handleEmail}
                         ></input>
                       </div>
@@ -415,7 +421,7 @@ class Profile extends React.Component {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-primary"
+                          class="btn change-pass-button"
                           data-dismiss="modal"
                           onClick={this.editProfile}
                         >
@@ -439,14 +445,14 @@ class Profile extends React.Component {
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                          Edit Phone
+                          Change Your Phone Number
                         </h5>
                       </div>
                       <div class="modal-body">
                         <input
                           type="text"
                           className="m-2"
-                          placeholder="Phone"
+                          placeholder="New Phone Number"
                           onChange={this.handlePhone}
                         ></input>
                       </div>
@@ -460,7 +466,7 @@ class Profile extends React.Component {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-primary"
+                          class="btn change-pass-button"
                           data-dismiss="modal"
                           onClick={this.editProfile}
                         >

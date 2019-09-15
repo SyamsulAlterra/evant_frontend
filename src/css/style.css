@@ -123,6 +123,21 @@ table {
   font-weight: bold;
   color: black;
 }
+.invitedBox {
+  height: 300px;
+  overflow: scroll;
+}
+.venue {
+  width: 100px;
+}
+.places {
+  height: 300px;
+  overflow: scroll;
+}
+.change-pass-button {
+  background-color: black;
+  color: white;
+}
 .display-enter {
   opacity: 0;
 }
@@ -136,15 +151,4 @@ table {
 .display-exit-active {
   opacity: 0;
   transition: opacity 200ms;
-}
-.invitedBox {
-  height: 300px;
-  overflow: scroll;
-}
-.venue {
-  width: 100px;
-}
-.places {
-  height: 300px;
-  overflow: scroll;
 }
