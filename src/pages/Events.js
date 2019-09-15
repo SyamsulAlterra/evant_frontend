@@ -61,56 +61,18 @@ class Events extends React.Component {
                   </button>
                 </h2>
               </div>
-            <div
-              id="collapseOne"
-              className="collapse"
-              aria-labelledby="headingOne"
-              data-parent="#accordionExample1"
-            >
-              {this.state.listEvent.map(value => {
-                return (
-                  <div className="border">
-                    <CollapseEvent
-                      id={value.event_id}
-                      creatorName={value.creator_name}
-                      eventName={value.event_name}
-                      category={value.category}
-                      startDateParameter={value.start_date_parameter}
-                      endDateParameter={value.end_date_parameter}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="accordion pastEvent" id="accordionExample">
-            <div className="card">
-              <div className="card-header" id="headingOne">
-                <h2 className="mb-0">
-                  <button
-                    className="btn btn-link"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseTwo"
-                    aria-expanded="true"
-                    aria-controls="collapseTwo"
-                  >
-                    Events History ({this.state.pastEvent.length})
-                  </button>
-                </h2>
-              </div>
-
               <div
-                id="collapseTwo"
+                id="collapseOne"
                 className="collapse"
-                aria-labelledby="headingTwo"
-                data-parent="#accordionExample"
+                aria-labelledby="headingOne"
+                data-parent="#accordionExample1"
               >
-                {this.state.pastEvent.map(value => {
+                {this.state.listEvent.map(value => {
                   return (
                     <div className="border">
                       <CollapseEvent
                         id={value.event_id}
+                        creatorName={value.creator_name}
                         eventName={value.event_name}
                         category={value.category}
                         startDateParameter={value.start_date_parameter}
@@ -119,6 +81,45 @@ class Events extends React.Component {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+            <div className="accordion pastEvent" id="accordionExample">
+              <div className="card">
+                <div className="card-header" id="headingOne">
+                  <h2 className="mb-0">
+                    <button
+                      className="btn btn-link"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#collapseTwo"
+                      aria-expanded="true"
+                      aria-controls="collapseTwo"
+                    >
+                      Events History ({this.state.pastEvent.length})
+                    </button>
+                  </h2>
+                </div>
+
+                <div
+                  id="collapseTwo"
+                  className="collapse"
+                  aria-labelledby="headingTwo"
+                  data-parent="#accordionExample"
+                >
+                  {this.state.pastEvent.map(value => {
+                    return (
+                      <div className="border">
+                        <CollapseEvent
+                          id={value.event_id}
+                          eventName={value.event_name}
+                          category={value.category}
+                          startDateParameter={value.start_date_parameter}
+                          endDateParameter={value.end_date_parameter}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
