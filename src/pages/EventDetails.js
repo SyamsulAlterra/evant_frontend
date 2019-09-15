@@ -126,7 +126,9 @@ class EventDetails extends React.Component {
         <div className="border container my-3 p-3 mobileView">
           <h1 className="text-center">{this.state.event.event_name}</h1>
 
-          <h6 className="text-center m-0">creator: {this.state.event.creator_username}</h6>
+          <h6 className="text-center m-0">
+            creator: {this.state.event.creator_username}
+          </h6>
           <div className="category my-3">
             <h6 className="text-center">
               Category :{this.state.event.category}
@@ -161,13 +163,13 @@ class EventDetails extends React.Component {
           </div>
           <div className="row justify-content-center mb-3">
             <div className="button-add col-8 text-center">
-              <Link to="/#">
+              <Link to={`/suggestion/${this.state.event.event_id}`}>
                 <button className="btn btn-primary m-1">
                   Suggest Our Event
                 </button>
               </Link>
-            </div >
-          </div >
+            </div>
+          </div>
           <div className="row justify-content-center">
             <div className="search-user text-center">
               <input
@@ -175,19 +177,22 @@ class EventDetails extends React.Component {
                 placeholder="search by username"
                 className="text-center my-3"
               ></input>
-              <img className="searchFriends mx-2" alt="" src={searchFriends}></img>
+              <img
+                className="searchFriends mx-2"
+                alt=""
+                src={searchFriends}
+              ></img>
             </div>
           </div>
           <div className="participant border border-secondary p-3">
             {this.state.participants.map((value, index) => {
               return (
-
                 <ParticipantCard user={value}></ParticipantCard>
               );
             })}
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
