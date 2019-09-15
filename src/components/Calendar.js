@@ -5,6 +5,8 @@ import { actions } from "../Store";
 import CalendarDetail from "./CalendarDetail";
 import CalendarTitle from "./CalendarTitle";
 import "bootstrap/dist/js/bootstrap.bundle";
+import Axios from "axios";
+
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -92,7 +94,7 @@ class Calendar extends React.Component {
       currentYear: today.getFullYear()
     });
 
-    this.populateCalendar(this.state.month, this.state.year);
+    await this.populateCalendar(this.state.month, this.state.year);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -170,17 +172,23 @@ class Calendar extends React.Component {
               today={this.twoDigitString(this.state.todayDate)}
               currentMonth={this.twoDigitString(this.state.currentMonth)}
               currentYear={this.state.currentYear}
-              // availableDates={this.props.availableDates}
             ></CalendarGrid>
           );
         })}
-        <CalendarDetail></CalendarDetail>
+        <div className="col-2 px-3 eventDetail mt-2 mx-5">
+          <div className="btn btn-warning"></div>
+          <p className="eventDetail">Today</p>
+        </div>
+        <CalendarDetail
+          selectedMonth={this.twoDigitString(this.state.month)}
+          selectedYear={this.state.year}
+        ></CalendarDetail>
       </div>
     );
   }
 }
 
 export default connect(
-  "totalLeapYear",
+  "totalLeapYear, events, baseUrl",
   actions
 )(Calendar);
