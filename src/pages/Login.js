@@ -173,7 +173,7 @@ class Login extends React.Component {
                 />
                 <br />
                 <div className="row no-gutters justify-content-center animated fadeIn mt-2">
-                  <div className="col-auto">
+                  <div className="col-auto mt-3">
                     <Button
                       color="primary"
                       variant="contained"
@@ -187,24 +187,10 @@ class Login extends React.Component {
                   </div>
                 </div>
               </ValidatorForm>
-              {/* <form className="mt-3 mb-0 animated fadeIn">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  className="m-2"
-                  onChange={this.handleUsername}
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="m-2"
-                  onChange={this.handlePassword}
-                />
-              </form> */}
-              <div className="row no-gutters justify-content-center animated fadeIn mt-2">
+              <div className="row no-gutters justify-content-center animated fadeIn">
                 <div className="col-auto">
                   <br />
-                  <div className="row justify-content-center mt-2">
+                  <div className="row justify-content-center">
                     <div className="col text-center">
                       <GoogleLogin
                         clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
@@ -225,8 +211,7 @@ class Login extends React.Component {
                     </div>
                   </div>
                 </div>
-
-                <div className="row justify-content-center mt-3">
+                <div className="row justify-content-center mb-5">
                   <div className="col text-center">
                     <Link to="/register">
                       <small className="register-text">
