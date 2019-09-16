@@ -187,20 +187,6 @@ class Login extends React.Component {
                   </div>
                 </div>
               </ValidatorForm>
-              {/* <form className="mt-3 mb-0 animated fadeIn">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  className="m-2"
-                  onChange={this.handleUsername}
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="m-2"
-                  onChange={this.handlePassword}
-                />
-              </form> */}
               <div className="row no-gutters justify-content-center animated fadeIn mt-2">
                 <div className="col-auto">
                   <br />
