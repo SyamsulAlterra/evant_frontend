@@ -132,7 +132,7 @@ class EventDetails extends React.Component {
 
     await this.props.setPlaceOnGlobal(placeResponse.data);
     console.log(placeResponse.data);
-    this.props.history.push(`/suggestion/${this.state.event.event_id}`);
+    this.props.history.push(`/transition/${this.state.event.event_id}`);
   };
 
   formatDate = date => {
@@ -206,7 +206,7 @@ class EventDetails extends React.Component {
           </div>
           <div className="row justify-content-center mb-3">
             <div className="button-add col-8 text-center">
-              <Link to={`/suggestion/${this.state.event.event_id}`}>
+              <Link to={`/transition/${this.state.event.event_id}`}>
                 <button
                   className="btn btn-primary m-1"
                   onClick={this.generateEvent}

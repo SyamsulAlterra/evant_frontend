@@ -13,7 +13,8 @@ class EventHistoryDetail extends React.Component {
         event_name: "",
         creator_name: ""
       },
-      participant: []
+      participant: [],
+      startDate: ""
     };
   }
 
@@ -68,8 +69,22 @@ class EventHistoryDetail extends React.Component {
 
     response = await Axios(config);
     await this.setState({ participant: response.data });
+    if (
+      response.data.start_date === null ||
+      response.data.start_date === undefined ||
+      response.data.start_date === ""
+    ) {
+      this.setState({ startDate: `don't have match date` });
+      this.setState({ endDate: "" });
+    } else {
+      this.setState({
+        startDate: this.formatDate(this.state.event.start_date)
+      });
+      this.setState({ endDate: this.formatDate(this.state.event.end_date) });
+    }
   };
   render() {
+    console.log(this.state.event);
     return (
       <div className="eventHistory">
         <Header></Header>
@@ -85,8 +100,7 @@ class EventHistoryDetail extends React.Component {
             category: {this.state.event.category}
           </h6>
           <h6 className="text-center m-0">
-            date: {this.formatDate(this.state.event.start_date)} -{" "}
-            {this.formatDate(this.state.event.end_date)}
+            date: {`${this.state.startDate} - ${this.state.endDate}`}
           </h6>
           <div className="participant m-3 border">
             {this.state.participant.map((user, index) => {
@@ -115,9 +129,12 @@ class EventHistoryDetail extends React.Component {
               <div className="m-3">
                 <tr>
                   <td className="p-3">
-                    <img alt="" src={avatar} className="venue"></img>
+                    {/* <img alt="" src={avatar} className="venue"></img> */}
                     <p className="text-center m-0 centering">
-                      $places name and address
+                      {this.state.event.place_name}
+                    </p>
+                    <p className="text-center m-0 centering">
+                      {this.state.event.location}
                     </p>
                     {/* <br></br> */}
                   </td>

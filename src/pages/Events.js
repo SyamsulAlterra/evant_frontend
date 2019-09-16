@@ -43,6 +43,7 @@ class Events extends React.Component {
   };
 
   render() {
+    console.log(this.state.pastEvent);
     return (
       <div>
         <Header></Header>
@@ -84,13 +85,9 @@ class Events extends React.Component {
               </Card.Header>
               <Accordion.Collapse eventKey="1">
                 <Card.Body>
-                  <div
-                    id="collapseTwo"
-                    className="collapse"
-                    aria-labelledby="headingTwo"
-                    data-parent="#accordionExample"
-                  >
+                  <div>
                     {this.state.pastEvent.map(value => {
+                      console.log(value);
                       return (
                         <div className="shadow">
                           <CollapseEvent

@@ -30,17 +30,38 @@ class Footer extends React.Component {
           <div className="row mobileView p-0">
             <div className="col-3 bg-white text-center p-0">
               <Link to="/home">
-                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Home" src={houseIcon}></img>
+                <img
+                  alt=""
+                  className="my-3"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Home"
+                  src={houseIcon}
+                ></img>
               </Link>
             </div>
             <div className="col-3 bg-white text-center p-0">
               <Link to="/events">
-                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Event" src={calendar}></img>
+                <img
+                  alt=""
+                  className="my-3"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Event"
+                  src={calendar}
+                ></img>
               </Link>
             </div>
             <div className="col-3 bg-white text-center p-0">
               <Link to="/invitations">
-                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Invitation" src={invitation}></img>
+                <img
+                  alt=""
+                  className="my-3"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Invitation"
+                  src={invitation}
+                ></img>
                 <span className="text-dark">
                   {this.props.invitations.length}
                 </span>
@@ -48,8 +69,14 @@ class Footer extends React.Component {
             </div>
             <div className="col-3 bg-white text-center p-0">
               <Link to="/profile">
-                <img alt="" className="my-3" data-toggle="tooltip" data-placement="top" title="Profile" src={profile}></img>
-
+                <img
+                  alt=""
+                  className="my-3"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Profile"
+                  src={profile}
+                ></img>
               </Link>
             </div>
           </div>

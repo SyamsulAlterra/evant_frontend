@@ -27,7 +27,10 @@ class Transition extends React.Component {
     let event_status = response.data.status;
     let creator_id = response.data.creator_id;
     let place = response.data.place_name;
-    this.setState({ place: response.data.place_name });
+    let suggestionDate = response.data.startDate;
+    let eventPreference = response.data.preference;
+
+    // this.setState({ place: response.data.place_name });
 
     config = {
       url:
@@ -59,11 +62,13 @@ class Transition extends React.Component {
       return user.user_id.toString() === currentUserId;
     });
 
-    console.log(isConfirm[0]);
+    console.log(suggestionDate, eventPreference);
 
     let destination;
     if (event_status === 0) {
-      if (
+      if (suggestionDate === undefined && eventPreference !== null) {
+        destination = `/unmatch/${event_id}`;
+      } else if (
         currentUserId === creator_id.toString() &&
         (isConfirm[0] === undefined || place === null || place === "")
       ) {
