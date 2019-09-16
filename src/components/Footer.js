@@ -25,10 +25,10 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid footer bg-light text-center p-0">
-        <div className="bg-info container mobileView text-center">
+      <div className="container-fluid footer text-center p-0">
+        <div className="container mobileView text-center">
           <div className="row mobileView p-0">
-            <div className="col-3 bg-white text-center p-0">
+            <div className="col-3 text-center p-0">
               <Link to="/home">
                 <img
                   alt=""
@@ -40,7 +40,7 @@ class Footer extends React.Component {
                 ></img>
               </Link>
             </div>
-            <div className="col-3 bg-white text-center p-0">
+            <div className="col-3 text-center p-0">
               <Link to="/events">
                 <img
                   alt=""
@@ -52,7 +52,7 @@ class Footer extends React.Component {
                 ></img>
               </Link>
             </div>
-            <div className="col-3 bg-white text-center p-0">
+            <div className="col-3 text-center p-0">
               <Link to="/invitations">
                 <img
                   alt=""
@@ -67,7 +67,7 @@ class Footer extends React.Component {
                 </span>
               </Link>
             </div>
-            <div className="col-3 bg-white text-center p-0">
+            <div className="col-3 text-center p-0">
               <Link to="/profile">
                 <img
                   alt=""
