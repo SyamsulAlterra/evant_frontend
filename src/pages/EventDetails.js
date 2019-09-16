@@ -165,7 +165,7 @@ class EventDetails extends React.Component {
 
   render() {
     return (
-      <div className="eventDetailContent">
+      <div className="eventDetailContent mbForFooter">
         <Header></Header>
         <div className="vh-100">
           <div className="border container my-3 p-3 mobileView">
@@ -243,7 +243,7 @@ class EventDetails extends React.Component {
                 ></img>
               </div>
             </div>
-            <div className="participant border border-secondary p-3">
+            <div className="participant p-3">
               {this.state.participants.map((value, index) => {
                 return <ParticipantCard user={value}></ParticipantCard>;
               })}

@@ -173,7 +173,7 @@ class CreateEvent extends React.Component {
     );
     console.log(this.props.category);
     return (
-      <div className="createEvent-content">
+      <div className="createEvent-content mbForFooter">
         <Header></Header>
         <div className="border container my-5 p-3 mobileView">
           <h3 className="text-center">CREATE EVENT</h3>
@@ -218,8 +218,8 @@ class CreateEvent extends React.Component {
                   onChange={this.searchParticipant}
                 ></input>
               </div>
-              <Link to="/invite" className="button-add col-4 p-0 text-left">
-                <button className="btn btn-primary m-1">invite user</button>
+              <Link to="/invite" className="button-add col-4 px-2 text-right">
+                <button className="btn btn-primary m-1">invite</button>
               </Link>
             </div>
             <div>
@@ -235,6 +235,7 @@ class CreateEvent extends React.Component {
             </div>
             <div className="row startDate-section justify-content-center">
               <div className="col-5 p-0 text-center my-2">
+
                 <DatePicker
                   selected={this.props.startDate}
                   onChange={this.handleStartDate}
