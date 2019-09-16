@@ -356,67 +356,6 @@ class Register extends React.Component {
                       </div>
                     </div>
                   </ValidatorForm>
-                  {/* <input
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Full Name"
-                      onChange={this.handleName}
-                    />
-                    <input
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Username"
-                      onChange={this.handleUsername}
-                    />
-                    <input
-                      type="email"
-                      className="mb-3 col-12"
-                      placeholder="Email"
-                      onChange={this.handleEmail}
-                    />
-                    <input
-                      type="password"
-                      className="mb-3 col-12"
-                      placeholder="Password"
-                      onChange={this.handlePassword}
-                    />
-                    <input
-                      type="password"
-                      className="mb-3 col-12"
-                      placeholder="Confirm password"
-                      onChange={this.handleConfirmPassword}
-                    />
-                    <input
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Phone"
-                      onChange={this.handlePhone}
-                    />
-                    <textarea
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Address"
-                      onChange={this.handleAddress}
-                    />
-                    <br />
-                    <div className="text-left mx-4 mb-4 px-4">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value={true}
-                        onChange={this.handleGender}
-                      />
-                      Male
-                      <br />
-                      <input
-                        type="radio"
-                        name="gender"
-                        value={false}
-                        onChange={this.handleGender}
-                      />
-                      Female <br />
-                    </div>
-                  </form> */}
                 </div>
                 {/* <div className="col-12">
                   <button
