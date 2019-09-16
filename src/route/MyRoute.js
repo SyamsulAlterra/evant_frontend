@@ -35,9 +35,9 @@ class MyRoute extends React.Component {
             <Route exact path="/events/create" component={CreateEvent} />
             <Route exact path="/profile" component={ProfilPage} />
             <Route exact path="/invite" component={InviteFriends} />
-            <Route exact path="/editDate/:event_id" component={EditDate} />
             <Route exact path="/prepareDate" component={PrepareEdit} />
             <Route path="/suggestion/:id" component={Suggestion} />
+            <Route path="/editDate/:event_id" component={EditDate} />
             <Route path="/pending/:id" component={PendingEvent} />
             <Route path="/transition/:id" component={Transition} />
             <Route path="/history/:id" component={EventHistoryDetail} />
