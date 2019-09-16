@@ -114,7 +114,7 @@ class Profile extends React.Component {
               <div className="fullname">
                 <h3 className="my-5">{localStorage.getItem("fullname")}</h3>
               </div>
-              <div className="">
+              <div className="mb-4">
                 <img
                   src={fotoProfil}
                   className="profileImage my-3"
@@ -124,18 +124,18 @@ class Profile extends React.Component {
               <div className="p-0">
                 <div className="username mb-3">
                   <div className="row justify-content-center">
-                    <div className="col-7">
+                    <div className="col-10">
                       <img
                         src={username}
                         height="20px"
                         width="20px"
                         className="float-left"
                       />
-                      <h6 className="m-0">
-                        {localStorage.getItem("username")}
+                      <h6 className="m-0 float-left">
+                        &nbsp;{localStorage.getItem("username")}
                       </h6>
                     </div>
-                    <div className="col-5">
+                    <div className="col-2">
                       <img
                         src={editIcon}
                         alt=""
@@ -145,6 +145,9 @@ class Profile extends React.Component {
                         onClick={() =>
                           this.setState({ usernameModalShow: true })
                         }
+                        data-toggle="tooltip"
+                        data-placement="right"
+                        title="Edit Username"
                       />
                     </div>
                   </div>
@@ -152,18 +155,18 @@ class Profile extends React.Component {
                 <br />
                 <div className="address mb-3">
                   <div className="row justify-content-center">
-                    <div className="col-7">
+                    <div className="col-10">
                       <img
                         src={address}
                         height="20px"
                         width="20px"
                         className="float-left"
                       />
-                      <h6 className="m-0">
-                        &nbsp;{localStorage.getItem("address")}
+                      <h6 className="m-0 float-left">
+                        &nbsp;<small>{localStorage.getItem("address")}</small>
                       </h6>
                     </div>
-                    <div className="col-5">
+                    <div className="col-2">
                       <img
                         src={editIcon}
                         height="15px"
@@ -173,6 +176,9 @@ class Profile extends React.Component {
                         onClick={() =>
                           this.setState({ addressModalShow: true })
                         }
+                        data-toggle="tooltip"
+                        data-placement="right"
+                        title="Edit Address"
                       />
                     </div>
                   </div>
@@ -180,18 +186,18 @@ class Profile extends React.Component {
                 <br />
                 <div className="email mb-3">
                   <div className="row justify-content-center">
-                    <div className="col-7">
+                    <div className="col-10">
                       <img
                         src={email}
                         height="20px"
                         width="20px"
                         className="float-left"
                       />
-                      <h6 className="m-0">
+                      <h6 className="m-0 float-left">
                         &nbsp;{localStorage.getItem("email")}
                       </h6>
                     </div>
-                    <div className="col-5">
+                    <div className="col-2">
                       <img
                         src={editIcon}
                         alt=""
@@ -199,24 +205,28 @@ class Profile extends React.Component {
                         width="15px"
                         className="float-right"
                         onClick={() => this.setState({ emailModalShow: true })}
+                        data-toggle="tooltip"
+                        data-placement="right"
+                        title="Edit Email"
                       />
                     </div>
                   </div>
-                  <span className="m-0"></span>
                 </div>
                 <br />
                 <div className="phone mb-3">
                   <div className="row justify-content-center">
-                    <div className="col-7">
+                    <div className="col-10">
                       <img
                         src={phone}
                         height="20px"
                         width="20px"
                         className="float-left"
                       />
-                      <h6 className="m-0">{localStorage.getItem("phone")}</h6>
+                      <h6 className="m-0 float-left">
+                        {localStorage.getItem("phone")}
+                      </h6>
                     </div>
-                    <div className="col-5">
+                    <div className="col-2">
                       <img
                         src={editIcon}
                         alt=""
@@ -224,13 +234,16 @@ class Profile extends React.Component {
                         width="15px"
                         className="float-right"
                         onClick={() => this.setState({ phoneModalShow: true })}
+                        data-toggle="tooltip"
+                        data-placement="right"
+                        title="Edit Phone"
                       />
                     </div>
                   </div>
                 </div>
                 <br />
                 <div className="row justify-content-left">
-                  <div className="col-7">
+                  <div className="col-10">
                     <div className="gender">
                       <img
                         src={gender}
@@ -238,7 +251,7 @@ class Profile extends React.Component {
                         width="20px"
                         className="float-left"
                       />
-                      <span className="m-0">
+                      <span className="m-0 float-left">
                         {" "}
                         &nbsp;
                         {localStorage.getItem("gender") === "true"
