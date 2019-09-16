@@ -35,7 +35,7 @@ class Events extends React.Component {
       .get(this.props.baseUrl + "events/history", config)
       .then(async response => {
         await this.setState({ pastEvent: response.data });
-        console.log(this.state.pastEvent);
+        await console.log("past evnet", response.data);
       })
       .catch(error => {
         console.log(error);
@@ -61,7 +61,7 @@ class Events extends React.Component {
                   <div>
                     {this.state.listEvent.map(value => {
                       return (
-                        <div className="border">
+                        <div className="shadow">
                           <CollapseEvent
                             id={value.event_id}
                             creatorName={value.creator_name}
@@ -91,11 +91,14 @@ class Events extends React.Component {
                       return (
                         <div className="shadow">
                           <CollapseEvent
-                            id={value.event_id}
-                            eventName={value.event_name}
-                            category={value.category}
-                            startDateParameter={value.start_date_parameter}
-                            endDateParameter={value.end_date_parameter}
+                            id={value.event.event_id}
+                            eventName={value.event.event_name}
+                            creatorName={value.creator_name}
+                            category={value.event.category}
+                            startDateParameter={
+                              value.event.start_date_parameter
+                            }
+                            endDateParameter={value.event.end_date_parameter}
                           />
                         </div>
                       );
