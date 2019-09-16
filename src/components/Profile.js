@@ -163,7 +163,7 @@ class Profile extends React.Component {
                         className="float-left"
                       />
                       <h6 className="m-0 float-left">
-                        &nbsp;<small>{localStorage.getItem("address")}</small>
+                        &nbsp;{localStorage.getItem("address")}
                       </h6>
                     </div>
                     <div className="col-2">

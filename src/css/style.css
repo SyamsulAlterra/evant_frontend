@@ -48,6 +48,10 @@ table {
 .eventDetail {
   font-size: 12px;
 }
+.eventDetailButton {
+  background-color: black;
+  color: white;
+}
 .todayButton {
   height: 20px;
   width: 50px;
@@ -187,6 +191,7 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
+
 .todayMark {
   width: 50px;
   font-size: 12px;
@@ -200,3 +205,4 @@ select.form-control:not([size]):not([multiple]) {
 .position {
   height: 100vh;
 }
+
