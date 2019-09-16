@@ -20,6 +20,7 @@ import Suggestion from "../pages/Suggestion";
 import PendingEvent from "../components/PendingEvent";
 import Confirmation from "../pages/Confirmation";
 import GeneratedEvent from "../pages/GeneratedEvent";
+import Unmatch from "../components/Unmatch";
 import GoogleRegister from "../pages/RegisterWithGoogle";
 
 class MyRoute extends React.Component {
@@ -36,8 +37,8 @@ class MyRoute extends React.Component {
             <Route exact path="/events/create" component={CreateEvent} />
             <Route exact path="/profile" component={ProfilPage} />
             <Route exact path="/invite" component={InviteFriends} />
-            <Route exact path="/editDate/:event_id" component={EditDate} />
             <Route exact path="/prepareDate" component={PrepareEdit} />
+            <Route path="/editDate/:event_id" component={EditDate} />
             <Route path="/suggestion/:id" component={Suggestion} />
             <Route path="/pending/:id" component={PendingEvent} />
             <Route path="/transition/:id" component={Transition} />
@@ -46,6 +47,7 @@ class MyRoute extends React.Component {
             <Route path="/participant/:id" component={EventDetailParticipant} />
             <Route path="/confirmation/:id" component={Confirmation} />
             <Route path="/generated/:id" component={GeneratedEvent} />
+            <Route path="/unmatch/:id" component={Unmatch} />
             <Route path="/googleRegister" component={GoogleRegister} />
           </Switch>
         </Provider>
