@@ -68,38 +68,6 @@ class GoogleRegister extends React.Component {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
     }
-    // let config = {
-    //   url: this.props.baseUrl + "users/register",
-    //   method: "post",
-    //   data: {
-    //     username: this.state.username,
-    //     email: this.state.email,
-    //     password: this.state.password,
-    //     gender: this.state.gender,
-    //     fullname: this.state.name,
-    //     address: this.state.address,
-    //     phone: this.state.phone.toString()
-    //   }
-    // };
-
-    // await axios(config)
-    //   .then(() => {
-    //     Swal.fire(
-    //       "Account Created Successfully",
-    //       "Please proceed to login",
-    //       "success"
-    //     );
-    //     this.props.history.push("/");
-    //   })
-    //   .catch(() => {
-    //     Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
-    //   });
-
-    // console.log(response);
-    // const email = response.profileObj.email;
-    // const boundaryIndex = email.indexOf("@");
-    // const username = email.slice(0, boundaryIndex);
-    // const fullname = response.profileObj.name;
     const req = {
       method: "post",
       url: this.props.baseUrl + "users/register_with_google",
@@ -155,8 +123,8 @@ class GoogleRegister extends React.Component {
                   src={homeLogo}
                   alt=""
                   className="text-center mt-5 mb-0"
-                  width="75px"
-                  height="75px"
+                  width="185px"
+                  height="185px"
                 />
                 <h1 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
                   Evant

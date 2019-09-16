@@ -154,8 +154,8 @@ class Login extends React.Component {
                   src={homeLogo}
                   alt=""
                   className="text-center mt-3 mb-5 animated bounceInDown delay-1s"
-                  width="50%"
-                  height="50%"
+                  width="70%"
+                  height="70%"
                 />
               </div>
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
