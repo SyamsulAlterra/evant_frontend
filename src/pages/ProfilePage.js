@@ -8,8 +8,10 @@ class ProfilePage extends React.Component {
     return (
       <div className="profilePage">
         <Header></Header>
-        <Profile></Profile>
-        <Footer></Footer>
+        <div className="position">
+          <Profile></Profile>
+          <Footer></Footer>
+        </div>
       </div>
     );
   }

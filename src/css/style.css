@@ -63,7 +63,6 @@ table {
   width: 30px;
 }
 .footer {
-  position: fixed;
   bottom: 0;
 }
 .footer img {
@@ -159,13 +158,22 @@ table {
   opacity: 0;
   transition: opacity 200ms;
 }
+.edit-header {
+  height: 100px;
+}
 .header-style {
   /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
   -moz-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
   box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73); */
+  height: 100px;
 }
 .header-style h4 {
   font-family: "Roboto", sans-serif;
+  height: 100px;
+}
+.header {
+  height: 100px;
+  background-color: #a7cdcc;
 }
 .size-select {
   width: 1000px;
@@ -179,4 +187,6 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
-
+.position {
+  height: 100vh;
+}

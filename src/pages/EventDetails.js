@@ -165,85 +165,87 @@ class EventDetails extends React.Component {
     return (
       <div className="eventDetailContent">
         <Header></Header>
-        <div className="border container my-3 p-3 mobileView">
-          <h1 className="text-center">{this.state.event.event_name}</h1>
+        <div className="vh-100">
+          <div className="border container my-3 p-3 mobileView">
+            <h1 className="text-center">{this.state.event.event_name}</h1>
 
-          <h6 className="text-center m-0">
-            creator: {this.state.event.creator_username}
-          </h6>
-          <div className="category my-3">
-            <h6 className="text-center">
-              Category :{this.state.event.category}
+            <h6 className="text-center m-0">
+              creator: {this.state.event.creator_username}
             </h6>
-          </div>
-          <div className="row justify-content-center mb-3">
-            <div className="preferenceSelect col-8 text-center">
-              <label for="preference">Select your preference :</label>
-              <span>
-                <select
-                  className="form-control"
-                  id="preference"
-                  onChange={this.handlePreference}
+            <div className="category my-3">
+              <h6 className="text-center">
+                Category :{this.state.event.category}
+              </h6>
+            </div>
+            <div className="row justify-content-center mb-3">
+              <div className="preferenceSelect col-8 text-center">
+                <label for="preference">Select your preference :</label>
+                <span>
+                  <select
+                    className="form-control"
+                    id="preference"
+                    onChange={this.handlePreference}
+                  >
+                    {this.state.preferenceOptions.map((value, index) => {
+                      console.log(value);
+                      return (
+                        <option value={value.preference}>
+                          {value.preference}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </span>
+              </div>
+            </div>
+            <div className="dateSection text-center">
+              Range date :{" "}
+              {this.formatDate(this.state.event.start_date_parameter)} -{" "}
+              {this.formatDate(this.state.event.end_date_parameter)}
+              <br />
+              Event Duration : {this.state.event.duration} days
+            </div>
+            <div className="row justify-content-center mb-3">
+              <div className="button-add col-8 text-center">
+                <Link to={`/transition/${this.state.event.event_id}`}>
+                  <button
+                    className="btn btn-primary m-1"
+                    onClick={this.generateEvent}
+                  >
+                    Suggest Our Event
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div className="row justify-content-center mb-0">
+              <div className="button-add col-8 text-center">
+                <Link
+                  to={"/editDate/" + this.state.event.event_id}
+                  className="btn btn-primary m-1 w-100"
                 >
-                  {this.state.preferenceOptions.map((value, index) => {
-                    console.log(value);
-                    return (
-                      <option value={value.preference}>
-                        {value.preference}
-                      </option>
-                    );
-                  })}
-                </select>
-              </span>
+                  Manage my date
+                </Link>
+              </div>
             </div>
-          </div>
-          <div className="dateSection text-center">
-            Range date :{" "}
-            {this.formatDate(this.state.event.start_date_parameter)} -{" "}
-            {this.formatDate(this.state.event.end_date_parameter)}
-            <br />
-            Event Duration : {this.state.event.duration} days
-          </div>
-          <div className="row justify-content-center mb-3">
-            <div className="button-add col-8 text-center">
-              <Link to={`/transition/${this.state.event.event_id}`}>
-                <button
-                  className="btn btn-primary m-1"
-                  onClick={this.generateEvent}
-                >
-                  Suggest Our Event
-                </button>
-              </Link>
+            <div className="row justify-content-center">
+              <div className="search-user text-center">
+                <input
+                  type="text"
+                  placeholder="search by username"
+                  className="text-center my-3"
+                ></input>
+                <img
+                  className="searchFriends mx-2"
+                  alt=""
+                  src={searchFriends}
+                ></img>
+              </div>
             </div>
-          </div>
-          <div className="row justify-content-center mb-0">
-            <div className="button-add col-8 text-center">
-              <Link
-                to={"/editDate/" + this.state.event.event_id}
-                className="btn btn-primary m-1 w-100"
-              >
-                Manage my date
-              </Link>
+            <div className="participant border border-secondary p-3">
+              {this.state.participants.map((value, index) => {
+                return <ParticipantCard user={value}></ParticipantCard>;
+              })}
             </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="search-user text-center">
-              <input
-                type="text"
-                placeholder="search by username"
-                className="text-center my-3"
-              ></input>
-              <img
-                className="searchFriends mx-2"
-                alt=""
-                src={searchFriends}
-              ></img>
-            </div>
-          </div>
-          <div className="participant border border-secondary p-3">
-            {this.state.participants.map((value, index) => {
-              return <ParticipantCard user={value}></ParticipantCard>;
-            })}
           </div>
         </div>
         <Footer></Footer>
