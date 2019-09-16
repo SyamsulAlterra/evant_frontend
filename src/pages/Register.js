@@ -4,12 +4,20 @@ import axios from "axios";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
-import GoogleButton from "react-google-button";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { TransitonGroup, CSSTransition } from "react-transition-group";
-import Button from "@material-ui/core/Button";
+import { CSSTransition } from "react-transition-group";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import homeLogo from "../images/e.png";
+import red from "@material-ui/core/colors/red";
+
+const red300 = red["500"];
+
+const style = {
+  right: 0,
+  fontSize: "12px",
+  color: red300,
+  width: "240px"
+  // marginTop: "-50px"
+};
 
 class Register extends React.Component {
   constructor(props) {
@@ -189,6 +197,7 @@ class Register extends React.Component {
                     className="register-form form-group animated fadeIn"
                   >
                     <TextValidator
+                      style={style}
                       label="Username"
                       onChange={this.handleUsername}
                       name="username"
@@ -200,6 +209,7 @@ class Register extends React.Component {
                       ]}
                     />
                     <TextValidator
+                      style={style}
                       label="Fullname"
                       onChange={this.handleName}
                       name="name"
@@ -211,6 +221,7 @@ class Register extends React.Component {
                       ]}
                     />
                     <TextValidator
+                      style={style}
                       label="Email"
                       onChange={this.handleEmail}
                       name="email"
@@ -223,6 +234,7 @@ class Register extends React.Component {
                     />
                     <br />
                     <TextValidator
+                      style={style}
                       label="Password"
                       onChange={this.handlePassword}
                       name="password"
@@ -233,6 +245,7 @@ class Register extends React.Component {
                     />
                     <br />
                     <TextValidator
+                      style={style}
                       label="Confirm Password"
                       onChange={this.handleConfirmPassword}
                       name="password"
@@ -243,6 +256,7 @@ class Register extends React.Component {
                     />
                     <br />
                     <TextValidator
+                      style={style}
                       label="Phone"
                       onChange={this.handlePhone}
                       name="Phone"
@@ -254,6 +268,7 @@ class Register extends React.Component {
                       ]}
                     />
                     <TextValidator
+                      style={style}
                       label="Address"
                       onChange={this.handleAddress}
                       name="address"
@@ -284,18 +299,20 @@ class Register extends React.Component {
                     </div>
                     <div className="row no-gutters justify-content-center animated fadeIn mt-2">
                       <div className="col-auto">
-                        <Button
-                          className="register-button"
+                        <button
                           color="primary"
+                          size="large"
                           variant="contained"
                           type="submit"
                           onClick={this.handleClick}
                           disabled={this.state.submitted}
+                          type="button"
+                          class="btn btn-primary edit-button"
                         >
                           {(this.state.submitted &&
                             "Your form is submitted!") ||
-                            (!this.state.submitted && "REGISTER")}
-                        </Button>
+                            (!this.state.submitted && "LOGIN")}
+                        </button>
                       </div>
                     </div>
                   </ValidatorForm>
