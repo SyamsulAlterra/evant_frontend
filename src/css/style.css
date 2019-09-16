@@ -14,6 +14,7 @@
 .mobileView {
   width: 375px;
   font-family: "Montserrat";
+  overflow: hidden;
 }
 .calendarCell {
   height: 40px;
@@ -67,6 +68,7 @@ table {
   width: 30px;
 }
 .footer {
+  position: fixed;
   bottom: 0;
 }
 .footer img {
@@ -191,7 +193,6 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
-
 .todayMark {
   width: 50px;
   font-size: 12px;
@@ -202,7 +203,3 @@ select.form-control:not([size]):not([multiple]) {
 .mbForFooter {
   margin-bottom: 100px;
 }
-.position {
-  height: 100vh;
-}
-
