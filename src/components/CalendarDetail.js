@@ -34,31 +34,32 @@ class CalendarDetail extends React.Component {
   render() {
     return (
       <div className="container mobileView p-0 text-center mbForFooter">
-        <div className="calendarDetail border mb-3 my-1 text-left p-2">
-          <div className="row">
-            <div className="col-12 px-3 eventDetail text-center">
+        <div className="calendarDetail mb-3 my-1 text-left">
+          <div className="row no-gutters">
+            <div className="col-12 eventDetail text-center">
               <p className="text-center mb-2 p-1 bg-danger text-white markedTitle">
                 Marked Event(s)
               </p>
               {this.props.events.map(event => {
-                let theDate = event.booked.filter((date, i) => {
-                  return i === 0;
-                });
-                let month = theDate[0].slice(3, 5);
-                if (month === this.props.selectedMonth) {
-                  return (
-                    <Link to={`/transition/${event.event_id}`}>
-                      <div className="m-1 border p-1">
-                        <p className="m-0 eventDetail">"{event.event_name}"</p>
-                        <p className="m-0 eventDetail">{`${this.formatDate(
-                          event.booked[0]
-                        )} - ${this.formatDate(
-                          event.booked[event.booked.length - 1]
-                        )}`}</p>
-                      </div>
-                    </Link>
-                  );
-                }
+                // let theDate = event.booked.filter((date, i) => {
+                //   return i === 0;
+                // });
+                // let month = theDate[0].slice(3, 5);
+                // if (month === this.props.selectedMonth) {
+                return (
+                  <Link to={`/transition/${event.event_id}`}>
+                    <div className="m-1 border p-1">
+                      <p className="m-0 eventDetail">"{event.event_name}"</p>
+                      <p className="m-0 eventDetail">{`${this.formatDate(
+                        event.booked[0]
+                      )} - ${this.formatDate(
+                        event.booked[event.booked.length - 1]
+                      )}`}</p>
+                    </div>
+                  </Link>
+                  // );
+                  // }
+                );
               })}
             </div>
           </div>

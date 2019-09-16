@@ -41,12 +41,10 @@ table {
 }
 .calendarDetail {
   width: 280px;
-  height: 200px;
   margin: 0px auto;
-  overflow: scroll;
 }
 .eventDetail {
-  font-size: 12px;
+  font-size: 13px;
 }
 .eventDetailButton {
   background-color: black;
@@ -67,6 +65,7 @@ table {
   width: 30px;
 }
 .footer {
+  position: fixed;
   bottom: 0;
 }
 .footer img {
@@ -99,10 +98,6 @@ table {
   width: 26px;
   height: 26px;
 }
-.participant {
-  height: 400px;
-  overflow: scroll;
-}
 .checked,
 .cross {
   width: 40px;
@@ -132,10 +127,6 @@ table {
 .register-evant {
   font-weight: bold;
   color: black;
-}
-.invitedBox {
-  height: 300px;
-  overflow: scroll;
 }
 .venue {
   width: 200px;
@@ -191,18 +182,22 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
-
 .todayMark {
   width: 50px;
   font-size: 12px;
 }
 .markedTitle {
-  font-size: 12px;
+  font-size: 15px;
 }
 .mbForFooter {
-  margin-bottom: 100px;
+  margin-bottom: 150px;
 }
 .position {
   height: 100vh;
 }
-
+.calendarCell p {
+  font-size: 15px !important;
+}
+.search-user input {
+  height: 40px;
+}
