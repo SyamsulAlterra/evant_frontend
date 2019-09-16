@@ -6,6 +6,9 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 
 class Invitations extends React.Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     if (this.props.invitations.length < 1) {
       return (
