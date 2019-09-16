@@ -271,7 +271,7 @@ class CalendarPrepareDate extends React.Component {
         <div className="row justify-content-center">
           <div className="col-6 text-center">
             <Link
-              to={"/participant/" + this.state.event.event_id}
+              to={"/transition/" + this.state.event.event_id}
               class="btn btn-outline-info"
               role="button"
             >

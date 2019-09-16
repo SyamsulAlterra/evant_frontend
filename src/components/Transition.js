@@ -40,21 +40,42 @@ class Transition extends React.Component {
       }
     };
     response = await Axios(config);
-    console.log(response.data);
     let isFilled = response.data.filter(pref => {
       return pref.user_id.toString() === currentUserId;
     });
-    console.log(place);
+
+    config = {
+      url:
+        this.props.baseUrl +
+        "users/preferences/confirmations/" +
+        this.props.match.params.id.toString(),
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+    response = await Axios(config);
+    let isConfirm = response.data.filter(user => {
+      return user.user_id.toString() === currentUserId;
+    });
+
+    console.log(isConfirm[0]);
+
     let destination;
     if (event_status === 0) {
-      if (place !== "") {
-        destination = `/confirmation/${event_id}`;
-      } else if (currentUserId === creator_id.toString()) {
-        destination = `/events/${event_id}`;
-      } else if (isFilled.length > 0) {
-        destination = `/pending/${event_id}`;
-      } else {
+      if (
+        currentUserId === creator_id.toString() &&
+        (isConfirm[0] === undefined || place === null || place === "")
+      ) {
+        destination = `/creator/${event_id}`;
+      } else if (isConfirm[0] === undefined) {
         destination = `/participant/${event_id}`;
+      } else if (isFilled.length > 0 && (place === null || place === "")) {
+        destination = `/pending/${event_id}`;
+      } else if (isConfirm[0].confirmation === 1) {
+        destination = `/generated/${event_id}`;
+      } else if (isConfirm[0].confirmation === 0) {
+        destination = `/confirmation/${event_id}`;
       }
     } else {
       destination = `/history/${event_id}`;

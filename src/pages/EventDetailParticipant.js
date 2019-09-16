@@ -162,7 +162,6 @@ class EventDetailParticipant extends React.Component {
                   className="form-control h-50"
                   id="category"
                   onChange={this.handleCategory}
-                  // value={this.props.category}
                 >
                   {this.state.categories.map((category, i) => {
                     if (i === 0) {

@@ -160,7 +160,7 @@ class CreateEvent extends React.Component {
     return (
       <div className="createEvent-content">
         <Header></Header>
-        <div className="border container my-3 p-3 mobileView">
+        <div className="border container my-5 p-3 mobileView">
           <h3 className="text-center">CREATE EVENT</h3>
           <div className="">
             <div className="row justify-content-center mb-3">
