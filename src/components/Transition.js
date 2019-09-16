@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import Axios from "axios";
+import loading from "../images/loading.gif";
 
 class Transition extends React.Component {
   constructor(props) {
@@ -90,7 +91,11 @@ class Transition extends React.Component {
   };
 
   render() {
-    return <div>Please Wait</div>;
+    return (
+      <div className="row justify-content-center">
+        <img src={loading} className="text-center" />
+      </div>
+    );
   }
 }
 

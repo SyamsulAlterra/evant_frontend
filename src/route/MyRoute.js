@@ -40,6 +40,7 @@ class MyRoute extends React.Component {
             <Route exact path="/prepareDate" component={PrepareEdit} />
             <Route path="/editDate/:event_id" component={EditDate} />
             <Route path="/suggestion/:id" component={Suggestion} />
+            <Route path="/editDate/:event_id" component={EditDate} />
             <Route path="/pending/:id" component={PendingEvent} />
             <Route path="/transition/:id" component={Transition} />
             <Route path="/history/:id" component={EventHistoryDetail} />

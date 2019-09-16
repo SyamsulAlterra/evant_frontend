@@ -16,7 +16,10 @@ class EditDate extends React.Component {
   }
   componentWillMount = async () => {
     const config = {
-      url: this.props.baseUrl + "events/" + this.props.match.params.event_id,
+      url:
+        this.props.baseUrl +
+        "events/" +
+        this.props.match.params.event_id.toString(),
       method: "get",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
