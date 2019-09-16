@@ -51,7 +51,7 @@ class Events extends React.Component {
     return (
       <div>
         <Header></Header>
-        <div className="container eventContent mobileView pb-5 animated fadeIn">
+        <div className="container eventContent mobileView pb-5 animated fadeIn h-400 mbForFooter">
           <h1 className="text-center">My Event</h1>
 
           <Tabs
@@ -61,42 +61,40 @@ class Events extends React.Component {
           >
             <Tab eventKey="home" title="On-Going">
               <div>
-                    {this.state.listEvent.map(value => {
-                      return (
-                        <div className="shadow">
-                          <CollapseEvent
-                            id={value.event_id}
-                            creatorName={value.creator_name}
-                            eventName={value.event_name}
-                            category={value.category}
-                            startDateParameter={value.start_date_parameter}
-                            endDateParameter={value.end_date_parameter}
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
+                {this.state.listEvent.map(value => {
+                  return (
+                    <div className="shadow">
+                      <CollapseEvent
+                        id={value.event_id}
+                        creatorName={value.creator_name}
+                        eventName={value.event_name}
+                        category={value.category}
+                        startDateParameter={value.start_date_parameter}
+                        endDateParameter={value.end_date_parameter}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </Tab>
             <Tab eventKey="profile" title="History">
               <div>
-                    {this.state.pastEvent.map(value => {
-                      console.log(value);
-                      return (
-                        <div className="shadow">
-                          <CollapseEvent
-                            id={value.event.event_id}
-                            eventName={value.event.event_name}
-                            creatorName={value.creator_name}
-                            category={value.event.category}
-                            startDateParameter={
-                              value.event.start_date_parameter
-                            }
-                            endDateParameter={value.event.end_date_parameter}
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
+                {this.state.pastEvent.map(value => {
+                  console.log(value);
+                  return (
+                    <div className="shadow">
+                      <CollapseEvent
+                        id={value.event.event_id}
+                        eventName={value.event.event_name}
+                        creatorName={value.creator_name}
+                        category={value.event.category}
+                        startDateParameter={value.event.start_date_parameter}
+                        endDateParameter={value.event.end_date_parameter}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </Tab>
           </Tabs>
         </div>

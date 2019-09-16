@@ -35,19 +35,17 @@ table {
   font-family: "Montserrat";
 }
 .invitationCard {
-  font-size: 10px;
+  font-size: 1em;
 }
 .invitationCard a {
   font-size: 10px;
 }
 .calendarDetail {
   width: 280px;
-  height: 200px;
   margin: 0px auto;
-  overflow: scroll;
 }
 .eventDetail {
-  font-size: 12px;
+  font-size: 13px;
 }
 .eventDetailButton {
   background-color: black;
@@ -101,10 +99,6 @@ table {
   width: 26px;
   height: 26px;
 }
-.participant {
-  height: 400px;
-  overflow: scroll;
-}
 .checked,
 .cross {
   width: 40px;
@@ -134,10 +128,6 @@ table {
 .register-evant {
   font-weight: bold;
   color: black;
-}
-.invitedBox {
-  height: 300px;
-  overflow: scroll;
 }
 .venue {
   width: 200px;
@@ -198,8 +188,17 @@ select.form-control:not([size]):not([multiple]) {
   font-size: 12px;
 }
 .markedTitle {
-  font-size: 12px;
+  font-size: 15px;
 }
 .mbForFooter {
-  margin-bottom: 100px;
+  margin-bottom: 150px;
+}
+.position {
+  height: 100vh;
+}
+.calendarCell p {
+  font-size: 15px !important;
+}
+.search-user input {
+  height: 40px;
 }

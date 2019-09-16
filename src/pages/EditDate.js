@@ -33,7 +33,7 @@ class EditDate extends React.Component {
   render() {
     return (
       <div className="EditDate">
-        <Header></Header>
+        {/* <Header></Header> */}
         <CalendarPrepareDate
           start_date={this.state.event.start_date_parameter}
           end_date={this.state.event.end_date_parameter}

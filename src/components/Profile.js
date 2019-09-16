@@ -105,6 +105,10 @@ class Profile extends React.Component {
     }
   };
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
       <div className="profile mbForFooter">
