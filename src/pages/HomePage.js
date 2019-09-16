@@ -35,6 +35,21 @@ class HomePage extends React.Component {
       response.data.booked_event,
       response.data.all_booked_dates
     );
+
+    this.props.allBookedDates.map(async date => {
+      config = {
+        url: this.props.baseUrl + "date",
+        method: "delete",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        data: {
+          date: date
+        }
+      };
+
+      await Axios(config);
+    });
   };
   render() {
     return (
@@ -49,6 +64,6 @@ class HomePage extends React.Component {
 }
 
 export default connect(
-  "baseUrl",
+  "baseUrl, allBookedDates",
   actions
 )(HomePage);

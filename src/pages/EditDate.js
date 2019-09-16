@@ -28,7 +28,6 @@ class EditDate extends React.Component {
   };
 
   render() {
-    // console.log(this.state.event);
     return (
       <div className="EditDate">
         <Header></Header>

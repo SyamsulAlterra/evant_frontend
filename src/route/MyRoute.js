@@ -19,6 +19,7 @@ import PrepareEdit from "../pages/PrepareEditTanggal";
 import Suggestion from "../pages/Suggestion";
 import PendingEvent from "../components/PendingEvent";
 import Confirmation from "../pages/Confirmation";
+import GeneratedEvent from "../pages/GeneratedEvent";
 
 class MyRoute extends React.Component {
   render() {
@@ -40,9 +41,10 @@ class MyRoute extends React.Component {
             <Route path="/pending/:id" component={PendingEvent} />
             <Route path="/transition/:id" component={Transition} />
             <Route path="/history/:id" component={EventHistoryDetail} />
-            <Route path="/events/:id" component={EventDetails} />
+            <Route path="/creator/:id" component={EventDetails} />
             <Route path="/participant/:id" component={EventDetailParticipant} />
             <Route path="/confirmation/:id" component={Confirmation} />
+            <Route path="/generated/:id" component={GeneratedEvent} />
           </Switch>
         </Provider>
       </Router>
