@@ -46,7 +46,7 @@ class Events extends React.Component {
     return (
       <div>
         <Header></Header>
-        <div className="container eventContent mobileView pb-5">
+        <div className="container eventContent mobileView pb-5 animated fadeIn">
           <h1 className="text-center">My Event</h1>
           <Accordion>
             <Card>
