@@ -9,7 +9,7 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import "bootstrap/dist/js/bootstrap.bundle";
-import homeLogo from "../images/e.png";
+import homeLogo from "../images/logo_transparent.png";
 
 class Login extends React.Component {
   constructor(props) {

@@ -3,13 +3,11 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import GoogleButton from "react-google-button";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { CSSTransition } from "react-transition-group";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import "bootstrap/dist/js/bootstrap.bundle";
-import homeLogo from "../images/e.png";
+import homeLogo from "../images/logo_transparent.png";
 
 class GoogleRegister extends React.Component {
   constructor(props) {
@@ -26,46 +24,6 @@ class GoogleRegister extends React.Component {
       display: false
     };
   }
-
-  // registerWithGoogle = async response => {
-  //   console.log(response);
-  //   const email = response.profileObj.email;
-  //   const boundaryIndex = email.indexOf("@");
-  //   const username = email.slice(0, boundaryIndex);
-  //   const fullname = response.profileObj.name;
-  //   const req = {
-  //     method: "post",
-  //     url: this.props.baseUrl + "users/register_with_google",
-  //     headers: {},
-  //     data: {
-  //       username: username,
-  //       email: email,
-  //       password: "",
-  //       gender: this.state.gender,
-  //       fullname: fullname,
-  //       address: this.state.address,
-  //       phone: this.state.phone.toString()
-  //     }
-  //   };
-
-  //   const self = this;
-  //   await axios(req)
-  //     .then(function(response) {
-  //       console.log("login as", response.data);
-  //       localStorage.setItem("token", response.data.token);
-  //       localStorage.setItem("user_id", response.data.user["user_id"]);
-  //       localStorage.setItem("address", response.data.user["address"]);
-  //       localStorage.setItem("email", response.data.user["email"]);
-  //       localStorage.setItem("fullname", response.data.user["fullname"]);
-  //       localStorage.setItem("gender", response.data.user["gender"]);
-  //       localStorage.setItem("phone", response.data.user["phone"]);
-  //       localStorage.setItem("username", response.data.user["username"]);
-  //       self.props.history.push("/home");
-  //     })
-  //     .catch(function(error) {
-  //       console.log("ERROR", error);
-  //     });
-  // };
 
   handlePhone = async e => {
     let inputPhone = e.target.value;
