@@ -37,8 +37,8 @@ class InvitationCard extends React.Component {
     return (
       <div className="container mobileView invitationCard">
         <Slide left>
-          <div class="row">
-            <div class="col my-4 shadow">
+          <div class="row justify-content-center">
+            <div class="col my-5">
               <div class="card">
                 <div class="card-body">
                   <h6 class="card-title">
@@ -46,11 +46,10 @@ class InvitationCard extends React.Component {
                     "
                   </h6>
                   <p class="card-text">
-                    invited by: @{this.props.invitation.username_creator}{" "}
-                    <br></br>
-                    duration: {this.props.invitation.event_duration} days{" "}
-                    <br></br>
-                    category: {this.props.invitation.event_category} <br></br>
+                    invited by: @{this.props.invitation.username_creator} <br />
+                    duration: {this.props.invitation.event_duration} day(s){" "}
+                    <br />
+                    category: {this.props.invitation.event_category} <br />
                   </p>
                   <div className="text-right">
                     <Link

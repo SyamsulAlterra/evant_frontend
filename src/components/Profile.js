@@ -8,6 +8,9 @@ import phone from "../images/phone.png";
 import gender from "../images/gender.png";
 import axios from "axios";
 import { connect } from "unistore/react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Swal from "sweetalert2";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -16,7 +19,12 @@ class Profile extends React.Component {
       username: localStorage.getItem("username"),
       address: localStorage.getItem("address"),
       email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone")
+      phone: localStorage.getItem("phone"),
+      usernameModalShow: false,
+      addressModalShow: false,
+      emailModalShow: false,
+      phoneModalShow: false,
+      passwordModalShow: false
     };
   }
 
@@ -50,14 +58,24 @@ class Profile extends React.Component {
     await this.setState({ confirmPassword: inputConfirmpassword });
   };
 
+  handleToggle = () => {
+    this.setState({
+      usernameModalShow: false,
+      addressModalShow: false,
+      emailModalShow: false,
+      phoneModalShow: false,
+      passwordModalShow: false
+    });
+  };
+
   editProfile = async e => {
     e.preventDefault();
     const self = this;
     await axios
       .put(
         this.props.baseUrl +
-        "users/" +
-        parseInt(localStorage.getItem("user_id")),
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
         {
           username: self.state.username
         }
@@ -76,14 +94,14 @@ class Profile extends React.Component {
     if (this.state.password === this.state.confirmPassword) {
       await axios.put(
         this.props.baseUrl +
-        "users/" +
-        parseInt(localStorage.getItem("user_id")),
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
         {
           password: this.state.password
         }
       );
     } else {
-      alert("new password doesnt match");
+      Swal.fire("Error", "Your New Password Doesn't Match", "warning");
     }
   };
 
@@ -123,9 +141,10 @@ class Profile extends React.Component {
                         alt=""
                         height="15px"
                         width="15px"
-                        data-toggle="modal"
-                        data-target="#editUsername"
                         className="float-right"
+                        onClick={() =>
+                          this.setState({ usernameModalShow: true })
+                        }
                       />
                     </div>
                   </div>
@@ -150,9 +169,10 @@ class Profile extends React.Component {
                         height="15px"
                         alt=""
                         width="15px"
-                        data-toggle="modal"
-                        data-target="#editAddress"
                         className="float-right"
+                        onClick={() =>
+                          this.setState({ addressModalShow: true })
+                        }
                       />
                     </div>
                   </div>
@@ -177,9 +197,8 @@ class Profile extends React.Component {
                         alt=""
                         height="15px"
                         width="15px"
-                        data-toggle="modal"
-                        data-target="#email"
                         className="float-right"
+                        onClick={() => this.setState({ emailModalShow: true })}
                       />
                     </div>
                   </div>
@@ -203,9 +222,8 @@ class Profile extends React.Component {
                         alt=""
                         height="15px"
                         width="15px"
-                        data-toggle="modal"
-                        data-target="#editPhone"
                         className="float-right"
+                        onClick={() => this.setState({ phoneModalShow: true })}
                       />
                     </div>
                   </div>
@@ -236,8 +254,7 @@ class Profile extends React.Component {
                 <div className="col-6 text-left">
                   <button
                     className="btn my-3 p-1 change-pass-button"
-                    data-toggle="modal"
-                    data-target="#changePassword"
+                    onClick={() => this.setState({ passwordModalShow: true })}
                   >
                     <small>Change Password</small>
                   </button>
@@ -246,237 +263,135 @@ class Profile extends React.Component {
                 {/* start modal */}
 
                 {/* modal change password */}
-                <div
-                  class="modal fade"
-                  id="changePassword"
-                  tabindex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
+                <Modal
+                  aria-labelledby="contained-modal-title-vcenter"
+                  show={this.state.passwordModalShow}
+                  centered
                 >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Change Your Password
-                        </h5>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          type="password"
-                          className="m-2"
-                          placeholder="New Password"
-                          onChange={this.handlePassword}
-                        ></input>
-                        <br />
-                        <input
-                          type="password"
-                          className="m-2"
-                          placeholder="Confirm New Password"
-                          onChange={this.handleConfirmPassword}
-                        ></input>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="button"
-                          class="btn change-pass-button"
-                          data-dismiss="modal"
-                          onClick={this.editPassword}
-                        >
-                          OK
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <Modal.Header>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                      Change Your Password
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <input
+                      type="password"
+                      className="p-2 col-12"
+                      placeholder="New Password"
+                      onChange={this.handlePassword}
+                    ></input>
+                    <input
+                      type="password"
+                      className="p-2 col-12"
+                      placeholder="Confirm New Password"
+                      onChange={this.handleConfirmPassword}
+                    ></input>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={this.handleToggle}>Close</Button>
+                    <Button onClick={this.editPassword}>Confirm</Button>
+                  </Modal.Footer>
+                </Modal>
 
                 {/* modal change user name */}
-                <div
-                  class="modal fade"
-                  id="editUsername"
-                  tabindex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
+                <Modal
+                  aria-labelledby="contained-modal-title-vcenter"
+                  show={this.state.usernameModalShow}
+                  centered
                 >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Change Your Username
-                        </h5>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          type="text"
-                          className="m-2"
-                          placeholder="New Username"
-                          onChange={this.handleUsername}
-                        ></input>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="button"
-                          class="btn change-pass-button"
-                          data-dismiss="modal"
-                          onClick={this.editProfile}
-                        >
-                          OK
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <Modal.Header>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                      Change Your Username
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <input
+                      type="text"
+                      className="p-2 col-12"
+                      placeholder="New Username"
+                      onChange={this.handleUsername}
+                    ></input>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={this.handleToggle}>Close</Button>
+                    <Button onClick={this.editProfile}>Confirm</Button>
+                  </Modal.Footer>
+                </Modal>
 
                 {/* modal change address */}
-                <div
-                  class="modal fade"
-                  id="editAddress"
-                  tabindex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
+                <Modal
+                  aria-labelledby="contained-modal-title-vcenter"
+                  show={this.state.addressModalShow}
+                  centered
                 >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Change Your Address
-                        </h5>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          type="text"
-                          className="m-2"
-                          placeholder="New Address"
-                          onChange={this.handleAddress}
-                        ></input>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="button"
-                          class="btn change-pass-button"
-                          data-dismiss="modal"
-                          onClick={this.editProfile}
-                        >
-                          OK
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <Modal.Header>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                      Change Your Address
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <input
+                      type="text"
+                      className="p-2 col-12"
+                      placeholder="New Address"
+                      onChange={this.handleAddress}
+                    ></input>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={this.handleToggle}>Close</Button>
+                    <Button onClick={this.editProfile}>Confirm</Button>
+                  </Modal.Footer>
+                </Modal>
 
                 {/* modal change email */}
-                <div
-                  class="modal fade"
-                  id="email"
-                  tabindex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
+                <Modal
+                  aria-labelledby="contained-modal-title-vcenter"
+                  show={this.state.emailModalShow}
+                  centered
                 >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Change Your Email
-                        </h5>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          type="text"
-                          className="m-2"
-                          placeholder="New Email"
-                          onChange={this.handleEmail}
-                        ></input>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="button"
-                          class="btn change-pass-button"
-                          data-dismiss="modal"
-                          onClick={this.editProfile}
-                        >
-                          OK
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <Modal.Header>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                      Change Your Email Address
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <input
+                      type="text"
+                      className="p-2 col-12"
+                      placeholder="New Email Address"
+                      onChange={this.handleEmail}
+                    ></input>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={this.handleToggle}>Close</Button>
+                    <Button onClick={this.editProfile}>Confirm</Button>
+                  </Modal.Footer>
+                </Modal>
 
                 {/* modal change phone */}
-                <div
-                  class="modal fade"
-                  id="editPhone"
-                  tabindex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
+                <Modal
+                  aria-labelledby="contained-modal-title-vcenter"
+                  show={this.state.phoneModalShow}
+                  centered
                 >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Change Your Phone Number
-                        </h5>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          type="text"
-                          className="m-2"
-                          placeholder="New Phone Number"
-                          onChange={this.handlePhone}
-                        ></input>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="button"
-                          class="btn change-pass-button"
-                          data-dismiss="modal"
-                          onClick={this.editProfile}
-                        >
-                          OK
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+                  <Modal.Header>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                      Change Your Phone Number
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <input
+                      type="text"
+                      className="p-2 col-12"
+                      placeholder="New Phone Number"
+                      onChange={this.handlePhone}
+                    ></input>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={this.handleToggle}>Close</Button>
+                    <Button onClick={this.editProfile}>Confirm</Button>
+                  </Modal.Footer>
+                </Modal>
                 {/* end modals */}
               </div>
             </div>
