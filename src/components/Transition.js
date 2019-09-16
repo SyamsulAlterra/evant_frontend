@@ -11,7 +11,7 @@ class Transition extends React.Component {
       place: ""
     };
   }
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     let currentUserId = localStorage.getItem("user_id").toString();
     let config = {
       url:
@@ -27,9 +27,8 @@ class Transition extends React.Component {
     let event_status = response.data.status;
     let creator_id = response.data.creator_id;
     let place = response.data.place_name;
-    let suggestionDate = response.data.startDate;
+    let suggestionDate = response.data.start_date;
     let eventPreference = response.data.preference;
-
     // this.setState({ place: response.data.place_name });
 
     config = {
@@ -62,22 +61,39 @@ class Transition extends React.Component {
       return user.user_id.toString() === currentUserId;
     });
 
+    console.log("AAAAAAAAAAAAAAAAAAAA", isConfirm);
     console.log(suggestionDate, eventPreference);
 
     let destination;
     if (event_status === 0) {
-      if (suggestionDate === undefined && eventPreference !== null) {
+      if (suggestionDate === null && eventPreference !== null) {
         destination = `/unmatch/${event_id}`;
       } else if (
-        currentUserId === creator_id.toString() &&
-        (isConfirm[0] === undefined || place === null || place === "")
+        (currentUserId === creator_id.toString() &&
+          isConfirm[0] === undefined &&
+          place === null) ||
+        (currentUserId === creator_id.toString() &&
+          isConfirm[0] !== undefined &&
+          place === null &&
+          suggestionDate === null)
       ) {
         destination = `/creator/${event_id}`;
+      } else if (
+        suggestionDate !== null &&
+        isConfirm[0] !== undefined &&
+        currentUserId === creator_id.toString() &&
+        place === null
+      ) {
+        destination = `/suggestion/${event_id}`;
       } else if (isConfirm[0] === undefined) {
         destination = `/participant/${event_id}`;
-      } else if (isFilled.length > 0 && (place === null || place === "")) {
+      } else if (
+        isFilled.length > 0 &&
+        (place === null || place === "") &&
+        currentUserId !== creator_id.toString()
+      ) {
         destination = `/pending/${event_id}`;
-      } else if (isConfirm[0].confirmation === 1) {
+      } else if (isConfirm[0].confirmation === 1 && place !== null) {
         destination = `/generated/${event_id}`;
       } else if (isConfirm[0].confirmation === 0) {
         destination = `/confirmation/${event_id}`;
