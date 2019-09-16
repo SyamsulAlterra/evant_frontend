@@ -61,7 +61,7 @@ class EventDetails extends React.Component {
 
     let responsePreference = await axios(getPreference);
     console.log(responsePreference.data);
-    this.setState({ preferenceOptions: responsePreference.data });
+    await this.setState({ preferenceOptions: responsePreference.data });
 
     let postPreference = {
       url: this.props.baseUrl + "users/preferences",
@@ -71,7 +71,7 @@ class EventDetails extends React.Component {
       },
       data: {
         event_id: this.props.match.params.id,
-        preference: "Bogor"
+        preference: this.state.preferenceOptions[0].preference
       }
     };
 
@@ -186,6 +186,7 @@ class EventDetails extends React.Component {
                   onChange={this.handlePreference}
                 >
                   {this.state.preferenceOptions.map((value, index) => {
+                    console.log(value);
                     return (
                       <option value={value.preference}>
                         {value.preference}
@@ -212,6 +213,16 @@ class EventDetails extends React.Component {
                 >
                   Suggest Our Event
                 </button>
+              </Link>
+            </div>
+          </div>
+          <div className="row justify-content-center mb-0">
+            <div className="button-add col-8 text-center">
+              <Link
+                to={"/editDate/" + this.state.event.event_id}
+                className="btn btn-primary m-1 w-100"
+              >
+                Manage my date
               </Link>
             </div>
           </div>

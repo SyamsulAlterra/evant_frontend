@@ -4,12 +4,9 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
-import checked from "../images/checked.png";
-import error from "../images/error.png";
 import { Link, withRouter } from "react-router-dom";
-import { actions } from "../Store";
 
-class Confirmation extends React.Component {
+class GeneratedEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +14,7 @@ class Confirmation extends React.Component {
         event_name: "",
         creator_name: ""
       },
-      participant: []
+      confirmParticipant: []
     };
   }
 
@@ -60,21 +57,7 @@ class Confirmation extends React.Component {
     let response = await Axios(config);
     await this.setState({ event: response.data });
 
-    //get participant
-    config = {
-      url:
-        this.props.baseUrl +
-        "events/list_of_participant/" +
-        this.props.match.params.id.toString(),
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    response = await Axios(config);
-    await this.setState({ participant: response.data });
-
+    //get participant confirmation
     config = {
       url:
         this.props.baseUrl +
@@ -85,72 +68,13 @@ class Confirmation extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
+
     response = await Axios(config);
-    let confirmParticipant = response.data.filter(user => {
+    let confirmUser = response.data.filter(user => {
       return user.confirmation === 1;
     });
-    await this.setState({ participant: confirmParticipant });
-  };
-  confirm = async status => {
-    let config = {
-      url:
-        this.props.baseUrl +
-        "users/preferences/confirmations/" +
-        this.props.match.params.id.toString(),
-      method: "put",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      },
-      data: {
-        confirmation: status
-      }
-    };
-
-    await Axios(config);
-
-    if (status === -1) {
-      config = {
-        url:
-          this.props.baseUrl +
-          "invitations/decline/" +
-          this.props.match.params.id.toString(),
-        method: "delete",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token")
-        }
-      };
-
-      await Axios(config);
-    } else {
-      this.props.allBookedDates.map(async date => {
-        config = {
-          url: this.props.baseUrl + "date",
-          method: "delete",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token")
-          },
-          data: {
-            date: date
-          }
-        };
-
-        await Axios(config);
-      });
-    }
-
-    config = {
-      url: this.props.baseUrl + "events/booked",
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    let response = await Axios(config);
-    await this.props.setEventsAndBookedDatesOnGlobal(
-      response.data.booked_event,
-      response.data.all_booked_dates
-    );
+    console.log(confirmUser);
+    await this.setState({ confirmParticipant: confirmUser });
   };
 
   render() {
@@ -173,7 +97,7 @@ class Confirmation extends React.Component {
             {this.formatDate(this.state.event.end_date)}
           </h6>
           <div className="participant m-3 border">
-            {this.state.participant.map((user, index) => {
+            {this.state.confirmParticipant.map((user, index) => {
               return (
                 <div className="mx-5 my-2">
                   <table>
@@ -216,34 +140,11 @@ class Confirmation extends React.Component {
               </div>
             </table>
           </div>
-          <div className="row mb-5 mx-5">
-            <Link to="/home" className="col-6 text-center">
-              <img
-                alt=""
-                src={error}
-                className="cross m-3"
-                onClick={() => this.confirm(-1)}
-              ></img>
-              <br></br>
-              Decline
-            </Link>
-            <Link
-              to={`/generated/${this.props.match.params.id}`}
-              className="col-6 text-center"
-              onClick={() => this.confirm(1)}
-            >
-              <img alt="" src={checked} className="checked m-3"></img>
-              <br></br>
-              Ok
-            </Link>
-          </div>
         </div>
+        <Footer></Footer>
       </div>
     );
   }
 }
 
-export default connect(
-  "baseUrl, allBookedDates",
-  actions
-)(withRouter(Confirmation));
+export default connect("baseUrl")(withRouter(GeneratedEvent));
