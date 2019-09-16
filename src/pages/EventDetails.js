@@ -37,8 +37,8 @@ class EventDetails extends React.Component {
     await axios
       .get(
         this.props.baseUrl +
-        "events/list_of_participant/" +
-        this.props.match.params.id,
+          "events/list_of_participant/" +
+          this.props.match.params.id,
         config
       )
       .then(response => {
@@ -49,83 +49,91 @@ class EventDetails extends React.Component {
       });
 
     let getPreference = {
-      url: this.props.baseUrl + 'category',
-      method: 'get',
+      url: this.props.baseUrl + "category",
+      method: "get",
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
+        Authorization: "Bearer " + localStorage.getItem("token")
       },
       params: {
         category: this.state.event.category
       }
-    }
+    };
 
-    let responsePreference = await axios(getPreference)
-    console.log(responsePreference.data)
-    this.setState({ preferenceOptions: responsePreference.data })
+    let responsePreference = await axios(getPreference);
+    console.log(responsePreference.data);
+    this.setState({ preferenceOptions: responsePreference.data });
 
     let postPreference = {
-      url: this.props.baseUrl + 'users/preferences',
-      method: 'post',
+      url: this.props.baseUrl + "users/preferences",
+      method: "post",
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
+        Authorization: "Bearer " + localStorage.getItem("token")
       },
       data: {
         event_id: this.props.match.params.id,
         preference: "Bogor"
       }
-    }
+    };
 
-    let postResponse = await axios(postPreference)
-    console.log(postResponse.data)
+    let postResponse = await axios(postPreference);
+    console.log(postResponse.data);
   };
 
   handlePreference = async e => {
     await this.setState({ preference: e.target.value });
 
     let putPreference = {
-      url: this.props.baseUrl + 'users/preferences/' + this.props.match.params.id,
-      method: 'put',
+      url:
+        this.props.baseUrl + "users/preferences/" + this.props.match.params.id,
+      method: "put",
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
+        Authorization: "Bearer " + localStorage.getItem("token")
       },
       data: {
         preference: this.state.preference
       }
-    }
+    };
 
-    let putResponse = await axios(putPreference)
-    console.log(putResponse.data)
+    let putResponse = await axios(putPreference);
+    console.log(putResponse.data);
   };
 
   generateEvent = async e => {
     e.preventDefault();
 
     let generateDate = {
-      url: this.props.baseUrl + 'events/generate_date/' + this.props.match.params.id,
-      method: 'get',
+      url:
+        this.props.baseUrl +
+        "events/generate_date/" +
+        this.props.match.params.id,
+      method: "get",
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
+        Authorization: "Bearer " + localStorage.getItem("token")
       }
-    }
+    };
 
-    let dateResponse = await axios(generateDate)
-    console.log(dateResponse.data)
+    let dateResponse = await axios(generateDate);
+    console.log(dateResponse.data);
 
     let generatePlace = {
-      url: this.props.baseUrl + 'recommendation/' + this.state.event.category + "/" + this.props.match.params.id,
-      method: 'get',
+      url:
+        this.props.baseUrl +
+        "recommendation/" +
+        this.state.event.category +
+        "/" +
+        this.props.match.params.id,
+      method: "get",
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
+        Authorization: "Bearer " + localStorage.getItem("token")
       }
-    }
+    };
 
-    let placeResponse = await axios(generatePlace)
+    let placeResponse = await axios(generatePlace);
 
-    await this.props.setPlaceOnGlobal(placeResponse.data)
-
-    console.log(placeResponse.data)
+    await this.props.setPlaceOnGlobal(placeResponse.data);
+    console.log(placeResponse.data);
     this.props.history.push(`/suggestion/${this.state.event.event_id}`);
-  }
+  };
 
   formatDate = date => {
     const dateDictionary = [
@@ -182,7 +190,7 @@ class EventDetails extends React.Component {
                       <option value={value.preference}>
                         {value.preference}
                       </option>
-                    )
+                    );
                   })}
                 </select>
               </span>
@@ -198,7 +206,10 @@ class EventDetails extends React.Component {
           <div className="row justify-content-center mb-3">
             <div className="button-add col-8 text-center">
               <Link to={`/suggestion/${this.state.event.event_id}`}>
-                <button className="btn btn-primary m-1" onClick={this.generateEvent}>
+                <button
+                  className="btn btn-primary m-1"
+                  onClick={this.generateEvent}
+                >
                   Suggest Our Event
                 </button>
               </Link>
@@ -220,9 +231,7 @@ class EventDetails extends React.Component {
           </div>
           <div className="participant border border-secondary p-3">
             {this.state.participants.map((value, index) => {
-              return (
-                <ParticipantCard user={value}></ParticipantCard>
-              );
+              return <ParticipantCard user={value}></ParticipantCard>;
             })}
           </div>
         </div>
@@ -232,4 +241,7 @@ class EventDetails extends React.Component {
   }
 }
 
-export default connect("baseUrl, place", actions)(withRouter(EventDetails));
+export default connect(
+  "baseUrl, place",
+  actions
+)(withRouter(EventDetails));

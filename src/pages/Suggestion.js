@@ -68,7 +68,7 @@ class Suggestion extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
   choosePlace = async input => {
-    console.log(input);
+    console.log(input.photo.length);
     let config = {
       url:
         this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
@@ -79,6 +79,7 @@ class Suggestion extends React.Component {
       data: {
         place_name: input.place,
         place_location: input.place_location
+        // place_image: input.photo
       }
     };
 
