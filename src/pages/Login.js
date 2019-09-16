@@ -187,7 +187,11 @@ class Login extends React.Component {
                   </div>
                 </div>
               </ValidatorForm>
-              <div className="row no-gutters justify-content-center animated fadeIn">
+
+
+
+              <div className="row no-gutters justify-content-center animated fadeIn mt-2">
+
                 <div className="col-auto">
                   <br />
                   <div className="row justify-content-center">

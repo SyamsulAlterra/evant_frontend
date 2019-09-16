@@ -5,6 +5,12 @@ import { actions } from "../Store";
 import Axios from "axios";
 
 class Transition extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      place: ""
+    };
+  }
   componentDidMount = async () => {
     let currentUserId = localStorage.getItem("user_id").toString();
     let config = {
@@ -16,9 +22,12 @@ class Transition extends React.Component {
       }
     };
     let response = await Axios(config);
+    console.log(response.data);
     let event_id = response.data.event_id;
     let event_status = response.data.status;
     let creator_id = response.data.creator_id;
+    let place = response.data.place_name;
+    this.setState({ place: response.data.place_name });
 
     config = {
       url:
@@ -35,10 +44,12 @@ class Transition extends React.Component {
     let isFilled = response.data.filter(pref => {
       return pref.user_id.toString() === currentUserId;
     });
-
+    console.log(place);
     let destination;
     if (event_status === 0) {
-      if (currentUserId === creator_id.toString()) {
+      if (place !== "") {
+        destination = `/confirmation/${event_id}`;
+      } else if (currentUserId === creator_id.toString()) {
         destination = `/events/${event_id}`;
       } else if (isFilled.length > 0) {
         destination = `/pending/${event_id}`;
