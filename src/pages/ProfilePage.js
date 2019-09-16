@@ -8,10 +8,8 @@ class ProfilePage extends React.Component {
     return (
       <div className="profilePage mbForFooter">
         <Header></Header>
-        <div className="position">
-          <Profile></Profile>
-          <Footer></Footer>
-        </div>
+        <Profile></Profile>
+        <Footer></Footer>
       </div>
     );
   }
