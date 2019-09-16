@@ -14,6 +14,7 @@
 .mobileView {
   width: 375px;
   font-family: "Montserrat";
+  overflow: hidden;
 }
 .calendarCell {
   height: 40px;
@@ -34,19 +35,21 @@ table {
   font-family: "Montserrat";
 }
 .invitationCard {
-  font-size: 10px;
+  font-size: 1em;
 }
 .invitationCard a {
   font-size: 10px;
 }
 .calendarDetail {
   width: 280px;
-  height: 200px;
   margin: 0px auto;
-  overflow: scroll;
 }
 .eventDetail {
-  font-size: 8px;
+  font-size: 13px;
+}
+.eventDetailButton {
+  background-color: black;
+  color: white;
 }
 .todayButton {
   height: 20px;
@@ -63,6 +66,7 @@ table {
   width: 30px;
 }
 .footer {
+  position: fixed;
   bottom: 0;
 }
 .footer img {
@@ -95,10 +99,6 @@ table {
   width: 26px;
   height: 26px;
 }
-.participant {
-  height: 400px;
-  overflow: scroll;
-}
 .checked,
 .cross {
   width: 40px;
@@ -128,10 +128,6 @@ table {
 .register-evant {
   font-weight: bold;
   color: black;
-}
-.invitedBox {
-  height: 300px;
-  overflow: scroll;
 }
 .venue {
   width: 200px;
@@ -187,9 +183,20 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
+.todayMark {
+  width: 50px;
+  font-size: 12px;
+}
+.markedTitle {
+  font-size: 15px;
+}
+.mbForFooter {
+  margin-bottom: 150px;
+}
 .position {
   height: 100vh;
 }
+
 .MuiButton-sizeLarge {
   padding: 8px 99px;
   font-size: 0.9375rem;
@@ -197,3 +204,11 @@ select.form-control:not([size]):not([multiple]) {
 .edit-button {
   padding: 8px 93px;
 }
+
+.calendarCell p {
+  font-size: 15px !important;
+}
+.search-user input {
+  height: 40px;
+}
+

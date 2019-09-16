@@ -18,6 +18,8 @@
 .mobileView {
   width: 375px;
   font-family: "Montserrat";
+  overflow: hidden;
+  // padding-top: 100px;
 }
 
 .calendarCell {
@@ -46,7 +48,7 @@ table {
 }
 
 .invitationCard {
-  font-size: 10px;
+  font-size: 1em;
   a {
     font-size: 10px;
   }
@@ -54,13 +56,18 @@ table {
 
 .calendarDetail {
   width: 280px;
-  height: 200px;
+  // height: 200px;
   margin: 0px auto;
-  overflow: scroll;
+  // overflow: scroll;
 }
 
 .eventDetail {
-  font-size: 8px;
+  font-size: 13px;
+}
+
+.eventDetailButton {
+  background-color: black;
+  color: white;
 }
 
 .todayButton {
@@ -86,7 +93,7 @@ table {
     height: 30px;
     width: 30px;
   }
-  // position: fixed;
+  position: fixed;
   bottom: 0;
 }
 
@@ -126,8 +133,8 @@ table {
 }
 
 .participant {
-  height: 400px;
-  overflow: scroll;
+  // height: 400px;
+  // overflow: scroll;
 }
 
 .checked,
@@ -168,8 +175,8 @@ table {
 }
 
 .invitedBox {
-  height: 300px;
-  overflow: scroll;
+  // height: 300px;
+  // overflow: scroll;
 }
 
 .venue {
@@ -218,7 +225,11 @@ table {
 }
 .header {
   height: 100px;
+
   background-color: #464d5c;
+
+  // position: fixed;
+  background-color: #a7cdcc;
 }
 
 .size-select {
@@ -235,9 +246,23 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
+
+.todayMark {
+  width: 50px;
+  font-size: 12px;
+}
+.markedTitle {
+  font-size: 15px;
+}
+
+.mbForFooter {
+  margin-bottom: 150px;
+}
+
 .position {
   height: 100vh;
 }
+
 
 .MuiButton-sizeLarge {
   padding: 8px 99px;
@@ -247,4 +272,20 @@ select.form-control:not([size]):not([multiple]) {
 .edit-button {
   padding: 8px 93px;
   // width: 99px;
+
+// .h-400 {
+//   height: 450px !important;
+// }
+
+.calendarCell {
+  p {
+    font-size: 15px !important;
+  }
+}
+
+.search-user {
+  input {
+    height: 40px;
+  }
+
 }

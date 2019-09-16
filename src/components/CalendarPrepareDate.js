@@ -196,7 +196,7 @@ class CalendarPrepareDate extends React.Component {
     console.log(this.state.year, this.state.months);
 
     return (
-      <div className="CalendarPrepareDate container mobileView p-0 mt-0">
+      <div className="CalendarPrepareDate container mobileView p-0 my-5">
         <div className="row justify-content-center">
           <div className="col-8">
             {" "}

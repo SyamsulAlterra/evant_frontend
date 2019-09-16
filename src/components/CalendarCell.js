@@ -159,52 +159,67 @@ class CalendarCell extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-        <div
-          className={`calendarCell border text-right m-0 px-0 ${this.state.cellClass}`}
-          data-toggle="modal"
-          data-target={`#date${this.props.dates}`}
-        >
-          <p className="px-2 m-0 calendarCell">{this.props.dates}</p>
+    if (this.state.cellClass === "" || this.state.cellClass === "bg-success") {
+      return (
+        <div>
+          <div
+            className={`calendarCell border text-right m-0 px-0 ${this.state.cellClass}`}
+            data-toggle="modal"
+            data-target={`#date${this.props.dates}`}
+            onClick={() => this.handleMark(this.props.dates)}
+          >
+            <p className="px-2 m-0 calendarCell">{this.props.dates}</p>
+          </div>
         </div>
-        <div
-          class="modal fade"
-          id={`date${this.props.dates}`}
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                  {this.state.modalMessage}
-                </h5>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onClick={() => this.handleMark(this.props.dates)}
-                  data-dismiss="modal"
-                >
-                  Yes
-                </button>
+      );
+    } else {
+      return (
+        <div>
+          <div
+            className={`calendarCell border text-right m-0 px-0 ${this.state.cellClass}`}
+            data-toggle="modal"
+            data-target={`#date${this.props.dates}`}
+          >
+            <p className="px-2 m-0 calendarCell">{this.props.dates}</p>
+          </div>
+          <div
+            class="modal fade"
+            id={`date${this.props.dates}`}
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    {this.state.modalMessage}
+                  </h5>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={() => this.handleMark(this.props.dates)}
+                    data-dismiss="modal"
+                  >
+                    Yes
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

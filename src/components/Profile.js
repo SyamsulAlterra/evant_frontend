@@ -74,8 +74,8 @@ class Profile extends React.Component {
     await axios
       .put(
         this.props.baseUrl +
-          "users/" +
-          parseInt(localStorage.getItem("user_id")),
+        "users/" +
+        parseInt(localStorage.getItem("user_id")),
         {
           username: self.state.username
         }
@@ -94,8 +94,8 @@ class Profile extends React.Component {
     if (this.state.password === this.state.confirmPassword) {
       await axios.put(
         this.props.baseUrl +
-          "users/" +
-          parseInt(localStorage.getItem("user_id")),
+        "users/" +
+        parseInt(localStorage.getItem("user_id")),
         {
           password: this.state.password
         }
@@ -105,9 +105,13 @@ class Profile extends React.Component {
     }
   };
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
-      <div className="profile">
+      <div className="profile mbForFooter">
         <div className="container mobileView animated fadeIn">
           <div className="row border shadow">
             <div className="col text-center">
@@ -163,7 +167,7 @@ class Profile extends React.Component {
                         className="float-left"
                       />
                       <h6 className="m-0 float-left">
-                        &nbsp;<small>{localStorage.getItem("address")}</small>
+                        &nbsp;{localStorage.getItem("address")}
                       </h6>
                     </div>
                     <div className="col-2">
