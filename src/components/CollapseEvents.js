@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 class CollapseEvents extends React.Component {
   render() {
     return (
-
-      <div className="card-body my-3 border">
-
+      <div className="col-12 text-center my-3 border shadow p-3">
         Event Name: {this.props.eventName} <br />
         <br />
         Category: {this.props.category} <br />

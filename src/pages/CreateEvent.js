@@ -15,8 +15,8 @@ class CreateEvent extends React.Component {
     super(props);
     this.state = {
       date: null,
-      startDate: null,
-      endDate: null,
+      startDate: "-",
+      endDate: "-",
       searchResult: []
     };
   }
@@ -46,9 +46,11 @@ class CreateEvent extends React.Component {
   };
 
   handleStartDate = async date => {
+    console.log(date);
     await this.setState({
       startDate: this.convert(date)
     });
+    await console.log("startdate", this.state.startDate);
 
     await this.props.setStartDateGlobal(date);
     console.log("start date", this.props.setStartDateGlobal);
@@ -58,6 +60,7 @@ class CreateEvent extends React.Component {
     await this.setState({
       endDate: this.convert(date)
     });
+    await console.log("endadate", this.state.endDate);
 
     await this.props.setEndDateGlobal(date);
     console.log("end date", this.props.setEndDateGlobal);
@@ -158,6 +161,16 @@ class CreateEvent extends React.Component {
   };
 
   render() {
+    const ExampleCustomInput1 = ({ value, onClick }) => (
+      <button className="btn btn-primary" onClick={onClick}>
+        Start Date
+      </button>
+    );
+    const ExampleCustomInput2 = ({ value, onClick }) => (
+      <button className="btn btn-primary" onClick={onClick}>
+        End Date
+      </button>
+    );
     console.log(this.props.category);
     return (
       <div className="createEvent-content">
@@ -221,23 +234,29 @@ class CreateEvent extends React.Component {
               </div>
             </div>
             <div className="row startDate-section justify-content-center">
-              <div className="col-12 text-center">
-                Start Date <br />
+              <div className="col-5 p-0 text-center my-2">
                 <DatePicker
                   selected={this.props.startDate}
                   onChange={this.handleStartDate}
                   dateFormat="dd/MM/yyyy"
+                  customInput={<ExampleCustomInput1 />}
                 />
+              </div>
+              <div className="col-7 text-left p-0 mt-2">
+                : {this.state.startDate}
               </div>
             </div>
             <div className="row startDate-section justify-content-center">
-              <div className="col-12 text-center">
-                End Date <br />
+              <div className="col-5 text-center my-2">
                 <DatePicker
                   selected={this.props.endDate}
                   onChange={this.handleEndDate}
                   dateFormat="dd/MM/yyyy"
+                  customInput={<ExampleCustomInput2 />}
                 />
+              </div>
+              <div className="col-7 text-left p-0 mt-2">
+                : {this.state.endDate}
               </div>
             </div>
             <div className="row duration justify-content-center">

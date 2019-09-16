@@ -34,7 +34,7 @@ table {
   font-family: "Montserrat";
 }
 .invitationCard {
-  font-size: 10px;
+  font-size: 1em;
 }
 .invitationCard a {
   font-size: 10px;
@@ -191,7 +191,6 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
-
 .todayMark {
   width: 50px;
   font-size: 12px;
@@ -205,4 +204,3 @@ select.form-control:not([size]):not([multiple]) {
 .position {
   height: 100vh;
 }
-

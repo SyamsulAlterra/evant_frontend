@@ -177,11 +177,11 @@ class Calendar extends React.Component {
         <div className="row px-0 eventDetail mt-2 mx-5">
           <div className="col-3 p-0">
             <div className="btn btn-warning todayMark today"></div>
-            <p className="eventDetail todayMark text-center">Today</p>
+            <p className="eventDetail todayMark text-center">Today's Date</p>
           </div>
           <div className="col-3 p-0">
             <div className="btn btn-success todayMark"></div>
-            <p className="eventDetail todayMark text-center">Available</p>
+            <p className="eventDetail todayMark text-center">Available Date</p>
           </div>
           <div className="col-3 p-0">
             <div className="btn btn-danger todayMark"></div>
