@@ -48,6 +48,8 @@ class EventDetails extends React.Component {
         console.log(error);
       });
 
+    console.log(this.state.event);
+
     let getPreference = {
       url: this.props.baseUrl + "category",
       method: "get",
@@ -131,7 +133,7 @@ class EventDetails extends React.Component {
     let placeResponse = await axios(generatePlace);
 
     await this.props.setPlaceOnGlobal(placeResponse.data);
-    console.log(placeResponse.data);
+
     this.props.history.push(`/transition/${this.state.event.event_id}`);
   };
 

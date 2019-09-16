@@ -33,6 +33,7 @@ class CreateEvent extends React.Component {
 
   handleCategory = async e => {
     let inputCategory = e.target.value;
+    console.log(inputCategory);
     await this.props.setCategoryGlobal(inputCategory);
     // await this.setState({ category: inputCategory });
   };
@@ -157,6 +158,7 @@ class CreateEvent extends React.Component {
   };
 
   render() {
+    console.log(this.props.category);
     return (
       <div className="createEvent-content">
         <Header></Header>

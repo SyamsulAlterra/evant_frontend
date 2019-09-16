@@ -3,6 +3,7 @@ import { connect } from "unistore/react";
 import Header from "../components/Header";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
+import { actions } from "../Store";
 
 class Suggestion extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class Suggestion extends React.Component {
     console.log(this.props.place);
     let response = await Axios(config);
     await this.setState({ event: response.data });
+    console.log(response.data);
 
     config = {
       url:
@@ -38,6 +40,24 @@ class Suggestion extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
+
+    let generatePlace = {
+      url:
+        this.props.baseUrl +
+        "recommendation/" +
+        this.state.event.category +
+        "/" +
+        this.props.match.params.id,
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    let placeResponse = await Axios(generatePlace);
+
+    await this.props.setPlaceOnGlobal(placeResponse.data);
+    console.log(placeResponse.data);
 
     response = await Axios(config);
     await this.setState({ participant: response.data });
@@ -79,7 +99,6 @@ class Suggestion extends React.Component {
       data: {
         place_name: input.place,
         place_location: input.place_location
-        // place_image: input.photo
       }
     };
 
@@ -163,4 +182,7 @@ class Suggestion extends React.Component {
   }
 }
 
-export default connect("baseUrl, place")(Suggestion);
+export default connect(
+  "baseUrl, place",
+  actions
+)(Suggestion);
