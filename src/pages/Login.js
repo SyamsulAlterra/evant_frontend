@@ -3,13 +3,24 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import GoogleButton from "react-google-button";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-import Button from "@material-ui/core/Button";
+import { GoogleLogin } from "react-google-login";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import "bootstrap/dist/js/bootstrap.bundle";
 import homeLogo from "../images/logo_transparent.png";
+
+import red from "@material-ui/core/colors/red";
+
+const red300 = red["500"];
+
+const style = {
+  right: 0,
+  fontSize: "12px",
+  color: red300,
+  width: "240px"
+  // marginTop: "-50px"
+};
 
 class Login extends React.Component {
   constructor(props) {
@@ -146,20 +157,23 @@ class Login extends React.Component {
         <div class="container login mobileView align-items-center">
           <div class="row justify-content-center">
             <div class="col text-center">
-              <h1 className="my-5 underline home-evant animated fadeIn">
+              <h1 className="underline home-evant animated fadeIn">
+                {/* my-1 */}
                 Evant
               </h1>
               <div className="home-logo my-3">
                 <img
                   src={homeLogo}
                   alt=""
-                  className="text-center mt-3 mb-5 animated bounceInDown delay-1s"
+                  className="text-center mb-2 animated bounceInDown delay-1s"
                   width="70%"
                   height="70%"
                 />
               </div>
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <TextValidator
+                  style={style}
+                  className="edit-button"
                   label="Username"
                   onChange={this.handleUsername}
                   name="username"
@@ -172,6 +186,7 @@ class Login extends React.Component {
                 />
                 <br />
                 <TextValidator
+                  style={style}
                   label="Password"
                   onChange={this.handlePassword}
                   name="password"
@@ -183,8 +198,23 @@ class Login extends React.Component {
                 <br />
                 <div className="row no-gutters justify-content-center animated fadeIn mt-2">
                   <div className="col-auto mt-3">
-                    <Button
+                    <button
                       color="primary"
+                      size="large"
+                      variant="contained"
+                      type="submit"
+                      onClick={this.handleClick}
+                      disabled={this.state.submitted}
+                      type="button"
+                      class="btn btn-primary edit-button"
+                    >
+                      {(this.state.submitted && "Your form is submitted!") ||
+                        (!this.state.submitted && "LOGIN")}
+                    </button>
+                    {/* <Button
+                      classes={{ sizeLarge: "MuiButton-sizeLarge" }}
+                      color="primary"
+                      size="large"
                       variant="contained"
                       type="submit"
                       onClick={this.handleClick}
@@ -192,12 +222,12 @@ class Login extends React.Component {
                     >
                       {(this.state.submitted && "Your form is submitted!") ||
                         (!this.state.submitted && "LOGIN")}
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </ValidatorForm>
 
-              <div className="row no-gutters justify-content-center animated fadeIn mt-2">
+              <div className="row no-gutters justify-content-center animated fadeIn mt-5">
                 <div className="col-auto">
                   <br />
                   <div className="row justify-content-center">
