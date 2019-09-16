@@ -1,17 +1,17 @@
 import React from "react";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
-import { actions } from "../Store";
-import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import GoogleButton from "react-google-button";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { TransitonGroup, CSSTransition } from "react-transition-group";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import "bootstrap/dist/js/bootstrap.bundle";
 import homeLogo from "../images/e.png";
 
-class Register extends React.Component {
+class GoogleRegister extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,30 +27,45 @@ class Register extends React.Component {
     };
   }
 
-  handleName = e => {
-    let inputName = e.target.value;
-    this.setState({ name: inputName });
-  };
+  // registerWithGoogle = async response => {
+  //   console.log(response);
+  //   const email = response.profileObj.email;
+  //   const boundaryIndex = email.indexOf("@");
+  //   const username = email.slice(0, boundaryIndex);
+  //   const fullname = response.profileObj.name;
+  //   const req = {
+  //     method: "post",
+  //     url: this.props.baseUrl + "users/register_with_google",
+  //     headers: {},
+  //     data: {
+  //       username: username,
+  //       email: email,
+  //       password: "",
+  //       gender: this.state.gender,
+  //       fullname: fullname,
+  //       address: this.state.address,
+  //       phone: this.state.phone.toString()
+  //     }
+  //   };
 
-  handleUsername = e => {
-    let inputUsername = e.target.value;
-    this.setState({ username: inputUsername });
-  };
-
-  handleEmail = e => {
-    let inputEmail = e.target.value;
-    this.setState({ email: inputEmail });
-  };
-
-  handlePassword = e => {
-    let inputPassword = e.target.value;
-    this.setState({ password: inputPassword });
-  };
-
-  handleConfirmPassword = e => {
-    let inputConfirmPassword = e.target.value;
-    this.setState({ confirmPassword: inputConfirmPassword });
-  };
+  //   const self = this;
+  //   await axios(req)
+  //     .then(function(response) {
+  //       console.log("login as", response.data);
+  //       localStorage.setItem("token", response.data.token);
+  //       localStorage.setItem("user_id", response.data.user["user_id"]);
+  //       localStorage.setItem("address", response.data.user["address"]);
+  //       localStorage.setItem("email", response.data.user["email"]);
+  //       localStorage.setItem("fullname", response.data.user["fullname"]);
+  //       localStorage.setItem("gender", response.data.user["gender"]);
+  //       localStorage.setItem("phone", response.data.user["phone"]);
+  //       localStorage.setItem("username", response.data.user["username"]);
+  //       self.props.history.push("/home");
+  //     })
+  //     .catch(function(error) {
+  //       console.log("ERROR", error);
+  //     });
+  // };
 
   handlePhone = async e => {
     let inputPhone = e.target.value;
@@ -73,32 +88,8 @@ class Register extends React.Component {
     }
   };
 
-  handleClick = async () => {
+  handleClick = async response => {
     const number = /^[0-9]+$/;
-    if (this.state.name === "") {
-      Swal.fire("Error", "Please fill your Full Name", "warning");
-      return false;
-    }
-    if (this.state.username === "") {
-      Swal.fire("Error", "Please fill your Username", "warning");
-      return false;
-    }
-    if (this.state.email === "") {
-      Swal.fire("Error", "Please fill your email", "warning");
-      return false;
-    }
-    if (this.state.password === "") {
-      Swal.fire("Error", "Please fill your password", "warning");
-      return false;
-    }
-    if (this.state.confirmPassword !== this.state.password) {
-      Swal.fire(
-        "Error",
-        "Your passwords doesn't match, please re-check",
-        "warning"
-      );
-      return false;
-    }
     if (this.state.phone === "") {
       Swal.fire("Error", "Please fill your Phone Number", "warning");
       return false;
@@ -119,31 +110,69 @@ class Register extends React.Component {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
     }
-    let config = {
-      url: this.props.baseUrl + "users/register",
+    // let config = {
+    //   url: this.props.baseUrl + "users/register",
+    //   method: "post",
+    //   data: {
+    //     username: this.state.username,
+    //     email: this.state.email,
+    //     password: this.state.password,
+    //     gender: this.state.gender,
+    //     fullname: this.state.name,
+    //     address: this.state.address,
+    //     phone: this.state.phone.toString()
+    //   }
+    // };
+
+    // await axios(config)
+    //   .then(() => {
+    //     Swal.fire(
+    //       "Account Created Successfully",
+    //       "Please proceed to login",
+    //       "success"
+    //     );
+    //     this.props.history.push("/");
+    //   })
+    //   .catch(() => {
+    //     Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
+    //   });
+
+    // console.log(response);
+    // const email = response.profileObj.email;
+    // const boundaryIndex = email.indexOf("@");
+    // const username = email.slice(0, boundaryIndex);
+    // const fullname = response.profileObj.name;
+    const req = {
       method: "post",
+      url: this.props.baseUrl + "users/register_with_google",
+      headers: {},
       data: {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
+        username: localStorage.getItem("username"),
+        email: localStorage.getItem("email"),
+        password: "",
         gender: this.state.gender,
-        fullname: this.state.name,
+        fullname: localStorage.getItem("fullname"),
         address: this.state.address,
         phone: this.state.phone.toString()
       }
     };
 
-    await axios(config)
-      .then(() => {
-        Swal.fire(
-          "Account Created Successfully",
-          "Please proceed to login",
-          "success"
-        );
-        this.props.history.push("/");
+    const self = this;
+    await axios(req)
+      .then(function(response) {
+        console.log("login as", response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_id", response.data.user["user_id"]);
+        localStorage.setItem("address", response.data.user["address"]);
+        localStorage.setItem("email", response.data.user["email"]);
+        localStorage.setItem("fullname", response.data.user["fullname"]);
+        localStorage.setItem("gender", response.data.user["gender"]);
+        localStorage.setItem("phone", response.data.user["phone"]);
+        localStorage.setItem("username", response.data.user["username"]);
+        self.props.history.push("/home");
       })
-      .catch(() => {
-        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
+      .catch(function(error) {
+        console.log("ERROR", error);
       });
   };
 
@@ -188,59 +217,6 @@ class Register extends React.Component {
                     onSubmit={this.handleSubmit}
                     className="register-form form-group animated fadeIn"
                   >
-                    <TextValidator
-                      label="Username"
-                      onChange={this.handleUsername}
-                      name="username"
-                      value={this.state.username}
-                      validators={["required"]}
-                      errorMessages={[
-                        "this field is required",
-                        "email is not valid"
-                      ]}
-                    />
-                    <TextValidator
-                      label="Fullname"
-                      onChange={this.handleName}
-                      name="name"
-                      value={this.state.name}
-                      validators={["required"]}
-                      errorMessages={[
-                        "this field is required",
-                        "Fullname is not valid"
-                      ]}
-                    />
-                    <TextValidator
-                      label="Email"
-                      onChange={this.handleEmail}
-                      name="email"
-                      value={this.state.email}
-                      validators={["required", "isEmail"]}
-                      errorMessages={[
-                        "this field is required",
-                        "Email is not valid"
-                      ]}
-                    />
-                    <br />
-                    <TextValidator
-                      label="Password"
-                      onChange={this.handlePassword}
-                      name="password"
-                      type="password"
-                      value={this.state.password}
-                      validators={["required"]}
-                      errorMessages={["this field is required"]}
-                    />
-                    <br />
-                    <TextValidator
-                      label="Confirm Password"
-                      onChange={this.handleConfirmPassword}
-                      name="password"
-                      type="password"
-                      value={this.state.confirmPassword}
-                      validators={["required"]}
-                      errorMessages={["this field is required"]}
-                    />
                     <br />
                     <TextValidator
                       label="Phone"
@@ -300,15 +276,6 @@ class Register extends React.Component {
                     </div>
                   </ValidatorForm>
                 </div>
-                {/* <div className="col-12">
-                  <button
-                    className="btn btn-block text-center register-button mb-5"
-                    onClick={this.handleClick}
-                    width="100%"
-                  >
-                    Register
-                  </button>
-                </div> */}
               </div>
             </div>
           </div>
@@ -318,7 +285,4 @@ class Register extends React.Component {
   }
 }
 
-export default connect(
-  "baseUrl",
-  actions
-)(withRouter(Register));
+export default connect("baseUrl")(withRouter(GoogleRegister));
