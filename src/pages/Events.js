@@ -5,8 +5,12 @@ import Footer from "../components/Footer";
 import { connect } from "unistore/react";
 import axios from "axios";
 import Accordion from "react-bootstrap/Accordion";
+import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import TabContainer from "react-bootstrap/TabContainer";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 
 class Events extends React.Component {
   constructor(props) {
@@ -49,16 +53,14 @@ class Events extends React.Component {
         <Header></Header>
         <div className="container eventContent mobileView pb-5 animated fadeIn">
           <h1 className="text-center">My Event</h1>
-          <Accordion>
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                  Ongoing Event ({this.state.listEvent.length})
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey="0">
-                <Card.Body>
-                  <div>
+
+          <Tabs
+            defaultActiveKey="home"
+            transition={false}
+            id="noanim-tab-example"
+          >
+            <Tab eventKey="home" title="On-Going">
+              <div>
                     {this.state.listEvent.map(value => {
                       return (
                         <div className="shadow">
@@ -74,18 +76,9 @@ class Events extends React.Component {
                       );
                     })}
                   </div>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                  Events History ({this.state.pastEvent.length})
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey="1">
-                <Card.Body>
-                  <div>
+            </Tab>
+            <Tab eventKey="profile" title="History">
+              <div>
                     {this.state.pastEvent.map(value => {
                       console.log(value);
                       return (
@@ -104,10 +97,8 @@ class Events extends React.Component {
                       );
                     })}
                   </div>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
+            </Tab>
+          </Tabs>
         </div>
         <Footer></Footer>
       </div>
