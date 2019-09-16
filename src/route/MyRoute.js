@@ -20,6 +20,7 @@ import Suggestion from "../pages/Suggestion";
 import PendingEvent from "../components/PendingEvent";
 import Confirmation from "../pages/Confirmation";
 import GeneratedEvent from "../pages/GeneratedEvent";
+import GoogleRegister from "../pages/RegisterWithGoogle";
 
 class MyRoute extends React.Component {
   render() {
@@ -45,6 +46,7 @@ class MyRoute extends React.Component {
             <Route path="/participant/:id" component={EventDetailParticipant} />
             <Route path="/confirmation/:id" component={Confirmation} />
             <Route path="/generated/:id" component={GeneratedEvent} />
+            <Route path="/googleRegister" component={GoogleRegister} />
           </Switch>
         </Provider>
       </Router>

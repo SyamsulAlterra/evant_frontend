@@ -27,45 +27,45 @@ class GoogleRegister extends React.Component {
     };
   }
 
-  registerWithGoogle = async response => {
-    console.log(response);
-    const email = response.profileObj.email;
-    const boundaryIndex = email.indexOf("@");
-    const username = email.slice(0, boundaryIndex);
-    const fullname = response.profileObj.name;
-    const req = {
-      method: "post",
-      url: this.props.baseUrl + "users/register_with_google",
-      headers: {},
-      data: {
-        username: username,
-        email: email,
-        password: "",
-        gender: this.state.gender,
-        fullname: fullname,
-        address: this.state.address,
-        phone: this.state.phone.toString()
-      }
-    };
+  // registerWithGoogle = async response => {
+  //   console.log(response);
+  //   const email = response.profileObj.email;
+  //   const boundaryIndex = email.indexOf("@");
+  //   const username = email.slice(0, boundaryIndex);
+  //   const fullname = response.profileObj.name;
+  //   const req = {
+  //     method: "post",
+  //     url: this.props.baseUrl + "users/register_with_google",
+  //     headers: {},
+  //     data: {
+  //       username: username,
+  //       email: email,
+  //       password: "",
+  //       gender: this.state.gender,
+  //       fullname: fullname,
+  //       address: this.state.address,
+  //       phone: this.state.phone.toString()
+  //     }
+  //   };
 
-    const self = this;
-    await axios(req)
-      .then(function(response) {
-        console.log("login as", response.data);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user_id", response.data.user["user_id"]);
-        localStorage.setItem("address", response.data.user["address"]);
-        localStorage.setItem("email", response.data.user["email"]);
-        localStorage.setItem("fullname", response.data.user["fullname"]);
-        localStorage.setItem("gender", response.data.user["gender"]);
-        localStorage.setItem("phone", response.data.user["phone"]);
-        localStorage.setItem("username", response.data.user["username"]);
-        self.props.history.push("/home");
-      })
-      .catch(function(error) {
-        console.log("ERROR", error);
-      });
-  };
+  //   const self = this;
+  //   await axios(req)
+  //     .then(function(response) {
+  //       console.log("login as", response.data);
+  //       localStorage.setItem("token", response.data.token);
+  //       localStorage.setItem("user_id", response.data.user["user_id"]);
+  //       localStorage.setItem("address", response.data.user["address"]);
+  //       localStorage.setItem("email", response.data.user["email"]);
+  //       localStorage.setItem("fullname", response.data.user["fullname"]);
+  //       localStorage.setItem("gender", response.data.user["gender"]);
+  //       localStorage.setItem("phone", response.data.user["phone"]);
+  //       localStorage.setItem("username", response.data.user["username"]);
+  //       self.props.history.push("/home");
+  //     })
+  //     .catch(function(error) {
+  //       console.log("ERROR", error);
+  //     });
+  // };
 
   handlePhone = async e => {
     let inputPhone = e.target.value;
@@ -88,7 +88,7 @@ class GoogleRegister extends React.Component {
     }
   };
 
-  handleClick = async () => {
+  handleClick = async response => {
     const number = /^[0-9]+$/;
     if (this.state.phone === "") {
       Swal.fire("Error", "Please fill your Phone Number", "warning");
@@ -110,31 +110,69 @@ class GoogleRegister extends React.Component {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
     }
-    let config = {
-      url: this.props.baseUrl + "users/register",
+    // let config = {
+    //   url: this.props.baseUrl + "users/register",
+    //   method: "post",
+    //   data: {
+    //     username: this.state.username,
+    //     email: this.state.email,
+    //     password: this.state.password,
+    //     gender: this.state.gender,
+    //     fullname: this.state.name,
+    //     address: this.state.address,
+    //     phone: this.state.phone.toString()
+    //   }
+    // };
+
+    // await axios(config)
+    //   .then(() => {
+    //     Swal.fire(
+    //       "Account Created Successfully",
+    //       "Please proceed to login",
+    //       "success"
+    //     );
+    //     this.props.history.push("/");
+    //   })
+    //   .catch(() => {
+    //     Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
+    //   });
+
+    // console.log(response);
+    // const email = response.profileObj.email;
+    // const boundaryIndex = email.indexOf("@");
+    // const username = email.slice(0, boundaryIndex);
+    // const fullname = response.profileObj.name;
+    const req = {
       method: "post",
+      url: this.props.baseUrl + "users/register_with_google",
+      headers: {},
       data: {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
+        username: localStorage.getItem("username"),
+        email: localStorage.getItem("email"),
+        password: "",
         gender: this.state.gender,
-        fullname: this.state.name,
+        fullname: localStorage.getItem("fullname"),
         address: this.state.address,
         phone: this.state.phone.toString()
       }
     };
 
-    await axios(config)
-      .then(() => {
-        Swal.fire(
-          "Account Created Successfully",
-          "Please proceed to login",
-          "success"
-        );
-        this.props.history.push("/");
+    const self = this;
+    await axios(req)
+      .then(function(response) {
+        console.log("login as", response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_id", response.data.user["user_id"]);
+        localStorage.setItem("address", response.data.user["address"]);
+        localStorage.setItem("email", response.data.user["email"]);
+        localStorage.setItem("fullname", response.data.user["fullname"]);
+        localStorage.setItem("gender", response.data.user["gender"]);
+        localStorage.setItem("phone", response.data.user["phone"]);
+        localStorage.setItem("username", response.data.user["username"]);
+        self.props.history.push("/home");
       })
-      .catch(() => {
-        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
+      .catch(function(error) {
+        console.log("ERROR", error);
       });
   };
 
@@ -169,24 +207,6 @@ class GoogleRegister extends React.Component {
                 <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
                 </p>
-                <div className="row justify-content-center mb-3">
-                  <div className="col-auto text-center">
-                    <GoogleLogin
-                      clientId="47584810358-62nmr7avsvoep7lagucvlb9hnj39h8jj.apps.googleusercontent.com"
-                      render={renderProps => (
-                        <GoogleButton
-                          label="Sign Up with Google"
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
-                        />
-                      )}
-                      buttonText="Sign Up with Google"
-                      onSuccess={this.registerWithGoogle}
-                      onFailure={this.registerWithGoogle}
-                      cookiePolicy={"single_host_origin"}
-                    />
-                  </div>
-                </div>
                 <div className="col-12">
                   {/* <form
                     action=""

@@ -27,45 +27,6 @@ class Register extends React.Component {
     };
   }
 
-  registerWithGoogle = response => {
-    console.log(response);
-    const email = response.profileObj.email;
-    const boundaryIndex = email.indexOf("@");
-    const username = email.slice(0, boundaryIndex);
-    const fullname = response.profileObj.name;
-    const req = {
-      method: "post",
-      url: this.props.baseUrl + "users/register_with_google",
-      headers: {},
-      data: {
-        username: username,
-        email: email,
-        password: "",
-        fullname: fullname,
-        address: "",
-        phone: ""
-      }
-    };
-
-    const self = this;
-    axios(req)
-      .then(function(response) {
-        console.log("login as", response.data);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user_id", response.data.user["user_id"]);
-        localStorage.setItem("address", response.data.user["address"]);
-        localStorage.setItem("email", response.data.user["email"]);
-        localStorage.setItem("fullname", response.data.user["fullname"]);
-        localStorage.setItem("gender", response.data.user["gender"]);
-        localStorage.setItem("phone", response.data.user["phone"]);
-        localStorage.setItem("username", response.data.user["username"]);
-        self.props.history.push("/home");
-      })
-      .catch(function(error) {
-        console.log("ERROR", error);
-      });
-  };
-
   handleName = e => {
     let inputName = e.target.value;
     this.setState({ name: inputName });
@@ -217,24 +178,6 @@ class Register extends React.Component {
                 <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
                 </p>
-                <div className="row justify-content-center mb-3">
-                  <div className="col-auto text-center">
-                    <GoogleLogin
-                      clientId="47584810358-62nmr7avsvoep7lagucvlb9hnj39h8jj.apps.googleusercontent.com"
-                      render={renderProps => (
-                        <GoogleButton
-                          label="Sign Up with Google"
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
-                        />
-                      )}
-                      buttonText="Sign Up with Google"
-                      onSuccess={this.registerWithGoogle}
-                      onFailure={this.registerWithGoogle}
-                      cookiePolicy={"single_host_origin"}
-                    />
-                  </div>
-                </div>
                 <div className="col-12">
                   {/* <form
                     action=""
