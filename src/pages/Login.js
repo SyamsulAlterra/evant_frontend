@@ -40,6 +40,10 @@ class Login extends React.Component {
 
   responseGoogle = async response => {
     console.log(response);
+    const email = response.profileObj.email;
+    const boundaryIndex = email.indexOf("@");
+    const username = email.slice(0, boundaryIndex);
+    const fullname = response.profileObj.name;
     const req = {
       method: "post",
       url: this.props.baseUrl + "users/google_login",
@@ -65,6 +69,11 @@ class Login extends React.Component {
         self.props.history.push("/home");
       })
       .catch(function(error) {
+        localStorage.setItem("google_token", response.tokenId);
+        localStorage.setItem("email", email);
+        localStorage.setItem("fullname", fullname);
+        localStorage.setItem("username", username);
+        self.props.history.push("/googleRegister");
         console.log("ERROR", error);
       });
   };
@@ -188,10 +197,7 @@ class Login extends React.Component {
                 </div>
               </ValidatorForm>
 
-
-
               <div className="row no-gutters justify-content-center animated fadeIn mt-2">
-
                 <div className="col-auto">
                   <br />
                   <div className="row justify-content-center">

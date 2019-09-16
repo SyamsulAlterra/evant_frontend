@@ -21,6 +21,7 @@ import PendingEvent from "../components/PendingEvent";
 import Confirmation from "../pages/Confirmation";
 import GeneratedEvent from "../pages/GeneratedEvent";
 import Unmatch from "../components/Unmatch";
+import GoogleRegister from "../pages/RegisterWithGoogle";
 
 class MyRoute extends React.Component {
   render() {
@@ -47,6 +48,7 @@ class MyRoute extends React.Component {
             <Route path="/confirmation/:id" component={Confirmation} />
             <Route path="/generated/:id" component={GeneratedEvent} />
             <Route path="/unmatch/:id" component={Unmatch} />
+            <Route path="/googleRegister" component={GoogleRegister} />
           </Switch>
         </Provider>
       </Router>
