@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "unistore/react";
+import { Link, withRouter } from "react-router-dom";
 import Axios from "axios";
 
 class CalendarDetail extends React.Component {
@@ -30,49 +31,34 @@ class CalendarDetail extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
 
-  // componentDidMount = async () => {
-  //   let config = {
-  //     url: this.props.baseUrl + "events/booked",
-  //     method: "get",
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token")
-  //     }
-  //   };
-
-  //   let response = await Axios(config);
-  //   this.setState({ events: response.data });
-  // };
-
   render() {
     return (
-      <div className="container mobileView p-0 text-center">
+      <div className="container mobileView p-0 text-center mbForFooter">
         <div className="calendarDetail border mb-3 my-1 text-left p-2">
           <div className="row">
-            <div className="col-5 px-3 eventDetail">
-              <div className="btn btn-success mb-2"></div>
-              {this.props.availableDates.map(data => {
-                if (data.slice(3, 5) === this.props.selectedMonth) {
+            <div className="col-12 px-3 eventDetail text-center">
+              <p className="text-center mb-2 p-1 bg-danger text-white markedTitle">
+                Marked Event(s)
+              </p>
+              {this.props.events.map(event => {
+                let theDate = event.booked.filter((date, i) => {
+                  return i === 0;
+                });
+                let month = theDate[0].slice(3, 5);
+                if (month === this.props.selectedMonth) {
                   return (
-                    <div>
-                      <p className="m-0 eventDetail">{this.formatDate(data)}</p>
-                    </div>
+                    <Link to={`/transition/${event.event_id}`}>
+                      <div className="m-1 border p-1">
+                        <p className="m-0 eventDetail">"{event.event_name}"</p>
+                        <p className="m-0 eventDetail">{`${this.formatDate(
+                          event.booked[0]
+                        )} - ${this.formatDate(
+                          event.booked[event.booked.length - 1]
+                        )}`}</p>
+                      </div>
+                    </Link>
                   );
                 }
-              })}
-            </div>
-            <div className="col-7 px-3 eventDetail text-center">
-              <div className="btn btn-danger mb-2"></div>
-              {this.props.events.map(event => {
-                return (
-                  <div className="m-1 border p-1">
-                    <p className="m-0 eventDetail">"{event.event_name}"</p>
-                    <p className="m-0 eventDetail">{`${this.formatDate(
-                      event.booked[0]
-                    )} - ${this.formatDate(
-                      event.booked[event.booked.length - 1]
-                    )}`}</p>
-                  </div>
-                );
               })}
             </div>
           </div>
@@ -85,4 +71,4 @@ class CalendarDetail extends React.Component {
 export default connect(
   "availableDates, baseUrl, events",
   connect
-)(CalendarDetail);
+)(withRouter(CalendarDetail));

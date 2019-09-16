@@ -7,7 +7,6 @@ import CalendarTitle from "./CalendarTitle";
 import "bootstrap/dist/js/bootstrap.bundle";
 import Axios from "axios";
 
-
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
@@ -175,9 +174,23 @@ class Calendar extends React.Component {
             ></CalendarGrid>
           );
         })}
-        <div className="col-2 px-3 eventDetail mt-2 mx-5">
-          <div className="btn btn-warning"></div>
-          <p className="eventDetail">Today</p>
+        <div className="row px-0 eventDetail mt-2 mx-5">
+          <div className="col-3 p-0">
+            <div className="btn btn-warning todayMark today"></div>
+            <p className="eventDetail todayMark text-center">Today</p>
+          </div>
+          <div className="col-3 p-0">
+            <div className="btn btn-success todayMark"></div>
+            <p className="eventDetail todayMark text-center">Available</p>
+          </div>
+          <div className="col-3 p-0">
+            <div className="btn btn-danger todayMark"></div>
+            <p className="eventDetail todayMark text-center">Booked</p>
+          </div>
+          <div className="col-3 p-0">
+            <div className="btn btn-secondary todayMark"></div>
+            <p className="eventDetail todayMark text-center">Passed</p>
+          </div>
         </div>
         <CalendarDetail
           selectedMonth={this.twoDigitString(this.state.month)}

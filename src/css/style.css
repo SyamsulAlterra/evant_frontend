@@ -46,7 +46,7 @@ table {
   overflow: scroll;
 }
 .eventDetail {
-  font-size: 8px;
+  font-size: 12px;
 }
 .todayButton {
   height: 20px;
@@ -179,4 +179,13 @@ select.form-control:not([size]):not([multiple]) {
 .h-50 {
   height: 50px !important;
 }
-
+.todayMark {
+  width: 50px;
+  font-size: 12px;
+}
+.markedTitle {
+  font-size: 12px;
+}
+.mbForFooter {
+  margin-bottom: 100px;
+}
