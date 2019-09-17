@@ -16,7 +16,6 @@ const style = {
   fontSize: "12px",
   color: red300,
   width: "240px"
-  // marginTop: "-50px"
 };
 
 class Register extends React.Component {
@@ -82,6 +81,7 @@ class Register extends React.Component {
   };
 
   handleClick = async () => {
+    const number = /^[0-9]+$/;
     if (this.state.name === "") {
       Swal.fire("Error", "Please fill your Full Name", "warning");
       return false;
@@ -96,6 +96,50 @@ class Register extends React.Component {
     }
     if (this.state.password === "") {
       Swal.fire("Error", "Please fill your password", "warning");
+      return false;
+    }
+    if (this.state.password.length < 6) {
+      Swal.fire(
+        "Error",
+        "Password must contain at least six characters!",
+        "warning"
+      );
+      return false;
+    }
+    let re = /[0-9]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one number!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[!@#\$%\^&]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one special character!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[a-z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one lowercase letter!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[A-Z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one uppercase letter!",
+        "warning"
+      );
       return false;
     }
     if (this.state.confirmPassword !== this.state.password) {
