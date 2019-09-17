@@ -109,18 +109,39 @@ class Confirmation extends React.Component {
     await Axios(config);
 
     if (status === -1) {
-      config = {
-        url:
-          this.props.baseUrl +
-          "invitations/decline/" +
-          this.props.match.params.id.toString(),
-        method: "delete",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token")
-        }
-      };
+      if (
+        this.state.event.creator_id.toString() ===
+        localStorage.getItem("user_id").toString()
+      ) {
+        config = {
+          url:
+            this.props.baseUrl +
+            "events/" +
+            this.props.match.params.id.toString(),
+          method: "put",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          },
+          data: {
+            creator_confirmation: 0
+          }
+        };
 
-      await Axios(config);
+        await Axios(config);
+      } else {
+        config = {
+          url:
+            this.props.baseUrl +
+            "invitations/decline/" +
+            this.props.match.params.id.toString(),
+          method: "delete",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          }
+        };
+
+        await Axios(config);
+      }
     } else {
       this.props.allBookedDates.map(async date => {
         config = {
@@ -151,6 +172,8 @@ class Confirmation extends React.Component {
       response.data.booked_event,
       response.data.all_booked_dates
     );
+
+    this.props.history.push("/home");
   };
 
   render() {
@@ -217,27 +240,126 @@ class Confirmation extends React.Component {
             </table>
           </div>
           <div className="row mb-5 mx-5">
-            <Link to="/home" className="col-6 text-center">
+            {/* decline button */}
+            <div className="col-6 text-center">
               <img
                 alt=""
                 src={error}
                 className="cross m-3"
-                onClick={() => this.confirm(-1)}
+                data-toggle="modal"
+                data-target="#decline"
               ></img>
               <br></br>
               Decline
-            </Link>
-            <Link
-              to={`/generated/${this.props.match.params.id}`}
+            </div>
+
+            {/* confirm button */}
+            <div
               className="col-6 text-center"
-              onClick={() => this.confirm(1)}
+              data-toggle="modal"
+              data-target="#commit"
             >
               <img alt="" src={checked} className="checked m-3"></img>
               <br></br>
               Ok
-            </Link>
+            </div>
+
+            {/* modal decline */}
+            <div>
+              <div
+                class="modal fade"
+                id="decline"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        <b>Are you sure want to decline?</b>
+                      </h5>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        After you decline, you <b>can't see</b> any activity
+                        from this event
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                      <Link
+                        to="/home"
+                        type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal"
+                        onClick={() => this.confirm(-1)}
+                      >
+                        Yes
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* modal confirm */}
+            <div>
+              <div
+                class="modal fade"
+                id="commit"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        <b>WARNING</b>
+                      </h5>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        <b>Commit</b> will inform to everybody that you{" "}
+                        <b>certainly attend the event</b>. However, you{" "}
+                        <b>can't decline</b> after commit and your date will{" "}
+                        <b>always be marked red</b>
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                      <Link
+                        to="/home"
+                        type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal"
+                        onClick={() => this.confirm(1)}
+                      >
+                        Yes
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <Footer></Footer>
       </div>
     );
   }

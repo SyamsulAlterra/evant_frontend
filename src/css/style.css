@@ -209,6 +209,7 @@ select.form-control:not([size]):not([multiple]) {
 .search-user input {
   height: 40px;
 }
+
 @media screen and (max-width: 728px) {
   .mobileView {
     width: none;
@@ -216,3 +217,4 @@ select.form-control:not([size]):not([multiple]) {
     overflow: none;
   }
 }
+

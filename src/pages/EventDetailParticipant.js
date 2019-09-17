@@ -20,7 +20,7 @@ class EventDetailParticipant extends React.Component {
       preference: ""
     };
   }
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     let config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -144,7 +144,7 @@ class EventDetailParticipant extends React.Component {
 
   render() {
     return (
-      <div className="eventDetailContent">
+      <div className="eventDetailContent mbForFooter">
         <Header></Header>
         <div className="border container my-3 p-3 mobileView">
           <h1 className="text-center">{this.state.event.event_name}</h1>
@@ -152,7 +152,7 @@ class EventDetailParticipant extends React.Component {
             ======================<br></br>
             creator: @{this.state.event.creator_username}
             <br></br>
-            category :{this.state.event.category}
+            category: {this.props.verboseCategory[this.state.event.category]}
           </h6>
           <div className="row justify-content-center mb-0">
             <div className="preferenceSelect col-8 text-center">
@@ -240,6 +240,6 @@ class EventDetailParticipant extends React.Component {
   }
 }
 
-export default connect("baseUrl, eventName")(
+export default connect("baseUrl, eventName, verboseCategory, preference")(
   withRouter(EventDetailParticipant)
 );

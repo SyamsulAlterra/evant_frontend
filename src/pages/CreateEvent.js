@@ -23,6 +23,8 @@ class CreateEvent extends React.Component {
 
   componentDidMount = async () => {
     await this.setState({ searchResult: this.props.participants });
+    // await this.props.setCategoryGlobal("vacation");
+    console.log(this.props.category);
   };
 
   componentWillUpdate = async (nextProps, prevState) => {
@@ -201,11 +203,21 @@ class CreateEvent extends React.Component {
                     onChange={this.handleCategory}
                     value={this.props.category}
                   >
-                    <option selected="selected" value="vacation">
-                      Holiday
-                    </option>
-                    <option value="eat">Eat Out</option>
-                    <option value="hiking">Hiking</option>
+                    {["vacation", "eat", "hiking"].map(value => {
+                      if (value === this.props.category) {
+                        return (
+                          <option selected="selected" value={value}>
+                            {this.props.verboseCategory[value]}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option value={value}>
+                            {this.props.verboseCategory[value]}
+                          </option>
+                        );
+                      }
+                    })}
                   </select>
                 </span>
               </div>
@@ -235,7 +247,6 @@ class CreateEvent extends React.Component {
             </div>
             <div className="row startDate-section justify-content-center">
               <div className="col-5 p-0 text-center my-2">
-
                 <DatePicker
                   selected={this.props.startDate}
                   onChange={this.handleStartDate}
@@ -244,7 +255,7 @@ class CreateEvent extends React.Component {
                 />
               </div>
               <div className="col-7 text-left p-0 mt-2">
-                : {this.state.startDate}
+                : {this.convert(this.props.startDate)}
               </div>
             </div>
             <div className="row startDate-section justify-content-center">
@@ -257,7 +268,7 @@ class CreateEvent extends React.Component {
                 />
               </div>
               <div className="col-7 text-left p-0 mt-2">
-                : {this.state.endDate}
+                : {this.convert(this.props.endDate)}
               </div>
             </div>
             <div className="row duration justify-content-center">
@@ -295,6 +306,6 @@ class CreateEvent extends React.Component {
 }
 
 export default connect(
-  "baseUrl, participants, eventName, category, startDate, endDate, duration",
+  "baseUrl, participants, eventName, category, startDate, endDate, duration, verboseCategory",
   actions
 )(CreateEvent);
