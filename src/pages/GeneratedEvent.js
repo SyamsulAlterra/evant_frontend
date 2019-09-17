@@ -86,8 +86,9 @@ class GeneratedEvent extends React.Component {
           <div className="container mobileView generatedEvent">
             <div class="row justify-content-center">
               <div className="col-12 text-center">
+                <h2 className="text-center m-0 mt-3">You are commit to</h2>
                 <h3 className="text-center m-0 mt-3">
-                  {this.state.event.event_name}
+                  "{this.state.event.event_name}"
                 </h3>
                 <hr />
               </div>

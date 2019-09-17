@@ -66,6 +66,7 @@ table {
   width: 30px;
 }
 .footer {
+  z-index: 99999;
   color: white;
   position: fixed;
   bottom: 0;
@@ -248,4 +249,40 @@ select.form-control:not([size]):not([multiple]) {
     overflow: none;
     padding-top: 100px;
   }
+}
+.f-15 {
+  font-size: 20px;
+}
+.invitationSearch {
+  width: 300px;
+}
+.BiruTua {
+  color: #2d72df !important;
+}
+.bgBiruTua {
+  background-color: #2d72df !important;
+}
+.BiruMuda {
+  color: #3b8ea5 !important;
+}
+.bgBiruMuda {
+  color: #3b8ea5 !important;
+}
+.Pastel {
+  color: #f5ee9e;
+}
+.bgPastel {
+  background-color: #f5ee9e;
+}
+.Oren {
+  color: #f49e4c !important;
+}
+.bgOren {
+  background-color: #f49e4c !important;
+}
+.Merah {
+  color: #ab3428 !important;
+}
+.bgMerah {
+  background-color: #ab3428 !important;
 }

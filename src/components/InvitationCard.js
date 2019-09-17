@@ -41,50 +41,48 @@ class InvitationCard extends React.Component {
   render() {
     return (
       <div className="container mobileView invitationCard animated fadeIn">
-        <Slide left>
-          <div class="row justify-content-center">
-            <div class="col-12 my-3">
-              <div class="card shadow">
-                <div class="card-body shadow">
-                  <h6 class="card-title cardInvitation">
-                    You have been invited to "{this.props.invitation.event_name}
-                    "
-                  </h6>
-                  <p class="card-text textInvitation">
-                    invited by: @{this.props.invitation.username_creator} <br />
-                    duration: {this.props.invitation.event_duration} day(s){" "}
-                    <br />
-                    category:{" "}
-                    {
-                      this.props.verboseCategory[
-                        this.props.invitation.event_category
-                      ]
-                    }{" "}
-                    <br />
-                  </p>
-                  <div className="text-right invitationAccDec">
-                    <Link
-                      className="btn m-2 text-right"
-                      onClick={() =>
-                        this.acceptEvent(this.props.invitation.event_id)
-                      }
-                    >
-                      Accept
-                    </Link>
-                    <Link
-                      className="btn m-2 text-right"
-                      onClick={() =>
-                        this.declineEvent(this.props.invitation.event_id)
-                      }
-                    >
-                      Decline
-                    </Link>
-                  </div>
+        {/* <Slide left> */}
+        <div class="row justify-content-center">
+          <div class="col-9 my-3 mx-4 text-center">
+            <div class="card shadow">
+              <div class="card-body shadow">
+                <h6 class="card-title cardInvitation">
+                  You have been invited to "{this.props.invitation.event_name}"
+                </h6>
+                <p class="card-text textInvitation">
+                  invited by: @{this.props.invitation.username_creator} <br />
+                  duration: {this.props.invitation.event_duration} day(s) <br />
+                  category:{" "}
+                  {
+                    this.props.verboseCategory[
+                      this.props.invitation.event_category
+                    ]
+                  }{" "}
+                  <br />
+                </p>
+                <div className="text-right invitationAccDec">
+                  <Link
+                    className="btn m-2 text-right"
+                    onClick={() =>
+                      this.acceptEvent(this.props.invitation.event_id)
+                    }
+                  >
+                    Accept
+                  </Link>
+                  <Link
+                    className="btn m-2 text-right"
+                    onClick={() =>
+                      this.declineEvent(this.props.invitation.event_id)
+                    }
+                  >
+                    Decline
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-        </Slide>
+        </div>
+        {/* </Slide> */}
       </div>
     );
   }
