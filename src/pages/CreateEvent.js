@@ -182,11 +182,11 @@ class CreateEvent extends React.Component {
     return (
       <div className="createEvent-content mbForFooter">
         <Header></Header>
-        <div className="border container my-5 p-3 mobileView">
-          <h3 className="text-center">CREATE EVENT</h3>
+        <div className="border rounded shadow container my-5 mobileView animated fadeIn">
+          <h3 className="text-center mt-5">CREATE EVENT</h3>
           <div className="">
-            <div className="row justify-content-center mb-3">
-              <div className="event-name col-12 text-center">
+            <div className="row justify-content-center">
+              <div className="event-name col-12 text-center mt-5 mb-3">
                 <label for="exampleFormControlSelect1">Event Name</label>
                 <br />
                 <input
@@ -198,7 +198,7 @@ class CreateEvent extends React.Component {
                 />
               </div>
             </div>
-            <div className="row justify-content-center mb-3">
+            <div className="row justify-content-center mt-3 mb-5">
               <div className="category-select col-12 text-center">
                 <label for="category">Select Category</label>
                 <span>
@@ -235,9 +235,11 @@ class CreateEvent extends React.Component {
                   onChange={this.searchParticipant}
                 ></input>
               </div>
-              <Link to="/invite" className="button-add col-4 px-2 text-right">
-                <button className="btn btn-primary m-1">invite</button>
-              </Link>
+              <div className="col-4 px-2 text-right">
+                <Link to="/invite" className="button-add">
+                  <button className="btn btn-primary m-1">invite</button>
+                </Link>
+              </div>
             </div>
             <div>
               <div className="row justify-content-center invitedBox m-3">
@@ -251,7 +253,7 @@ class CreateEvent extends React.Component {
               </div>
             </div>
             <div className="row startDate-section justify-content-center">
-              <div className="col-5 p-0 text-center my-2">
+              <div className="col-7 text-center my-2">
                 <DatePicker
                   selected={this.props.startDate}
                   onChange={this.handleStartDate}
@@ -259,12 +261,12 @@ class CreateEvent extends React.Component {
                   customInput={<ExampleCustomInput1 />}
                 />
               </div>
-              <div className="col-7 text-left p-0 mt-2">
+              <div className="col-5 text-left p-0 my-3">
                 : {this.convert(this.props.startDate)}
               </div>
             </div>
             <div className="row startDate-section justify-content-center">
-              <div className="col-5 text-center my-2">
+              <div className="col-7 text-center my-2">
                 <DatePicker
                   selected={this.props.endDate}
                   onChange={this.handleEndDate}
@@ -272,7 +274,7 @@ class CreateEvent extends React.Component {
                   customInput={<ExampleCustomInput2 />}
                 />
               </div>
-              <div className="col-7 text-left p-0 mt-2">
+              <div className="col-5 text-left p-0 my-3">
                 : {this.convert(this.props.endDate)}
               </div>
             </div>

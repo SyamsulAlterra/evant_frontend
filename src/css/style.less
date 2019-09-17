@@ -17,7 +17,7 @@
 }
 
 .mobileView {
-  width: 375px;
+  width: 360px;
   font-family: "Montserrat";
   // padding-top: 100px;
 }
@@ -90,7 +90,8 @@ table {
 
 .footer {
   z-index: 99999;
-  color: white;
+  color: black;
+  background-color: #f5ee9e;
   img {
     height: 30px;
     width: 30px;
@@ -212,6 +213,7 @@ table {
 
 .edit-header {
   height: 100px;
+  margin: auto;
 }
 
 .header-style {
@@ -231,7 +233,7 @@ table {
   // background-color: #464d5c;
 
   // position: fixed;
-  background-color: #ffffff;
+  background-color: #3b8ea5;
 }
 
 .size-select {
@@ -341,7 +343,11 @@ select.form-control:not([size]):not([multiple]) {
     width: none;
     font-family: none;
     overflow: none;
-    padding-top: 100px;
+    // padding-top: 100px;
+  }
+  .header {
+    height: none;
+    width: auto;
   }
 }
 
@@ -390,4 +396,12 @@ select.form-control:not([size]):not([multiple]) {
 
 .bgMerah {
   background-color: #ab3428 !important;
+}
+
+.InviteFriendContent {
+  margin-top: 50px;
+  .buttonCancelInvite {
+    background-color: #3b8ea5;
+    color: white;
+  }
 }
