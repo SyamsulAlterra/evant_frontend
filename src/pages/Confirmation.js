@@ -261,7 +261,7 @@ class Confirmation extends React.Component {
             >
               <img alt="" src={checked} className="checked m-3"></img>
               <br></br>
-              Ok
+              Commit
             </div>
 
             {/* modal decline */}

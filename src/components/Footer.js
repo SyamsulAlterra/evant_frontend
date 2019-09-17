@@ -111,7 +111,7 @@ class Footer extends React.Component {
                   title="Invitation"
                   src={invitation}
                 ></img>
-                <span className="text-dark">
+                <span className="text-light">
                   {this.props.invitations.length}
                 </span>
               </Link>

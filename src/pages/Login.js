@@ -255,7 +255,7 @@ class Login extends React.Component {
                   <div className="col text-center">
                     <Link to="/register">
                       <small className="register-text">
-                        Don't have an acoount? click here to create an account
+                        Don't have an acoount? click here to register
                       </small>
                     </Link>
                   </div>

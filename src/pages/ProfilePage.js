@@ -6,7 +6,7 @@ import Profile from "../components/Profile";
 class ProfilePage extends React.Component {
   render() {
     return (
-      <div className="profilePage mbForFooter">
+      <div className="profilePage">
         <Header></Header>
         <Profile></Profile>
         <Footer></Footer>
