@@ -133,10 +133,10 @@ table {
   height: 26px;
 }
 
-.participant {
-  // height: 400px;
-  // overflow: scroll;
-}
+// .participant {
+//   // height: 400px;
+//   // overflow: scroll;
+// }
 
 .checked,
 .cross {
@@ -175,10 +175,10 @@ table {
   color: black;
 }
 
-.invitedBox {
-  // height: 300px;
-  // overflow: scroll;
-}
+// .invitedBox {
+//   // height: 300px;
+//   // overflow: scroll;
+// }
 
 .venue {
   width: 200px;
@@ -227,10 +227,10 @@ table {
 .header {
   height: 100px;
 
-  background-color: #464d5c;
+  // background-color: #464d5c;
 
   // position: fixed;
-  background-color: #a7cdcc;
+  background-color: #ffffff;
 }
 
 .size-select {
@@ -273,11 +273,14 @@ select.form-control:not([size]):not([multiple]) {
 .edit-button {
   padding: 8px 93px;
   // width: 99px;
-
   // .h-400 {
   //   height: 450px !important;
   // }
 }
+
+// .h-400 {
+//   height: 450px !important;
+// }
 
 .calendarCell {
   p {
@@ -325,5 +328,14 @@ select.form-control:not([size]):not([multiple]) {
     /* Set the hr color */
     color: #333; /* old IE */
     background-color: #333; /* Modern Browsers */
+  }
+}
+
+@media screen and (max-width: 728px) {
+  .mobileView {
+    width: none;
+    font-family: none;
+    overflow: none;
+    // padding-top: 100px;
   }
 }

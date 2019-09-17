@@ -1,21 +1,30 @@
 import createStore from "unistore";
 
 export let Store = createStore({
-  baseUrl: "http://0.0.0.0:5000/api/",
+  baseUrl: "http://0.0.0.0:5000/api/", //"https://api.myevant.com/api/",
   availableDates: ["dummy"],
   invitations: [],
   participants: [],
   place: [],
   eventName: "",
   category: "vacation",
-  startDate: "",
-  endDate: "",
+  startDate: new Date(),
+  endDate: new Date(),
   duration: null,
   events: [],
-  allBookedDates: []
+  allBookedDates: [],
+  verboseCategory: {
+    vacation: "Holiday",
+    eat: "Eat Out",
+    hiking: "Hiking"
+  },
+  preference: ""
 });
 
 export const actions = Store => ({
+  setPreferenceOnGlobal: (state, preference) => {
+    return { preference: preference };
+  },
   setEventsAndBookedDatesOnGlobal: (state, events, bookedDate) => {
     return { events: events, allBookedDates: bookedDate };
   },
@@ -56,9 +65,9 @@ export const actions = Store => ({
   clearCreateEvent: state => {
     return {
       eventName: "",
-      category: "",
-      startDate: "",
-      endDate: "",
+      category: "vacation",
+      startDate: new Date(),
+      endDate: new Date(),
       duration: null
     };
   },

@@ -170,8 +170,7 @@ table {
 }
 .header {
   height: 100px;
-  background-color: #464d5c;
-  background-color: #a7cdcc;
+  background-color: #ffffff;
 }
 .size-select {
   width: 1000px;
@@ -243,3 +242,12 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #333;
   /* Modern Browsers */
 }
+
+@media screen and (max-width: 728px) {
+  .mobileView {
+    width: none;
+    font-family: none;
+    overflow: none;
+  }
+}
+

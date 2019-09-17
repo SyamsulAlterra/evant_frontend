@@ -20,7 +20,7 @@ class EventDetailParticipant extends React.Component {
       preference: ""
     };
   }
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     let config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -248,6 +248,6 @@ class EventDetailParticipant extends React.Component {
   }
 }
 
-export default connect("baseUrl, eventName")(
+export default connect("baseUrl, eventName, verboseCategory, preference")(
   withRouter(EventDetailParticipant)
 );

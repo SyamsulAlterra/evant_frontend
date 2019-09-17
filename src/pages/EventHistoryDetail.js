@@ -14,7 +14,9 @@ class EventHistoryDetail extends React.Component {
         creator_name: ""
       },
       participant: [],
-      startDate: ""
+      title: "",
+      startDate: "",
+      endDate: ""
     };
   }
 
@@ -54,7 +56,11 @@ class EventHistoryDetail extends React.Component {
     };
 
     let response = await Axios(config);
-    await this.setState({ event: response.data });
+    await this.setState({
+      event: response.data,
+      startDate: response.data.start_date,
+      endDate: response.data.end_date
+    });
 
     config = {
       url:
@@ -70,17 +76,19 @@ class EventHistoryDetail extends React.Component {
     response = await Axios(config);
     await this.setState({ participant: response.data });
     if (
-      response.data.start_date === null ||
-      response.data.start_date === undefined ||
-      response.data.start_date === ""
+      this.state.startDate === null ||
+      this.state.startDate === undefined ||
+      this.state.startDate === ""
     ) {
-      this.setState({ startDate: `don't have match date` });
-      this.setState({ endDate: "" });
+      this.setState({ title: `don't have match date` });
+    } else if (
+      this.state.event.place_name === null ||
+      this.state.event.place_name === undefined ||
+      this.state.event.place_name === ""
+    ) {
+      this.setState({ title: `don't have match place` });
     } else {
-      this.setState({
-        startDate: this.formatDate(this.state.event.start_date)
-      });
-      this.setState({ endDate: this.formatDate(this.state.event.end_date) });
+      this.setState({ title: `Success` });
     }
   };
   render() {
@@ -91,6 +99,7 @@ class EventHistoryDetail extends React.Component {
         <div className="container mobileView">
           <h3 className="text-center m-0 mt-3">
             {this.state.event.event_name}
+            <h6>{this.state.title}</h6>
           </h3>
           <p className="text-center m-0">===========================</p>
           <h6 className="text-center m-0">
@@ -100,7 +109,10 @@ class EventHistoryDetail extends React.Component {
             category: {this.state.event.category}
           </h6>
           <h6 className="text-center m-0">
-            date: {`${this.state.startDate} - ${this.state.endDate}`}
+            date:{" "}
+            {`${this.formatDate(this.state.startDate)} - ${this.formatDate(
+              this.state.endDate
+            )}`}
           </h6>
           <div className="participant m-3 border">
             {this.state.participant.map((user, index) => {
