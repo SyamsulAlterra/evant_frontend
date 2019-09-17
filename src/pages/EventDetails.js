@@ -19,7 +19,7 @@ class EventDetails extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -101,40 +101,34 @@ class EventDetails extends React.Component {
   };
 
   generateEvent = async e => {
-    e.preventDefault();
-
-    let generateDate = {
-      url:
-        this.props.baseUrl +
-        "events/generate_date/" +
-        this.props.match.params.id,
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    let dateResponse = await axios(generateDate);
-    console.log(dateResponse.data);
-
-    let generatePlace = {
-      url:
-        this.props.baseUrl +
-        "recommendation/" +
-        this.state.event.category +
-        "/" +
-        this.props.match.params.id,
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    let placeResponse = await axios(generatePlace);
-
-    await this.props.setPlaceOnGlobal(placeResponse.data);
-
-    this.props.history.push(`/transition/${this.state.event.event_id}`);
+    // e.preventDefault();
+    // let generateDate = {
+    //   url:
+    //     this.props.baseUrl +
+    //     "events/generate_date/" +
+    //     this.props.match.params.id,
+    //   method: "get",
+    //   headers: {
+    //     Authorization: "Bearer " + localStorage.getItem("token")
+    //   }
+    // };
+    // let dateResponse = await axios(generateDate);
+    // console.log(dateResponse.data);
+    // let generatePlace = {
+    //   url:
+    //     this.props.baseUrl +
+    //     "recommendation/" +
+    //     this.state.event.category +
+    //     "/" +
+    //     this.props.match.params.id,
+    //   method: "get",
+    //   headers: {
+    //     Authorization: "Bearer " + localStorage.getItem("token")
+    //   }
+    // };
+    // let placeResponse = await axios(generatePlace);
+    // await this.props.setPlaceOnGlobal(placeResponse.data);
+    // this.props.history.push(`/transition/${this.state.event.event_id}`);
   };
 
   formatDate = date => {
@@ -172,11 +166,12 @@ class EventDetails extends React.Component {
             <h1 className="text-center">{this.state.event.event_name}</h1>
 
             <h6 className="text-center m-0">
-              creator: {this.state.event.creator_username}
+              Creator: {this.state.event.creator_username}
             </h6>
             <div className="category my-3">
               <h6 className="text-center">
-                Category :{this.state.event.category}
+                Category:{" "}
+                {this.props.verboseCategory[this.state.event.category]}
               </h6>
             </div>
             <div className="row justify-content-center mb-3">
@@ -209,10 +204,10 @@ class EventDetails extends React.Component {
             </div>
             <div className="row justify-content-center mb-3">
               <div className="button-add col-8 text-center">
-                <Link to={`/transition/${this.state.event.event_id}`}>
+                <Link to={`/calculate/${this.state.event.event_id}`}>
                   <button
                     className="btn btn-primary m-1"
-                    onClick={this.generateEvent}
+                    // onClick={this.generateEvent}
                   >
                     Suggest Our Event
                   </button>
@@ -257,6 +252,6 @@ class EventDetails extends React.Component {
 }
 
 export default connect(
-  "baseUrl, place",
+  "baseUrl, place, verboseCategory",
   actions
 )(withRouter(EventDetails));

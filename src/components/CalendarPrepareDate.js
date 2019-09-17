@@ -198,10 +198,12 @@ class CalendarPrepareDate extends React.Component {
     return (
       <div className="CalendarPrepareDate container mobileView p-0 my-5">
         <div className="row justify-content-center">
-          <div className="col-8">
+          <div className="col-10">
             {" "}
             <br></br>
-            <h6 className="text-center">Your Available Date on</h6>
+            <h6 className="text-center">
+              Please prepare {this.state.event.duration} days between
+            </h6>
             <h6 className="text-center">
               {`${this.formatDate(
                 this.state.event.start_date_parameter

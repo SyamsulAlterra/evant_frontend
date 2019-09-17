@@ -62,12 +62,15 @@ class Transition extends React.Component {
       return user.user_id.toString() === currentUserId;
     });
 
-    console.log("AAAAAAAAAAAAAAAAAAAA", isConfirm);
+    console.log("AAAAAAAAAAAAAAAAAAAA", isConfirm, place);
     console.log(suggestionDate, eventPreference);
 
     let destination;
     if (event_status === 0) {
-      if (suggestionDate === null && eventPreference !== null) {
+      if (
+        (suggestionDate === null && eventPreference !== null) ||
+        (suggestionDate !== null && eventPreference === null)
+      ) {
         destination = `/unmatch/${event_id}`;
       } else if (
         (currentUserId === creator_id.toString() &&
@@ -96,7 +99,7 @@ class Transition extends React.Component {
         destination = `/pending/${event_id}`;
       } else if (isConfirm[0].confirmation === 1 && place !== null) {
         destination = `/generated/${event_id}`;
-      } else if (isConfirm[0].confirmation === 0) {
+      } else if (isConfirm[0].confirmation === 0 && place !== null) {
         destination = `/confirmation/${event_id}`;
       }
     } else {
