@@ -37,7 +37,7 @@ class CalendarDetail extends React.Component {
         <div className="calendarDetail mb-3 my-1 text-left">
           <div className="row no-gutters">
             <div className="col-12 eventDetail text-center">
-              <p className="text-center mb-2 p-1 bg-danger text-white markedTitle">
+              <p className="text-center mb-2 p-1 markedTitle">
                 Marked Event(s)
               </p>
               {this.props.events.map(event => {
@@ -49,7 +49,9 @@ class CalendarDetail extends React.Component {
                 return (
                   <Link to={`/transition/${event.event_id}`}>
                     <div className="m-1 border p-1">
-                      <p className="m-0 eventDetail">"{event.event_name}"</p>
+                      <p className="m-0 eventDetailTitle bgMerah text-white">
+                        "{event.event_name}"
+                      </p>
                       <p className="m-0 eventDetail">{`${this.formatDate(
                         event.booked[0]
                       )} - ${this.formatDate(

@@ -13,7 +13,7 @@
   background-color: white;
 }
 .mobileView {
-  width: 375px;
+  width: 360px;
   font-family: "Montserrat";
 }
 .calendarCell {
@@ -43,6 +43,9 @@ table {
 .calendarDetail {
   width: 280px;
   margin: 0px auto;
+}
+.eventDetailTitle {
+  font-size: 16px;
 }
 .eventDetail {
   font-size: 13px;
@@ -85,6 +88,7 @@ table {
 .fotoProfil .plain {
   text-decoration: none;
   color: black;
+  font-size: 15px;
 }
 .avatar {
   width: 25px;
@@ -209,7 +213,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 .fontstyle {
   font-family: "Muli";
-  font-size: 20px;
+  font-size: 15px;
 }
 .eventDetailContentParticipant hr {
   border: none;
@@ -247,7 +251,6 @@ select.form-control:not([size]):not([multiple]) {
     width: none;
     font-family: none;
     overflow: none;
-    padding-top: 100px;
   }
 }
 .f-15 {
@@ -266,7 +269,7 @@ select.form-control:not([size]):not([multiple]) {
   color: #3b8ea5 !important;
 }
 .bgBiruMuda {
-  color: #3b8ea5 !important;
+  background-color: #3b8ea5 !important;
 }
 .Pastel {
   color: #f5ee9e;
@@ -281,8 +284,20 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #f49e4c !important;
 }
 .Merah {
-  color: #ab3428 !important;
+  color: #ff0000 !important;
 }
 .bgMerah {
-  background-color: #ab3428 !important;
+  background-color: #df5454 !important;
+}
+.span1 {
+  font-size: 22px;
+}
+.span2 {
+  font-size: 15px;
+}
+.borad {
+  border-radius: 20%;
+}
+.black {
+  background-color: black;
 }

@@ -25,7 +25,7 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid footer text-center p-0">
+      <div className="container-fluid footer text-center p-0 bgBiruMuda">
         <div className="container mobileView text-center">
           <div className="row mobileView p-0">
             <div className="col-3 text-center p-0">
