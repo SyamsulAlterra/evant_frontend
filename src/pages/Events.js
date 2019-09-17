@@ -21,7 +21,7 @@ class Events extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -89,12 +89,12 @@ class Events extends React.Component {
                   return (
                     <div className="shadow">
                       <CollapseEvent
-                        id={value.event_id}
-                        eventName={value.event_name}
-                        creatorName={value.creator_name}
-                        category={value.category}
-                        startDateParameter={value.start_date_parameter}
-                        endDateParameter={value.end_date_parameter}
+                        id={value.event.event_id}
+                        eventName={value.event.event_name}
+                        creatorName={value.event.creator_name}
+                        category={value.event.category}
+                        startDateParameter={value.event.start_date_parameter}
+                        endDateParameter={value.event.end_date_parameter}
                       />
                     </div>
                   );
