@@ -200,6 +200,9 @@ class Login extends React.Component {
                   errorMessages={["this field is required"]}
                 />
                 <br />
+                <Link to="/forgotPassword">
+                  <small className="register-text">Forgot password?</small>
+                </Link>
                 <div className="row no-gutters justify-content-center animated fadeIn mt-2">
                   <div className="col-auto mt-3">
                     <button
