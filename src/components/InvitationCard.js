@@ -49,7 +49,13 @@ class InvitationCard extends React.Component {
                     invited by: @{this.props.invitation.username_creator} <br />
                     duration: {this.props.invitation.event_duration} day(s){" "}
                     <br />
-                    category: {this.props.invitation.event_category} <br />
+                    category:{" "}
+                    {
+                      this.props.verboseCategory[
+                        this.props.invitation.event_category
+                      ]
+                    }{" "}
+                    <br />
                   </p>
                   <div className="text-right">
                     <Link
@@ -80,6 +86,6 @@ class InvitationCard extends React.Component {
 }
 
 export default connect(
-  "baseUrl",
+  "baseUrl, verboseCategory",
   actions
 )(withRouter(InvitationCard));
