@@ -70,7 +70,8 @@ table {
 }
 .footer {
   z-index: 99999;
-  color: white;
+  color: black;
+  background-color: #f5ee9e;
   position: fixed;
   bottom: 0;
 }
@@ -158,6 +159,7 @@ table {
 }
 .edit-header {
   height: 100px;
+  margin: auto;
 }
 .header-style {
   /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
@@ -171,7 +173,7 @@ table {
 }
 .header {
   height: 100px;
-  background-color: #ffffff;
+  background-color: #3b8ea5;
 }
 .size-select {
   width: 1000px;
@@ -252,6 +254,10 @@ select.form-control:not([size]):not([multiple]) {
     font-family: none;
     overflow: none;
   }
+  .header {
+    height: none;
+    width: auto;
+  }
 }
 .f-15 {
   font-size: 20px;
@@ -300,4 +306,11 @@ select.form-control:not([size]):not([multiple]) {
 }
 .black {
   background-color: black;
+}
+.InviteFriendContent {
+  margin-top: 50px;
+}
+.InviteFriendContent .buttonCancelInvite {
+  background-color: #3b8ea5;
+  color: white;
 }
