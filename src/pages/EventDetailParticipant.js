@@ -144,12 +144,13 @@ class EventDetailParticipant extends React.Component {
 
   render() {
     return (
-      <div className="eventDetailContent">
+      <div className="eventDetailContentParticipant">
         <Header></Header>
-        <div className="border container my-3 p-3 mobileView">
+        <div className="border shadow rounded container my-3 p-3 mobileView mbForFooter">
           <h1 className="text-center">{this.state.event.event_name}</h1>
           <h6 className="text-center m-0">
-            ======================<br></br>
+            {/* ======================<br></br> */}
+            <hr />
             creator: @{this.state.event.creator_username}
             <br></br>
             category :{this.state.event.category}

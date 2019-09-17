@@ -63,7 +63,7 @@ class Events extends React.Component {
               <div>
                 {this.state.listEvent.map(value => {
                   return (
-                    <div className="shadow">
+                    <div className="shadow rounded">
                       <CollapseEvent
                         id={value.event_id}
                         creatorName={value.creator_name}

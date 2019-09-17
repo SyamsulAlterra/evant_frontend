@@ -30,16 +30,21 @@ class InvitationCard extends React.Component {
     };
 
     await Axios(config);
+    Swal.fire(
+      "Invitation accepted",
+      "Please fill your available date and preferences in event detail page",
+      "success"
+    );
     this.props.history.push("/events");
   };
 
   render() {
     return (
-      <div className="container mobileView invitationCard">
+      <div className="container mobileView invitationCard animated fadeIn">
         <Slide left>
           <div class="row justify-content-center">
-            <div class="col-12 my-5">
-              <div class="card">
+            <div class="col-12 my-3">
+              <div class="card shadow">
                 <div class="card-body">
                   <h6 class="card-title cardInvitation">
                     You have been invited to "{this.props.invitation.event_name}

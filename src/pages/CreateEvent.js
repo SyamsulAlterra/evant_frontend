@@ -23,6 +23,7 @@ class CreateEvent extends React.Component {
 
   componentDidMount = async () => {
     await this.setState({ searchResult: this.props.participants });
+    console.log(this.props.category);
   };
 
   componentWillUpdate = async (nextProps, prevState) => {
@@ -75,6 +76,9 @@ class CreateEvent extends React.Component {
   createEvent = async e => {
     e.preventDefault();
     const self = this;
+    if (self.props.category === "" || self.props.category === undefined) {
+      this.props.setCategoryGlobal("vacation");
+    }
     const configCreate = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -235,7 +239,6 @@ class CreateEvent extends React.Component {
             </div>
             <div className="row startDate-section justify-content-center">
               <div className="col-5 p-0 text-center my-2">
-
                 <DatePicker
                   selected={this.props.startDate}
                   onChange={this.handleStartDate}

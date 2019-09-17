@@ -1,7 +1,7 @@
 import createStore from "unistore";
 
 export let Store = createStore({
-  baseUrl: "https://api.myevant.com/api/",
+  baseUrl: "http://0.0.0.0:5000/api/",
   availableDates: ["dummy"],
   invitations: [],
   participants: [],

@@ -66,6 +66,7 @@ table {
   width: 30px;
 }
 .footer {
+  color: white;
   position: fixed;
   bottom: 0;
 }
@@ -170,6 +171,7 @@ table {
 .header {
   height: 100px;
   background-color: #464d5c;
+  background-color: #a7cdcc;
 }
 .size-select {
   width: 1000px;
@@ -192,11 +194,11 @@ select.form-control:not([size]):not([multiple]) {
 }
 .mbForFooter {
   margin-bottom: 150px;
+  margin-top: 50px;
 }
 .position {
   height: 100vh;
 }
-
 .MuiButton-sizeLarge {
   padding: 8px 99px;
   font-size: 0.9375rem;
@@ -204,11 +206,27 @@ select.form-control:not([size]):not([multiple]) {
 .edit-button {
   padding: 8px 93px;
 }
-
 .calendarCell p {
   font-size: 15px !important;
 }
 .search-user input {
   height: 40px;
 }
-
+.eventDetailContentParticipant hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+.eventDetailContent hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
