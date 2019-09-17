@@ -96,53 +96,55 @@ class PendingEvent extends React.Component {
     return (
       <div className="eventDetailContent">
         <Header></Header>
-        <div className="border container my-3 p-3 mobileView">
-          <h1 className="text-center">{this.state.event.event_name}</h1>
-          <h6 className="text-center m-0">
-            ======================<br></br>
-            creator: @{this.state.event.creator_username}
-            <br></br>
-            category :{this.state.event.category}
-          </h6>
-          <div className="row justify-content-center mb-0">
-            <div className="preferenceSelect col-10 text-center">
-              <label for="preference"></label>
-              <span>Your preference: {this.state.preference}</span>
+        <div className="vh-100 mbForFooter">
+          <div className="border container my-3 p-3 mobileView">
+            <h1 className="text-center">{this.state.event.event_name}</h1>
+            <h6 className="text-center m-0">
+              ======================<br></br>
+              creator: @{this.state.event.creator_username}
+              <br></br>
+              category :{this.state.event.category}
+            </h6>
+            <div className="row justify-content-center mb-0">
+              <div className="preferenceSelect col-10 text-center">
+                <label for="preference"></label>
+                <span>Your preference: {this.state.preference}</span>
+              </div>
             </div>
-          </div>
-          <div className="dateSection text-center">
-            Range date :{" "}
-            {this.formatDate(this.state.event.start_date_parameter)} -{" "}
-            {this.formatDate(this.state.event.end_date_parameter)}
-            <br />
-            Event Duration : {this.state.event.duration} days
-          </div>
-          <div className="row justify-content-center">
-            <div className="search-user col-12 text-center my-3">
-              <input
-                type="text"
-                placeholder="search username or fullname"
-                className="my-0 w-100 text-center"
-                onChange={this.search}
-              ></input>
+            <div className="dateSection text-center">
+              Range date :{" "}
+              {this.formatDate(this.state.event.start_date_parameter)} -{" "}
+              {this.formatDate(this.state.event.end_date_parameter)}
+              <br />
+              Event Duration : {this.state.event.duration} days
             </div>
-          </div>
-          <div className="participant border border-secondary p-3">
-            {this.state.searchResult.map((value, index) => {
-              return <ParticipantCard user={value}></ParticipantCard>;
-            })}
-          </div>
-          <div className="container text-center">
-            <div className="row text-center">
-              <Link to="/events" className="col-12 text-center">
-                <img
-                  alt=""
-                  src={checked}
-                  className="checked m-3 text-center"
-                ></img>
-                <br></br>
-                Ok
-              </Link>
+            <div className="row justify-content-center">
+              <div className="search-user col-12 text-center my-3">
+                <input
+                  type="text"
+                  placeholder="search username or fullname"
+                  className="my-0 w-100 text-center"
+                  onChange={this.search}
+                ></input>
+              </div>
+            </div>
+            <div className="participant border border-secondary p-3">
+              {this.state.searchResult.map((value, index) => {
+                return <ParticipantCard user={value}></ParticipantCard>;
+              })}
+            </div>
+            <div className="container text-center">
+              <div className="row text-center">
+                <Link to="/events" className="col-12 text-center">
+                  <img
+                    alt=""
+                    src={checked}
+                    className="checked m-3 text-center"
+                  ></img>
+                  <br></br>
+                  Ok
+                </Link>
+              </div>
             </div>
           </div>
         </div>

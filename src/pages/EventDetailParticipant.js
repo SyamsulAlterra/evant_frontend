@@ -146,92 +146,99 @@ class EventDetailParticipant extends React.Component {
     return (
       <div className="eventDetailContentParticipant">
         <Header></Header>
-        <div className="border shadow rounded container my-3 p-3 mobileView mbForFooter">
-          <h1 className="text-center">{this.state.event.event_name}</h1>
-          <h6 className="text-center m-0">
-            {/* ======================<br></br> */}
-            <hr />
-            creator: @{this.state.event.creator_username}
-            <br></br>
-            category :{this.state.event.category}
-          </h6>
-          <div className="row justify-content-center mb-0">
-            <div className="preferenceSelect col-8 text-center">
-              <label for="preference"></label>
-              <span>
-                <select
-                  className="form-control h-50"
-                  id="category"
-                  onChange={this.handleCategory}
+        <div className="vh-100 mbForFooter">
+          <div className="border shadow rounded container my-3 p-3 mobileView">
+            <h1 className="text-center">{this.state.event.event_name}</h1>
+            <h6 className="text-center m-0">
+              <hr />
+              creator: @{this.state.event.creator_username}
+              <br></br>
+              category: {this.state.event.category}
+            </h6>
+            <div className="row justify-content-center mb-0">
+              <div className="preferenceSelect col-8 text-center">
+                <label for="preference"></label>
+                <span>
+                  <select
+                    className="form-control h-50 mb-3"
+                    id="category"
+                    onChange={this.handleCategory}
+                  >
+                    {this.state.categories.map((category, i) => {
+                      if (i === 0) {
+                        return (
+                          <option
+                            value={category.preference}
+                            selected="selected"
+                          >
+                            {category.preference}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option value={category.preference}>
+                            {category.preference}
+                          </option>
+                        );
+                      }
+                    })}
+                  </select>
+                </span>
+              </div>
+            </div>
+            <div className="dateSection text-center mb-3">
+              Range date :{" "}
+              {this.formatDate(this.state.event.start_date_parameter)} -{" "}
+              {this.formatDate(this.state.event.end_date_parameter)}
+              <br />
+              Event Duration : {this.state.event.duration} days
+            </div>
+            <div className="row justify-content-center mb-0">
+              <div className="button-add col-8 text-center">
+                <Link
+                  to={"/editDate/" + this.state.event.event_id}
+                  className="btn btn-primary m-1 w-100"
                 >
-                  {this.state.categories.map((category, i) => {
-                    if (i === 0) {
-                      return (
-                        <option value={category.preference} selected="selected">
-                          {category.preference}
-                        </option>
-                      );
-                    } else {
-                      return (
-                        <option value={category.preference}>
-                          {category.preference}
-                        </option>
-                      );
-                    }
-                  })}
-                </select>
-              </span>
+                  Manage my date
+                </Link>
+              </div>
             </div>
-          </div>
-          <div className="dateSection text-center">
-            Range date :{" "}
-            {this.formatDate(this.state.event.start_date_parameter)} -{" "}
-            {this.formatDate(this.state.event.end_date_parameter)}
-            <br />
-            Event Duration : {this.state.event.duration} days
-          </div>
-          <div className="row justify-content-center mb-0">
-            <div className="button-add col-8 text-center">
-              <Link
-                to={"/editDate/" + this.state.event.event_id}
-                className="btn btn-primary m-1 w-100"
-              >
-                Manage my date
-              </Link>
+            <div className="row justify-content-center">
+              <div className="search-user col-12 text-center my-3">
+                <input
+                  type="text"
+                  placeholder="search username or fullname"
+                  className="my-0 w-100 text-center"
+                  onChange={this.search}
+                ></input>
+              </div>
             </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="search-user col-12 text-center my-3">
-              <input
-                type="text"
-                placeholder="search username or fullname"
-                className="my-0 w-100 text-center"
-                onChange={this.search}
-              ></input>
+            <div className="participant p-3">
+              {this.state.searchResult.map((value, index) => {
+                return <ParticipantCard user={value}></ParticipantCard>;
+              })}
             </div>
-          </div>
-          <div className="participant border border-secondary p-3">
-            {this.state.searchResult.map((value, index) => {
-              return <ParticipantCard user={value}></ParticipantCard>;
-            })}
-          </div>
-          <div className="container">
-            <div className="row no-gutters">
-              <Link className="col-6 text-center">
-                <img
-                  alt=""
-                  src={error}
-                  className="cross m-3"
-                  onClick={this.declineEvent}
-                ></img>
-                <br></br>
-                Decline
-              </Link>
-              <Link className="col-6 text-center" onClick={this.postPreference}>
-                <img alt="" src={checked} className="checked m-3"></img>
-                <br></br>
-                Ok
-              </Link>
+            <div className="container">
+              <div className="row no-gutters">
+                <Link className="col-6 text-center">
+                  <img
+                    alt=""
+                    src={error}
+                    className="cross m-3"
+                    onClick={this.declineEvent}
+                  ></img>
+                  <br></br>
+                  Decline
+                </Link>
+                <Link
+                  className="col-6 text-center"
+                  onClick={this.postPreference}
+                >
+                  <img alt="" src={checked} className="checked m-3"></img>
+                  <br></br>
+                  Ok
+                </Link>
+              </div>
             </div>
           </div>
         </div>

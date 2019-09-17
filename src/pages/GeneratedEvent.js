@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
 import { Link, withRouter } from "react-router-dom";
+import testImage from "../images/error.png";
 
 class GeneratedEvent extends React.Component {
   constructor(props) {
@@ -81,64 +82,77 @@ class GeneratedEvent extends React.Component {
     return (
       <div className="eventHistory pb-5">
         <Header></Header>
-        <div className="container mobileView">
-          <h3 className="text-center m-0 mt-3">
-            {this.state.event.event_name}
-          </h3>
-          <p className="text-center m-0">===========================</p>
-          <h6 className="text-center m-0">
-            creator: @{this.state.event.creator_username}
-          </h6>
-          <h6 className="text-center m-0">
-            category: {this.state.event.category}
-          </h6>
-          <h6 className="text-center m-0">
-            date: {this.formatDate(this.state.event.start_date)} -{" "}
-            {this.formatDate(this.state.event.end_date)}
-          </h6>
-          <div className="participant m-3 border">
-            {this.state.confirmParticipant.map((user, index) => {
-              return (
-                <div className="mx-5 my-2">
-                  <table>
+        <div className="vh-100 mbForFooter">
+          <div className="container mobileView generatedEvent">
+            <div class="row justify-content-center">
+              <div className="col-12 text-center">
+                <h3 className="text-center m-0 mt-3">
+                  {this.state.event.event_name}
+                </h3>
+                <hr />
+              </div>
+              <div className="col-12 text-center generatedEventInfo my-2">
+                <h6 className="text-center m-0">
+                  creator: @{this.state.event.creator_username}
+                </h6>
+                <br />
+                <h6 className="text-center m-0">
+                  category: {this.state.event.category}
+                </h6>
+                <br />
+                <h6 className="text-center m-0">
+                  date: {this.formatDate(this.state.event.start_date)} -{" "}
+                  {this.formatDate(this.state.event.end_date)}
+                </h6>
+              </div>
+              <h3 className="text-center mt-3">Participants</h3>
+
+              <div className="col-8 generatedParticipant m-3 border rounded shadow">
+                {this.state.confirmParticipant.map((user, index) => {
+                  return (
+                    <div className="mx-5 my-2">
+                      <table>
+                        <tr>
+                          <td className="p-2 w-25">
+                            <img src={avatar} alt="" className="avatar"></img>
+                          </td>
+                          <td className="p-2 w-75">
+                            <p className="m-0">{user.fullname}</p>
+                            <p className="m-0">@{user.username}</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="category">
+                <h3 className="text-center">Venue:</h3>
+              </div>
+              <div className="text-center mb-3">
+                <table className="border m-3">
+                  <div className="m-3">
                     <tr>
-                      <td className="p-2 w-25">
-                        <img src={avatar} alt="" className="avatar"></img>
-                      </td>
-                      <td className="p-2 w-75">
-                        <p className="m-0">{user.fullname}</p>
-                        <p className="m-0">@{user.username}</p>
+                      <td className="p-3">
+                        <img
+                          alt=""
+                          // src={this.state.event.place_image}
+                          src={testImage}
+                          className="venue"
+                        ></img>
+                        <p className="text-center m-0 centering">
+                          {this.state.event.place_name}
+                        </p>
+                        <br></br>
+                        <p className="text-center m-0 centering">
+                          {this.state.event.place_location}
+                        </p>
                       </td>
                     </tr>
-                  </table>
-                </div>
-              );
-            })}
-          </div>
-          <div className="category">
-            <h3 className="text-center">Venue:</h3>
-          </div>
-          <div className="text-center mb-3">
-            <table className="border m-3">
-              <div className="m-3">
-                <tr>
-                  <td className="p-3">
-                    <img
-                      alt=""
-                      src={this.state.event.place_image}
-                      className="venue"
-                    ></img>
-                    <p className="text-center m-0 centering">
-                      {this.state.event.place_name}
-                    </p>
-                    <br></br>
-                    <p className="text-center m-0 centering">
-                      {this.state.event.place_location}
-                    </p>
-                  </td>
-                </tr>
+                  </div>
+                </table>
               </div>
-            </table>
+            </div>
           </div>
         </div>
         <Footer></Footer>

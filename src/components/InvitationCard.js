@@ -45,7 +45,7 @@ class InvitationCard extends React.Component {
           <div class="row justify-content-center">
             <div class="col-12 my-3">
               <div class="card shadow">
-                <div class="card-body">
+                <div class="card-body shadow">
                   <h6 class="card-title cardInvitation">
                     You have been invited to "{this.props.invitation.event_name}
                     "
@@ -56,9 +56,9 @@ class InvitationCard extends React.Component {
                     <br />
                     category: {this.props.invitation.event_category} <br />
                   </p>
-                  <div className="text-right">
+                  <div className="text-right invitationAccDec">
                     <Link
-                      className="btn btn-primary m-2 text-right"
+                      className="btn m-2 text-right"
                       onClick={() =>
                         this.acceptEvent(this.props.invitation.event_id)
                       }
@@ -66,7 +66,7 @@ class InvitationCard extends React.Component {
                       Accept
                     </Link>
                     <Link
-                      className="btn btn-primary m-2 text-right"
+                      className="btn m-2 text-right"
                       onClick={() =>
                         this.declineEvent(this.props.invitation.event_id)
                       }

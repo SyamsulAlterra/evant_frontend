@@ -112,9 +112,9 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="profile mbForFooter">
-        <div className="container mobileView animated fadeIn mt-5">
-          <div className="row border">
-            <div className="col-12 text-center shadow">
+        <div className="container mobileView animated fadeIn mt-5 shadow">
+          <div className="row border rounded">
+            <div className="col-12 text-center">
               <div className="fullname">
                 <h3 className="my-5">{localStorage.getItem("fullname")}</h3>
               </div>

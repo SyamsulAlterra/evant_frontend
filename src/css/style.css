@@ -230,3 +230,16 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #333;
   /* Modern Browsers */
 }
+.invitationAccDec .btn {
+  background-color: black;
+  color: white;
+}
+.generatedEvent hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
