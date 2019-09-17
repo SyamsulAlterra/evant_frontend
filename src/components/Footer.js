@@ -29,55 +29,6 @@ class Footer extends React.Component {
         <div className="container mobileView text-center">
           <div className="row mobileView p-0">
             <div className="col-3 text-center p-0">
-              {/* <Link to="/home">
-                <img
-                  alt=""
-                  className="my-3"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Home"
-                  src={houseIcon}
-                ></img>
-              </Link>
-            </div>
-            <div className="col-3 text-center p-0">
-              <Link to="/events">
-                <img
-                  alt=""
-                  className="my-3"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Event"
-                  src={calendar}
-                ></img>
-              </Link>
-            </div>
-            <div className="col-3 text-center p-0">
-              <Link to="/invitations">
-                <img
-                  alt=""
-                  className="my-3"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Invitation"
-                  src={invitation}
-                ></img>
-                <span className="text-dark">
-                  {this.props.invitations.length}
-                </span>
-              </Link>
-            </div>
-            <div className="col-3 text-center p-0">
-              <Link to="/profile">
-                <img
-                  alt=""
-                  className="my-3"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Profile"
-                  src={profile}
-                ></img>
-              </Link> */}
               <Link to="/home">
                 <img
                   alt=""

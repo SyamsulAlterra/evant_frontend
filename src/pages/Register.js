@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 import { CSSTransition } from "react-transition-group";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import homeLogo from "../images/e.png";
+import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 
 const red300 = red["500"];
