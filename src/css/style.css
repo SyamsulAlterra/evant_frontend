@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Cinzel:400,700|Montserrat:400,700|Noto+Sans:400,700&display=swap");
-@import url('https://fonts.googleapis.com/css?family=Muli:400,600,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Muli:400,600,700&display=swap");
 .login {
   font-family: "Montserrat";
 }
@@ -189,7 +189,6 @@ select.form-control:not([size]):not([multiple]) {
 }
 .mbForFooter {
   margin-bottom: 150px;
-  margin-top: 50px;
 }
 .position {
   height: 100vh;
@@ -207,12 +206,10 @@ select.form-control:not([size]):not([multiple]) {
 .search-user input {
   height: 40px;
 }
-
 .fontstyle {
   font-family: "Muli";
   font-size: 20px;
 }
-
 .eventDetailContentParticipant hr {
   border: none;
   height: 1px;
@@ -243,7 +240,6 @@ select.form-control:not([size]):not([multiple]) {
   /* old IE */
   background-color: #333;
   /* Modern Browsers */
-
 }
 @media screen and (max-width: 728px) {
   .mobileView {

@@ -33,7 +33,7 @@ class CalendarDetail extends React.Component {
 
   render() {
     return (
-      <div className="container mobileView p-0 text-center mbForFooter">
+      <div className="container mobileView p-0 text-center">
         <div className="calendarDetail mb-3 my-1 text-left">
           <div className="row no-gutters">
             <div className="col-12 eventDetail text-center">
