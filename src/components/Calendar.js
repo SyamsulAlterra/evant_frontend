@@ -120,7 +120,7 @@ class Calendar extends React.Component {
 
     return (
       <div className="Calendar container mobileView p-0 mt-0">
-        <div className="text-right mx-5">
+        <div className="text-right mx-4">
           <img src="" alt=""></img>
           <select
             className="button centering p-0 mx-1 my-3 optionMonth form-control size-select btn dropdown-toggle btn-outline-info"
@@ -175,22 +175,28 @@ class Calendar extends React.Component {
           );
         })}
         <div className="row px-0 eventDetail mt-2 mx-5">
-          <div className="col-3 p-0">
-            <div className="btn btn-warning todayMark today"></div>
-            <p className="eventDetail todayMark text-center">Today's Date</p>
+          <div className="col-4 p-0 text-center">
+            <div className="btn todayMark bgOren text-center"></div>
+            <div className="text-center">
+              <p className="eventDetail text-center">Today's Date</p>
+            </div>
           </div>
-          <div className="col-3 p-0">
-            <div className="btn btn-success todayMark"></div>
-            <p className="eventDetail todayMark text-center">Available Date</p>
+          <div className="col-4 p-0 text-center">
+            <div className="btn btn-success todayMark text-center"></div>
+            <div className="text-center">
+              <p className="eventDetail text-center">Available Date</p>
+            </div>
           </div>
-          <div className="col-3 p-0 text-center">
-            <div className="btn btn-danger todayMark text-center"></div>
-            <p className="eventDetail todayMark text-center mx-2">Booked</p>
+          <div className="col-4 p-0 text-center">
+            <div className="btn bgMerah todayMark text-center"></div>
+            <div className="text-center">
+              <p className="eventDetail text-center">Booked</p>
+            </div>
           </div>
-          <div className="col-3 p-0 text-center">
+          {/* <div className="col-4 p-0 text-center">
             <div className="btn btn-secondary todayMark text-center"></div>
             <p className="eventDetail todayMark text-center mx-2">Passed</p>
-          </div>
+          </div> */}
         </div>
         <CalendarDetail
           selectedMonth={this.twoDigitString(this.state.month)}

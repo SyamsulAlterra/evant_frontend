@@ -8,7 +8,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid header">
+      <div className="container-fluid header bgBiruMuda">
         <div className="row justify-content-center h-100">
           <div className="col text-center pt-2 pb-2 "></div>
           <div className="row ustify-content-center h-100">
