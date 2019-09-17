@@ -74,7 +74,7 @@ class CalendarCell extends React.Component {
 
       if (!this.forwardDate(todayDate, date) && this.props.dates !== "") {
         this.setState({
-          cellClass: "bg-secondary",
+          cellClass: "bgBiruTua text-white",
           modalMessage: "cannot mark passed date"
         });
       } else {
@@ -88,7 +88,7 @@ class CalendarCell extends React.Component {
           this.setState({ modalMessage: "Oops, invalid date" });
         } else if (booked.length > 0) {
           this.setState({
-            cellClass: "bg-danger",
+            cellClass: "bg-dark text-white",
             modalMessage: "this date is currently booked"
           });
         } else if (available.length > 0) {

@@ -6,7 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 class FotoProfil extends React.Component {
   render() {
     return (
-      <div className="container mobileView p-0 fotoProfil">
+      <div className="container mobileView p-0 fotoProfil animated fadeIn">
         <div className="row mt-3 mx-3">
           <div className="col-3 p-0">
             <img className="my-2 marginLeft" src={fotoProfil} alt=""></img>
@@ -16,11 +16,13 @@ class FotoProfil extends React.Component {
               <div className="fontstyle text-center">
                 <span className="px-2">{localStorage.getItem("fullname")}</span>
                 <br></br>
-                <span className="px-2">@{localStorage.getItem("username")}</span>
+                <span className="px-2">
+                  @{localStorage.getItem("username")}
+                </span>
               </div>
               <br></br>
             </div>
-          </div >
+          </div>
           <div className="col-3 p-0 text-center fontstyle">
             <Link to="/events/create">
               <img src={plus} alt="" className="text-center mt-2"></img>

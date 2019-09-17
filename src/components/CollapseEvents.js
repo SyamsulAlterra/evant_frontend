@@ -5,7 +5,7 @@ class CollapseEvents extends React.Component {
   render() {
     console.log(this.props.id);
     return (
-      <div className="col-12 text-center my-3 border shadow p-3 rounded">
+      <div className="col-8 text-center my-3 border shadow p-3 rounded">
         Event Name: {this.props.eventName} <br />
         <br />
         Category: {this.props.category} <br />

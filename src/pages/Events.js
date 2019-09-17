@@ -90,12 +90,11 @@ class Events extends React.Component {
           >
             <Tab eventKey="home" title="On-Going">
               <div>
-
                 {this.state.searchListEvent.map(value => {
                   if (value.creator_confirmation === 1) {
                     if (value.place_name === null) {
                       return (
-                        <div className="shadow rounded">
+                        <div className="row justify-content-center">
                           <CollapseEvent
                             id={value.event_id}
                             creatorName={value.creator_name}

@@ -55,9 +55,11 @@ class Invitations extends React.Component {
       return (
         <div className="Invitations">
           <Header></Header>
-          <h3 className="text-center animated fadeIn">
-            You don't have any event invitation(s) yet
-          </h3>
+          <div className="h-400 my-5">
+            <h3 className="text-center animated fadeIn p-3 f-15">
+              You don't have any event invitation(s) yet
+            </h3>
+          </div>
           <Footer></Footer>
         </div>
       );
@@ -71,7 +73,7 @@ class Invitations extends React.Component {
               <div className="col-12 text-center">
                 <input
                   type="text"
-                  className="text-center"
+                  className="text-center invitationSearch"
                   placeholder="search invitation"
                   onChange={this.search}
                 ></input>
