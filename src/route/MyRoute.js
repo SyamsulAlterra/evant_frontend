@@ -23,6 +23,7 @@ import GeneratedEvent from "../pages/GeneratedEvent";
 import Unmatch from "../components/Unmatch";
 import GoogleRegister from "../pages/RegisterWithGoogle";
 import LoadingGenerate from "../components/LoadingGenerate";
+import ForgotPassword from "../pages/ForgotPassword";
 
 class MyRoute extends React.Component {
   render() {
@@ -39,6 +40,7 @@ class MyRoute extends React.Component {
             <Route exact path="/profile" component={ProfilPage} />
             <Route exact path="/invite" component={InviteFriends} />
             <Route exact path="/prepareDate" component={PrepareEdit} />
+            <Route exact path="/forgotPassword" component={ForgotPassword} />
             <Route path="/editDate/:event_id" component={EditDate} />
             <Route path="/suggestion/:id" component={Suggestion} />
             <Route path="/editDate/:event_id" component={EditDate} />

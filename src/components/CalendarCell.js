@@ -74,12 +74,12 @@ class CalendarCell extends React.Component {
 
       if (!this.forwardDate(todayDate, date) && this.props.dates !== "") {
         this.setState({
-          cellClass: "bg-secondary",
+          cellClass: "Merah",
           modalMessage: "cannot mark passed date"
         });
       } else {
         if (todayDate === date) {
-          this.setState({ cellClass: "today" });
+          this.setState({ cellClass: "bgOren" });
           this.setState({
             modalMessage: "Sorry, you cannot mark today's date"
           });
@@ -88,7 +88,7 @@ class CalendarCell extends React.Component {
           this.setState({ modalMessage: "Oops, invalid date" });
         } else if (booked.length > 0) {
           this.setState({
-            cellClass: "bg-danger",
+            cellClass: "bgMerah text-white",
             modalMessage: "this date is currently booked"
           });
         } else if (available.length > 0) {
@@ -161,9 +161,9 @@ class CalendarCell extends React.Component {
   render() {
     if (this.state.cellClass === "" || this.state.cellClass === "bg-success") {
       return (
-        <div>
+        <div className="borad">
           <div
-            className={`calendarCell border text-right m-0 px-0 ${this.state.cellClass}`}
+            className={`calendarCell border text-center m-1 px-0 py-1 borad ${this.state.cellClass}`}
             data-toggle="modal"
             data-target={`#date${this.props.dates}`}
             onClick={() => this.handleMark(this.props.dates)}
@@ -176,7 +176,7 @@ class CalendarCell extends React.Component {
       return (
         <div>
           <div
-            className={`calendarCell border text-right m-0 px-0 ${this.state.cellClass}`}
+            className={`calendarCell border text-center m-1 px-0 py-1 borad ${this.state.cellClass}`}
             data-toggle="modal"
             data-target={`#date${this.props.dates}`}
           >
