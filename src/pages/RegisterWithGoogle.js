@@ -8,7 +8,17 @@ import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import "bootstrap/dist/js/bootstrap.bundle";
 import homeLogo from "../images/logo_transparent.png";
+import red from "@material-ui/core/colors/red";
 
+const red300 = red["500"];
+
+const style = {
+  right: 0,
+  fontSize: "12px",
+  color: red300,
+  width: "240px"
+  // marginTop: "-50px"
+};
 class GoogleRegister extends React.Component {
   constructor(props) {
     super(props);
@@ -116,7 +126,7 @@ class GoogleRegister extends React.Component {
         appear
       >
         <div className="container register mobileView">
-          <div className="row justify-content-center">
+          <div className="row justify-content-center mt-3">
             <div className="col text-center">
               <div className="my-5">
                 <img
@@ -145,6 +155,7 @@ class GoogleRegister extends React.Component {
                   >
                     <br />
                     <TextValidator
+                      style={style}
                       label="Phone"
                       onChange={this.handlePhone}
                       name="Phone"
@@ -156,6 +167,7 @@ class GoogleRegister extends React.Component {
                       ]}
                     />
                     <TextValidator
+                      style={style}
                       label="Address"
                       onChange={this.handleAddress}
                       name="address"
@@ -186,18 +198,20 @@ class GoogleRegister extends React.Component {
                     </div>
                     <div className="row no-gutters justify-content-center animated fadeIn mt-2">
                       <div className="col-auto">
-                        <Button
-                          className="register-button"
+                        <button
                           color="primary"
+                          size="large"
                           variant="contained"
                           type="submit"
                           onClick={this.handleClick}
                           disabled={this.state.submitted}
+                          type="button"
+                          class="btn btn-primary edit-button"
                         >
                           {(this.state.submitted &&
                             "Your form is submitted!") ||
                             (!this.state.submitted && "REGISTER")}
-                        </Button>
+                        </button>
                       </div>
                     </div>
                   </ValidatorForm>

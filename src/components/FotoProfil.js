@@ -1,6 +1,6 @@
 import React from "react";
-import fotoProfil from "../images/users.png";
-import plus from "../images/plus.png";
+import fotoProfil from "../images/manager.png";
+import plus from "../images/clipboard.png";
 import { Link, withRouter } from "react-router-dom";
 
 class FotoProfil extends React.Component {
@@ -12,11 +12,13 @@ class FotoProfil extends React.Component {
             <img className="my-2 marginLeft" src={fotoProfil} alt=""></img>
           </div>
           <div className="col-6 p-0">
-            <div className="row mt-2 justify-content-center">
-              <div className="fontstyle text-center">
-                <span className="px-2">{localStorage.getItem("fullname")}</span>
+            <div className="row mt-1 px-2">
+              <div className="fontstyle text-left">
+                <span className="px-2 span1">
+                  {localStorage.getItem("fullname")}
+                </span>
                 <br></br>
-                <span className="px-2">
+                <span className="px-2 span2">
                   @{localStorage.getItem("username")}
                 </span>
               </div>

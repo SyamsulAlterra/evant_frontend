@@ -157,10 +157,6 @@ class Login extends React.Component {
         <div class="container login mobileView align-items-center">
           <div class="row justify-content-center">
             <div class="col text-center">
-              <h1 className="underline home-evant animated fadeIn">
-                {/* my-1 */}
-                Evant
-              </h1>
               <div className="home-logo my-3">
                 <img
                   src={homeLogo}
@@ -169,6 +165,14 @@ class Login extends React.Component {
                   width="70%"
                   height="70%"
                 />
+                <h1 className="underline home-evant animated fadeIn">
+                  {/* my-1 */}
+                  Evant
+                </h1>
+                <hr className="animated fadeIn shadow" width="200px" />
+                <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
+                  Decide When, Where, and Who
+                </p>
               </div>
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <TextValidator
@@ -196,6 +200,9 @@ class Login extends React.Component {
                   errorMessages={["this field is required"]}
                 />
                 <br />
+                <Link to="/forgotPassword">
+                  <small className="register-text">Forgot password?</small>
+                </Link>
                 <div className="row no-gutters justify-content-center animated fadeIn mt-2">
                   <div className="col-auto mt-3">
                     <button

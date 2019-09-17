@@ -11,6 +11,7 @@ import { connect } from "unistore/react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
+import LogOut from "../components/LogOut";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -74,8 +75,8 @@ class Profile extends React.Component {
     await axios
       .put(
         this.props.baseUrl +
-          "users/" +
-          parseInt(localStorage.getItem("user_id")),
+        "users/" +
+        parseInt(localStorage.getItem("user_id")),
         {
           username: self.state.username
         }
@@ -94,8 +95,8 @@ class Profile extends React.Component {
     if (this.state.password === this.state.confirmPassword) {
       await axios.put(
         this.props.baseUrl +
-          "users/" +
-          parseInt(localStorage.getItem("user_id")),
+        "users/" +
+        parseInt(localStorage.getItem("user_id")),
         {
           password: this.state.password
         }
@@ -113,9 +114,9 @@ class Profile extends React.Component {
     return (
       <div className="profile mbForFooter">
         <div className="container mobileView animated fadeIn mt-5 shadow">
-          <div className="row border rounded">
-            <div className="col-12 text-center">
-              <div className="fullname">
+          <div className="row justify-content-center">
+            <div className="col-10 text-center">
+              <div className="fullname fontstyle">
                 <h3 className="my-5">{localStorage.getItem("fullname")}</h3>
               </div>
               <div className="mb-4">
@@ -275,6 +276,10 @@ class Profile extends React.Component {
                   >
                     <small>Change Password</small>
                   </button>
+                </div>
+
+                <div className="col-6 my-2 text-right p-0">
+                  <LogOut></LogOut>
                 </div>
 
                 {/* start modal */}
