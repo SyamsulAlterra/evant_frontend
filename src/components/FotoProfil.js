@@ -11,18 +11,22 @@ class FotoProfil extends React.Component {
           <div className="col-3 p-0">
             <img className="my-2 marginLeft" src={fotoProfil} alt=""></img>
           </div>
-          <div className="col-5 p-0">
-            <div className="mt-2">
-              <span className="px-2">{localStorage.getItem("fullname")}</span>
-              <br></br>
-              <span className="px-2">@{localStorage.getItem("username")}</span>
+          <div className="col-6 p-0">
+            <div className="row mt-2 justify-content-center">
+              <div className="fontstyle text-center">
+                <span className="px-2">{localStorage.getItem("fullname")}</span>
+                <br></br>
+                <span className="px-2">@{localStorage.getItem("username")}</span>
+              </div>
               <br></br>
             </div>
+          </div >
+          <div className="col-3 p-0 text-center fontstyle">
+            <Link to="/events/create">
+              <img src={plus} alt="" className="text-center mt-2"></img>
+              <p className="m-0 text-center plain">create</p>
+            </Link>
           </div>
-          <Link to="/events/create" className="col-4 p-0 text-center plain">
-            <img src={plus} alt="" className="text-center mt-2"></img>
-            <p className="m-0 text-center plain">create</p>
-          </Link>
         </div>
       </div>
     );
