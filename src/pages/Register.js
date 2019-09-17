@@ -354,7 +354,7 @@ class Register extends React.Component {
                         >
                           {(this.state.submitted &&
                             "Your form is submitted!") ||
-                            (!this.state.submitted && "LOGIN")}
+                            (!this.state.submitted && "REGISTER")}
                         </button>
                       </div>
                     </div>
