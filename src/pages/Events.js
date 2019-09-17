@@ -17,7 +17,10 @@ class Events extends React.Component {
     super(props);
     this.state = {
       listEvent: [],
-      pastEvent: []
+      pastEvent: [],
+      searchListEvent: [],
+      searchPastEvent: [],
+      key: ""
     };
   }
 
@@ -31,6 +34,7 @@ class Events extends React.Component {
       .get(this.props.baseUrl + "events/ongoing", config)
       .then(async response => {
         await this.setState({ listEvent: response.data });
+        await this.setState({ searchListEvent: response.data });
       })
       .catch(error => {
         console.log(error);
@@ -39,6 +43,7 @@ class Events extends React.Component {
       .get(this.props.baseUrl + "events/history", config)
       .then(async response => {
         await this.setState({ pastEvent: response.data });
+        await this.setState({ searchPastEvent: response.data });
         await console.log("past evnet", response.data);
       })
       .catch(error => {
@@ -46,14 +51,38 @@ class Events extends React.Component {
       });
   };
 
+  search = e => {
+    let keyword = e.target.value;
+    let resultOnGoing = this.state.listEvent.filter(event => {
+      let keywordMatch = event.event_name.search(keyword);
+      return keywordMatch !== -1;
+    });
+
+    let resultHistory = this.state.pastEvent.filter(event => {
+      let keywordMatch = event.event.event_name.search(keyword);
+      return keywordMatch !== -1;
+    });
+    this.setState({
+      searchListEvent: resultOnGoing,
+      searchPastEvent: resultHistory
+    });
+  };
+
   render() {
-    console.log(this.state.pastEvent);
+    console.log(this.state);
     return (
       <div>
         <Header></Header>
         <div className="container eventContent mobileView pb-5 animated fadeIn h-400 mbForFooter">
-          <h1 className="text-center">My Event</h1>
-
+          <div className="text-center">
+            <h1 className="text-centerm mt-3 mb-2">My Event</h1>
+            <input
+              type="text"
+              placeholder="search event"
+              className="mb-5"
+              onChange={this.search}
+            ></input>
+          </div>
           <Tabs
             defaultActiveKey="home"
             transition={false}
@@ -61,7 +90,8 @@ class Events extends React.Component {
           >
             <Tab eventKey="home" title="On-Going">
               <div>
-                {this.state.listEvent.map(value => {
+
+                {this.state.searchListEvent.map(value => {
                   if (value.creator_confirmation === 1) {
                     if (value.place_name === null) {
                       return (
@@ -83,7 +113,7 @@ class Events extends React.Component {
             </Tab>
             <Tab eventKey="profile" title="History">
               <div>
-                {this.state.pastEvent.map(value => {
+                {this.state.searchPastEvent.map(value => {
                   console.log(value);
                   return (
                     <div className="shadow">

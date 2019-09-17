@@ -14,6 +14,7 @@ class EventDetails extends React.Component {
     this.state = {
       event: [],
       participants: [],
+      searchParticipants: [],
       preference: "",
       preferenceOptions: []
     };
@@ -43,6 +44,7 @@ class EventDetails extends React.Component {
       )
       .then(response => {
         this.setState({ participants: response.data });
+        this.setState({ searchParticipants: response.data });
       })
       .catch(error => {
         console.log(error);
@@ -157,6 +159,19 @@ class EventDetails extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
 
+  search = e => {
+    let keyword = e.target.value;
+    console.log(this.state.participants);
+    let result = this.state.participants.filter(participant => {
+      let keywordMatch1 = participant.fullname.search(keyword);
+      let keywordMatch2 = participant.username.search(keyword);
+
+      return keywordMatch1 !== -1 || keywordMatch2 !== -1;
+    });
+
+    this.setState({ searchParticipants: result });
+  };
+
   render() {
     return (
       <div className="eventDetailContent">
@@ -230,6 +245,7 @@ class EventDetails extends React.Component {
                   type="text"
                   placeholder="search by username"
                   className="text-center my-3"
+                  onChange={this.search}
                 ></input>
                 <img
                   className="searchFriends mx-2"
@@ -239,7 +255,7 @@ class EventDetails extends React.Component {
               </div>
             </div>
             <div className="participant p-3">
-              {this.state.participants.map((value, index) => {
+              {this.state.searchParticipants.map((value, index) => {
                 return <ParticipantCard user={value}></ParticipantCard>;
               })}
             </div>
