@@ -63,16 +63,20 @@ class Invitations extends React.Component {
       );
     } else {
       return (
-        <div className="Invitations">
+        <div className="Invitations mbForFooter">
           <Header></Header>
-          <div className="invitationCardsMap mbForFooter">
-        <h2 className="text-center">My Invitations</h2>
-            <input
-              type="text"
-              className="text-center"
-              placeholder="search invitation"
-              onChange={this.search}
-            ></input>
+          <div className="invitationCardsMap mobileView container">
+            <h2 className="text-center">My Invitations</h2>
+            <div className="row">
+              <div className="col-12 text-center">
+                <input
+                  type="text"
+                  className="text-center"
+                  placeholder="search invitation"
+                  onChange={this.search}
+                ></input>
+              </div>
+            </div>
           </div>
           {this.state.searchResult.map(invitation => {
             return <InvitationCard invitation={invitation}></InvitationCard>;
