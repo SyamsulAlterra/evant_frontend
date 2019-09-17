@@ -82,7 +82,6 @@ class Register extends React.Component {
   };
 
   handleClick = async () => {
-    const number = /^[0-9]+$/;
     if (this.state.name === "") {
       Swal.fire("Error", "Please fill your Full Name", "warning");
       return false;
