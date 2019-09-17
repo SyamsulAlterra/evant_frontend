@@ -66,6 +66,7 @@ table {
   width: 30px;
 }
 .footer {
+  color: white;
   position: fixed;
   bottom: 0;
 }
@@ -188,6 +189,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 .mbForFooter {
   margin-bottom: 150px;
+  margin-top: 50px;
 }
 .position {
   height: 100vh;
@@ -204,6 +206,38 @@ select.form-control:not([size]):not([multiple]) {
 }
 .search-user input {
   height: 40px;
+}
+
+.eventDetailContentParticipant hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+.eventDetailContent hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+.invitationAccDec .btn {
+  background-color: black;
+  color: white;
+}
+.generatedEvent hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
 }
 @media screen and (max-width: 728px) {
   .mobileView {

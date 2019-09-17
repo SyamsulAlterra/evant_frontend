@@ -174,12 +174,12 @@ class EventDetails extends React.Component {
 
   render() {
     return (
-      <div className="eventDetailContent mbForFooter">
+      <div className="eventDetailContent">
         <Header></Header>
-        <div className="vh-100">
-          <div className="border container my-3 p-3 mobileView">
+        <div className="vh-100 mbForFooter">
+          <div className="border container my-3 p-3 mobileView rounded">
             <h1 className="text-center">{this.state.event.event_name}</h1>
-
+            <hr />
             <h6 className="text-center m-0">
               Creator: {this.state.event.creator_username}
             </h6>

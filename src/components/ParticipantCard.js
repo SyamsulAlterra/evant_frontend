@@ -43,7 +43,7 @@ class ParticipantCard extends React.Component {
       return (
         <div className="invitationCard">
           <div class="card my-2 centering">
-            <div class="card-body p-2">
+            <div class="card-body shadow p-2">
               <div className="container">
                 <div class="row">
                   <div className="col-2 p-0">

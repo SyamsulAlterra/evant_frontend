@@ -53,9 +53,9 @@ class Invitations extends React.Component {
     console.log(this.state.searchResult);
     if (this.props.invitations.length < 1) {
       return (
-        <div className="Invitations animated fadeIn">
+        <div className="Invitations">
           <Header></Header>
-          <h3 className="text-center">
+          <h3 className="text-center animated fadeIn">
             You don't have any event invitation(s) yet
           </h3>
           <Footer></Footer>
@@ -65,7 +65,8 @@ class Invitations extends React.Component {
       return (
         <div className="Invitations">
           <Header></Header>
-          <div className="text-center">
+          <div className="invitationCardsMap mbForFooter">
+        <h2 className="text-center">My Invitations</h2>
             <input
               type="text"
               className="text-center"
