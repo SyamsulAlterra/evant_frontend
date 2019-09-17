@@ -23,7 +23,9 @@ class CreateEvent extends React.Component {
 
   componentDidMount = async () => {
     await this.setState({ searchResult: this.props.participants });
+
     // await this.props.setCategoryGlobal("vacation");
+
     console.log(this.props.category);
   };
 
@@ -77,6 +79,9 @@ class CreateEvent extends React.Component {
   createEvent = async e => {
     e.preventDefault();
     const self = this;
+    if (self.props.category === "" || self.props.category === undefined) {
+      this.props.setCategoryGlobal("vacation");
+    }
     const configCreate = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")

@@ -12,9 +12,9 @@ class Invitations extends React.Component {
   render() {
     if (this.props.invitations.length < 1) {
       return (
-        <div className="Invitations animated fadeIn">
+        <div className="Invitations">
           <Header></Header>
-          <h3 className="text-center">
+          <h3 className="text-center animated fadeIn">
             You don't have any event invitation(s) yet
           </h3>
           <Footer></Footer>
@@ -24,10 +24,13 @@ class Invitations extends React.Component {
       return (
         <div className="Invitations">
           <Header></Header>
-          {this.props.invitations.map(invitation => {
-            return <InvitationCard invitation={invitation}></InvitationCard>;
-          })}
-          <Footer></Footer>
+          <div className="invitationCardsMap mbForFooter">
+            <h2 className="text-center">My Invitations</h2>
+            {this.props.invitations.map(invitation => {
+              return <InvitationCard invitation={invitation}></InvitationCard>;
+            })}
+            <Footer></Footer>
+          </div>
         </div>
       );
     }
