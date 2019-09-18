@@ -72,7 +72,12 @@ class GeneratedEvent extends React.Component {
 
     response = await Axios(config);
     let confirmUser = response.data.filter(user => {
-      return user.confirmation === 1;
+      let temp = user;
+      temp.class = "";
+      if (temp.confirmation === -1) {
+        temp.class = "bg-danger";
+      }
+      return temp;
     });
     console.log(confirmUser);
     await this.setState({ confirmParticipant: confirmUser });
@@ -110,8 +115,9 @@ class GeneratedEvent extends React.Component {
 
               <div className="col-8 generatedParticipant m-3 border rounded shadow">
                 {this.state.confirmParticipant.map((user, index) => {
+                  console.log(user);
                   return (
-                    <div className="mx-5 my-2">
+                    <div className={`mx-5 my-2 ${user.class}`}>
                       <table>
                         <tr>
                           <td className="p-2 w-25">

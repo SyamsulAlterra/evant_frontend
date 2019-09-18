@@ -110,10 +110,8 @@ class EventDetailParticipant extends React.Component {
   declineEvent = async () => {
     let config = {
       url:
-        this.props.baseUrl +
-        "invitations/decline/" +
-        this.props.match.params.id,
-      method: "delete",
+        this.props.baseUrl + "invitations/reject/" + this.props.match.params.id,
+      method: "put",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
