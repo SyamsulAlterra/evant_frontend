@@ -7,7 +7,10 @@ import { CSSTransition } from "react-transition-group";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import "bootstrap/dist/js/bootstrap.bundle";
-import homeLogo from "../images/logo_transparent.png";
+import { InputAdornment, withStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import { RemoveRedEye } from "@material-ui/icons";
+import PropTypes from "prop-types";
 import red from "@material-ui/core/colors/red";
 
 const red300 = red["500"];
@@ -19,6 +22,60 @@ const style = {
   width: "240px"
   // marginTop: "-50px"
 };
+
+const styles = theme => ({
+  eye: {
+    cursor: "pointer"
+  }
+});
+
+class PasswordInput extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      passwordIsMasked: true
+    };
+  }
+
+  togglePasswordMask = () => {
+    this.setState(prevState => ({
+      passwordIsMasked: !prevState.passwordIsMasked
+    }));
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { passwordIsMasked } = this.state;
+
+    return (
+      <TextField
+        type={passwordIsMasked ? "password" : "text"}
+        {...this.props}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <RemoveRedEye
+                className={classes.eye}
+                onClick={this.togglePasswordMask}
+              />
+            </InputAdornment>
+          )
+        }}
+      />
+    );
+  }
+}
+
+PasswordInput.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired
+};
+
+PasswordInput = withStyles(styles)(PasswordInput);
+
+/* --------------------------------------------------------- */
 class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
@@ -141,10 +198,6 @@ class ForgotPassword extends React.Component {
             <div className="col text-center">
               <div className="my-5">
                 <div className="col-12">
-                  {/* <form
-                    action=""
-                    className="register-form form-group animated fadeIn"
-                  > */}
                   <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
@@ -163,31 +216,19 @@ class ForgotPassword extends React.Component {
                         "Fullname is not valid"
                       ]}
                     />
-                    <TextValidator
-                      style={style}
+                    <PasswordInput
                       label="New Password"
-                      onChange={this.handlePassword}
-                      name="Password"
-                      type="password"
-                      value={this.state.password}
-                      validators={["required"]}
-                      errorMessages={[
-                        "this field is required",
-                        "Fullname is not valid"
-                      ]}
-                    />
-                    <TextValidator
                       style={style}
-                      label="Confirmation Password"
-                      onChange={this.handleConfirm}
-                      name="confirm"
-                      type="password"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.handlePassword}
+                    />
+                    <PasswordInput
+                      label="Password"
+                      style={style}
+                      name="password"
                       value={this.state.confirmPassword}
-                      validators={["required"]}
-                      errorMessages={[
-                        "this field is required",
-                        "Fullname is not valid"
-                      ]}
+                      onChange={this.handleConfirm}
                     />
                     <br />
                     <div className="row no-gutters justify-content-center animated fadeIn mt-5">

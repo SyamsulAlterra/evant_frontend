@@ -326,6 +326,19 @@ hr {
   background-color: #3b8ea5;
   color: white;
 }
+
+.icon-mobile-phone:before {
+  content: "\f10b";
+  position: relative;
+  right: 7px;
+  top: 20px;
+}
+.icon-unlock-alt:before {
+  content: "\f13e";
+  position: relative;
+  right: 7px;
+  top: 22px;
+
 .bgWhite {
   background-color: white;
 }
