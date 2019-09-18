@@ -6,9 +6,74 @@ import Axios from "axios";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import Calendar from "../components/Calendar";
+import Joyride from "react-joyride";
 
 class HomePage extends React.Component {
-  state = { display: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      run: true,
+      steps: [
+        {
+          content: <h2>Let's begin our journey!</h2>,
+          locale: { skip: <strong aria-label="skip">S-K-I-P</strong> },
+          placement: "center",
+          target: "body"
+        },
+        {
+          content: "Click here to plan events with your friends",
+          placement: "top",
+          target: ".boarding-create-event",
+          title: "Create events"
+        },
+        {
+          content: "just click on a date to mark them as an available date",
+          placement: "left",
+          target: ".boarding-mark-calendar",
+          title: "Mark your available dates"
+        },
+        {
+          content: "all your future events will appear here",
+          placement: "left",
+          target: ".boarding-marked-calendar",
+          title: "Your planned events"
+        },
+        {
+          content: "click here if you want to go back to this page",
+          // floaterProps: {
+          //   disableAnimation: true
+          // },
+          // spotlightPadding: 20,
+          placement: "top",
+          target: ".my-first-step-home",
+          title: "Home"
+        },
+        {
+          placement: "top",
+          content: "Click here to see all of your events!",
+          // styles: {
+          //   options: {
+          //     width: 300
+          //   }
+          // },
+          target: ".my-second-step-events",
+          title: "Events"
+        },
+        {
+          placement: "top",
+          content: "accept and reject invitations",
+          target: ".my-third-step-invitations",
+          title: "Invitations"
+        },
+        {
+          content: "see and edit your profile here",
+          placement: "top",
+          target: ".my-fourth-step-profile",
+          title: "Profile"
+        }
+      ]
+    };
+  }
   componentWillMount = async () => {
     this.setState({ display: true });
     let config = {
@@ -52,9 +117,26 @@ class HomePage extends React.Component {
     });
   };
   render() {
+    const { run, steps } = this.state;
+
     return (
       <div className="HomePage mbForFooter">
         <Header />
+        <Joyride
+          callback={this.handleJoyrideCallback}
+          continuous={true}
+          getHelpers={this.getHelpers}
+          run={run}
+          scrollToFirstStep={true}
+          showProgress={true}
+          showSkipButton={true}
+          steps={steps}
+          styles={{
+            options: {
+              zIndex: 10000
+            }
+          }}
+        />
         <FotoProfil></FotoProfil>
         <Calendar></Calendar>
         <Footer></Footer>
