@@ -314,3 +314,17 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #3b8ea5;
   color: white;
 }
+.calenderDetailContent {
+  text-decoration: none;
+}
+.calenderDetailContent link,
+.calenderDetailContent link:hover,
+.calenderDetailContent link:focus {
+  text-decoration: none;
+}
+.calenderDetailContent p,
+.calenderDetailContent p:hover,
+.calenderDetailContent p:focus {
+  text-decoration: none;
+  color: black;
+}

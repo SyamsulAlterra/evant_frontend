@@ -108,14 +108,13 @@ class Profile extends React.Component {
     }
     if (this.state.password === this.state.confirmPassword) {
       await axios
-        .put(
-          this.props.baseUrl +
-            "users/" +
-            parseInt(localStorage.getItem("user_id")),
-          {
-            password: this.state.password
-          }
-        )
+        .post(this.props.baseUrl + "users/add_new_password", {
+          email: this.state.email,
+          new_password: this.state.password
+        })
+        .then(response => {
+          window.location.reload();
+        })
         .catch(error => {
           Swal.fire(
             "Oops! Something Went Wrong",
