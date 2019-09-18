@@ -89,7 +89,10 @@ class Profile extends React.Component {
         localStorage.setItem("address", this.state.address);
         localStorage.setItem("email", this.state.email);
         localStorage.setItem("phone", this.state.phone);
-        window.location.reload();
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
       })
       .catch(error => {
         Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
@@ -113,7 +116,10 @@ class Profile extends React.Component {
           new_password: this.state.password
         })
         .then(response => {
-          window.location.reload();
+          Swal.fire("Success", "Your Password Has Been Changed", "success");
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
         })
         .catch(error => {
           Swal.fire(

@@ -16,8 +16,17 @@ class InvitationCard extends React.Component {
       }
     };
 
-    await Axios(config);
-    window.location.reload();
+    await Axios(config)
+      .then(response => {
+        Swal.fire("Success", "You have rejected this invitation", "success");
+
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      })
+      .catch(error => {
+        Swal.fire("Error", "Something Went Wrong, Please Try Again", "error");
+      });
   };
 
   acceptEvent = async input => {
