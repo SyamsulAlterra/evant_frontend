@@ -7,12 +7,13 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import Calendar from "../components/Calendar";
 import Joyride from "react-joyride";
+import { async } from "q";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      run: true,
+      run: false,
       steps: [
         {
           content: <h2>Let's begin our journey!</h2>,
@@ -71,11 +72,19 @@ class HomePage extends React.Component {
           target: ".my-fourth-step-profile",
           title: "Profile"
         }
-      ]
+      ],
+      status_first_login: localStorage.getItem("status_first_login")
     };
   }
   componentWillMount = async () => {
     this.setState({ display: true });
+    if (
+      localStorage.getItem("status_first_login") === 1 ||
+      localStorage.getItem("status_first_login") === true ||
+      localStorage.getItem("status_first_login") === "true"
+    ) {
+      this.setState({ run: true });
+    }
     let config = {
       url: this.props.baseUrl + "date",
       method: "get",
@@ -116,6 +125,21 @@ class HomePage extends React.Component {
       await Axios(config);
     });
   };
+
+  componentDidMount = async () => {
+    let config = {
+      url: this.props.baseUrl + "users/after_first_login",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    let response = await Axios(config).then(() => {
+      localStorage.setItem("status_first_login", false);
+    });
+  };
+
   render() {
     const { run, steps } = this.state;
 

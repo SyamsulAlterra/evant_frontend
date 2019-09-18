@@ -189,6 +189,10 @@ class Login extends React.Component {
         localStorage.setItem("gender", response.data.user["gender"]);
         localStorage.setItem("phone", response.data.user["phone"]);
         localStorage.setItem("username", response.data.user["username"]);
+        localStorage.setItem(
+          "status_first_login",
+          response.data.user["status_first_login"]
+        );
         self.props.history.push("/home");
         Toast.fire({
           type: "success",
