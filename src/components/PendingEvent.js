@@ -67,9 +67,17 @@ class PendingEvent extends React.Component {
         config
       )
       .then(response => {
+        let marked = response.data.map(user => {
+          let temp = user;
+          temp.class = "";
+          if (temp.invitation_status === -1) {
+            temp.class = "bg-danger";
+          }
+          return temp;
+        });
         this.setState({
-          participants: response.data,
-          searchResult: response.data
+          participants: marked,
+          searchResult: marked
         });
       })
       .catch(error => {
@@ -130,7 +138,12 @@ class PendingEvent extends React.Component {
             </div>
             <div className="participant border border-secondary p-3">
               {this.state.searchResult.map((value, index) => {
-                return <ParticipantCard user={value}></ParticipantCard>;
+                return (
+                  <ParticipantCard
+                    user={value}
+                    class={value.class}
+                  ></ParticipantCard>
+                );
               })}
             </div>
             <div className="container text-center">
