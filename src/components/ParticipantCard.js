@@ -39,10 +39,11 @@ class ParticipantCard extends React.Component {
     await this.setState({ userPreference: checkPreference });
   };
   render() {
+    console.log(this.props.class);
     if (this.props.user.status === "creator") {
       return (
-        <div className="invitationCard">
-          <div class="card my-2 centering">
+        <div className={`invitationCard`}>
+          <div class={`card my-2 centering ${this.props.class}`}>
             <div class="card-body shadow p-2">
               <div className="container">
                 <div class="row">
@@ -65,8 +66,8 @@ class ParticipantCard extends React.Component {
     } else {
       if (this.state.userPreference.length === 0) {
         return (
-          <div className="invitationCard">
-            <div class="card my-2 centering">
+          <div className={`invitationCard`}>
+            <div class={`card my-2 centering ${this.props.class}`}>
               <div class="card-body p-2">
                 <div className="container">
                   <div class="row">
@@ -86,8 +87,8 @@ class ParticipantCard extends React.Component {
         );
       } else {
         return (
-          <div className="invitationCard">
-            <div class="card my-2 centering">
+          <div className={`invitationCard`}>
+            <div class={`card my-2 centering ${this.props.class}`}>
               <div class="card-body p-2">
                 <div className="container">
                   <div class="row">
