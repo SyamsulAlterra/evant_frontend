@@ -72,6 +72,37 @@ class Profile extends React.Component {
   editProfile = async e => {
     e.preventDefault();
     const self = this;
+
+    // form validation
+    const number = /^[0-9]+$/;
+    if (this.state.name === "") {
+      Swal.fire("Error", "Please fill your Full Name", "warning");
+      return false;
+    }
+    if (this.state.username === "") {
+      Swal.fire("Error", "Please fill your Username", "warning");
+      return false;
+    }
+    if (this.state.email === "") {
+      Swal.fire("Error", "Please fill your email", "warning");
+      return false;
+    }
+    if (this.state.phone === "") {
+      Swal.fire("Error", "Please fill your Phone Number", "warning");
+      return false;
+    }
+    if (
+      !this.state.phone.match(number) ||
+      this.state.phone.length > 13 ||
+      this.state.phone.length < 10
+    ) {
+      Swal.fire("Error", "Please fill a valid phone number", "warning");
+      return false;
+    }
+    if (this.state.address === "") {
+      Swal.fire("Error", "Please fill your address", "warning");
+      return false;
+    }
     await axios
       .put(
         this.props.baseUrl +
@@ -101,12 +132,60 @@ class Profile extends React.Component {
 
   editPassword = async e => {
     e.preventDefault();
-    if (
-      this.state.password === undefined ||
-      this.state.password === null ||
-      this.state.password === ""
-    ) {
-      Swal.fire("Error", "Please Fill Your New Password", "warning");
+    if (this.state.password === "") {
+      Swal.fire("Error", "Please fill your new password", "warning");
+      return false;
+    }
+    if (this.state.password.length < 6) {
+      Swal.fire(
+        "Error",
+        "New Password must contain at least six characters!",
+        "warning"
+      );
+      return false;
+    }
+    let re = /[0-9]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one number!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[!@#\$%\^&]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one special character!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[a-z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one lowercase letter!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[A-Z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one uppercase letter!",
+        "warning"
+      );
+      return false;
+    }
+    if (this.state.confirmPassword !== this.state.password) {
+      Swal.fire(
+        "Error",
+        "Your passwords don't match, please re-check",
+        "warning"
+      );
       return false;
     }
     if (this.state.password === this.state.confirmPassword) {
