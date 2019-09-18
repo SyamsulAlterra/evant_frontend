@@ -54,7 +54,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className="HomePage mbForFooter">
-        <Header></Header>
+        <Header />
         <FotoProfil></FotoProfil>
         <Calendar></Calendar>
         <Footer></Footer>

@@ -94,7 +94,8 @@ table {
 
 .footer {
   z-index: 99999;
-  color: white;
+  color: black;
+  background-color: #f5ee9e;
   img {
     height: 30px;
     width: 30px;
@@ -181,6 +182,10 @@ table {
   color: black;
 }
 
+.smallDetail {
+  font-size: 12px;
+}
+
 // .invitedBox {
 //   // height: 300px;
 //   // overflow: scroll;
@@ -217,6 +222,7 @@ table {
 
 .edit-header {
   height: 100px;
+  margin: auto;
 }
 
 .header-style {
@@ -236,7 +242,7 @@ table {
   // background-color: #464d5c;
 
   // position: fixed;
-  background-color: #ffffff;
+  background-color: #3b8ea5;
 }
 
 .size-select {
@@ -314,6 +320,14 @@ select.form-control:not([size]):not([multiple]) {
   }
 }
 
+hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333; /* old IE */
+  background-color: #333; /* Modern Browsers */
+}
+
 .eventDetailContent {
   hr {
     border: none;
@@ -347,6 +361,10 @@ select.form-control:not([size]):not([multiple]) {
     font-family: none;
     overflow: none;
     // padding-top: 100px;
+  }
+  .header {
+    height: none;
+    width: auto;
   }
 }
 
@@ -411,4 +429,16 @@ select.form-control:not([size]):not([multiple]) {
 
 .black {
   background-color: black;
+}
+
+.InviteFriendContent {
+  margin-top: 50px;
+  .buttonCancelInvite {
+    background-color: #3b8ea5;
+    color: white;
+  }
+}
+
+.bgWhite {
+  background-color: white;
 }

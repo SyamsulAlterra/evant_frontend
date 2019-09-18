@@ -25,7 +25,7 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid footer text-center p-0 bgBiruMuda">
+      <div className="container-fluid footer text-center p-0 bgWhite">
         <div className="container mobileView text-center">
           <div className="row mobileView p-0">
             <div className="col-3 text-center p-0">
@@ -62,7 +62,7 @@ class Footer extends React.Component {
                   title="Invitation"
                   src={invitation}
                 ></img>
-                <span className="text-light">
+                <span className="text-dark">
                   {this.props.invitations.length}
                 </span>
               </Link>

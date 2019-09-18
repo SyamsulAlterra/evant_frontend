@@ -1,15 +1,20 @@
 import createStore from "unistore";
 
+const today = new Date();
+const oneDayLapse = 24 * 3600 * 1000;
+const tomorrow = new Date(today.getTime() + oneDayLapse);
+const dayAfterTomorrow = new Date(today.getTime() + 2 * oneDayLapse);
+
 export let Store = createStore({
-  baseUrl: "https://api.myevant.com/api/", //"https://api.myevant.com/api/",
+  baseUrl: "https://api.myevant.com/api/",
   availableDates: ["dummy"],
   invitations: [],
   participants: [],
   place: [],
-  eventName: "",
+  eventName: "My Event",
   category: "vacation",
-  startDate: new Date(),
-  endDate: new Date(),
+  startDate: tomorrow,
+  endDate: dayAfterTomorrow,
   duration: null,
   events: [],
   allBookedDates: [],
@@ -64,10 +69,10 @@ export const actions = Store => ({
   },
   clearCreateEvent: state => {
     return {
-      eventName: "",
+      eventName: "My Event",
       category: "vacation",
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: today,
+      endDate: tomorrow,
       duration: null
     };
   },
