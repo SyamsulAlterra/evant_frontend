@@ -15,7 +15,8 @@ class Confirmation extends React.Component {
     this.state = {
       event: {
         event_name: "",
-        creator_name: ""
+        creator_name: "",
+        category: "eat"
       },
       participant: []
     };
@@ -189,7 +190,7 @@ class Confirmation extends React.Component {
             creator: @{this.state.event.creator_username}
           </h6>
           <h6 className="text-center m-0">
-            category: {this.state.event.category}
+            category: {this.props.verboseCategory[this.state.event.category]}
           </h6>
           <h6 className="text-center m-0">
             date: {this.formatDate(this.state.event.start_date)} -{" "}
@@ -366,6 +367,6 @@ class Confirmation extends React.Component {
 }
 
 export default connect(
-  "baseUrl, allBookedDates",
+  "baseUrl, allBookedDates, verboseCategory",
   actions
 )(withRouter(Confirmation));
