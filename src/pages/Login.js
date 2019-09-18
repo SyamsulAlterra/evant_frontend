@@ -66,27 +66,29 @@ class Login extends React.Component {
     };
 
     const self = this;
-    await axios(req)
-      .then(function(response) {
-        console.log("login as", response.data);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user_id", response.data.user["user_id"]);
-        localStorage.setItem("address", response.data.user["address"]);
-        localStorage.setItem("email", response.data.user["email"]);
-        localStorage.setItem("fullname", response.data.user["fullname"]);
-        localStorage.setItem("gender", response.data.user["gender"]);
-        localStorage.setItem("phone", response.data.user["phone"]);
-        localStorage.setItem("username", response.data.user["username"]);
-        self.props.history.push("/home");
-      })
-      .catch(function(error) {
-        localStorage.setItem("google_token", response.tokenId);
-        localStorage.setItem("email", email);
-        localStorage.setItem("fullname", fullname);
-        localStorage.setItem("username", username);
-        self.props.history.push("/googleRegister");
-        console.log("ERROR", error);
-      });
+    if (response.profileObj.email) {
+      await axios(req)
+        .then(function(response) {
+          console.log("login as", response.data);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user_id", response.data.user["user_id"]);
+          localStorage.setItem("address", response.data.user["address"]);
+          localStorage.setItem("email", response.data.user["email"]);
+          localStorage.setItem("fullname", response.data.user["fullname"]);
+          localStorage.setItem("gender", response.data.user["gender"]);
+          localStorage.setItem("phone", response.data.user["phone"]);
+          localStorage.setItem("username", response.data.user["username"]);
+          self.props.history.push("/home");
+        })
+        .catch(function(error) {
+          localStorage.setItem("google_token", response.tokenId);
+          localStorage.setItem("email", email);
+          localStorage.setItem("fullname", fullname);
+          localStorage.setItem("username", username);
+          self.props.history.push("/googleRegister");
+          console.log("ERROR", error);
+        });
+    }
   };
 
   handleUsername = e => {
@@ -240,7 +242,7 @@ class Login extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col text-center">
                       <GoogleLogin
-                        clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                        clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
                         render={renderProps => (
                           <GoogleButton
                             type="light"
