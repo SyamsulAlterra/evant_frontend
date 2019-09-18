@@ -119,7 +119,7 @@ class Calendar extends React.Component {
     });
 
     return (
-      <div className="Calendar container mobileView p-0 mt-0">
+      <div className="Calendar container mobileView p-0 mt-0 animated fadeIn">
         <div className="text-right mx-4">
           <img src="" alt=""></img>
           <select

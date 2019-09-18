@@ -69,27 +69,129 @@ class Profile extends React.Component {
     });
   };
 
-  editProfile = async e => {
+  editUsername = async e => {
     e.preventDefault();
     const self = this;
+
+    //validation
+    if (this.state.username === "" || this.state.username === null) {
+      Swal.fire("Error", "Please fill your new Username", "warning");
+      return false;
+    }
     await axios
       .put(
         this.props.baseUrl +
           "users/" +
           parseInt(localStorage.getItem("user_id")),
         {
-          username: self.state.username,
-          address: self.state.address,
-          email: self.state.email,
-          phone: self.state.phone
+          username: self.state.username
         }
       )
       .then(response => {
         localStorage.setItem("username", this.state.username);
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      })
+      .catch(error => {
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
+      });
+  };
+
+  editAddress = async e => {
+    e.preventDefault();
+    const self = this;
+
+    // validation
+    if (this.state.address === "" || this.state.address === null) {
+      Swal.fire("Error", "Please fill your address", "warning");
+      return false;
+    }
+    await axios
+      .put(
+        this.props.baseUrl +
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
+        {
+          address: self.state.address
+        }
+      )
+      .then(response => {
         localStorage.setItem("address", this.state.address);
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      })
+      .catch(error => {
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
+      });
+  };
+
+  editEmail = async e => {
+    e.preventDefault();
+    const self = this;
+
+    // validation
+    if (this.state.email === "" || this.state.email === null) {
+      Swal.fire("Error", "Please fill your new email", "warning");
+      return false;
+    }
+    await axios
+      .put(
+        this.props.baseUrl +
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
+        {
+          email: self.state.email
+        }
+      )
+      .then(response => {
         localStorage.setItem("email", this.state.email);
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      })
+      .catch(error => {
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
+      });
+  };
+
+  editPhone = async e => {
+    e.preventDefault();
+    const self = this;
+    const number = /^[0-9]+$/;
+
+    // validation
+    if (this.state.phone === "" || this.state.phone === null) {
+      Swal.fire("Error", "Please fill your new Phone Number", "warning");
+      return false;
+    }
+    if (
+      !this.state.phone.match(number) ||
+      this.state.phone.length > 13 ||
+      this.state.phone.length < 10
+    ) {
+      Swal.fire("Error", "Please fill a valid phone number", "warning");
+      return false;
+    }
+    await axios
+      .put(
+        this.props.baseUrl +
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
+        {
+          phone: self.state.phone
+        }
+      )
+      .then(response => {
         localStorage.setItem("phone", this.state.phone);
-        window.location.reload();
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
       })
       .catch(error => {
         Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
@@ -98,24 +200,74 @@ class Profile extends React.Component {
 
   editPassword = async e => {
     e.preventDefault();
-    if (
-      this.state.password === undefined ||
-      this.state.password === null ||
-      this.state.password === ""
-    ) {
-      Swal.fire("Error", "Please Fill Your New Password", "warning");
+    if (this.state.password === "") {
+      Swal.fire("Error", "Please fill your new password", "warning");
+      return false;
+    }
+    if (this.state.password.length < 6) {
+      Swal.fire(
+        "Error",
+        "New Password must contain at least six characters!",
+        "warning"
+      );
+      return false;
+    }
+    let re = /[0-9]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one number!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[!@#\$%\^&]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one special character!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[a-z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one lowercase letter!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[A-Z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "New password must contain at least one uppercase letter!",
+        "warning"
+      );
+      return false;
+    }
+    if (this.state.confirmPassword !== this.state.password) {
+      Swal.fire(
+        "Error",
+        "Your passwords don't match, please re-check",
+        "warning"
+      );
       return false;
     }
     if (this.state.password === this.state.confirmPassword) {
       await axios
-        .put(
-          this.props.baseUrl +
-            "users/" +
-            parseInt(localStorage.getItem("user_id")),
-          {
-            password: this.state.password
-          }
-        )
+        .post(this.props.baseUrl + "users/add_new_password", {
+          email: this.state.email,
+          new_password: this.state.password
+        })
+        .then(response => {
+          Swal.fire("Success", "Your Password Has Been Changed", "success");
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
+        })
         .catch(error => {
           Swal.fire(
             "Oops! Something Went Wrong",
@@ -170,7 +322,10 @@ class Profile extends React.Component {
                         width="15px"
                         className="float-right"
                         onClick={() =>
-                          this.setState({ usernameModalShow: true })
+                          this.setState({
+                            usernameModalShow: true,
+                            username: null
+                          })
                         }
                         data-toggle="tooltip"
                         data-placement="right"
@@ -201,7 +356,10 @@ class Profile extends React.Component {
                         width="15px"
                         className="float-right"
                         onClick={() =>
-                          this.setState({ addressModalShow: true })
+                          this.setState({
+                            addressModalShow: true,
+                            address: null
+                          })
                         }
                         data-toggle="tooltip"
                         data-placement="right"
@@ -231,7 +389,9 @@ class Profile extends React.Component {
                         height="15px"
                         width="15px"
                         className="float-right"
-                        onClick={() => this.setState({ emailModalShow: true })}
+                        onClick={() =>
+                          this.setState({ emailModalShow: true, email: null })
+                        }
                         data-toggle="tooltip"
                         data-placement="right"
                         title="Edit Email"
@@ -260,7 +420,9 @@ class Profile extends React.Component {
                         height="15px"
                         width="15px"
                         className="float-right"
-                        onClick={() => this.setState({ phoneModalShow: true })}
+                        onClick={() =>
+                          this.setState({ phoneModalShow: true, phone: null })
+                        }
                         data-toggle="tooltip"
                         data-placement="right"
                         title="Edit Phone"
@@ -358,7 +520,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editUsername}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
 
@@ -383,7 +545,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editAddress}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
 
@@ -408,7 +570,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editEmail}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
 
@@ -433,7 +595,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editPhone}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
                 {/* end modals */}
