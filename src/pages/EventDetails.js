@@ -47,7 +47,7 @@ class EventDetails extends React.Component {
         let addClass = response.data.map(user => {
           let temp = user;
           if (temp.invitation_status === 1) {
-            temp.class = "bg-success";
+            temp.class = "";
           } else if (temp.invitation_status === -1) {
             temp.class = "bg-danger";
           } else {
