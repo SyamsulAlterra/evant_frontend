@@ -17,7 +17,7 @@ class Logout extends React.Component {
                         title="LogOut"
                     ></img>
                     <br></br>
-                    <span>SignOut</span>
+                    <span className="BiruTua">SignOut</span>
                 </Link>
             </div>
         );
