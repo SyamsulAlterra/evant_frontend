@@ -15,7 +15,7 @@ class FotoProfil extends React.Component {
             <div className="row mt-1 px-2">
               <div className="fontstyle text-left">
                 <span className="px-2 span1">
-                  {localStorage.getItem("fullname")}
+                  {localStorage.getItem("fullname").split(" ")[0]}
                 </span>
                 <br></br>
                 <span className="px-2 span2">
