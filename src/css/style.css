@@ -326,6 +326,20 @@ hr {
   background-color: #3b8ea5;
   color: white;
 }
+.calenderDetailContent {
+  text-decoration: none;
+}
+.calenderDetailContent link,
+.calenderDetailContent link:hover,
+.calenderDetailContent link:focus {
+  text-decoration: none;
+}
+.calenderDetailContent p,
+.calenderDetailContent p:hover,
+.calenderDetailContent p:focus {
+  text-decoration: none;
+  color: black;
+}
 .icon-mobile-phone:before {
   content: "\f10b";
   position: relative;
@@ -340,5 +354,7 @@ hr {
 }
 .bgWhite {
   background-color: white;
-
+}
+.modal-backdrop {
+  z-index: -1;
 }
