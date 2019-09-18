@@ -115,7 +115,7 @@ class Events extends React.Component {
                 {this.state.searchPastEvent.map(value => {
                   console.log(value);
                   return (
-                    <div className="shadow">
+                    <div className="row justify-content-center">
                       <CollapseEvent
                         id={value.event.event_id}
                         eventName={value.event.event_name}
