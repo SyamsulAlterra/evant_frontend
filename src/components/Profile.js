@@ -113,7 +113,7 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="profile mbForFooter">
-        <div className="container mobileView animated fadeIn mt-5 shadow">
+        <div className="container mobileView animated fadeIn mt-5">
           <div className="row justify-content-center">
             <div className="col-10 text-center">
               <div className="fullname fontstyle">
