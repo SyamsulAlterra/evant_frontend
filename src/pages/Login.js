@@ -8,9 +8,66 @@ import GoogleButton from "react-google-button";
 import { GoogleLogin } from "react-google-login";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import "bootstrap/dist/js/bootstrap.bundle";
+import { InputAdornment, withStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import { RemoveRedEye } from "@material-ui/icons";
+import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
-
 import red from "@material-ui/core/colors/red";
+
+const styles = theme => ({
+  eye: {
+    cursor: "pointer"
+  }
+});
+
+class PasswordInput extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      passwordIsMasked: true
+    };
+  }
+
+  togglePasswordMask = () => {
+    this.setState(prevState => ({
+      passwordIsMasked: !prevState.passwordIsMasked
+    }));
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { passwordIsMasked } = this.state;
+
+    return (
+      <TextField
+        type={passwordIsMasked ? "password" : "text"}
+        {...this.props}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <RemoveRedEye
+                className={classes.eye}
+                onClick={this.togglePasswordMask}
+              />
+            </InputAdornment>
+          )
+        }}
+      />
+    );
+  }
+}
+
+PasswordInput.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired
+};
+
+PasswordInput = withStyles(styles)(PasswordInput);
+
+/* --------------------------------------------------------- */
 
 const red300 = red["500"];
 
@@ -177,6 +234,7 @@ class Login extends React.Component {
                 </p>
               </div>
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
+                <i class="icon-mobile-phone icon-large"></i>
                 <TextValidator
                   style={style}
                   className="edit-button"
@@ -191,16 +249,14 @@ class Login extends React.Component {
                   ]}
                 />
                 <br />
-                <TextValidator
-                  style={style}
+                <i class="icon-unlock-alt"></i>
+                <PasswordInput
                   label="Password"
-                  onChange={this.handlePassword}
+                  style={style}
                   name="password"
-                  type="password"
                   value={this.state.password}
-                  validators={["required"]}
-                  errorMessages={["this field is required"]}
-                />
+                  onChange={this.handlePassword}
+                ></PasswordInput>
                 <br />
                 <Link to="/forgotPassword">
                   <small className="register-text">Forgot password?</small>
@@ -220,18 +276,6 @@ class Login extends React.Component {
                       {(this.state.submitted && "Your form is submitted!") ||
                         (!this.state.submitted && "LOGIN")}
                     </button>
-                    {/* <Button
-                      classes={{ sizeLarge: "MuiButton-sizeLarge" }}
-                      color="primary"
-                      size="large"
-                      variant="contained"
-                      type="submit"
-                      onClick={this.handleClick}
-                      disabled={this.state.submitted}
-                    >
-                      {(this.state.submitted && "Your form is submitted!") ||
-                        (!this.state.submitted && "LOGIN")}
-                    </Button> */}
                   </div>
                 </div>
               </ValidatorForm>
@@ -242,9 +286,6 @@ class Login extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col text-center">
                       <GoogleLogin
-                        // client id localhost
-                        // clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
-                        // client id deploy
                         clintId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
                         render={renderProps => (
                           <GoogleButton

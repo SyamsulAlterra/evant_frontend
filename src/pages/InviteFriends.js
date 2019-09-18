@@ -59,8 +59,13 @@ class InviteFriends extends React.Component {
     return (
       <div className="InviteFriends">
         <Header></Header>
-        <div className="vh-100 mbForFooter InviteFriendContent">
+        <div className="vh-100 mbForFooter InviteFriendContent mt-0">
           <div className="text-center mobileView container animated fadeIn">
+            <div className="text-center">
+              <Link to="/events/create" className="m-3 btn buttonCancelInvite">
+                Cancel
+              </Link>
+            </div>
             <div className="row justify-content-center">
               <input
                 type="text"
@@ -79,11 +84,6 @@ class InviteFriends extends React.Component {
             {this.state.searchResult.map(user => {
               return <FriendsCard user={user}></FriendsCard>;
             })}
-          </div>
-          <div className="text-center">
-            <Link to="/events/create" className="m-3 btn buttonCancelInvite">
-              Cancel
-            </Link>
           </div>
         </div>
         <Footer></Footer>

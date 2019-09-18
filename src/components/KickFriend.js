@@ -20,11 +20,11 @@ class KickFriend extends React.Component {
               <div className="col-2 p-0">
                 <img alt="" src={avatar} className="m-1 avatar"></img>
               </div>
-              <div className="col-6 p-0">
-                <p class="m-0 text-left">{this.props.user.fullname}</p>
-                <p class="m-0 text-left">@{this.props.user.username}</p>
+              <div className="col-8 p-0">
+                <p class="m-0 text-left span2">{this.props.user.fullname}</p>
+                <p class="m-0 text-left span2">@{this.props.user.username}</p>
               </div>
-              <div className="col-4 p-0">
+              <div className="col-2 p-0">
                 <img
                   alt=""
                   src={cancel}

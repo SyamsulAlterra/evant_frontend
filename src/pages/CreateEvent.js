@@ -17,16 +17,16 @@ class CreateEvent extends React.Component {
       date: null,
       startDate: "-",
       endDate: "-",
-      searchResult: []
+      searchResult: [],
+      today: new Date(),
+      duration: 2,
+      durationClass: "border-danger"
     };
   }
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     await this.setState({ searchResult: this.props.participants });
-
     // await this.props.setCategoryGlobal("vacation");
-
-    console.log(this.props.category);
   };
 
   componentWillUpdate = async (nextProps, prevState) => {
@@ -50,81 +50,153 @@ class CreateEvent extends React.Component {
   };
 
   handleStartDate = async date => {
-    console.log(date);
-    await this.setState({
-      startDate: this.convert(date)
-    });
-    await console.log("startdate", this.state.startDate);
-
-    await this.props.setStartDateGlobal(date);
-    console.log("start date", this.props.setStartDateGlobal);
+    let start = date.getTime();
+    let end = await this.props.endDate.getTime();
+    let forwardTime = end - start;
+    let dayCount = (await Math.ceil(forwardTime / (24 * 3600 * 1000))) + 1;
+    if (date < this.state.today) {
+      Swal.fire(
+        "Error",
+        "You choose passed date or today as start date",
+        "warning"
+      );
+      return false;
+    } else if (forwardTime < 0) {
+      Swal.fire(
+        "Error",
+        "start date exceed end date, please check your date",
+        "warning"
+      );
+      return false;
+    } else {
+      await this.setState({
+        startDate: this.convert(date)
+      });
+      await this.props.setStartDateGlobal(date);
+      if (dayCount >= 1) {
+        this.setState({ duration: dayCount });
+      }
+    }
   };
 
   handleEndDate = async date => {
-    await this.setState({
-      endDate: this.convert(date)
-    });
-    await console.log("endadate", this.state.endDate);
-
-    await this.props.setEndDateGlobal(date);
-    console.log("end date", this.props.setEndDateGlobal);
+    let start = await this.props.startDate.getTime();
+    let end = date.getTime();
+    let forwardTime = end - start;
+    console.log(forwardTime);
+    let dayCount = (await Math.ceil(forwardTime / (24 * 3600 * 1000))) + 1;
+    if (date < this.state.today) {
+      Swal.fire(
+        "Error",
+        "You choose passed date or today as start date",
+        "warning"
+      );
+      return false;
+    } else if (forwardTime < 0) {
+      Swal.fire(
+        "Error",
+        "start date exceed end date, please check your date",
+        "warning"
+      );
+      return false;
+    } else {
+      await this.setState({
+        endDate: this.convert(date)
+      });
+      await this.props.setEndDateGlobal(date);
+      if (dayCount >= 1) {
+        this.setState({ duration: dayCount });
+      }
+    }
   };
 
   handleDuration = async e => {
     let duration = e.target.value;
-
-    await this.props.setDurationGlobal(duration);
+    let re = /[0-9]+$/;
+    if (!re.test(duration)) {
+      await this.setState({ durationClass: "border-danger" });
+      await this.props.setDurationGlobal(duration);
+    } else if (
+      parseInt(duration) > parseInt(this.state.duration) ||
+      duration === "" ||
+      parseInt(duration) <= 0
+    ) {
+      await this.setState({ durationClass: "border-danger" });
+      await this.props.setDurationGlobal(duration);
+    } else {
+      await this.setState({ durationClass: "" });
+      await this.props.setDurationGlobal(duration);
+    }
   };
 
   createEvent = async e => {
     e.preventDefault();
     const self = this;
+    let re = /^[0-9]+$/;
     if (self.props.category === "" || self.props.category === undefined) {
       this.props.setCategoryGlobal("vacation");
     }
-    const configCreate = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-    await axios.post(
-      this.props.baseUrl + "events",
-      {
-        category: self.props.category,
-        event_name: self.props.eventName,
-        start_date_parameter: self.convert(self.props.startDate),
-        end_date_parameter: self.convert(self.props.endDate),
-        duration: self.props.duration
-      },
-      configCreate
-    );
-
-    let configInvite;
-
-    await this.props.participants.map(async participant => {
-      configInvite = {
-        url: this.props.baseUrl + "invitations",
-        method: "post",
+    if (!re.test(this.props.duration)) {
+      Swal.fire("Warning", "Please enter valid number for duration", "warning");
+      return false;
+    } else if (this.props.duration === "") {
+      Swal.fire("Warning", "You haven't enter your event duration", "warning");
+      return false;
+    } else if (parseInt(this.props.duration) < 1) {
+      Swal.fire(
+        "Warning",
+        "Invalid duration, please check your duration",
+        "warning"
+      );
+      return false;
+    } else if (parseInt(this.props.duration) > parseInt(this.state.duration)) {
+      Swal.fire("Warning", "Duration exceed date range", "warning");
+      return false;
+    } else {
+      const configCreate = {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token")
-        },
-        data: {
-          invited_id: participant.user_id
         }
       };
+      await axios.post(
+        this.props.baseUrl + "events",
+        {
+          category: self.props.category,
+          event_name: self.props.eventName,
+          start_date_parameter: self.convert(self.props.startDate),
+          end_date_parameter: self.convert(self.props.endDate),
+          duration: self.props.duration
+        },
+        configCreate
+      );
 
-      let response = await axios(configInvite);
-      console.log(response.data);
-    });
+      let configInvite;
 
-    Swal.fire(
-      "Event Successfully Created!",
-      "Invitations has been sent!",
-      "success"
-    );
-    await this.props.clearParticipantsOnGlobal();
-    await this.props.clearCreateEvent();
-    this.props.history.push("/events");
+      await this.props.participants.map(async participant => {
+        configInvite = {
+          url: this.props.baseUrl + "invitations",
+          method: "post",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          },
+          data: {
+            invited_id: participant.user_id
+          }
+        };
+
+        let response = await axios(configInvite);
+        console.log(response.data);
+      });
+
+      Swal.fire(
+        "Event Successfully Created!",
+        "Invitations has been sent!",
+        "success"
+      );
+      await this.props.clearParticipantsOnGlobal();
+      await this.props.clearCreateEvent();
+      this.props.history.push("/events");
+    }
   };
 
   cancelEvent = async () => {
@@ -167,7 +239,34 @@ class CreateEvent extends React.Component {
     this.setState({ searchResult: result });
   };
 
+  formatDate = date => {
+    const dateDictionary = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    if (date === undefined) {
+      return "halo";
+    } else if (date === null) {
+      return date;
+    }
+    let d = date.slice(0, 2);
+    let m = parseInt(date.slice(3, 5));
+    let y = date.slice(6, 10);
+    return `${dateDictionary[m - 1]} ${d}, ${y}`;
+  };
+
   render() {
+    console.log(this.state.duration);
     const ExampleCustomInput1 = ({ value, onClick }) => (
       <button className="btn btn-primary" onClick={onClick}>
         Start Date
@@ -182,12 +281,16 @@ class CreateEvent extends React.Component {
     return (
       <div className="createEvent-content mbForFooter">
         <Header></Header>
-        <div className="border rounded shadow container my-5 mobileView animated fadeIn">
-          <h3 className="text-center mt-5">CREATE EVENT</h3>
+        <div className="rounded container my-5 mobileView animated fadeIn">
+          <h5 className="text-center mt-5">CREATE EVENT</h5>
+          <hr></hr>
           <div className="">
             <div className="row justify-content-center">
-              <div className="event-name col-12 text-center mt-5 mb-3">
-                <label for="exampleFormControlSelect1">Event Name</label>
+              <div className="event-name col-9 text-center mt-2 mb-3">
+                <label for="exampleFormControlSelect1">
+                  <b>Event Name</b>
+                  <p className="smallDetail mb-0">changeable</p>
+                </label>
                 <br />
                 <input
                   type="text"
@@ -198,9 +301,11 @@ class CreateEvent extends React.Component {
                 />
               </div>
             </div>
-            <div className="row justify-content-center mt-3 mb-5">
-              <div className="category-select col-12 text-center">
-                <label for="category">Select Category</label>
+            <div className="row justify-content-center mt-1 mb-2">
+              <div className="category-select col-9 text-center">
+                <label for="category">
+                  <b>Select Category</b>
+                </label>
                 <span>
                   <select
                     className="form-control"
@@ -227,22 +332,23 @@ class CreateEvent extends React.Component {
                 </span>
               </div>
             </div>
-            <div className="row justify-content-center">
-              <div className="search-user col-8 text-center my-1">
+            <div className="row justify-content-center no-gutters">
+              <div className="text-center">
+                <label for="friends" className="mt-4 mb-0 text-center">
+                  <b>Your Invited Friend(s)</b>
+                </label>
+              </div>
+              {/* <div className="col-9">
                 <input
+                  className="w-100 friends"
                   type="text"
-                  placeholder="search participant"
+                  placeholder="search"
                   onChange={this.searchParticipant}
                 ></input>
-              </div>
-              <div className="col-4 px-2 text-right">
-                <Link to="/invite" className="button-add">
-                  <button className="btn btn-primary m-1">invite</button>
-                </Link>
-              </div>
+              </div> */}
             </div>
             <div>
-              <div className="row justify-content-center invitedBox m-3">
+              <div className="row justify-content-center invitedBox m-1">
                 {this.state.searchResult.map(value => {
                   return (
                     <div className="w-100 text-center">
@@ -251,6 +357,22 @@ class CreateEvent extends React.Component {
                   );
                 })}
               </div>
+            </div>
+            <div className="row justify-content-center no-gutters">
+              <div className="col-8 px-2 text-center">
+                <Link to="/invite" className="button-add">
+                  <button className="btn btn-primary m-0">invite other</button>
+                </Link>
+              </div>
+            </div>
+            <div className="text-center">
+              <label for="startDate" className="mt-4 text-center">
+                <b>Time Range and Duration</b>
+                <br></br>
+                <span className="smallDetail mb-0">
+                  click to change start and end date
+                </span>
+              </label>
             </div>
             <div className="row startDate-section justify-content-center">
               <div className="col-7 text-center my-2">
@@ -262,7 +384,7 @@ class CreateEvent extends React.Component {
                 />
               </div>
               <div className="col-5 text-left p-0 my-3">
-                : {this.convert(this.props.startDate)}
+                : {this.formatDate(this.convert(this.props.startDate))}
               </div>
             </div>
             <div className="row startDate-section justify-content-center">
@@ -275,19 +397,27 @@ class CreateEvent extends React.Component {
                 />
               </div>
               <div className="col-5 text-left p-0 my-3">
-                : {this.convert(this.props.endDate)}
+                : {this.formatDate(this.convert(this.props.endDate))}{" "}
               </div>
             </div>
             <div className="row duration justify-content-center">
-              <div className="col-12 text-center">Duration (days)</div>
               <div className="col-12 text-center">
                 <input
                   type="text"
-                  placeholder="duration"
+                  placeholder="Duration (days)"
                   onChange={this.handleDuration}
                   value={this.props.duration}
-                  className="w-100"
+                  className={`w-100 ${this.state.durationClass} rounded p-2`}
                 />
+                {[1].map(num => {
+                  if (this.state.durationClass === "border-danger") {
+                    return (
+                      <div className="smallDetail mb-0">
+                        event duration cannot exceed start - end date
+                      </div>
+                    );
+                  }
+                })}
               </div>
             </div>
             <div className="row justify-content-center">

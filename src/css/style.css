@@ -136,6 +136,9 @@ table {
   font-weight: bold;
   color: black;
 }
+.smallDetail {
+  font-size: 12px;
+}
 .venue {
   width: 200px;
 }
@@ -218,6 +221,15 @@ select.form-control:not([size]):not([multiple]) {
   font-size: 15px;
 }
 .eventDetailContentParticipant hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+hr {
   border: none;
   height: 1px;
   /* Set the hr color */
@@ -314,17 +326,19 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #3b8ea5;
   color: white;
 }
-.calenderDetailContent {
-  text-decoration: none;
+.icon-mobile-phone:before {
+  content: "\f10b";
+  position: relative;
+  right: 7px;
+  top: 20px;
 }
-.calenderDetailContent link,
-.calenderDetailContent link:hover,
-.calenderDetailContent link:focus {
-  text-decoration: none;
+.icon-unlock-alt:before {
+  content: "\f13e";
+  position: relative;
+  right: 7px;
+  top: 22px;
 }
-.calenderDetailContent p,
-.calenderDetailContent p:hover,
-.calenderDetailContent p:focus {
-  text-decoration: none;
-  color: black;
+.bgWhite {
+  background-color: white;
+
 }
