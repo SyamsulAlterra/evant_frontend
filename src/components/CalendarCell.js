@@ -198,9 +198,17 @@ class CalendarCell extends React.Component {
                   </h5>
                 </div>
                 <div class="modal-footer">
-                  <button
+                  {/* <button
                     type="button"
                     class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button> */}
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={() => this.handleMark(this.props.dates)}
                     data-dismiss="modal"
                   >
                     Oke
