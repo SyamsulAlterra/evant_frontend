@@ -20,7 +20,7 @@ class InvitationCard extends React.Component {
       .then(response => {
         Swal.fire("Success", "You have rejected this invitation", "success");
 
-        setTimeout(function() {
+        setTimeout(function () {
           window.location.reload();
         }, 1000);
       })
@@ -66,7 +66,7 @@ class InvitationCard extends React.Component {
                     category:{" "}
                     {
                       this.props.verboseCategory[
-                        this.props.invitation.event_category
+                      this.props.invitation.event_category
                       ]
                     }{" "}
                     <br />
@@ -75,18 +75,18 @@ class InvitationCard extends React.Component {
                     <Link
                       className="btn m-2 text-right"
                       onClick={() =>
-                        this.acceptEvent(this.props.invitation.event_id)
-                      }
-                    >
-                      Accept
-                    </Link>
-                    <Link
-                      className="btn m-2 text-right"
-                      onClick={() =>
                         this.declineEvent(this.props.invitation.event_id)
                       }
                     >
                       Decline
+                    </Link>
+                    <Link
+                      className="btn m-2 text-right"
+                      onClick={() =>
+                        this.acceptEvent(this.props.invitation.event_id)
+                      }
+                    >
+                      Accept
                     </Link>
                   </div>
                 </div>
