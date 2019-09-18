@@ -71,8 +71,8 @@ export const actions = Store => ({
     return {
       eventName: "My Event",
       category: "vacation",
-      startDate: today,
-      endDate: tomorrow,
+      startDate: tomorrow,
+      endDate: dayAfterTomorrow,
       duration: null
     };
   },
