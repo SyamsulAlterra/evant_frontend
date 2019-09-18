@@ -66,27 +66,29 @@ class Login extends React.Component {
     };
 
     const self = this;
-    await axios(req)
-      .then(function(response) {
-        console.log("login as", response.data);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user_id", response.data.user["user_id"]);
-        localStorage.setItem("address", response.data.user["address"]);
-        localStorage.setItem("email", response.data.user["email"]);
-        localStorage.setItem("fullname", response.data.user["fullname"]);
-        localStorage.setItem("gender", response.data.user["gender"]);
-        localStorage.setItem("phone", response.data.user["phone"]);
-        localStorage.setItem("username", response.data.user["username"]);
-        self.props.history.push("/home");
-      })
-      .catch(function(error) {
-        localStorage.setItem("google_token", response.tokenId);
-        localStorage.setItem("email", email);
-        localStorage.setItem("fullname", fullname);
-        localStorage.setItem("username", username);
-        self.props.history.push("/googleRegister");
-        console.log("ERROR", error);
-      });
+    if (response.profileObj.email) {
+      await axios(req)
+        .then(function(response) {
+          console.log("login as", response.data);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user_id", response.data.user["user_id"]);
+          localStorage.setItem("address", response.data.user["address"]);
+          localStorage.setItem("email", response.data.user["email"]);
+          localStorage.setItem("fullname", response.data.user["fullname"]);
+          localStorage.setItem("gender", response.data.user["gender"]);
+          localStorage.setItem("phone", response.data.user["phone"]);
+          localStorage.setItem("username", response.data.user["username"]);
+          self.props.history.push("/home");
+        })
+        .catch(function(error) {
+          localStorage.setItem("google_token", response.tokenId);
+          localStorage.setItem("email", email);
+          localStorage.setItem("fullname", fullname);
+          localStorage.setItem("username", username);
+          self.props.history.push("/googleRegister");
+          console.log("ERROR", error);
+        });
+    }
   };
 
   handleUsername = e => {
