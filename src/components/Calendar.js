@@ -119,85 +119,88 @@ class Calendar extends React.Component {
     });
 
     return (
-      <div className="Calendar container mobileView p-0 mt-0 animated fadeIn">
-        <div className="text-right mx-4">
-          <img src="" alt=""></img>
-          <select
-            className="button centering p-0 mx-1 my-3 optionMonth form-control size-select btn dropdown-toggle btn-outline-info"
-            onChange={this.handleMonth}
-          >
-            {this.state.monthDictionary.map((month, i) => {
-              if (i + 1 === this.state.currentMonth) {
-                return (
-                  <option value={i + 1} selected="selected">
-                    {month}
-                  </option>
-                );
+      <div className="Calendar container mobileView p-0 mt-0 animated fadeIn ">
+        <div className="boarding-mark-calendar">
+          <div className="text-right mx-4">
+            <img src="" alt=""></img>
+            <select
+              className="button centering p-0 mx-1 my-3 optionMonth form-control size-select btn dropdown-toggle btn-outline-info"
+              onChange={this.handleMonth}
+            >
+              {this.state.monthDictionary.map((month, i) => {
+                if (i + 1 === this.state.currentMonth) {
+                  return (
+                    <option value={i + 1} selected="selected">
+                      {month}
+                    </option>
+                  );
+                } else {
+                  return <option value={i + 1}>{month}</option>;
+                }
+              })}
+            </select>
+            <select
+              className="button centering p-0 mx-1 my-3 form-control size-select btn-outline-info btn dropdown-toggle"
+              onChange={this.handleYear}
+            >
+              {yearChoices.map(year => {
+                return <option value={year}>{year}</option>;
+              })}
+            </select>
+          </div>
+          <CalendarTitle></CalendarTitle>
+          {weeks.map(week => {
+            const tes = dates.map(date => {
+              let currentDate = 7 * (week - 1) + date;
+              if (
+                currentDate > this.state.totalDays + this.state.offset ||
+                currentDate <= this.state.offset
+              ) {
+                return "";
               } else {
-                return <option value={i + 1}>{month}</option>;
+                let dateString = this.twoDigitString(
+                  currentDate - this.state.offset
+                );
+                return dateString;
               }
-            })}
-          </select>
-          <select
-            className="button centering p-0 mx-1 my-3 form-control size-select btn-outline-info btn dropdown-toggle"
-            onChange={this.handleYear}
-          >
-            {yearChoices.map(year => {
-              return <option value={year}>{year}</option>;
-            })}
-          </select>
-        </div>
-        <CalendarTitle></CalendarTitle>
-        {weeks.map(week => {
-          const tes = dates.map(date => {
-            let currentDate = 7 * (week - 1) + date;
-            if (
-              currentDate > this.state.totalDays + this.state.offset ||
-              currentDate <= this.state.offset
-            ) {
-              return "";
-            } else {
-              let dateString = this.twoDigitString(
-                currentDate - this.state.offset
-              );
-              return dateString;
-            }
-          });
-          return (
-            <CalendarGrid
-              dates={tes}
-              month={this.twoDigitString(this.state.month)}
-              year={this.state.year}
-              today={this.twoDigitString(this.state.todayDate)}
-              currentMonth={this.twoDigitString(this.state.currentMonth)}
-              currentYear={this.state.currentYear}
-            ></CalendarGrid>
-          );
-        })}
-        <div className="row px-0 eventDetail mt-2 mx-5">
-          <div className="col-4 p-0 text-center">
-            <div className="btn todayMark bgOren text-center"></div>
-            <div className="text-center">
-              <p className="eventDetail text-center">Today's Date</p>
+            });
+            return (
+              <CalendarGrid
+                dates={tes}
+                month={this.twoDigitString(this.state.month)}
+                year={this.state.year}
+                today={this.twoDigitString(this.state.todayDate)}
+                currentMonth={this.twoDigitString(this.state.currentMonth)}
+                currentYear={this.state.currentYear}
+              ></CalendarGrid>
+            );
+          })}
+          <div className="row px-0 eventDetail mt-2 mx-5">
+            <div className="col-4 p-0 text-center">
+              <div className="btn todayMark bgOren text-center"></div>
+              <div className="text-center">
+                <p className="eventDetail text-center">Today's Date</p>
+              </div>
             </div>
-          </div>
-          <div className="col-4 p-0 text-center">
-            <div className="btn btn-success todayMark text-center"></div>
-            <div className="text-center">
-              <p className="eventDetail text-center">Available Date</p>
+            <div className="col-4 p-0 text-center">
+              <div className="btn btn-success todayMark text-center"></div>
+              <div className="text-center">
+                <p className="eventDetail text-center">Available Date</p>
+              </div>
             </div>
-          </div>
-          <div className="col-4 p-0 text-center">
-            <div className="btn bgMerah todayMark text-center"></div>
-            <div className="text-center">
-              <p className="eventDetail text-center">Booked</p>
+            <div className="col-4 p-0 text-center">
+              <div className="btn bgMerah todayMark text-center"></div>
+              <div className="text-center">
+                <p className="eventDetail text-center">Booked</p>
+              </div>
             </div>
-          </div>
-          {/* <div className="col-4 p-0 text-center">
+            {/* <div className="col-4 p-0 text-center">
             <div className="btn btn-secondary todayMark text-center"></div>
             <p className="eventDetail todayMark text-center mx-2">Passed</p>
           </div> */}
+          </div>
         </div>
+
         <CalendarDetail
           selectedMonth={this.twoDigitString(this.state.month)}
           selectedYear={this.state.year}

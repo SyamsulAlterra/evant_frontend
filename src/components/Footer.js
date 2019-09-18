@@ -7,6 +7,7 @@ import { actions } from "../Store";
 import { Link, withRouter } from "react-router-dom";
 import Axios from "axios";
 import { connect } from "unistore/react";
+import Joyride from "react-joyride";
 
 class Footer extends React.Component {
   componentDidMount = async (prevProps, prevState) => {
@@ -32,7 +33,7 @@ class Footer extends React.Component {
               <Link to="/home">
                 <img
                   alt=""
-                  className="my-3"
+                  className="my-3 my-first-step-home"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Home"
@@ -44,7 +45,7 @@ class Footer extends React.Component {
               <Link to="/events">
                 <img
                   alt=""
-                  className="my-3"
+                  className="my-3 my-second-step-events"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Event"
@@ -56,7 +57,7 @@ class Footer extends React.Component {
               <Link to="/invitations">
                 <img
                   alt=""
-                  className="my-3"
+                  className="my-3 my-third-step-invitations"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Invitation"
@@ -71,7 +72,7 @@ class Footer extends React.Component {
               <Link to="/profile">
                 <img
                   alt=""
-                  className="my-3"
+                  className="my-3 my-fourth-step-profile"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Profile"

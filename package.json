@@ -21,6 +21,7 @@
     "react-event-calendar": "^0.3.0",
     "react-google-button": "^0.5.3",
     "react-google-login": "^5.0.5",
+    "react-joyride": "^2.1.1",
     "react-material-ui-form-validator": "^2.0.9",
     "react-reveal": "^1.2.2",
     "react-router": "^5.0.1",
