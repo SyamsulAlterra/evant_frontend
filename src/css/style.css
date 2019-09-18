@@ -136,6 +136,9 @@ table {
   font-weight: bold;
   color: black;
 }
+.smallDetail {
+  font-size: 12px;
+}
 .venue {
   width: 200px;
 }
@@ -218,6 +221,15 @@ select.form-control:not([size]):not([multiple]) {
   font-size: 15px;
 }
 .eventDetailContentParticipant hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+hr {
   border: none;
   height: 1px;
   /* Set the hr color */
@@ -314,6 +326,7 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #3b8ea5;
   color: white;
 }
+
 .icon-mobile-phone:before {
   content: "\f10b";
   position: relative;
@@ -325,4 +338,7 @@ select.form-control:not([size]):not([multiple]) {
   position: relative;
   right: 7px;
   top: 22px;
+
+.bgWhite {
+  background-color: white;
 }
