@@ -27,8 +27,6 @@ class CreateEvent extends React.Component {
   componentWillMount = async () => {
     await this.setState({ searchResult: this.props.participants });
     // await this.props.setCategoryGlobal("vacation");
-
-    console.log(this.props.category);
   };
 
   componentWillUpdate = async (nextProps, prevState) => {
@@ -52,21 +50,10 @@ class CreateEvent extends React.Component {
   };
 
   handleStartDate = async date => {
-    await this.setState({
-      startDate: this.convert(date)
-    });
-    await console.log("startdate", this.state.startDate);
-    console.log(date);
-    await this.props.setStartDateGlobal(date);
-
-    let start = await this.props.startDate.getTime();
+    let start = date.getTime();
     let end = await this.props.endDate.getTime();
-    let dayCount = (await Math.ceil((end - start) / (24 * 3600 * 1000))) + 1;
-    console.log(
-      this.props.startDate.getDate(),
-      this.props.endDate.getDate(),
-      dayCount
-    );
+    let forwardTime = end - start;
+    let dayCount = (await Math.ceil(forwardTime / (24 * 3600 * 1000))) + 1;
     if (date < this.state.today) {
       Swal.fire(
         "Error",
@@ -74,35 +61,30 @@ class CreateEvent extends React.Component {
         "warning"
       );
       return false;
-    } else if (this.props.endDate < this.props.startDate) {
+    } else if (forwardTime < 0) {
       Swal.fire(
         "Error",
         "start date exceed end date, please check your date",
         "warning"
       );
       return false;
-    } else if (dayCount >= 1) {
-      this.setState({ duration: dayCount });
+    } else {
+      await this.setState({
+        startDate: this.convert(date)
+      });
+      await this.props.setStartDateGlobal(date);
+      if (dayCount >= 1) {
+        this.setState({ duration: dayCount });
+      }
     }
   };
 
   handleEndDate = async date => {
-    await this.setState({
-      endDate: this.convert(date)
-    });
-    await console.log("endadate", this.state.endDate);
-
-    await this.props.setEndDateGlobal(date);
-    console.log("end date", this.props.setEndDateGlobal);
-
     let start = await this.props.startDate.getTime();
-    let end = await this.props.endDate.getTime();
-    let dayCount = (await Math.ceil((end - start) / (24 * 3600 * 1000))) + 1;
-    console.log(
-      this.props.startDate.getDate(),
-      this.props.endDate.getDate(),
-      dayCount
-    );
+    let end = date.getTime();
+    let forwardTime = end - start;
+    console.log(forwardTime);
+    let dayCount = (await Math.ceil(forwardTime / (24 * 3600 * 1000))) + 1;
     if (date < this.state.today) {
       Swal.fire(
         "Error",
@@ -110,31 +92,39 @@ class CreateEvent extends React.Component {
         "warning"
       );
       return false;
-    } else if (this.props.endDate < this.props.startDate) {
+    } else if (forwardTime < 0) {
       Swal.fire(
         "Error",
         "start date exceed end date, please check your date",
         "warning"
       );
       return false;
-    } else if (dayCount > 1) {
-      this.setState({ duration: dayCount });
+    } else {
+      await this.setState({
+        endDate: this.convert(date)
+      });
+      await this.props.setEndDateGlobal(date);
+      if (dayCount >= 1) {
+        this.setState({ duration: dayCount });
+      }
     }
   };
 
   handleDuration = async e => {
     let duration = e.target.value;
-    console.log(
-      this.state.duration,
-      typeof this.state.duration,
-      duration,
-      typeof duration
-    );
-    if (parseInt(duration) > parseInt(this.state.duration)) {
-      this.setState({ durationClass: "border-danger" });
+    let re = /[0-9]+$/;
+    if (!re.test(duration)) {
+      await this.setState({ durationClass: "border-danger" });
+      await this.props.setDurationGlobal(duration);
+    } else if (
+      parseInt(duration) > parseInt(this.state.duration) ||
+      duration === "" ||
+      parseInt(duration) <= 0
+    ) {
+      await this.setState({ durationClass: "border-danger" });
       await this.props.setDurationGlobal(duration);
     } else {
-      this.setState({ durationClass: "" });
+      await this.setState({ durationClass: "" });
       await this.props.setDurationGlobal(duration);
     }
   };
@@ -142,52 +132,71 @@ class CreateEvent extends React.Component {
   createEvent = async e => {
     e.preventDefault();
     const self = this;
+    let re = /^[0-9]+$/;
     if (self.props.category === "" || self.props.category === undefined) {
       this.props.setCategoryGlobal("vacation");
     }
-    const configCreate = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-    await axios.post(
-      this.props.baseUrl + "events",
-      {
-        category: self.props.category,
-        event_name: self.props.eventName,
-        start_date_parameter: self.convert(self.props.startDate),
-        end_date_parameter: self.convert(self.props.endDate),
-        duration: self.props.duration
-      },
-      configCreate
-    );
-
-    let configInvite;
-
-    await this.props.participants.map(async participant => {
-      configInvite = {
-        url: this.props.baseUrl + "invitations",
-        method: "post",
+    if (!re.test(this.props.duration)) {
+      Swal.fire("Warning", "Please enter valid number for duration", "warning");
+      return false;
+    } else if (this.props.duration === "") {
+      Swal.fire("Warning", "You haven't enter your event duration", "warning");
+      return false;
+    } else if (parseInt(this.props.duration) < 1) {
+      Swal.fire(
+        "Warning",
+        "Invalid duration, please check your duration",
+        "warning"
+      );
+      return false;
+    } else if (parseInt(this.props.duration) > parseInt(this.state.duration)) {
+      Swal.fire("Warning", "Duration exceed date range", "warning");
+      return false;
+    } else {
+      const configCreate = {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token")
-        },
-        data: {
-          invited_id: participant.user_id
         }
       };
+      await axios.post(
+        this.props.baseUrl + "events",
+        {
+          category: self.props.category,
+          event_name: self.props.eventName,
+          start_date_parameter: self.convert(self.props.startDate),
+          end_date_parameter: self.convert(self.props.endDate),
+          duration: self.props.duration
+        },
+        configCreate
+      );
 
-      let response = await axios(configInvite);
-      console.log(response.data);
-    });
+      let configInvite;
 
-    Swal.fire(
-      "Event Successfully Created!",
-      "Invitations has been sent!",
-      "success"
-    );
-    await this.props.clearParticipantsOnGlobal();
-    await this.props.clearCreateEvent();
-    this.props.history.push("/events");
+      await this.props.participants.map(async participant => {
+        configInvite = {
+          url: this.props.baseUrl + "invitations",
+          method: "post",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          },
+          data: {
+            invited_id: participant.user_id
+          }
+        };
+
+        let response = await axios(configInvite);
+        console.log(response.data);
+      });
+
+      Swal.fire(
+        "Event Successfully Created!",
+        "Invitations has been sent!",
+        "success"
+      );
+      await this.props.clearParticipantsOnGlobal();
+      await this.props.clearCreateEvent();
+      this.props.history.push("/events");
+    }
   };
 
   cancelEvent = async () => {
