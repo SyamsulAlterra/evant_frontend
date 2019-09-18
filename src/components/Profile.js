@@ -75,10 +75,13 @@ class Profile extends React.Component {
     await axios
       .put(
         this.props.baseUrl +
-        "users/" +
-        parseInt(localStorage.getItem("user_id")),
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
         {
-          username: self.state.username
+          username: self.state.username,
+          address: self.state.address,
+          email: self.state.email,
+          phone: self.state.phone
         }
       )
       .then(response => {
@@ -87,20 +90,39 @@ class Profile extends React.Component {
         localStorage.setItem("email", this.state.email);
         localStorage.setItem("phone", this.state.phone);
         window.location.reload();
+      })
+      .catch(error => {
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
       });
   };
 
   editPassword = async e => {
     e.preventDefault();
+    if (
+      this.state.password === undefined ||
+      this.state.password === null ||
+      this.state.password === ""
+    ) {
+      Swal.fire("Error", "Please Fill Your New Password", "warning");
+      return false;
+    }
     if (this.state.password === this.state.confirmPassword) {
-      await axios.put(
-        this.props.baseUrl +
-        "users/" +
-        parseInt(localStorage.getItem("user_id")),
-        {
-          password: this.state.password
-        }
-      );
+      await axios
+        .put(
+          this.props.baseUrl +
+            "users/" +
+            parseInt(localStorage.getItem("user_id")),
+          {
+            password: this.state.password
+          }
+        )
+        .catch(error => {
+          Swal.fire(
+            "Oops! Something Went Wrong",
+            "Please Try Again",
+            "warning"
+          );
+        });
     } else {
       Swal.fire("Error", "Your New Password Doesn't Match", "warning");
     }
