@@ -8,6 +8,64 @@ import { CSSTransition } from "react-transition-group";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
+import { InputAdornment, withStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import { RemoveRedEye } from "@material-ui/icons";
+import PropTypes from "prop-types";
+
+const styles = theme => ({
+  eye: {
+    cursor: "pointer"
+  }
+});
+
+class PasswordInput extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      passwordIsMasked: true
+    };
+  }
+
+  togglePasswordMask = () => {
+    this.setState(prevState => ({
+      passwordIsMasked: !prevState.passwordIsMasked
+    }));
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { passwordIsMasked } = this.state;
+
+    return (
+      <TextField
+        type={passwordIsMasked ? "password" : "text"}
+        {...this.props}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <RemoveRedEye
+                className={classes.eye}
+                onClick={this.togglePasswordMask}
+              />
+            </InputAdornment>
+          )
+        }}
+      />
+    );
+  }
+}
+
+PasswordInput.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired
+};
+
+PasswordInput = withStyles(styles)(PasswordInput);
+
+/* --------------------------------------------------------- */
 
 const red300 = red["500"];
 
@@ -276,26 +334,20 @@ class Register extends React.Component {
                       ]}
                     />
                     <br />
-                    <TextValidator
-                      style={style}
+                    <PasswordInput
                       label="Password"
-                      onChange={this.handlePassword}
-                      name="password"
-                      type="password"
-                      value={this.state.password}
-                      validators={["required"]}
-                      errorMessages={["this field is required"]}
-                    />
-                    <br />
-                    <TextValidator
                       style={style}
-                      label="Confirm Password"
-                      onChange={this.handleConfirmPassword}
                       name="password"
-                      type="password"
+                      value={this.state.password}
+                      onChange={this.handlePassword}
+                    ></PasswordInput>
+                    <br />
+                    <PasswordInput
+                      label="Password"
+                      style={style}
+                      name="password"
                       value={this.state.confirmPassword}
-                      validators={["required"]}
-                      errorMessages={["this field is required"]}
+                      onChange={this.handleConfirmPassword}
                     />
                     <br />
                     <TextValidator
