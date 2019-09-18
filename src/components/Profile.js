@@ -69,26 +69,104 @@ class Profile extends React.Component {
     });
   };
 
-  editProfile = async e => {
+  editUsername = async e => {
     e.preventDefault();
     const self = this;
 
-    // form validation
+    //validation
+    if (this.state.username === "" || this.state.username === null) {
+      Swal.fire("Error", "Please fill your new Username", "warning");
+      return false;
+    }
+    await axios
+      .put(
+        this.props.baseUrl +
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
+        {
+          username: self.state.username
+        }
+      )
+      .then(response => {
+        localStorage.setItem("username", this.state.username);
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      })
+      .catch(error => {
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
+      });
+  };
+
+  editAddress = async e => {
+    e.preventDefault();
+    const self = this;
+
+    // validation
+    if (this.state.address === "" || this.state.address === null) {
+      Swal.fire("Error", "Please fill your address", "warning");
+      return false;
+    }
+    await axios
+      .put(
+        this.props.baseUrl +
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
+        {
+          address: self.state.address
+        }
+      )
+      .then(response => {
+        localStorage.setItem("address", this.state.address);
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      })
+      .catch(error => {
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
+      });
+  };
+
+  editEmail = async e => {
+    e.preventDefault();
+    const self = this;
+
+    // validation
+    if (this.state.email === "" || this.state.email === null) {
+      Swal.fire("Error", "Please fill your new email", "warning");
+      return false;
+    }
+    await axios
+      .put(
+        this.props.baseUrl +
+          "users/" +
+          parseInt(localStorage.getItem("user_id")),
+        {
+          email: self.state.email
+        }
+      )
+      .then(response => {
+        localStorage.setItem("email", this.state.email);
+        Swal.fire("Success", "Your Data Has Been Changed", "success");
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+      })
+      .catch(error => {
+        Swal.fire("Oops! Something Went Wrong", "Please Try Again", "warning");
+      });
+  };
+
+  editPhone = async e => {
+    e.preventDefault();
+    const self = this;
     const number = /^[0-9]+$/;
-    if (this.state.name === "") {
-      Swal.fire("Error", "Please fill your Full Name", "warning");
-      return false;
-    }
-    if (this.state.username === "") {
-      Swal.fire("Error", "Please fill your Username", "warning");
-      return false;
-    }
-    if (this.state.email === "") {
-      Swal.fire("Error", "Please fill your email", "warning");
-      return false;
-    }
-    if (this.state.phone === "") {
-      Swal.fire("Error", "Please fill your Phone Number", "warning");
+
+    // validation
+    if (this.state.phone === "" || this.state.phone === null) {
+      Swal.fire("Error", "Please fill your new Phone Number", "warning");
       return false;
     }
     if (
@@ -99,26 +177,16 @@ class Profile extends React.Component {
       Swal.fire("Error", "Please fill a valid phone number", "warning");
       return false;
     }
-    if (this.state.address === "") {
-      Swal.fire("Error", "Please fill your address", "warning");
-      return false;
-    }
     await axios
       .put(
         this.props.baseUrl +
           "users/" +
           parseInt(localStorage.getItem("user_id")),
         {
-          username: self.state.username,
-          address: self.state.address,
-          email: self.state.email,
           phone: self.state.phone
         }
       )
       .then(response => {
-        localStorage.setItem("username", this.state.username);
-        localStorage.setItem("address", this.state.address);
-        localStorage.setItem("email", this.state.email);
         localStorage.setItem("phone", this.state.phone);
         Swal.fire("Success", "Your Data Has Been Changed", "success");
         setTimeout(function() {
@@ -254,7 +322,10 @@ class Profile extends React.Component {
                         width="15px"
                         className="float-right"
                         onClick={() =>
-                          this.setState({ usernameModalShow: true })
+                          this.setState({
+                            usernameModalShow: true,
+                            username: null
+                          })
                         }
                         data-toggle="tooltip"
                         data-placement="right"
@@ -285,7 +356,10 @@ class Profile extends React.Component {
                         width="15px"
                         className="float-right"
                         onClick={() =>
-                          this.setState({ addressModalShow: true })
+                          this.setState({
+                            addressModalShow: true,
+                            address: null
+                          })
                         }
                         data-toggle="tooltip"
                         data-placement="right"
@@ -315,7 +389,9 @@ class Profile extends React.Component {
                         height="15px"
                         width="15px"
                         className="float-right"
-                        onClick={() => this.setState({ emailModalShow: true })}
+                        onClick={() =>
+                          this.setState({ emailModalShow: true, email: null })
+                        }
                         data-toggle="tooltip"
                         data-placement="right"
                         title="Edit Email"
@@ -344,7 +420,9 @@ class Profile extends React.Component {
                         height="15px"
                         width="15px"
                         className="float-right"
-                        onClick={() => this.setState({ phoneModalShow: true })}
+                        onClick={() =>
+                          this.setState({ phoneModalShow: true, phone: null })
+                        }
                         data-toggle="tooltip"
                         data-placement="right"
                         title="Edit Phone"
@@ -442,7 +520,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editUsername}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
 
@@ -467,7 +545,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editAddress}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
 
@@ -492,7 +570,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editEmail}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
 
@@ -517,7 +595,7 @@ class Profile extends React.Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleToggle}>Close</Button>
-                    <Button onClick={this.editProfile}>Confirm</Button>
+                    <Button onClick={this.editPhone}>Confirm</Button>
                   </Modal.Footer>
                 </Modal>
                 {/* end modals */}
