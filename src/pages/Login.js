@@ -14,6 +14,7 @@ import { RemoveRedEye } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
+import NotificationButton from "../components/Notification.js";
 
 const styles = theme => ({
   eye: {
@@ -313,6 +314,7 @@ class Login extends React.Component {
                     </Link>
                   </div>
                 </div>
+                <NotificationButton />
               </div>
             </div>
           </div>
