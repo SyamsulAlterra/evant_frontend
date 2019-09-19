@@ -312,6 +312,7 @@ class Login extends React.Component {
                         Don't have an acoount? click here to register
                       </small>
                     </Link>
+                    <div>{localStorage.getItem("token")}</div>
                   </div>
                 </div>
                 <NotificationButton />

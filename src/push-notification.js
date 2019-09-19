@@ -16,9 +16,11 @@ export const initializeFirebase = () => {
   //   messagingSenderId: "679868161460"
   // });
 
-  navigator.serviceWorker.register("/my-sw.js").then(registration => {
-    firebase.messaging().useServiceWorker(registration);
-  });
+  // navigator.serviceWorker
+  //   .register("../public/firebase-messaging-sw.js")
+  //   .then(registration => {
+  //     firebase.messaging().useServiceWorker(registration);
+  //   });
 };
 
 export const askForPermissioToReceiveNotifications = async () => {
@@ -26,6 +28,7 @@ export const askForPermissioToReceiveNotifications = async () => {
     const messaging = firebase.messaging();
     await messaging.requestPermission();
     const token = await messaging.getToken();
+    localStorage.setItem("token", token);
     console.log("token do usuário:", token);
 
     return token;
