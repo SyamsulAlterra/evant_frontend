@@ -217,7 +217,7 @@ select.form-control:not([size]):not([multiple]) {
   height: 40px;
 }
 .fontstyle {
-  font-family: "Muli";
+  font-family: "Muli", sans-serif;
   font-size: 15px;
 }
 .eventDetailContentParticipant hr {

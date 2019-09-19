@@ -202,10 +202,10 @@ class Confirmation extends React.Component {
           </h3>
           <p className="text-center m-0">===========================</p>
           <h6 className="text-center m-0">
-            creator: @{this.state.event.creator_username}
+            Creator: @{this.state.event.creator_username}
           </h6>
           <h6 className="text-center m-0">
-            category: {this.props.verboseCategory[this.state.event.category]}
+            Category: {this.props.verboseCategory[this.state.event.category]}
           </h6>
           <h6 className="text-center m-0">
             date: {this.formatDate(this.state.event.start_date)} -{" "}

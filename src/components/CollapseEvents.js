@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 class CollapseEvents extends React.Component {
   render() {
-    console.log(this.props.id);
+    console.log(this.props.creatorName);
     return (
       <div className="col-8 text-center my-3 border shadow p-3 rounded">
         Event Name: {this.props.eventName} <br />
