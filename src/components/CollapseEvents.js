@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 class CollapseEvents extends React.Component {
   render() {
-    console.log(this.props.id);
+    console.log(this.props.creatorName);
     return (
       <Slide left>
         <div className="col-12 text-left my-3 border shadow p-3 rounded">

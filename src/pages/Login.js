@@ -125,7 +125,7 @@ class Login extends React.Component {
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
-        .then(function(response) {
+        .then(function (response) {
           console.log("login as", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -137,7 +137,7 @@ class Login extends React.Component {
           localStorage.setItem("username", response.data.user["username"]);
           self.props.history.push("/home");
         })
-        .catch(function(error) {
+        .catch(function (error) {
           localStorage.setItem("google_token", response.tokenId);
           localStorage.setItem("email", email);
           localStorage.setItem("fullname", fullname);
@@ -261,12 +261,22 @@ class Login extends React.Component {
                   value={this.state.password}
                   onChange={this.handlePassword}
                 ></PasswordInput>
-                <br />
-                <Link to="/forgotPassword">
-                  <small className="register-text">Forgot password?</small>
-                </Link>
+                <div className="row justify-content-center mt-1">
+                  <div className="col-6 text-center">
+                    <Link to="/forgotPassword">
+                      <small className="register-text">Forgot password?</small>
+                    </Link>
+                  </div>
+                  <div className="col-6 text-center">
+                    <Link to="/register">
+                      <small className="register-text">
+                        Click here to register
+                      </small>
+                    </Link>
+                  </div>
+                </div>
                 <div className="row no-gutters justify-content-center animated fadeIn mt-2">
-                  <div className="col-auto mt-3">
+                  <div className="col-12 mb-0">
                     <button
                       color="primary"
                       size="large"
@@ -284,45 +294,35 @@ class Login extends React.Component {
                 </div>
               </ValidatorForm>
 
-              <div className="row no-gutters justify-content-center animated fadeIn mt-5">
-                <div className="col-auto">
-                  <br />
-                  <div className="row justify-content-center">
-                    <div className="col text-center">
-                      <GoogleLogin
-                        // clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
-                        clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
-                        render={renderProps => (
-                          <GoogleButton
-                            type="light"
-                            label="Sign In with Google"
-                            data-onsuccess="onSignIn"
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                          />
-                        )}
-                        buttonText="Login"
-                        onSuccess={this.responseGoogle}
-                        onFailure={this.responseGoogle}
-                        cookiePolicy={"single_host_origin"}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="row justify-content-center mb-5">
+              <span>or</span>
+
+              <div className="row no-gutters justify-content-center animated fadeIn mt-1">
+                <div className="row justify-content-center">
                   <div className="col text-center">
-                    <Link to="/register">
-                      <small className="register-text">
-                        Don't have an acoount? click here to register
-                      </small>
-                    </Link>
+                    <GoogleLogin
+                      clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                      // clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                      render={renderProps => (
+                        <GoogleButton
+                          type="light"
+                          label="Sign In with Google"
+                          data-onsuccess="onSignIn"
+                          onClick={renderProps.onClick}
+                          disabled={renderProps.disabled}
+                        />
+                      )}
+                      buttonText="Login"
+                      onSuccess={this.responseGoogle}
+                      onFailure={this.responseGoogle}
+                      cookiePolicy={"single_host_origin"}
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </CSSTransition>
+      </CSSTransition >
     );
   }
 }
