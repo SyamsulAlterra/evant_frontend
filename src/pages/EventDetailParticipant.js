@@ -48,7 +48,7 @@ class EventDetailParticipant extends React.Component {
           let temp = user;
           temp.class = "";
           if (temp.invitation_status === -1) {
-            temp.class = "bg-danger";
+            temp.class = "text-danger";
           }
           return temp;
         });
