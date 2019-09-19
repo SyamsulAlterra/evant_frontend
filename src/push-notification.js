@@ -28,12 +28,13 @@ export const askForPermissioToReceiveNotifications = async () => {
     const messaging = firebase.messaging();
     await messaging.requestPermission();
     const token = await messaging.getToken();
-    localStorage.setItem("token", token);
+    localStorage.setItem("token_broadcast", token);
     console.log("token do usuário:", token);
 
     return token;
   } catch (error) {
     console.error(error);
+    localStorage.setItem("error", error);
   }
 };
 

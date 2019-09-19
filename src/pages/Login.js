@@ -15,6 +15,30 @@ import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import NotificationButton from "../components/Notification.js";
+import firebase from "firebase";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBro5GpyXQ3_co67zLvfYvPC17A9IL9gT4",
+  authDomain: "try-evant.firebaseapp.com",
+  databaseURL: "https://try-evant.firebaseio.com",
+  projectId: "try-evant",
+  storageBucket: "",
+  messagingSenderId: "679868161460",
+  appId: "1:679868161460:web:733059595e6aabae0f26e1"
+};
+
+export const initializeFirebase = () => {
+  firebase.initializeApp(firebaseConfig);
+  // firebase.initializeApp({
+  //   messagingSenderId: "679868161460"
+  // });
+
+  // navigator.serviceWorker
+  //   .register("../public/firebase-messaging-sw.js")
+  //   .then(registration => {
+  //     firebase.messaging().useServiceWorker(registration);
+  //   });
+};
 
 const styles = theme => ({
   eye: {
@@ -108,6 +132,19 @@ class Login extends React.Component {
   };
 
   responseGoogle = async response => {
+    try {
+      const messaging = firebase.messaging();
+      await messaging.requestPermission();
+      const token = await messaging.getToken();
+      localStorage.setItem("token_broadcast", token);
+      console.log("token do usuário:", token);
+
+      // return token;
+    } catch (error) {
+      console.error(error);
+      localStorage.setItem("error", error);
+    }
+
     console.log(response);
     const email = response.profileObj.email;
     const boundaryIndex = email.indexOf("@");
@@ -119,7 +156,8 @@ class Login extends React.Component {
       headers: {},
       data: {
         email: response.profileObj.email,
-        token_google: response.tokenId
+        token_google: response.tokenId,
+        token_broadcast: localStorage.getItem("token_broadcast")
       }
     };
 
@@ -175,11 +213,27 @@ class Login extends React.Component {
       Swal.fire("Error", "Please fill in your password", "warning");
       return false;
     }
+
+    //Try to create token for client to fire base
+    try {
+      const messaging = firebase.messaging();
+      await messaging.requestPermission();
+      const token = await messaging.getToken();
+      localStorage.setItem("token_broadcast", token);
+      console.log("token do usuário:", token);
+
+      // return token;
+    } catch (error) {
+      console.error(error);
+      localStorage.setItem("error", error);
+    }
+
     const self = this;
     await axios
       .post(this.props.baseUrl + "users/login", {
         username: self.state.username,
-        password: self.state.password
+        password: self.state.password,
+        token_broadcast: localStorage.getItem("token_broadcast")
       })
       .then(response => {
         localStorage.setItem("token", response.data.token);
@@ -200,6 +254,60 @@ class Login extends React.Component {
         Swal.fire("Error", "Invalid username/password or not match", "error");
       });
   };
+
+  // handleBroadcast = async e => {
+  //   e.preventDefault();
+
+  //   let config1 = {
+  //     url:
+  //       "https://iid.googleapis.com/iid/v1/" +
+  //       localStorage.getItem("token_broadcast") +
+  //       "/rel/topics/event_id",
+  //     method: "post",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization:
+  //         "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
+  //     }
+  //   };
+
+  //   await axios(config1)
+  //     .then(() => {
+  //       Swal.fire("Success", "Topic has been broadcasted", "success");
+  //       this.props.history.push("/");
+  //     })
+  //     .catch(() => {
+  //       Swal.fire("Error message", "error");
+  //     });
+
+  //   let config = {
+  //     url: "https://fcm.googleapis.com/fcm/send",
+  //     method: "post",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization:
+  //         "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
+  //     },
+  //     data: {
+  //       notification: {
+  //         title: "Invitation",
+  //         body: "You got some invitation from A",
+  //         click_action: "http://localhost:4000/",
+  //         icon: "http://pixsector.com/cache/6c0d32b0/av711d9b2225038847817.png"
+  //       },
+  //       to: "/topics/topic_name"
+  //     }
+  //   };
+
+  //   axios(config)
+  //     .then(() => {
+  //       Swal.fire("Success", "Notification has been broadcasted", "success");
+  //       this.props.history.push("/");
+  //     })
+  //     .catch(() => {
+  //       Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
+  //     });
+  // };
 
   componentDidMount = () => {
     this.setState({ display: true });
@@ -302,6 +410,7 @@ class Login extends React.Component {
                         onFailure={this.responseGoogle}
                         cookiePolicy={"single_host_origin"}
                       />
+                      {/* <NotificationButton /> */}
                     </div>
                   </div>
                 </div>
@@ -312,10 +421,16 @@ class Login extends React.Component {
                         Don't have an acoount? click here to register
                       </small>
                     </Link>
-                    <div>{localStorage.getItem("token")}</div>
+                    {/* <div>{localStorage.getItem("token")}</div> */}
+                    {/* <button
+                      type="button"
+                      class="btn btn-primary"
+                      onClick={this.handleBroadcast}
+                    >
+                      Primary
+                    </button> */}
                   </div>
                 </div>
-                <NotificationButton />
               </div>
             </div>
           </div>
