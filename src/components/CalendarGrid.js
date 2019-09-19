@@ -9,7 +9,7 @@ class CalendarGrid extends React.Component {
           <tr>
             {this.props.dates.map(day => {
               return (
-                <td className="p-0">
+                <td className="p-0 boarding-mark-calendar">
                   <CalendarCell
                     dates={day}
                     month={this.props.month}
