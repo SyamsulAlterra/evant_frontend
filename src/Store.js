@@ -10,7 +10,7 @@ const tomorrow = new Date(today.getTime() + oneDayLapse);
 const dayAfterTomorrow = new Date(today.getTime() + 2 * oneDayLapse);
 
 export let Store = createStore({
-  baseUrl: "http://0.0.0.0:5000/api/",
+  baseUrl: "https://api.myevant.com/api/",
   availableDates: ["dummy"],
   invitations: [],
   participants: [],
