@@ -75,7 +75,7 @@ class GeneratedEvent extends React.Component {
       let temp = user;
       temp.class = "";
       if (temp.confirmation === -1) {
-        temp.class = "bg-danger";
+        temp.class = "text-danger";
       }
       return temp;
     });
@@ -117,7 +117,7 @@ class GeneratedEvent extends React.Component {
                 {this.state.confirmParticipant.map((user, index) => {
                   console.log(user);
                   return (
-                    <div className={`mx-5 my-2 ${user.class}`}>
+                    <div className={`mx-1 my-2 ${user.class}`}>
                       <table>
                         <tr>
                           <td className="p-2 w-25">
