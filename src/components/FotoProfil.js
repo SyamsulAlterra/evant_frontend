@@ -25,7 +25,7 @@ class FotoProfil extends React.Component {
               <br></br>
             </div>
           </div>
-          <div className="col-3 p-0 text-center fontstyle">
+          <div className="col-3 p-0 text-center fontstyle boarding-create-event">
             <Link to="/events/create">
               <img src={plus} alt="" className="text-center mt-2"></img>
               <p className="m-0 text-center plain">create</p>

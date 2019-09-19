@@ -43,8 +43,20 @@ class EventDetails extends React.Component {
         config
       )
       .then(response => {
-        this.setState({ participants: response.data });
-        this.setState({ searchParticipants: response.data });
+        console.log(response.data);
+        let addClass = response.data.map(user => {
+          let temp = user;
+          if (temp.invitation_status === 1) {
+            temp.class = "";
+          } else if (temp.invitation_status === -1) {
+            temp.class = "text-danger";
+          } else {
+            temp.class = "";
+          }
+          return temp;
+        });
+        this.setState({ participants: addClass });
+        this.setState({ searchParticipants: addClass });
       })
       .catch(error => {
         console.log(error);
@@ -100,37 +112,6 @@ class EventDetails extends React.Component {
 
     let putResponse = await axios(putPreference);
     console.log(putResponse.data);
-  };
-
-  generateEvent = async e => {
-    // e.preventDefault();
-    // let generateDate = {
-    //   url:
-    //     this.props.baseUrl +
-    //     "events/generate_date/" +
-    //     this.props.match.params.id,
-    //   method: "get",
-    //   headers: {
-    //     Authorization: "Bearer " + localStorage.getItem("token")
-    //   }
-    // };
-    // let dateResponse = await axios(generateDate);
-    // console.log(dateResponse.data);
-    // let generatePlace = {
-    //   url:
-    //     this.props.baseUrl +
-    //     "recommendation/" +
-    //     this.state.event.category +
-    //     "/" +
-    //     this.props.match.params.id,
-    //   method: "get",
-    //   headers: {
-    //     Authorization: "Bearer " + localStorage.getItem("token")
-    //   }
-    // };
-    // let placeResponse = await axios(generatePlace);
-    // await this.props.setPlaceOnGlobal(placeResponse.data);
-    // this.props.history.push(`/transition/${this.state.event.event_id}`);
   };
 
   formatDate = date => {
@@ -247,16 +228,16 @@ class EventDetails extends React.Component {
                   className="text-center my-3"
                   onChange={this.search}
                 ></input>
-                <img
-                  className="searchFriends mx-2"
-                  alt=""
-                  src={searchFriends}
-                ></img>
               </div>
             </div>
             <div className="participant p-3">
               {this.state.searchParticipants.map((value, index) => {
-                return <ParticipantCard user={value}></ParticipantCard>;
+                return (
+                  <ParticipantCard
+                    user={value}
+                    class={value.class}
+                  ></ParticipantCard>
+                );
               })}
             </div>
           </div>

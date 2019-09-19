@@ -39,21 +39,22 @@ class ParticipantCard extends React.Component {
     await this.setState({ userPreference: checkPreference });
   };
   render() {
+    console.log(this.props.class);
     if (this.props.user.status === "creator") {
       return (
-        <div className="invitationCard">
-          <div class="card my-2 centering">
+        <div className={`invitationCard`}>
+          <div class={`card my-2 centering ${this.props.class}`}>
             <div class="card-body shadow p-2">
               <div className="container">
                 <div class="row">
                   <div className="col-2 p-0">
                     <img alt="" src={avatar} className="m-1 avatar"></img>
                   </div>
-                  <div className="col-6 p-0">
+                  <div className="col-8 p-0">
                     <p class="m-0 text-left">{this.props.user.fullname}</p>
                     <p class="m-0 text-left">@{this.props.user.username}</p>
                   </div>
-                  <div className="col-4 p-0">
+                  <div className="col-2 p-0">
                     <img alt="" src={crown} className="m-1 avatar"></img>
                   </div>
                 </div>
@@ -65,9 +66,9 @@ class ParticipantCard extends React.Component {
     } else {
       if (this.state.userPreference.length === 0) {
         return (
-          <div className="invitationCard">
-            <div class="card my-2 centering">
-              <div class="card-body p-2">
+          <div className={`invitationCard`}>
+            <div class={`card my-2 centering ${this.props.class}`}>
+              <div class="card-body shadow p-2">
                 <div className="container">
                   <div class="row">
                     <div className="col-2 p-0">
@@ -86,8 +87,8 @@ class ParticipantCard extends React.Component {
         );
       } else {
         return (
-          <div className="invitationCard">
-            <div class="card my-2 centering">
+          <div className={`invitationCard`}>
+            <div class={`card my-2 centering ${this.props.class}`}>
               <div class="card-body p-2">
                 <div className="container">
                   <div class="row">

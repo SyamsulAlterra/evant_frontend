@@ -178,13 +178,13 @@ class CalendarCell extends React.Component {
           <div
             className={`calendarCell border text-center m-1 px-0 py-1 borad ${this.state.cellClass}`}
             data-toggle="modal"
-            data-target={`#date${this.props.dates}`}
+            data-target={`#tesdate${this.props.dates}`}
           >
             <p className="px-2 m-0 calendarCell">{this.props.dates}</p>
           </div>
           <div
             class="modal fade"
-            id={`date${this.props.dates}`}
+            id={`tesdate${this.props.dates}`}
             tabindex="-1"
             role="dialog"
             aria-labelledby="exampleModalLabel"
@@ -198,20 +198,20 @@ class CalendarCell extends React.Component {
                   </h5>
                 </div>
                 <div class="modal-footer">
-                  <button
+                  {/* <button
                     type="button"
                     class="btn btn-secondary"
                     data-dismiss="modal"
                   >
                     Cancel
-                  </button>
+                  </button> */}
                   <button
                     type="button"
                     class="btn btn-primary"
                     onClick={() => this.handleMark(this.props.dates)}
                     data-dismiss="modal"
                   >
-                    Yes
+                    Oke
                   </button>
                 </div>
               </div>

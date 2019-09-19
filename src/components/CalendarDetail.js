@@ -33,7 +33,7 @@ class CalendarDetail extends React.Component {
 
   render() {
     return (
-      <div className="container mobileView p-0 text-center">
+      <div className="container mobileView p-0 text-center calendarDetailContent boarding-marked-calendar">
         <div className="calendarDetail mb-3 my-1 text-left">
           <div className="row no-gutters">
             <div className="col-12 eventDetail text-center">
@@ -48,7 +48,7 @@ class CalendarDetail extends React.Component {
                 // if (month === this.props.selectedMonth) {
                 return (
                   <Link to={`/transition/${event.event_id}`}>
-                    <div className="m-1 border p-1">
+                    <div className="m-1 border shadow rounded p-1">
                       <p className="m-0 eventDetailTitle bgMerah text-white">
                         "{event.event_name}"
                       </p>

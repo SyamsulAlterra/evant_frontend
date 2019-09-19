@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Cinzel:400,700|Montserrat:400,700|Noto+Sans:400,700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Muli:400,600,700&display=swap");
+body {
+  font-family: "Montserrat", "Noto sans", sans-serif;
+}
 .login {
   font-family: "Montserrat";
 }
@@ -71,7 +74,7 @@ table {
 .footer {
   z-index: 99999;
   color: black;
-  background-color: #f5ee9e;
+  background-color: #dfd9e2;
   position: fixed;
   bottom: 0;
 }
@@ -217,7 +220,7 @@ select.form-control:not([size]):not([multiple]) {
   height: 40px;
 }
 .fontstyle {
-  font-family: "Muli";
+  font-family: "Muli", sans-serif;
   font-size: 15px;
 }
 .eventDetailContentParticipant hr {
@@ -326,6 +329,20 @@ hr {
   background-color: #3b8ea5;
   color: white;
 }
+.calenderDetailContent {
+  text-decoration: none;
+}
+.calenderDetailContent link,
+.calenderDetailContent link:hover,
+.calenderDetailContent link:focus {
+  text-decoration: none;
+}
+.calenderDetailContent p,
+.calenderDetailContent p:hover,
+.calenderDetailContent p:focus {
+  text-decoration: none;
+  color: black;
+}
 .icon-mobile-phone:before {
   content: "\f10b";
   position: relative;
@@ -340,4 +357,16 @@ hr {
 }
 .bgWhite {
   background-color: white;
+}
+.modal-backdrop {
+  z-index: -1;
+}
+.toEventDetails a {
+  color: black;
+}
+.calendarDetailContent a,
+.calendarDetailContent a:hover,
+.calendarDetailContent a:focus {
+  text-decoration: none;
+  color: black;
 }

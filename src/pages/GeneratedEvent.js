@@ -72,7 +72,12 @@ class GeneratedEvent extends React.Component {
 
     response = await Axios(config);
     let confirmUser = response.data.filter(user => {
-      return user.confirmation === 1;
+      let temp = user;
+      temp.class = "";
+      if (temp.confirmation === -1) {
+        temp.class = "text-danger";
+      }
+      return temp;
     });
     console.log(confirmUser);
     await this.setState({ confirmParticipant: confirmUser });
@@ -86,7 +91,7 @@ class GeneratedEvent extends React.Component {
           <div className="container mobileView generatedEvent">
             <div class="row justify-content-center">
               <div className="col-12 text-center">
-                <h2 className="text-center m-0 mt-3">You are commit to</h2>
+                <h3 className="text-center m-0 mt-3">You have commited to</h3>
                 <h3 className="text-center m-0 mt-3">
                   "{this.state.event.event_name}"
                 </h3>
@@ -94,7 +99,7 @@ class GeneratedEvent extends React.Component {
               </div>
               <div className="col-12 text-center generatedEventInfo my-2">
                 <h6 className="text-center m-0">
-                  creator: @{this.state.event.creator_username}
+                  creator: <b>@{this.state.event.creator_username}</b>
                 </h6>
                 <br />
                 <h6 className="text-center m-0">
@@ -102,16 +107,20 @@ class GeneratedEvent extends React.Component {
                 </h6>
                 <br />
                 <h6 className="text-center m-0">
-                  date: {this.formatDate(this.state.event.start_date)} -{" "}
-                  {this.formatDate(this.state.event.end_date)}
+                  date:{" "}
+                  <b>
+                    {this.formatDate(this.state.event.start_date)} -{" "}
+                    {this.formatDate(this.state.event.end_date)}
+                  </b>
                 </h6>
               </div>
               <h3 className="text-center mt-3">Participants</h3>
 
               <div className="col-8 generatedParticipant m-3 border rounded shadow">
                 {this.state.confirmParticipant.map((user, index) => {
+                  console.log(user);
                   return (
-                    <div className="mx-5 my-2">
+                    <div className={`mx-1 my-2 ${user.class}`}>
                       <table>
                         <tr>
                           <td className="p-2 w-25">
@@ -131,7 +140,7 @@ class GeneratedEvent extends React.Component {
                 <h3 className="text-center">Venue:</h3>
               </div>
               <div className="text-center mb-3">
-                <table className="border m-3">
+                <table className="border shadow rounded m-3">
                   <div className="m-3">
                     <tr>
                       <td className="p-3">

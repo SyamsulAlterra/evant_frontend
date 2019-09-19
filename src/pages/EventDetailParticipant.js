@@ -43,9 +43,18 @@ class EventDetailParticipant extends React.Component {
         config
       )
       .then(response => {
+        console.log(response.data);
+        let marked = response.data.map(user => {
+          let temp = user;
+          temp.class = "";
+          if (temp.invitation_status === -1) {
+            temp.class = "text-danger";
+          }
+          return temp;
+        });
         this.setState({
-          participants: response.data,
-          searchResult: response.data
+          participants: marked,
+          searchResult: marked
         });
       })
       .catch(error => {
@@ -110,10 +119,8 @@ class EventDetailParticipant extends React.Component {
   declineEvent = async () => {
     let config = {
       url:
-        this.props.baseUrl +
-        "invitations/decline/" +
-        this.props.match.params.id,
-      method: "delete",
+        this.props.baseUrl + "invitations/reject/" + this.props.match.params.id,
+      method: "put",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
@@ -215,7 +222,12 @@ class EventDetailParticipant extends React.Component {
             </div>
             <div className="participant p-3">
               {this.state.searchResult.map((value, index) => {
-                return <ParticipantCard user={value}></ParticipantCard>;
+                return (
+                  <ParticipantCard
+                    user={value}
+                    class={value.class}
+                  ></ParticipantCard>
+                );
               })}
             </div>
             <div className="container">

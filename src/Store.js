@@ -1,6 +1,10 @@
 import createStore from "unistore";
 
-const today = new Date();
+const fakeToday = new Date();
+const month = fakeToday.getMonth();
+const year = fakeToday.getFullYear();
+const date = fakeToday.getDate();
+const today = new Date(year, month, date);
 const oneDayLapse = 24 * 3600 * 1000;
 const tomorrow = new Date(today.getTime() + oneDayLapse);
 const dayAfterTomorrow = new Date(today.getTime() + 2 * oneDayLapse);
@@ -15,7 +19,7 @@ export let Store = createStore({
   category: "vacation",
   startDate: tomorrow,
   endDate: dayAfterTomorrow,
-  duration: null,
+  duration: "",
   events: [],
   allBookedDates: [],
   verboseCategory: {

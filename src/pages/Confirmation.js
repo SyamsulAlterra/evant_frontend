@@ -15,9 +15,11 @@ class Confirmation extends React.Component {
     this.state = {
       event: {
         event_name: "",
-        creator_name: ""
+        creator_name: "",
+        category: "eat"
       },
-      participant: []
+      participant: [],
+      fullParticipant: []
     };
   }
 
@@ -73,7 +75,7 @@ class Confirmation extends React.Component {
     };
 
     response = await Axios(config);
-    await this.setState({ participant: response.data });
+    await this.setState({ fullParticipant: response.data });
 
     config = {
       url:
@@ -86,10 +88,24 @@ class Confirmation extends React.Component {
       }
     };
     response = await Axios(config);
-    let confirmParticipant = response.data.filter(user => {
-      return user.confirmation === 1;
+    let confirmParticipant = await response.data.map(user => {
+      let temp = user;
+      if (temp.confirmation === 1) {
+        temp.class = "text-success";
+        return temp;
+      } else if (temp.confirmation === -1) {
+        temp.class = "text-danger";
+        return temp;
+      } else {
+        temp.class = "";
+        return temp;
+      }
+      console.log(temp);
+      return temp;
     });
+    console.log(confirmParticipant);
     await this.setState({ participant: confirmParticipant });
+    console.log(this.state.participant, this.state.fullParticipant);
   };
   confirm = async status => {
     let config = {
@@ -184,21 +200,24 @@ class Confirmation extends React.Component {
           <h3 className="text-center m-0 mt-3">
             {this.state.event.event_name}
           </h3>
-          <p className="text-center m-0">===========================</p>
+          <hr />
           <h6 className="text-center m-0">
-            creator: @{this.state.event.creator_username}
+            creator: <b>@{this.state.event.creator_username}</b>
           </h6>
           <h6 className="text-center m-0">
-            category: {this.state.event.category}
+            Category: {this.props.verboseCategory[this.state.event.category]}
           </h6>
           <h6 className="text-center m-0">
-            date: {this.formatDate(this.state.event.start_date)} -{" "}
-            {this.formatDate(this.state.event.end_date)}
+            date:{" "}
+            <b>
+              {this.formatDate(this.state.event.start_date)} -{" "}
+              {this.formatDate(this.state.event.end_date)}
+            </b>
           </h6>
-          <div className="participant m-3 border">
+          <div className="participant m-3 border rounded shadow">
             {this.state.participant.map((user, index) => {
               return (
-                <div className="mx-5 my-2">
+                <div className={`mx-3 my-2 ${user.class}`}>
                   <table>
                     <tr>
                       <td className="p-2 w-25">
@@ -218,7 +237,7 @@ class Confirmation extends React.Component {
             <h3 className="text-center">Venue:</h3>
           </div>
           <div className="text-center mb-3">
-            <table className="border m-3">
+            <table className="shadow m-3 border rounded">
               <div className="m-3">
                 <tr>
                   <td className="p-3">
@@ -366,6 +385,6 @@ class Confirmation extends React.Component {
 }
 
 export default connect(
-  "baseUrl, allBookedDates",
+  "baseUrl, allBookedDates, verboseCategory, participants",
   actions
 )(withRouter(Confirmation));
