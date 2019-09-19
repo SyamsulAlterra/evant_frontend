@@ -91,10 +91,10 @@ class Confirmation extends React.Component {
     let confirmParticipant = await response.data.map(user => {
       let temp = user;
       if (temp.confirmation === 1) {
-        temp.class = "bg-success";
+        temp.class = "text-success";
         return temp;
       } else if (temp.confirmation === -1) {
-        temp.class = "bg-danger";
+        temp.class = "text-danger";
         return temp;
       } else {
         temp.class = "";
@@ -214,7 +214,7 @@ class Confirmation extends React.Component {
           <div className="participant m-3 border">
             {this.state.participant.map((user, index) => {
               return (
-                <div className={`mx-5 my-2 ${user.class}`}>
+                <div className={`mx-3 my-2 ${user.class}`}>
                   <table>
                     <tr>
                       <td className="p-2 w-25">

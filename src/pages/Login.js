@@ -278,7 +278,7 @@ class Login extends React.Component {
                       class="btn btn-primary edit-button"
                     >
                       {(this.state.submitted && "Your form is submitted!") ||
-                        (!this.state.submitted && "LOGIN")}
+                        (!this.state.submitted && "SIGN IN")}
                     </button>
                   </div>
                 </div>

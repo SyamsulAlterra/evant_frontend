@@ -49,7 +49,7 @@ class EventDetails extends React.Component {
           if (temp.invitation_status === 1) {
             temp.class = "";
           } else if (temp.invitation_status === -1) {
-            temp.class = "bg-danger";
+            temp.class = "text-danger";
           } else {
             temp.class = "";
           }
