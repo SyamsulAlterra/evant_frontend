@@ -290,7 +290,7 @@ class Login extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col text-center">
                       <GoogleLogin
-                        clintId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                        clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
                         render={renderProps => (
                           <GoogleButton
                             type="light"
