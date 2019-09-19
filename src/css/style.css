@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Cinzel:400,700|Montserrat:400,700|Noto+Sans:400,700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Muli:400,600,700&display=swap");
 body {
-  font-family: "Montserrat";
+  font-family: "Montserrat", "Noto sans", sans-serif;
 }
 .login {
   font-family: "Montserrat";
@@ -362,5 +362,11 @@ hr {
   z-index: -1;
 }
 .toEventDetails a {
+  color: black;
+}
+.calendarDetailContent a,
+.calendarDetailContent a:hover,
+.calendarDetailContent a:focus {
+  text-decoration: none;
   color: black;
 }

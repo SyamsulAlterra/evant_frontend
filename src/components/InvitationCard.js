@@ -60,7 +60,7 @@ class InvitationCard extends React.Component {
                       <b>"{this.props.invitation.event_name}"</b>
                     </div>
                   </h6>
-                  <p class="card-text textInvitation">
+                  <p class="card-text textInvitation m-0">
                     invited by: <b>@{this.props.invitation.username_creator}</b>{" "}
                     <br />
                     duration: {this.props.invitation.event_duration} day(s){" "}
@@ -71,7 +71,6 @@ class InvitationCard extends React.Component {
                         this.props.invitation.event_category
                       ]
                     }{" "}
-                    <br />
                   </p>
                   <div className="text-right invitationAccDec">
                     <Link

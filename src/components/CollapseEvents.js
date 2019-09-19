@@ -15,7 +15,7 @@ class CollapseEvents extends React.Component {
           Created by: <b>@{this.props.creatorName}</b>
           <div className="button-detail text-right toEventDetails">
             <Link to={"/transition/" + this.props.id.toString()}>
-              See details..
+              <small>See details..</small>
             </Link>
           </div>
         </div>

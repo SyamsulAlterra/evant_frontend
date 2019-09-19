@@ -228,11 +228,6 @@ class EventDetails extends React.Component {
                   className="text-center my-3"
                   onChange={this.search}
                 ></input>
-                <img
-                  className="searchFriends mx-2"
-                  alt=""
-                  src={searchFriends}
-                ></img>
               </div>
             </div>
             <div className="participant p-3">
