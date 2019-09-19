@@ -101,9 +101,9 @@ class EventHistoryDetail extends React.Component {
             {this.state.event.event_name}
             <h6>{this.state.title}</h6>
           </h3>
-          <p className="text-center m-0">===========================</p>
+          <hr />
           <h6 className="text-center m-0">
-            creator: @{this.state.event.creator_username}
+            creator: <b>@{this.state.event.creator_username}</b>
           </h6>
           <h6 className="text-center m-0">
             category: {this.state.event.category}
@@ -114,7 +114,7 @@ class EventHistoryDetail extends React.Component {
               this.state.endDate
             )}`}
           </h6>
-          <div className="participant m-3 border">
+          <div className="participant m-3 border shadow rounded">
             {this.state.participant.map((user, index) => {
               return (
                 <div className="mx-5 my-2">
@@ -136,8 +136,8 @@ class EventHistoryDetail extends React.Component {
           <div className="category">
             <h3 className="text-center">Venue:</h3>
           </div>
-          <div className="text-center mb-3">
-            <table className="border">
+          <div className="text-center rounded mb-3">
+            <table className="border shadow rounded">
               <div className="m-3">
                 <tr>
                   <td className="p-3">
