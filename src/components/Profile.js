@@ -72,6 +72,7 @@ class Profile extends React.Component {
   editProfile = async e => {
     e.preventDefault();
     const self = this;
+    console.log(this.state);
     await axios
       .put(
         this.props.baseUrl +
