@@ -162,7 +162,7 @@ class ParticipantCard extends React.Component {
                       <p class="m-0 text-left">{this.props.user.fullname}</p>
                       <p class="m-0 text-left">@{this.props.user.username}</p>
                     </div>
-                    <div className="col-8 p-0">
+                    <div className="col-2 p-0">
                       <img alt="" src={check} className="m-1 avatar"></img>
                     </div>
                   </div>
