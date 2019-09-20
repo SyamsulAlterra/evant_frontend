@@ -286,14 +286,7 @@ class Login extends React.Component {
         <div class="container login mobileView align-items-center">
           <div class="row justify-content-center">
             <div class="col text-center">
-              <div className="home-logo my-3">
-                <img
-                  src={homeLogo}
-                  alt=""
-                  className="text-center animated bounceInDown delay-1s"
-                  width="50%"
-                  height="50%"
-                />
+              <div className="home-logo my-3 grey">
                 <h2 className="underline home-evant animated fadeIn">
                   {/* my-1 */}
                   Evant
@@ -302,6 +295,13 @@ class Login extends React.Component {
                 <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
                 </p>
+                <img
+                  src={homeLogo}
+                  alt=""
+                  className="text-center animated bounceInDown delay-1s"
+                  width="50%"
+                  height="50%"
+                />
               </div>
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <i class="icon-mobile-phone icon-large"></i>
@@ -327,7 +327,7 @@ class Login extends React.Component {
                   value={this.state.password}
                   onChange={this.handlePassword}
                 ></PasswordInput>
-                <div className="row justify-content-center mt-1">
+                <div className="row justify-content-center mt-4">
                   <div className="col-6 text-center">
                     <Link to="/forgotPassword">
                       <small className="register-text">Forgot password?</small>
@@ -341,8 +341,8 @@ class Login extends React.Component {
                     </Link>
                   </div>
                 </div>
-                <div className="row no-gutters justify-content-center animated fadeIn mt-2">
-                  <div className="col-12 mb-0">
+                <div className="row no-gutters justify-content-center animated fadeIn mt-4">
+                  <div className="col-12 mb-2">
                     <button
                       color="primary"
                       size="large"
