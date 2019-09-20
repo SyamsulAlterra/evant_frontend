@@ -80,7 +80,10 @@ class EventHistoryDetail extends React.Component {
       this.state.startDate === undefined ||
       this.state.startDate === ""
     ) {
-      this.setState({ title: `don't have match date` });
+      this.setState({
+        title: `don't have match date`,
+        startDate: '-'
+      })
     } else if (
       this.state.event.place_name === null ||
       this.state.event.place_name === undefined ||
@@ -90,6 +93,7 @@ class EventHistoryDetail extends React.Component {
     } else {
       this.setState({ title: `Success` });
     }
+    console.log(this.state.startDate)
   };
   render() {
     console.log(this.state.event);
@@ -98,21 +102,23 @@ class EventHistoryDetail extends React.Component {
         <Header></Header>
         <div className="container mobileView">
           <h3 className="text-center m-0 mt-3">
-            {this.state.event.event_name}
+            <b>{this.state.event.event_name}</ b>
+            <br></br>
             <h6>{this.state.title}</h6>
           </h3>
           <hr />
           <h6 className="text-center m-0">
-            creator: <b>@{this.state.event.creator_username}</b>
+            Creator:  <b>@{this.state.event.creator_username}</b>
           </h6>
+          <br></br>
           <h6 className="text-center m-0">
-            category: {this.state.event.category}
+            Category:  {this.state.event.category}
           </h6>
+          <br></br>
           <h6 className="text-center m-0">
-            date:{" "}
-            {`${this.formatDate(this.state.startDate)} - ${this.formatDate(
-              this.state.endDate
-            )}`}
+            Date:{" "}
+            {`${this.state.startDate === "-" ? this.state.startDate : this.formatDate(this.state.startDate)} - ${this.state.startDate === "-" ?
+              this.state.startDate : this.formatDate(this.state.endDate)}`}
           </h6>
           <div className="participant m-3 border shadow rounded">
             {this.state.participant.map((user, index) => {
@@ -141,14 +147,12 @@ class EventHistoryDetail extends React.Component {
               <div className="m-3">
                 <tr>
                   <td className="p-3">
-                    {/* <img alt="" src={avatar} className="venue"></img> */}
                     <p className="text-center m-0 centering">
                       {this.state.event.place_name}
                     </p>
                     <p className="text-center m-0 centering">
                       {this.state.event.location}
                     </p>
-                    {/* <br></br> */}
                   </td>
                 </tr>
               </div>

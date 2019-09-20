@@ -103,8 +103,6 @@ class Confirmation extends React.Component {
         temp.class = "";
         return temp;
       }
-      console.log(temp);
-      return temp;
     });
     console.log(confirmParticipant);
     await this.setState({ participant: confirmParticipant });

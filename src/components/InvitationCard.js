@@ -19,7 +19,7 @@ class InvitationCard extends React.Component {
     await Axios(config)
       .then(response => {
         Swal.fire("Success", "You have rejected this invitation", "success");
-        setTimeout(function() {
+        setTimeout(function () {
           window.location.reload();
         }, 1000);
       })
@@ -61,14 +61,14 @@ class InvitationCard extends React.Component {
                     </div>
                   </h6>
                   <p class="card-text textInvitation m-0">
-                    invited by: <b>@{this.props.invitation.username_creator}</b>{" "}
+                    Invited by: <b>@{this.props.invitation.username_creator}</b>{" "}
                     <br />
-                    duration: {this.props.invitation.event_duration} day(s){" "}
+                    Duration: {this.props.invitation.event_duration} day(s){" "}
                     <br />
-                    category:{" "}
+                    Category:{" "}
                     {
                       this.props.verboseCategory[
-                        this.props.invitation.event_category
+                      this.props.invitation.event_category
                       ]
                     }{" "}
                   </p>

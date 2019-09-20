@@ -305,7 +305,7 @@ class Login extends React.Component {
               </ValidatorForm>
               <span>or</span>
 
-              <div className="row no-gutters justify-content-center animated fadeIn mt-1">
+              <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
                 <div className="row justify-content-center">
                   <div className="col text-center">
                     <GoogleLogin
