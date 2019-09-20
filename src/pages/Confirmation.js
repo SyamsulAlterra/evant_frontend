@@ -9,6 +9,7 @@ import error from "../images/error.png";
 import { Link, withRouter } from "react-router-dom";
 import { actions } from "../Store";
 import { storage } from "../firebase/storage";
+import ParticipantCard from "../components/ParticipantCard";
 
 class Confirmation extends React.Component {
   constructor(props) {
@@ -237,22 +238,26 @@ class Confirmation extends React.Component {
               {this.formatDate(this.state.event.end_date)}
             </b>
           </h6>
-          <div className="participant m-3 border rounded shadow">
-            {this.state.participant.map((user, index) => {
+          <div className="participant m-3 rounded shadow">
+            {this.state.participant.map((value, index) => {
               return (
-                <div className={`mx-3 my-2 ${user.class}`}>
-                  <table>
-                    <tr>
-                      <td className="p-2 w-25">
-                        <img src={avatar} alt="" className="avatar"></img>
-                      </td>
-                      <td className="p-2 w-75">
-                        <p className="m-0">{user.fullname}</p>
-                        <p className="m-0">@{user.username}</p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                <ParticipantCard
+                  user={value}
+                  class={value.class}
+                ></ParticipantCard>
+                // <div className={`mx-3 my-2 ${user.class}`}>
+                //   <table>
+                //     <tr>
+                //       <td className="p-2 w-25">
+                //         <img src={avatar} alt="" className="avatar"></img>
+                //       </td>
+                //       <td className="p-2 w-75">
+                //         <p className="m-0">{user.fullname}</p>
+                //         <p className="m-0">@{user.username}</p>
+                //       </td>
+                //     </tr>
+                //   </table>
+                // </div>
               );
             })}
           </div>
