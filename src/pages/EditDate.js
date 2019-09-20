@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
-import FotoProfil from "../components/FotoProfil";
 import Axios from "axios";
 import { connect } from "unistore/react";
 import { actions } from "../Store";

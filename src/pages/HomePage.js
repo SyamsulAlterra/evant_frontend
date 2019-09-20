@@ -7,7 +7,6 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import Calendar from "../components/Calendar";
 import Joyride from "react-joyride";
-import { async } from "q";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -44,10 +43,6 @@ class HomePage extends React.Component {
         },
         {
           content: "click here if you want to go back to this page",
-          // floaterProps: {
-          //   disableAnimation: true
-          // },
-          // spotlightPadding: 20,
           placement: "top",
           target: ".my-first-step-home",
           title: "Home"

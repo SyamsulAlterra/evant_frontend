@@ -296,12 +296,12 @@ class Login extends React.Component {
 
               <span>or</span>
 
-              <div className="row no-gutters justify-content-center animated fadeIn mt-1">
+              <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
                 <div className="row justify-content-center">
                   <div className="col text-center">
                     <GoogleLogin
-                      clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
-                      // clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                      // clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                      clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       render={renderProps => (
                         <GoogleButton
                           type="light"

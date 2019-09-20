@@ -69,7 +69,6 @@ class Events extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <Header></Header>
@@ -119,7 +118,7 @@ class Events extends React.Component {
                       <CollapseEvent
                         id={value.event.event_id}
                         eventName={value.event.event_name}
-                        creatorName={value.event.creator_name}
+                        creatorName={value.creator_name}
                         category={value.event.category}
                         startDateParameter={value.event.start_date_parameter}
                         endDateParameter={value.event.end_date_parameter}
