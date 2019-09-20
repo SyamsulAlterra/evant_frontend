@@ -112,7 +112,7 @@ class Transition extends React.Component {
   render() {
     return (
       <div className="row justify-content-center">
-        <img src={loading} className="text-center" />
+        <img src={loading} alt="" className="text-center w-100 h-100" />
       </div>
     );
   }

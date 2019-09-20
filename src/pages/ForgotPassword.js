@@ -1,10 +1,9 @@
 import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { CSSTransition } from "react-transition-group";
-import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import "bootstrap/dist/js/bootstrap.bundle";
 import { InputAdornment, withStyles } from "@material-ui/core";
@@ -171,11 +170,11 @@ class ForgotPassword extends React.Component {
 
     const self = this;
     await axios(req)
-      .then(function(response) {
+      .then(function (response) {
         console.log("login as", response.data);
         self.props.history.push("/");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };

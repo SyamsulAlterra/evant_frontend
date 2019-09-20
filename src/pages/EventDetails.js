@@ -2,7 +2,6 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
-import searchFriends from "../images/searchFriends.png";
 import ParticipantCard from "../components/ParticipantCard";
 import { actions } from "../Store";
 import Header from "../components/Header";

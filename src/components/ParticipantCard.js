@@ -1,18 +1,20 @@
 import React from "react";
-import avatar from "../images/avatar.png";
+import avatar from "../images/manager.png";
 import crown from "../images/crown.png";
 import check from "../images/check.png";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import { storage } from "../firebase/storage";
 
 class ParticipantCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       preferences: [],
-      userPreference: ""
+      userPreference: "",
+      photo: ""
     };
   }
   componentWillMount = async () => {
@@ -37,9 +39,20 @@ class ParticipantCard extends React.Component {
       return preference.user_id === this.props.user.id_participant;
     });
     await this.setState({ userPreference: checkPreference });
+    console.log(this.props.user);
+
+    await storage
+      .ref(`profile_pictures/${this.props.user.username}`)
+      .getDownloadURL()
+      .then(url => {
+        this.setState({ photo: url });
+      })
+      .catch(() => {
+        this.setState({ photo: "" });
+      });
   };
   render() {
-    console.log(this.props.class);
+    console.log(this.props.user, this.state.userPreference);
     if (this.props.user.status === "creator") {
       return (
         <div className={`invitationCard`}>
@@ -48,7 +61,21 @@ class ParticipantCard extends React.Component {
               <div className="container">
                 <div class="row">
                   <div className="col-2 p-0">
-                    <img alt="" src={avatar} className="m-1 avatar"></img>
+                    {[1].map(dummy => {
+                      if (this.state.photo === "") {
+                        return (
+                          <img alt="" src={avatar} className="m-1 avatar"></img>
+                        );
+                      } else {
+                        return (
+                          <img
+                            alt=""
+                            src={this.state.photo}
+                            className="m-1 avatar"
+                          ></img>
+                        );
+                      }
+                    })}
                   </div>
                   <div className="col-8 p-0">
                     <p class="m-0 text-left">{this.props.user.fullname}</p>
@@ -72,13 +99,31 @@ class ParticipantCard extends React.Component {
                 <div className="container">
                   <div class="row">
                     <div className="col-2 p-0">
-                      <img alt="" src={avatar} className="m-1 avatar"></img>
+                      {[1].map(dummy => {
+                        if (this.state.photo === "") {
+                          return (
+                            <img
+                              alt=""
+                              src={avatar}
+                              className="m-1 avatar"
+                            ></img>
+                          );
+                        } else {
+                          return (
+                            <img
+                              alt=""
+                              src={this.state.photo}
+                              className="m-1 avatar"
+                            ></img>
+                          );
+                        }
+                      })}
                     </div>
-                    <div className="col-6 p-0">
+                    <div className="col-8 p-0">
                       <p class="m-0 text-left">{this.props.user.fullname}</p>
                       <p class="m-0 text-left">@{this.props.user.username}</p>
                     </div>
-                    <div className="col-4 p-0"></div>
+                    <div className="col-2 p-0"></div>
                   </div>
                 </div>
               </div>
@@ -93,13 +138,31 @@ class ParticipantCard extends React.Component {
                 <div className="container">
                   <div class="row">
                     <div className="col-2 p-0">
-                      <img alt="" src={avatar} className="m-1 avatar"></img>
+                      {[1].map(dummy => {
+                        if (this.state.photo === "") {
+                          return (
+                            <img
+                              alt=""
+                              src={avatar}
+                              className="m-1 avatar"
+                            ></img>
+                          );
+                        } else {
+                          return (
+                            <img
+                              alt=""
+                              src={this.state.photo}
+                              className="m-1 avatar"
+                            ></img>
+                          );
+                        }
+                      })}
                     </div>
-                    <div className="col-6 p-0">
+                    <div className="col-8 p-0">
                       <p class="m-0 text-left">{this.props.user.fullname}</p>
                       <p class="m-0 text-left">@{this.props.user.username}</p>
                     </div>
-                    <div className="col-4 p-0">
+                    <div className="col-2 p-0">
                       <img alt="" src={check} className="m-1 avatar"></img>
                     </div>
                   </div>

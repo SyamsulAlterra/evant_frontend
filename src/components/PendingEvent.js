@@ -16,7 +16,9 @@ class PendingEvent extends React.Component {
       event: [],
       participants: [],
       searchResult: [],
-      preference: ""
+      preference: "",
+      start_date: "",
+      end_date: ""
     };
   }
   formatDate = date => {
@@ -62,8 +64,8 @@ class PendingEvent extends React.Component {
     await axios
       .get(
         this.props.baseUrl +
-          "events/list_of_participant/" +
-          this.props.match.params.id,
+        "events/list_of_participant/" +
+        this.props.match.params.id,
         config
       )
       .then(response => {
@@ -108,7 +110,7 @@ class PendingEvent extends React.Component {
           <div className="border container my-3 p-3 mobileView">
             <h1 className="text-center">{this.state.event.event_name}</h1>
             <h6 className="text-center m-0">
-              ======================<br></br>
+              <hr></hr>
               creator: @{this.state.event.creator_username}
               <br></br>
               category :{this.state.event.category}

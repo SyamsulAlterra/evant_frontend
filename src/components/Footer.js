@@ -1,13 +1,13 @@
 import React from "react";
-import houseIcon from "../images/house.png";
-import calendar from "../images/calendar.png";
+import houseIcon from "../images/home.png";
+import calendar from "../images/calendar1.png";
 import invitation from "../images/invitation.png";
 import profile from "../images/profile.png";
 import { actions } from "../Store";
 import { Link, withRouter } from "react-router-dom";
 import Axios from "axios";
 import { connect } from "unistore/react";
-import Joyride from "react-joyride";
+
 
 class Footer extends React.Component {
   componentDidMount = async (prevProps, prevState) => {
