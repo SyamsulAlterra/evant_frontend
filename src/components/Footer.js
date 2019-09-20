@@ -8,9 +8,9 @@ import { Link, withRouter } from "react-router-dom";
 import Axios from "axios";
 import { connect } from "unistore/react";
 
-
 class Footer extends React.Component {
   componentDidMount = async (prevProps, prevState) => {
+    // to display number of invitations
     let config = {
       url: this.props.baseUrl + "invitations",
       method: "get",
@@ -20,7 +20,6 @@ class Footer extends React.Component {
     };
 
     let response = await Axios(config);
-    console.log("response", response.data);
     this.props.setInvitationsOnGlobal(response.data);
   };
 

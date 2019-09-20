@@ -15,31 +15,6 @@ import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import firebase from "firebase";
-// import { storage } from "../firebase/storage";
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBro5GpyXQ3_co67zLvfYvPC17A9IL9gT4",
-//   authDomain: "try-evant.firebaseapp.com",
-//   databaseURL: "https://try-evant.firebaseio.com",
-//   projectId: "try-evant",
-//   storageBucket: "gs://try-evant.appspot.com",
-//   messagingSenderId: "679868161460",
-//   appId: "1:679868161460:web:733059595e6aabae0f26e1"
-// };
-
-// export const initializeFirebase = () => {
-//   firebase.initializeApp(firebaseConfig);
-//   // firebase.initializeApp({
-//   //   messagingSenderId: "679868161460"
-//   // });
-//   // navigator.serviceWorker
-//   //   .register("../public/firebase-messaging-sw.js")
-//   //   .then(registration => {
-//   //     firebase.messaging().useServiceWorker(registration);
-//   //   });
-// };
-
-// export const storage = firebase.storage();
 
 const styles = theme => ({
   eye: {
@@ -102,7 +77,6 @@ const style = {
   fontSize: "12px",
   color: red300,
   width: "240px"
-  // marginTop: "-50px"
 };
 
 class Login extends React.Component {
@@ -165,7 +139,7 @@ class Login extends React.Component {
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
-        .then(function (response) {
+        .then(function(response) {
           console.log("login as", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -177,7 +151,7 @@ class Login extends React.Component {
           localStorage.setItem("username", response.data.user["username"]);
           self.props.history.push("/home");
         })
-        .catch(function (error) {
+        .catch(function(error) {
           localStorage.setItem("google_token", response.tokenId);
           localStorage.setItem("email", email);
           localStorage.setItem("fullname", fullname);
@@ -365,7 +339,7 @@ class Login extends React.Component {
                 <div className="row justify-content-center">
                   <div className="col text-center">
                     <GoogleLogin
-                      clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                      clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       // DEPLOY = "47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
                       // LOCAL = "47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       render={renderProps => (

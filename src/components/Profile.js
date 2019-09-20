@@ -1,4 +1,10 @@
 import React from "react";
+import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import firebase from "firebase";
+import Swal from "sweetalert2";
+import { connect } from "unistore/react";
 import fotoProfil from "../images/manager.png";
 import editIcon from "../images/edit.png";
 import username from "../images/username.png";
@@ -6,15 +12,7 @@ import address from "../images/address.png";
 import email from "../images/mail.png";
 import phone from "../images/phone.png";
 import gender from "../images/gender.png";
-import axios from "axios";
-import { connect } from "unistore/react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Swal from "sweetalert2";
 import LogOut from "../components/LogOut";
-import firebase from "firebase";
-
-// import { storage } from "../firebase/storage";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -33,36 +31,43 @@ class Profile extends React.Component {
     };
   }
 
+  // handle change in username field
   handleUsername = async e => {
     let inputUsername = e.target.value;
     await this.setState({ username: inputUsername });
   };
 
+  // handle change in address field
   handleAddress = async e => {
     let inputAddress = e.target.value;
     await this.setState({ address: inputAddress });
   };
 
+  // handle change in email field
   handleEmail = async e => {
     let inputEmail = e.target.value;
     await this.setState({ email: inputEmail });
   };
 
+  // handle change in phone field
   handlePhone = async e => {
     let inputPhone = e.target.value;
     await this.setState({ phone: inputPhone });
   };
 
+  // handle change in password field
   handlePassword = async e => {
     let inputPassword = e.target.value;
     await this.setState({ password: inputPassword });
   };
 
+  // handle change in confirm password field
   handleConfirmPassword = async e => {
     let inputConfirmpassword = e.target.value;
     await this.setState({ confirmPassword: inputConfirmpassword });
   };
 
+  // method to open and close modal
   handleToggle = () => {
     this.setState({
       usernameModalShow: false,
@@ -74,6 +79,7 @@ class Profile extends React.Component {
     });
   };
 
+  // method to edit username to database
   editUsername = async e => {
     e.preventDefault();
     const self = this;
@@ -104,6 +110,7 @@ class Profile extends React.Component {
       });
   };
 
+  // method to edit address to database
   editAddress = async e => {
     e.preventDefault();
     const self = this;
@@ -134,6 +141,7 @@ class Profile extends React.Component {
       });
   };
 
+  // method to edit email to database
   editEmail = async e => {
     e.preventDefault();
     const self = this;
@@ -164,6 +172,7 @@ class Profile extends React.Component {
       });
   };
 
+  // method to edit phonee to database
   editPhone = async e => {
     e.preventDefault();
     const self = this;
@@ -203,6 +212,7 @@ class Profile extends React.Component {
       });
   };
 
+  // method to edit password to database
   editPassword = async e => {
     e.preventDefault();
     if (this.state.password === "") {
@@ -217,6 +227,8 @@ class Profile extends React.Component {
       );
       return false;
     }
+
+    // validation
     let re = /[0-9]/;
     if (!re.test(this.state.password)) {
       Swal.fire(
@@ -289,24 +301,24 @@ class Profile extends React.Component {
     window.scrollTo(0, 0);
   }
 
+  // handle change in upload photo field
   handleImage = async e => {
-    console.log(e.target.files[0].name);
     let file = e.target.files[0];
-    console.log(file, file.type);
 
+    // validation photo file format
     if (file.type !== "image/jpeg" && file.type !== "image/png") {
       Swal.fire(
-        "error",
-        "you photo profil need in .jpg and .png format",
+        "Error",
+        "Invalid Picture Format, Please Check Your File",
         "error"
       );
       return false;
     } else {
       this.setState({ file: file });
-      console.log("tes");
     }
   };
 
+  // method to upload profile photo
   upload = async file => {
     if (file === undefined) {
       Swal.fire("error", "you photo profil need in .jpg format", "error");
@@ -332,6 +344,7 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="profile mbForFooter">
+        {/* container profile detail */}
         <div className="container mobileView animated fadeIn mt-5">
           <div className="row justify-content-center">
             <div className="col-10 text-center">
@@ -340,7 +353,6 @@ class Profile extends React.Component {
               </div>
               <div className="mb-4">
                 {[1].map(dummy => {
-                  console.log(localStorage.getItem("photoUrl"));
                   if (localStorage.getItem("photoUrl") === null) {
                     return (
                       <img
