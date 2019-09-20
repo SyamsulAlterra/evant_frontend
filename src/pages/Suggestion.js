@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
 import { actions } from "../Store";
+import { storage } from "../firebase/storage";
 
 class Suggestion extends React.Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class Suggestion extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
   choosePlace = async input => {
-    console.log(input.photo.length);
+    console.log(input);
     let config = {
       url:
         this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
@@ -103,6 +104,8 @@ class Suggestion extends React.Component {
     };
 
     await Axios(config);
+
+    await storage.ref(`places/${input.place}`).putString(input.photo);
     this.props.history.push("/transition/" + this.props.match.params.id);
   };
   render() {
