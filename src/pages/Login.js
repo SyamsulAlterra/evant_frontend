@@ -166,7 +166,7 @@ class Login extends React.Component {
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
-        .then(function(response) {
+        .then(function (response) {
           console.log("login as", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -178,7 +178,7 @@ class Login extends React.Component {
           localStorage.setItem("username", response.data.user["username"]);
           self.props.history.push("/home");
         })
-        .catch(function(error) {
+        .catch(function (error) {
           localStorage.setItem("google_token", response.tokenId);
           localStorage.setItem("email", email);
           localStorage.setItem("fullname", fullname);
@@ -291,16 +291,16 @@ class Login extends React.Component {
                 <img
                   src={homeLogo}
                   alt=""
-                  className="text-center mb-2 animated bounceInDown delay-1s"
-                  width="70%"
-                  height="70%"
+                  className="text-center animated bounceInDown delay-1s"
+                  width="50%"
+                  height="50%"
                 />
-                <h1 className="underline home-evant animated fadeIn">
+                <h2 className="underline home-evant animated fadeIn">
                   {/* my-1 */}
                   Evant
-                </h1>
-                <hr className="animated fadeIn shadow" width="200px" />
-                <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
+                </h2>
+                {/* <hr className="animated fadeIn shadow" width="200px" /> */}
+                <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
                 </p>
               </div>
