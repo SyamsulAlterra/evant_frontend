@@ -12,7 +12,9 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 import LogOut from "../components/LogOut";
-import { storage } from "../firebase/storage";
+import firebase from "firebase";
+
+// import { storage } from "../firebase/storage";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -316,9 +318,9 @@ class Profile extends React.Component {
 
     let filename = file.name;
 
-    let storageRef = storage.ref(
-      `profile_pictures/${localStorage.getItem("username")}`
-    );
+    let storageRef = firebase
+      .storage()
+      .ref(`profile_pictures/${localStorage.getItem("username")}`);
 
     let response = await storageRef.put(file);
 
@@ -371,7 +373,7 @@ class Profile extends React.Component {
                     <div className="col-10">
                       <img
                         src={username}
-                        alt =""
+                        alt=""
                         height="20px"
                         width="20px"
                         className="float-left"
@@ -405,7 +407,7 @@ class Profile extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col-10">
                       <img
-                        alt =""
+                        alt=""
                         src={address}
                         height="20px"
                         width="20px"
@@ -440,7 +442,7 @@ class Profile extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col-10">
                       <img
-                        alt =""
+                        alt=""
                         src={email}
                         height="20px"
                         width="20px"
@@ -472,7 +474,7 @@ class Profile extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col-10">
                       <img
-                        alt =""
+                        alt=""
                         src={phone}
                         height="20px"
                         width="20px"
@@ -504,7 +506,7 @@ class Profile extends React.Component {
                   <div className="col-10">
                     <div className="gender">
                       <img
-                        alt =""
+                        alt=""
                         src={gender}
                         height="20px"
                         width="20px"

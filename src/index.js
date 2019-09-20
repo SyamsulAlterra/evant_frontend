@@ -5,7 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 import MyRoute from "./route/MyRoute";
 import "./css/bootstrap.min.css";
 import "./css/style.css";
-import { initializeFirebase } from "../src/pages/Login";
+import { initializeFirebase } from "./firebase/storage";
 
 ReactDOM.render(<MyRoute />, document.getElementById("root"));
 
@@ -13,4 +13,4 @@ ReactDOM.render(<MyRoute />, document.getElementById("root"));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 initializeFirebase();
-serviceWorker.unregister();
+serviceWorker.register();

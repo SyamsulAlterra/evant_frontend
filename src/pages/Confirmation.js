@@ -8,7 +8,7 @@ import checked from "../images/checked.png";
 import error from "../images/error.png";
 import { Link, withRouter } from "react-router-dom";
 import { actions } from "../Store";
-import { storage } from "../firebase/storage";
+import firebase from "firebase";
 import ParticipantCard from "../components/ParticipantCard";
 
 class Confirmation extends React.Component {
@@ -108,7 +108,8 @@ class Confirmation extends React.Component {
     await this.setState({ participant: confirmParticipant });
     console.log(this.state.participant, this.state.fullParticipant);
 
-    let url = await storage
+    let url = await firebase
+      .storage()
       .ref(`places/${this.state.event.place_name}`)
       .getDownloadURL();
 

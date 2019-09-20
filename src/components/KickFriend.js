@@ -4,7 +4,7 @@ import cancel from "../images/cancel.png";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
-import { storage } from "../firebase/storage";
+import firebase from "firebase";
 
 class KickFriend extends React.Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class KickFriend extends React.Component {
   }
 
   componentWillMount = async () => {
-    await storage
+    await firebase
+      .storage()
       .ref(`profile_pictures/${this.props.user.username}`)
       .getDownloadURL()
       .then(url => {

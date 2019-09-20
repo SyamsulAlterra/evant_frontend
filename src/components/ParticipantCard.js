@@ -6,7 +6,9 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import { storage } from "../firebase/storage";
+import firebase from "firebase";
+
+// import { storage } from "../firebase/storage";
 
 class ParticipantCard extends React.Component {
   constructor(props) {
@@ -41,7 +43,8 @@ class ParticipantCard extends React.Component {
     await this.setState({ userPreference: checkPreference });
     console.log(this.props.user);
 
-    await storage
+    await firebase
+      .storage()
       .ref(`profile_pictures/${this.props.user.username}`)
       .getDownloadURL()
       .then(url => {
