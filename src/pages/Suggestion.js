@@ -4,6 +4,8 @@ import Header from "../components/Header";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
 import { actions } from "../Store";
+import { storage } from "../firebase/storage";
+import ParticipantCard from "../components/ParticipantCard";
 
 class Suggestion extends React.Component {
   constructor(props) {
@@ -88,7 +90,7 @@ class Suggestion extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
   choosePlace = async input => {
-    console.log(input.photo.length);
+    console.log(input);
     let config = {
       url:
         this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
@@ -103,6 +105,8 @@ class Suggestion extends React.Component {
     };
 
     await Axios(config);
+
+    await storage.ref(`places/${input.place}`).putString(input.photo);
     this.props.history.push("/transition/" + this.props.match.params.id);
   };
   render() {
@@ -125,23 +129,27 @@ class Suggestion extends React.Component {
             {this.formatDate(this.state.event.start_date)} -{" "}
             {this.formatDate(this.state.event.end_date)}
           </h6>
-          <div className="participant m-3 border">
-            {this.state.participant.map((user, index) => {
+          <div className="participant m-3">
+            {this.state.participant.map((value, index) => {
               return (
-                <div className="mx-3 my-2 border">
-                  <table className="mx-5">
-                    <tr>
-                      <td className="p-2 w-25">
-                        <img alt="" src={avatar} className="avatar"></img>
-                      </td>
+                <ParticipantCard
+                  user={value}
+                  class={value.class}
+                ></ParticipantCard>
+                // <div className="mx-3 my-2 border">
+                //   <table className="mx-5">
+                //     <tr>
+                //       <td className="p-2 w-25">
+                //         <img alt="" src={avatar} className="avatar"></img>
+                //       </td>
 
-                      <td className="p-2 w-75">
-                        <p className="m-0">{user.fullname}</p>
-                        <p className="m-0">@{user.username}</p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                //       <td className="p-2 w-75">
+                //         <p className="m-0">{user.fullname}</p>
+                //         <p className="m-0">@{user.username}</p>
+                //       </td>
+                //     </tr>
+                //   </table>
+                // </div>
               );
             })}
           </div>

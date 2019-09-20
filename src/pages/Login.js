@@ -14,6 +14,7 @@ import { RemoveRedEye } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
+import { storage } from "../firebase/storage";
 
 const styles = theme => ({
   eye: {
@@ -125,7 +126,7 @@ class Login extends React.Component {
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
-        .then(function (response) {
+        .then(function(response) {
           console.log("login as", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -137,7 +138,7 @@ class Login extends React.Component {
           localStorage.setItem("username", response.data.user["username"]);
           self.props.history.push("/home");
         })
-        .catch(function (error) {
+        .catch(function(error) {
           localStorage.setItem("google_token", response.tokenId);
           localStorage.setItem("email", email);
           localStorage.setItem("fullname", fullname);
@@ -180,7 +181,7 @@ class Login extends React.Component {
         username: self.state.username,
         password: self.state.password
       })
-      .then(response => {
+      .then(async response => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.user["user_id"]);
         localStorage.setItem("address", response.data.user["address"]);
@@ -193,7 +194,16 @@ class Login extends React.Component {
           "status_first_login",
           response.data.user["status_first_login"]
         );
-        self.props.history.push("/home");
+        await storage
+          .ref(`profile_pictures/${this.state.username}`)
+          .getDownloadURL()
+          .then(photo => {
+            localStorage.setItem("photoUrl", photo);
+            self.props.history.push("/home");
+          })
+          .catch(error => {
+            self.props.history.push("/home");
+          });
         Toast.fire({
           type: "success",
           title: "Welcome " + localStorage.getItem("fullname") + "!"
@@ -293,15 +303,15 @@ class Login extends React.Component {
                   </div>
                 </div>
               </ValidatorForm>
-
               <span>or</span>
 
               <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
                 <div className="row justify-content-center">
                   <div className="col text-center">
                     <GoogleLogin
-                      // clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
-                      clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                      clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                      // DEPLOY = "47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                      // LOCAL = "47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       render={renderProps => (
                         <GoogleButton
                           type="light"
@@ -322,7 +332,7 @@ class Login extends React.Component {
             </div>
           </div>
         </div>
-      </CSSTransition >
+      </CSSTransition>
     );
   }
 }

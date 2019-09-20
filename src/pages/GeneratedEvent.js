@@ -6,6 +6,8 @@ import Axios from "axios";
 import avatar from "../images/avatar.png";
 import { Link, withRouter } from "react-router-dom";
 import testImage from "../images/error.png";
+import { storage } from "../firebase/storage";
+import ParticipantCard from "../components/ParticipantCard";
 
 class GeneratedEvent extends React.Component {
   constructor(props) {
@@ -15,7 +17,8 @@ class GeneratedEvent extends React.Component {
         event_name: "",
         creator_name: ""
       },
-      confirmParticipant: []
+      confirmParticipant: [],
+      photoUrl: ""
     };
   }
 
@@ -70,17 +73,20 @@ class GeneratedEvent extends React.Component {
       }
     };
 
-    response = await Axios(config);
-    let confirmUser = response.data.filter(user => {
-      let temp = user;
-      temp.class = "";
-      if (temp.confirmation === -1) {
-        temp.class = "text-danger";
-      }
-      return temp;
+    await Axios(config).then(response => {
+      let confirmUser = response.data.map(user => {
+        let temp = user;
+        temp.class = "";
+        if (temp.confirmation === -1) {
+          temp.class = "text-danger";
+        } else if (temp.confirmation === 1) {
+          temp.class = "text-success";
+        }
+        return temp;
+      });
+      console.log(confirmUser);
+      this.setState({ confirmParticipant: confirmUser });
     });
-    console.log(confirmUser);
-    await this.setState({ confirmParticipant: confirmUser });
   };
 
   render() {
@@ -116,23 +122,13 @@ class GeneratedEvent extends React.Component {
               </div>
               <h3 className="text-center mt-3">Participants</h3>
 
-              <div className="col-8 generatedParticipant m-3 border rounded shadow">
-                {this.state.confirmParticipant.map((user, index) => {
-                  console.log(user);
+              <div className="col-12 generatedParticipant m-3 rounded">
+                {this.state.confirmParticipant.map((value, index) => {
                   return (
-                    <div className={`mx-1 my-2 ${user.class}`}>
-                      <table>
-                        <tr>
-                          <td className="p-2 w-25">
-                            <img src={avatar} alt="" className="avatar"></img>
-                          </td>
-                          <td className="p-2 w-75">
-                            <p className="m-0">{user.fullname}</p>
-                            <p className="m-0">@{user.username}</p>
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
+                    <ParticipantCard
+                      user={value}
+                      class={value.class}
+                    ></ParticipantCard>
                   );
                 })}
               </div>
@@ -147,7 +143,7 @@ class GeneratedEvent extends React.Component {
                         <img
                           alt=""
                           // src={this.state.event.place_image}
-                          src={testImage}
+                          src={this.state.photoUrl}
                           className="venue"
                         ></img>
                         <p className="text-center m-0 centering">

@@ -160,7 +160,7 @@ class HomePage extends React.Component {
             }
           }}
         />
-        <FotoProfil></FotoProfil>
+        <FotoProfil photo={localStorage.getItem("photoUrl")}></FotoProfil>
         <Calendar></Calendar>
         <Footer></Footer>
       </div>

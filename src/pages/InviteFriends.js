@@ -56,6 +56,7 @@ class InviteFriends extends React.Component {
   };
 
   render() {
+    console.log(this.state.uninvitedUser);
     return (
       <div className="InviteFriends">
         <Header></Header>

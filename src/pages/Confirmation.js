@@ -8,6 +8,8 @@ import checked from "../images/checked.png";
 import error from "../images/error.png";
 import { Link, withRouter } from "react-router-dom";
 import { actions } from "../Store";
+import { storage } from "../firebase/storage";
+import ParticipantCard from "../components/ParticipantCard";
 
 class Confirmation extends React.Component {
   constructor(props) {
@@ -19,7 +21,8 @@ class Confirmation extends React.Component {
         category: "eat"
       },
       participant: [],
-      fullParticipant: []
+      fullParticipant: [],
+      photoUrl: ""
     };
   }
 
@@ -104,6 +107,27 @@ class Confirmation extends React.Component {
     console.log(confirmParticipant);
     await this.setState({ participant: confirmParticipant });
     console.log(this.state.participant, this.state.fullParticipant);
+
+    let url = await storage
+      .ref(`places/${this.state.event.place_name}`)
+      .getDownloadURL();
+
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = "blob";
+    xhr.onload = function(event) {
+      const blob = xhr.response;
+    };
+    xhr.open("GET", url);
+    xhr.send();
+
+    console.log(xhr.response);
+
+    // Or inserted into an <img> element:
+    // const img = document.getElementById("myimg");
+    // img.src = url;
+
+    // await this.setState({ photoUrl: url });
+    // console.log(this.state.photoUrl);
   };
   confirm = async status => {
     let config = {
@@ -212,22 +236,26 @@ class Confirmation extends React.Component {
               {this.formatDate(this.state.event.end_date)}
             </b>
           </h6>
-          <div className="participant m-3 border rounded shadow">
-            {this.state.participant.map((user, index) => {
+          <div className="participant m-3 rounded shadow">
+            {this.state.participant.map((value, index) => {
               return (
-                <div className={`mx-3 my-2 ${user.class}`}>
-                  <table>
-                    <tr>
-                      <td className="p-2 w-25">
-                        <img src={avatar} alt="" className="avatar"></img>
-                      </td>
-                      <td className="p-2 w-75">
-                        <p className="m-0">{user.fullname}</p>
-                        <p className="m-0">@{user.username}</p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                <ParticipantCard
+                  user={value}
+                  class={value.class}
+                ></ParticipantCard>
+                // <div className={`mx-3 my-2 ${user.class}`}>
+                //   <table>
+                //     <tr>
+                //       <td className="p-2 w-25">
+                //         <img src={avatar} alt="" className="avatar"></img>
+                //       </td>
+                //       <td className="p-2 w-75">
+                //         <p className="m-0">{user.fullname}</p>
+                //         <p className="m-0">@{user.username}</p>
+                //       </td>
+                //     </tr>
+                //   </table>
+                // </div>
               );
             })}
           </div>
@@ -241,7 +269,7 @@ class Confirmation extends React.Component {
                   <td className="p-3">
                     <img
                       alt=""
-                      src={this.state.event.place_image}
+                      src={this.state.photoUrl}
                       className="venue"
                     ></img>
                     <p className="text-center m-0 centering">
