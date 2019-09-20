@@ -280,6 +280,9 @@ hr {
 .invitationSearch {
   width: 300px;
 }
+.grey {
+  color: #1e4e5f !important;
+}
 .BiruTua {
   color: #2d72df !important;
 }

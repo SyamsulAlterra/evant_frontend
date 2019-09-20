@@ -85,8 +85,8 @@ class Register extends React.Component {
       email: "",
       password: "",
       // confirmPassword: "",
-      phone: "",
-      address: "",
+      // phone: "",
+      // address: "",
       gender: "",
       display: false
     };
@@ -117,16 +117,16 @@ class Register extends React.Component {
   //   this.setState({ confirmPassword: inputConfirmPassword });
   // };
 
-  handlePhone = async e => {
-    let inputPhone = e.target.value;
-    await this.setState({ phone: inputPhone });
-    console.log(typeof this.state.phone);
-  };
+  // handlePhone = async e => {
+  //   let inputPhone = e.target.value;
+  //   await this.setState({ phone: inputPhone });
+  //   console.log(typeof this.state.phone);
+  // };
 
-  handleAddress = e => {
-    let inputAddress = e.target.value;
-    this.setState({ address: inputAddress });
-  };
+  // handleAddress = e => {
+  //   let inputAddress = e.target.value;
+  //   this.setState({ address: inputAddress });
+  // };
 
   handleGender = e => {
     let inputGender = e.target.value;
@@ -208,22 +208,22 @@ class Register extends React.Component {
     //   );
     //   return false;
     // }
-    if (this.state.phone === "") {
-      Swal.fire("Error", "Please fill your Phone Number", "warning");
-      return false;
-    }
-    if (
-      !this.state.phone.match(number) ||
-      this.state.phone.length > 13 ||
-      this.state.phone.length < 10
-    ) {
-      Swal.fire("Error", "Please fill a valid phone number", "warning");
-      return false;
-    }
-    if (this.state.address === "") {
-      Swal.fire("Error", "Please fill your address", "warning");
-      return false;
-    }
+    // if (this.state.phone === "") {
+    //   Swal.fire("Error", "Please fill your Phone Number", "warning");
+    //   return false;
+    // }
+    // if (
+    //   !this.state.phone.match(number) ||
+    //   this.state.phone.length > 13 ||
+    //   this.state.phone.length < 10
+    // ) {
+    //   Swal.fire("Error", "Please fill a valid phone number", "warning");
+    //   return false;
+    // }
+    // if (this.state.address === "") {
+    //   Swal.fire("Error", "Please fill your address", "warning");
+    //   return false;
+    // }
     if (this.state.gender === "") {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
@@ -237,8 +237,8 @@ class Register extends React.Component {
         password: this.state.password,
         gender: this.state.gender,
         fullname: this.state.name,
-        address: this.state.address,
-        phone: this.state.phone.toString()
+        // address: this.state.address,
+        // phone: this.state.phone.toString()
       }
     };
 
@@ -273,20 +273,19 @@ class Register extends React.Component {
           <div className="row justify-content-center">
             <div className="col text-center">
               <div className="my-5">
+                <h2 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
+                  Evant
+                </h2>
+                <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
+                  Decide When, Where, and Who
+                </p>
                 <img
                   src={homeLogo}
                   alt=""
-                  className="text-center mt-5 mb-0"
+                  className="text-center mt-0 mb-0"
                   width="75px"
                   height="75px"
                 />
-                <h1 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
-                  Evant
-                </h1>
-                <hr className="animated fadeIn shadow" width="200px" />
-                <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
-                  Decide When, Where, and Who
-                </p>
                 <div className="col-12">
                   {/* <form
                     action=""
@@ -349,7 +348,7 @@ class Register extends React.Component {
                       value={this.state.confirmPassword}
                       onChange={this.handleConfirmPassword}
                     /> */}
-                    <br />
+                    {/* <br />
                     <TextValidator
                       style={style}
                       label="Phone"
@@ -373,7 +372,7 @@ class Register extends React.Component {
                         "this field is required",
                         "Fullname is not valid"
                       ]}
-                    />
+                    /> */}
                     <br />
                     <div className="text-left mx-4 mb-4 px-4 mt-3">
                       <input
