@@ -117,7 +117,7 @@ class Suggestion extends React.Component {
           <h3 className="text-center m-0 mt-3">
             {this.state.event.event_name}
           </h3>
-          <p className="text-center m-0">===========================</p>
+          <hr></hr>
           <h6 className="text-center m-0">
             creator: @{this.state.event.creator_username}
           </h6>
