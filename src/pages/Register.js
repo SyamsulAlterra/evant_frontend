@@ -84,9 +84,8 @@ class Register extends React.Component {
       username: "",
       email: "",
       password: "",
-      // confirmPassword: "",
-      // phone: "",
-      // address: "",
+      phone: "",
+      address: "",
       gender: "",
       display: false
     };
@@ -111,22 +110,6 @@ class Register extends React.Component {
     let inputPassword = e.target.value;
     this.setState({ password: inputPassword });
   };
-
-  // handleConfirmPassword = e => {
-  //   let inputConfirmPassword = e.target.value;
-  //   this.setState({ confirmPassword: inputConfirmPassword });
-  // };
-
-  // handlePhone = async e => {
-  //   let inputPhone = e.target.value;
-  //   await this.setState({ phone: inputPhone });
-  //   console.log(typeof this.state.phone);
-  // };
-
-  // handleAddress = e => {
-  //   let inputAddress = e.target.value;
-  //   this.setState({ address: inputAddress });
-  // };
 
   handleGender = e => {
     let inputGender = e.target.value;
@@ -200,30 +183,15 @@ class Register extends React.Component {
       );
       return false;
     }
-    // if (this.state.confirmPassword !== this.state.password) {
-    //   Swal.fire(
-    //     "Error",
-    //     "Your passwords doesn't match, please re-check",
-    //     "warning"
-    //   );
-    //   return false;
-    // }
-    // if (this.state.phone === "") {
-    //   Swal.fire("Error", "Please fill your Phone Number", "warning");
-    //   return false;
-    // }
-    // if (
-    //   !this.state.phone.match(number) ||
-    //   this.state.phone.length > 13 ||
-    //   this.state.phone.length < 10
-    // ) {
-    //   Swal.fire("Error", "Please fill a valid phone number", "warning");
-    //   return false;
-    // }
-    // if (this.state.address === "") {
-    //   Swal.fire("Error", "Please fill your address", "warning");
-    //   return false;
-    // }
+    if (this.state.phone === "") {
+      this.setState({ phone: "Entry your phone" })
+      return false;
+    }
+    console.log(this.state.phone)
+    if (this.state.address === "") {
+      this.setState({ address: "Entry your address" })
+      return false;
+    }
     if (this.state.gender === "") {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
@@ -237,8 +205,8 @@ class Register extends React.Component {
         password: this.state.password,
         gender: this.state.gender,
         fullname: this.state.name,
-        // address: this.state.address,
-        // phone: this.state.phone.toString()
+        address: this.state.address,
+        phone: this.state.phone
       }
     };
 
@@ -272,8 +240,10 @@ class Register extends React.Component {
         <div className="container register mobileView">
           <div className="row justify-content-center">
             <div className="col text-center">
-              <div className="my-5">
-                <h2 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
+
+              {/* home logo */}
+              <div className="my-5 grey">
+                <h2 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant grey">
                   Evant
                 </h2>
                 <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
@@ -282,15 +252,11 @@ class Register extends React.Component {
                 <img
                   src={homeLogo}
                   alt=""
-                  className="text-center mt-0 mb-0"
+                  className="text-center mt-0 mb-4"
                   width="75px"
                   height="75px"
                 />
                 <div className="col-12">
-                  {/* <form
-                    action=""
-                    className="register-form form-group animated fadeIn"
-                  > */}
                   <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
@@ -411,15 +377,6 @@ class Register extends React.Component {
                     </div>
                   </ValidatorForm>
                 </div>
-                {/* <div className="col-12">
-                  <button
-                    className="btn btn-block text-center register-button mb-5"
-                    onClick={this.handleClick}
-                    width="100%"
-                  >
-                    Register
-                  </button>
-                </div> */}
               </div>
             </div>
           </div>

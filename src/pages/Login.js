@@ -15,32 +15,8 @@ import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import firebase from "firebase";
-// import { storage } from "../firebase/storage";
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBro5GpyXQ3_co67zLvfYvPC17A9IL9gT4",
-//   authDomain: "try-evant.firebaseapp.com",
-//   databaseURL: "https://try-evant.firebaseio.com",
-//   projectId: "try-evant",
-//   storageBucket: "gs://try-evant.appspot.com",
-//   messagingSenderId: "679868161460",
-//   appId: "1:679868161460:web:733059595e6aabae0f26e1"
-// };
-
-// export const initializeFirebase = () => {
-//   firebase.initializeApp(firebaseConfig);
-//   // firebase.initializeApp({
-//   //   messagingSenderId: "679868161460"
-//   // });
-//   // navigator.serviceWorker
-//   //   .register("../public/firebase-messaging-sw.js")
-//   //   .then(registration => {
-//   //     firebase.messaging().useServiceWorker(registration);
-//   //   });
-// };
-
-// export const storage = firebase.storage();
-
+/* using firebase*/
 const styles = theme => ({
   eye: {
     cursor: "pointer"
@@ -95,6 +71,7 @@ PasswordInput = withStyles(styles)(PasswordInput);
 
 /* --------------------------------------------------------- */
 
+/* setting style for input form */
 const red300 = red["500"];
 
 const style = {
@@ -102,8 +79,8 @@ const style = {
   fontSize: "12px",
   color: red300,
   width: "240px"
-  // marginTop: "-50px"
 };
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -120,12 +97,14 @@ class Login extends React.Component {
     };
   }
 
+  /* function to save input form to variable */
   handleChange = event => {
     const { formData } = this.state;
     formData[event.target.name] = event.target.value;
     this.setState({ formData });
   };
 
+  /* function to handle submitted form by google, submitted using time out for handling */
   handleSubmit = () => {
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
@@ -286,15 +265,17 @@ class Login extends React.Component {
         <div class="container login mobileView align-items-center">
           <div class="row justify-content-center">
             <div class="col text-center">
-              <div className="home-logo my-3 grey">
-                <h2 className="underline home-evant animated fadeIn">
+
+              {/* home logo */}
+              <div className="home-logo my-3">
+                <h4 className="underline home-evant animated fadeIn grey">
                   {/* my-1 */}
                   Evant
-                </h2>
+                </h4>
                 {/* <hr className="animated fadeIn shadow" width="200px" /> */}
-                <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
+                <h6 className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
-                </p>
+                </h6>
                 <img
                   src={homeLogo}
                   alt=""
@@ -303,6 +284,8 @@ class Login extends React.Component {
                   height="50%"
                 />
               </div>
+
+              {/* user input */}
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <i class="icon-mobile-phone icon-large"></i>
                 <TextValidator
@@ -327,25 +310,11 @@ class Login extends React.Component {
                   value={this.state.password}
                   onChange={this.handlePassword}
                 ></PasswordInput>
-                <div className="row justify-content-center mt-4">
-                  <div className="col-6 text-center">
-                    <Link to="/forgotPassword">
-                      <small className="register-text">Forgot password?</small>
-                    </Link>
-                  </div>
-                  <div className="col-6 text-center">
-                    <Link to="/register">
-                      <small className="register-text">
-                        Click here to register
-                      </small>
-                    </Link>
-                  </div>
-                </div>
                 <div className="row no-gutters justify-content-center animated fadeIn mt-4">
                   <div className="col-12 mb-2">
                     <button
                       color="primary"
-                      size="large"
+                      size="medium"
                       variant="contained"
                       type="submit"
                       onClick={this.handleClick}
@@ -361,6 +330,7 @@ class Login extends React.Component {
               </ValidatorForm>
               <span>or</span>
 
+              {/* google login */}
               <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
                 <div className="row justify-content-center">
                   <div className="col text-center">
@@ -383,6 +353,24 @@ class Login extends React.Component {
                       cookiePolicy={"single_host_origin"}
                     />
                   </div>
+                </div>
+              </div>
+              <div className="row justify-content-center mt-3 mb-3 ">
+
+                {/* forgot password */}
+                <div className="col-6 text-center">
+                  <Link to="/forgotPassword">
+                    <small className="register-text">Forgot password?</small>
+                  </Link>
+                </div>
+
+                {/* register account */}
+                <div className="col-6 text-center">
+                  <Link to="/register">
+                    <small className="register-text">
+                      Click here to register
+                      </small>
+                  </Link>
                 </div>
               </div>
             </div>
