@@ -120,7 +120,7 @@ class Calendar extends React.Component {
 
     return (
       <div className="Calendar container mobileView p-0 mt-0 animated fadeIn ">
-        <div className="boarding-mark-calendar">
+        <div className="">
           <div className="text-right mx-4">
             <img src="" alt=""></img>
             <select
@@ -185,7 +185,7 @@ class Calendar extends React.Component {
             <div className="col-4 p-0 text-center">
               <div className="btn btn-success todayMark text-center"></div>
               <div className="text-center">
-                <p className="eventDetail text-center">Available Date</p>
+                <p className="eventDetail text-center">Chosen Date</p>
               </div>
             </div>
             <div className="col-4 p-0 text-center">

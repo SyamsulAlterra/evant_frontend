@@ -223,18 +223,21 @@ class Confirmation extends React.Component {
           <h3 className="text-center m-0 mt-3">
             {this.state.event.event_name}
           </h3>
-          <p className="text-center m-0">===========================</p>
+          <hr />
           <h6 className="text-center m-0">
-            creator: @{this.state.event.creator_username}
+            creator: <b>@{this.state.event.creator_username}</b>
           </h6>
           <h6 className="text-center m-0">
-            category: {this.props.verboseCategory[this.state.event.category]}
+            Category: {this.props.verboseCategory[this.state.event.category]}
           </h6>
           <h6 className="text-center m-0">
-            date: {this.formatDate(this.state.event.start_date)} -{" "}
-            {this.formatDate(this.state.event.end_date)}
+            date:{" "}
+            <b>
+              {this.formatDate(this.state.event.start_date)} -{" "}
+              {this.formatDate(this.state.event.end_date)}
+            </b>
           </h6>
-          <div className="participant m-3 border">
+          <div className="participant m-3 border rounded shadow">
             {this.state.participant.map((user, index) => {
               return (
                 <div className={`mx-3 my-2 ${user.class}`}>
@@ -257,7 +260,7 @@ class Confirmation extends React.Component {
             <h3 className="text-center">Venue:</h3>
           </div>
           <div className="text-center mb-3">
-            <table className="border m-3">
+            <table className="shadow m-3 border rounded">
               <div className="m-3">
                 <tr>
                   <td className="p-3">

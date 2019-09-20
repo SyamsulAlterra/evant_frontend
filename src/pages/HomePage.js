@@ -15,26 +15,29 @@ class HomePage extends React.Component {
       run: false,
       steps: [
         {
-          content: <h2>Let's begin our journey!</h2>,
+          content: "Decide When, Where, and Who",
           locale: { skip: <strong aria-label="skip">S-K-I-P</strong> },
           placement: "center",
-          target: "body"
+          target: "body",
+          title: <h2>Welcome to Evant!</h2>
         },
         {
           content: "Click here to plan events with your friends",
-          placement: "top",
+          placement: "bottom",
           target: ".boarding-create-event",
           title: "Create events"
         },
         {
-          content: "just click on a date to mark them as an available date",
-          placement: "left",
+          content: "just click on a date to mark them as your free day",
+          placement: "top",
+          spotlightPadding: 20,
           target: ".boarding-mark-calendar",
           title: "Mark your available dates"
         },
         {
           content: "all your future events will appear here",
-          placement: "left",
+          placement: "bottom",
+          spotlightPadding: 20,
           target: ".boarding-marked-calendar",
           title: "Your planned events"
         },
@@ -51,11 +54,6 @@ class HomePage extends React.Component {
         {
           placement: "top",
           content: "Click here to see all of your events!",
-          // styles: {
-          //   options: {
-          //     width: 300
-          //   }
-          // },
           target: ".my-second-step-events",
           title: "Events"
         },
@@ -156,7 +154,13 @@ class HomePage extends React.Component {
           steps={steps}
           styles={{
             options: {
-              zIndex: 10000
+              arrowColor: "#dfd9e2",
+              backgroundColor: "#dfd9e2",
+              // overlayColor: "rgba(79, 26, 0, 0.4)",
+              primaryColor: "#000",
+              textColor: "#000",
+              width: 300,
+              zIndex: 1000
             }
           }}
         />

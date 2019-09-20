@@ -10,7 +10,7 @@ class CalendarTitle extends React.Component {
               return (
                 <td className="p-0">
                   <div className="borad">
-                    <div className="calendarCell border text-center py-1 m-1 px-0">
+                    <div className="calendarCell border text-center py-0 m-1 px-0">
                       <p className="px-2 m-0 calendarCell bgBiruMuda text-white">
                         {value}
                       </p>
