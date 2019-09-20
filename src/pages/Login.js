@@ -16,30 +16,31 @@ import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import NotificationButton from "../components/Notification.js";
 import firebase from "firebase";
-import { storage } from "../firebase/storage";
+// import { storage } from "../firebase/storage";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBro5GpyXQ3_co67zLvfYvPC17A9IL9gT4",
-  authDomain: "try-evant.firebaseapp.com",
-  databaseURL: "https://try-evant.firebaseio.com",
-  projectId: "try-evant",
-  storageBucket: "",
-  messagingSenderId: "679868161460",
-  appId: "1:679868161460:web:733059595e6aabae0f26e1"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBro5GpyXQ3_co67zLvfYvPC17A9IL9gT4",
+//   authDomain: "try-evant.firebaseapp.com",
+//   databaseURL: "https://try-evant.firebaseio.com",
+//   projectId: "try-evant",
+//   storageBucket: "gs://try-evant.appspot.com",
+//   messagingSenderId: "679868161460",
+//   appId: "1:679868161460:web:733059595e6aabae0f26e1"
+// };
 
-export const initializeFirebase = () => {
-  firebase.initializeApp(firebaseConfig);
-  // firebase.initializeApp({
-  //   messagingSenderId: "679868161460"
-  // });
+// export const initializeFirebase = () => {
+//   firebase.initializeApp(firebaseConfig);
+//   // firebase.initializeApp({
+//   //   messagingSenderId: "679868161460"
+//   // });
+//   // navigator.serviceWorker
+//   //   .register("../public/firebase-messaging-sw.js")
+//   //   .then(registration => {
+//   //     firebase.messaging().useServiceWorker(registration);
+//   //   });
+// };
 
-  // navigator.serviceWorker
-  //   .register("../public/firebase-messaging-sw.js")
-  //   .then(registration => {
-  //     firebase.messaging().useServiceWorker(registration);
-  //   });
-};
+// export const storage = firebase.storage();
 
 const styles = theme => ({
   eye: {
@@ -249,7 +250,8 @@ class Login extends React.Component {
           "status_first_login",
           response.data.user["status_first_login"]
         );
-        await storage
+        await firebase
+          .storage()
           .ref(`profile_pictures/${this.state.username}`)
           .getDownloadURL()
           .then(photo => {
@@ -364,7 +366,7 @@ class Login extends React.Component {
                 <div className="row justify-content-center">
                   <div className="col text-center">
                     <GoogleLogin
-                      clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                      clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       // DEPLOY = "47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
                       // LOCAL = "47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       render={renderProps => (

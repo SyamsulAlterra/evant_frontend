@@ -4,7 +4,8 @@ import Header from "../components/Header";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
 import { actions } from "../Store";
-import { storage } from "../firebase/storage";
+import firebase from "firebase";
+// import { storage } from "../firebase/storage";
 import ParticipantCard from "../components/ParticipantCard";
 
 class Suggestion extends React.Component {
@@ -106,7 +107,10 @@ class Suggestion extends React.Component {
 
     await Axios(config);
 
-    await storage.ref(`places/${input.place}`).putString(input.photo);
+    await firebase
+      .storage()
+      .ref(`places/${input.place}`)
+      .putString(input.photo);
     this.props.history.push("/transition/" + this.props.match.params.id);
   };
   render() {

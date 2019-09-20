@@ -5,7 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 import MyRoute from "./route/MyRoute";
 import "./css/bootstrap.min.css";
 import "./css/style.css";
-import { initializeFirebase } from "./push-notification";
+import { initializeFirebase } from "./firebase/storage";
 
 ReactDOM.render(<MyRoute />, document.getElementById("root"));
 
