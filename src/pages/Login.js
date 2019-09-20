@@ -14,7 +14,6 @@ import { RemoveRedEye } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
-import NotificationButton from "../components/Notification.js";
 import firebase from "firebase";
 // import { storage } from "../firebase/storage";
 
