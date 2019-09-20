@@ -6,6 +6,7 @@ import Axios from "axios";
 import avatar from "../images/avatar.png";
 import { Link, withRouter } from "react-router-dom";
 import testImage from "../images/error.png";
+import { storage } from "../firebase/storage";
 
 class GeneratedEvent extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class GeneratedEvent extends React.Component {
         event_name: "",
         creator_name: ""
       },
-      confirmParticipant: []
+      confirmParticipant: [],
+      photoUrl: ""
     };
   }
 
@@ -81,6 +83,12 @@ class GeneratedEvent extends React.Component {
     });
     console.log(confirmUser);
     await this.setState({ confirmParticipant: confirmUser });
+
+    let url = storage
+      .ref(`places/${this.state.event.place_name}`)
+      .getDownloadURL();
+    this.setState({ photoUrl: url });
+    console.log(this.state.photoUrl);
   };
 
   render() {
@@ -144,7 +152,7 @@ class GeneratedEvent extends React.Component {
                         <img
                           alt=""
                           // src={this.state.event.place_image}
-                          src={testImage}
+                          src={this.state.photoUrl}
                           className="venue"
                         ></img>
                         <p className="text-center m-0 centering">

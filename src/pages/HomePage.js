@@ -7,7 +7,6 @@ import { connect } from "unistore/react";
 import { actions } from "../Store";
 import Calendar from "../components/Calendar";
 import Joyride from "react-joyride";
-import { async } from "q";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -161,7 +160,7 @@ class HomePage extends React.Component {
             }
           }}
         />
-        <FotoProfil></FotoProfil>
+        <FotoProfil photo={localStorage.getItem("photoUrl")}></FotoProfil>
         <Calendar></Calendar>
         <Footer></Footer>
       </div>

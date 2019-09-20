@@ -1,5 +1,5 @@
 import React from "react";
-import fotoProfil from "../images/profile.png";
+import fotoProfil from "../images/manager.png";
 import editIcon from "../images/edit.png";
 import username from "../images/username.png";
 import address from "../images/address.png";
@@ -12,6 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 import LogOut from "../components/LogOut";
+import { storage } from "../firebase/storage";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class Profile extends React.Component {
       addressModalShow: false,
       emailModalShow: false,
       phoneModalShow: false,
-      passwordModalShow: false
+      passwordModalShow: false,
+      uploadedFile: {}
     };
   }
 
@@ -65,7 +67,8 @@ class Profile extends React.Component {
       addressModalShow: false,
       emailModalShow: false,
       phoneModalShow: false,
-      passwordModalShow: false
+      passwordModalShow: false,
+      newPhoto: ""
     });
   };
 
@@ -284,6 +287,46 @@ class Profile extends React.Component {
     window.scrollTo(0, 0);
   }
 
+  handleImage = async e => {
+    console.log(e.target.files[0].name);
+    let file = e.target.files[0];
+    console.log(file, file.type);
+
+    if (file.type !== "image/jpeg" && file.type !== "image/png") {
+      Swal.fire(
+        "error",
+        "you photo profil need in .jpg and .png format",
+        "error"
+      );
+      return false;
+    } else {
+      this.setState({ file: file });
+      console.log("tes");
+    }
+  };
+
+  upload = async file => {
+    if (file === undefined) {
+      Swal.fire("error", "you photo profil need in .jpg format", "error");
+      return false;
+    } else if (file.type !== "image/jpeg" && file.type !== "image/png") {
+      Swal.fire("error", "you photo profil need in .jpg format", "error");
+      return false;
+    }
+
+    let filename = file.name;
+
+    let storageRef = storage.ref(
+      `profile_pictures/${localStorage.getItem("username")}`
+    );
+
+    let response = await storageRef.put(file);
+
+    let url = await storageRef.getDownloadURL();
+    localStorage.setItem("photoUrl", url);
+    window.location.reload();
+  };
+
   render() {
     return (
       <div className="profile mbForFooter">
@@ -294,11 +337,33 @@ class Profile extends React.Component {
                 <h3 className="my-5">{localStorage.getItem("fullname")}</h3>
               </div>
               <div className="mb-4">
-                <img
-                  src={fotoProfil}
-                  className="profileImage my-3"
-                  alt=""
-                ></img>
+                {[1].map(dummy => {
+                  console.log(localStorage.getItem("photoUrl"));
+                  if (localStorage.getItem("photoUrl") === null) {
+                    return (
+                      <img
+                        src={fotoProfil}
+                        className="profileImage my-3"
+                        alt=""
+                      ></img>
+                    );
+                  } else {
+                    return (
+                      <img
+                        src={localStorage.getItem("photoUrl")}
+                        className="profileImage my-3"
+                        alt=""
+                      ></img>
+                    );
+                  }
+                })}
+                <input type="file" onChange={this.handleImage}></input>
+                <button
+                  className="btn btn-success m-2"
+                  onClick={() => this.upload(this.state.file)}
+                >
+                  upload
+                </button>
               </div>
               <div className="p-0">
                 <div className="username mb-3">
