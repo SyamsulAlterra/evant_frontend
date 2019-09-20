@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import { RemoveRedEye } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import red from "@material-ui/core/colors/red";
+import homeLogo from "../images/logo_transparent.png";
 
 const red300 = red["500"];
 
@@ -195,7 +196,20 @@ class ForgotPassword extends React.Component {
         <div className="container register mobileView">
           <div className="row justify-content-center mt-3">
             <div className="col text-center">
-              <div className="my-5">
+              <div className="my-5 grey">
+                <h2 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant grey">
+                  Evant
+                </h2>
+                <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
+                  Decide When, Where, and Who
+                </p>
+                <img
+                  src={homeLogo}
+                  alt=""
+                  className="text-center mt-0 mb-4"
+                  width="75px"
+                  height="75px"
+                />
                 <div className="col-12">
                   <ValidatorForm
                     ref="form"
@@ -222,13 +236,6 @@ class ForgotPassword extends React.Component {
                       value={this.state.password}
                       onChange={this.handlePassword}
                     />
-                    <PasswordInput
-                      label="Password"
-                      style={style}
-                      name="password"
-                      value={this.state.confirmPassword}
-                      onChange={this.handleConfirm}
-                    />
                     <br />
                     <div className="row no-gutters justify-content-center animated fadeIn mt-5">
                       <div className="col-auto">
@@ -250,19 +257,6 @@ class ForgotPassword extends React.Component {
                     </div>
                   </ValidatorForm>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="row justify-content-center mt-3">
-            <div className="col text-center">
-              <div className="my-5">
-                <h1 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
-                  Evant
-                </h1>
-                <hr className="animated fadeIn shadow" width="200px" />
-                <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
-                  Decide When, Where, and Who
-                </p>
               </div>
             </div>
           </div>
