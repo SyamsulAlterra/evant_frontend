@@ -137,7 +137,7 @@ class CreateEvent extends React.Component {
     if (self.props.category === "" || self.props.category === undefined) {
       this.props.setCategoryGlobal("vacation");
     }
-    
+
     if (!re.test(this.props.duration)) {
       Swal.fire("Warning", "Please enter valid number for duration", "warning");
       return false;
@@ -154,31 +154,31 @@ class CreateEvent extends React.Component {
     } else if (parseInt(this.props.duration) > parseInt(this.state.duration)) {
       Swal.fire("Warning", "Duration exceed date range", "warning");
       return false;
-    }else{
+    } else {
       const configCreate = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-    await axios
-      .post(
-        this.props.baseUrl + "events",
-        {
-          category: self.props.category,
-          event_name: self.props.eventName,
-          start_date_parameter: self.convert(self.props.startDate),
-          end_date_parameter: self.convert(self.props.endDate),
-          duration: self.props.duration
-        },
-        configCreate
-      )
-      .then(response => {
-        localStorage.setItem("event_id", response.data.event_id);
-        console.log(response);
-      })
-      .catch(error => {
-        console.log("terdapat eror ini :", error);
-      });
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      };
+      await axios
+        .post(
+          this.props.baseUrl + "events",
+          {
+            category: self.props.category,
+            event_name: self.props.eventName,
+            start_date_parameter: self.convert(self.props.startDate),
+            end_date_parameter: self.convert(self.props.endDate),
+            duration: self.props.duration
+          },
+          configCreate
+        )
+        .then(response => {
+          localStorage.setItem("event_id", response.data.event_id);
+          console.log(response);
+        })
+        .catch(error => {
+          console.log("terdapat eror ini :", error);
+        });
 
       let configInvite;
 
@@ -197,69 +197,69 @@ class CreateEvent extends React.Component {
         let response = await axios(configInvite);
         console.log(response.data);
       });
-    
+
       await this.props.participants.map(async participant => {
-      let config1 = {
-        url:
-          "https://iid.googleapis.com/iid/v1/" +
-          participant.token_broadcast +
-          "/rel/topics/" +
-          localStorage.getItem("event_id"),
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
-        }
-      };
+        let config1 = {
+          url:
+            "https://iid.googleapis.com/iid/v1/" +
+            participant.token_broadcast +
+            "/rel/topics/" +
+            localStorage.getItem("event_id"),
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
+          }
+        };
 
-      await axios(config1)
-        .then(() => {
-          console.log("Success", "Topic has been broadcasted", "success");
-        })
-        .catch(() => {
-          console.log("Error message", "error");
-        });
-
-      let config = {
-        url: "https://fcm.googleapis.com/fcm/send",
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
-        },
-        data: {
-          notification: {
-            title: "Invitation",
-            body:
-              localStorage.getItem("username") +
-              " Invite you to join event " +
-              self.props.eventName,
-            click_action: "https://myevant.com/", //masih pr buat diselesaikan
-            icon:
-              "http://pixsector.com/cache/6c0d32b0/av711d9b2225038847817.png"
+        await axios(config1)
+          .then(() => {
+            console.log("Success", "Topic has been broadcasted", "success");
+          })
+          .catch(() => {
+            console.log("Error message", "error");
+          });
+        console.log(self.props.inputEventName);
+        let config = {
+          url: "https://fcm.googleapis.com/fcm/send",
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
           },
-          to: "/topics/" + localStorage.getItem("event_id")
-        }
-      };
+          data: {
+            notification: {
+              title: "Invitation",
+              body:
+                localStorage.getItem("username") +
+                " Invite you to join event " +
+                self.props.inputEventName,
+              click_action: "https://myevant.com/", //masih pr buat diselesaikan
+              icon:
+                "http://pixsector.com/cache/6c0d32b0/av711d9b2225038847817.png"
+            },
+            to: "/topics/" + localStorage.getItem("event_id")
+          }
+        };
 
-      axios(config)
-        .then(() => {
-          console.log(
-            "Success",
-            "Notification has been broadcasted",
-            "success"
-          );
-        })
-        .catch(() => {
-          console.log(
-            "Oops! Something Went Wrong",
-            "Please Try Again",
-            "error"
-          );
-        });
-    });
+        axios(config)
+          .then(() => {
+            console.log(
+              "Success",
+              "Notification has been broadcasted",
+              "success"
+            );
+          })
+          .catch(() => {
+            console.log(
+              "Oops! Something Went Wrong",
+              "Please Try Again",
+              "error"
+            );
+          });
+      });
 
       Swal.fire(
         "Event Successfully Created!",
