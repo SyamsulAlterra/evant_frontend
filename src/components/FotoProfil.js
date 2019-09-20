@@ -9,7 +9,26 @@ class FotoProfil extends React.Component {
       <div className="container mobileView p-0 fotoProfil animated fadeIn">
         <div className="row mt-3 mx-3">
           <div className="col-3 p-0">
-            <img className="my-2 marginLeft" src={fotoProfil} alt=""></img>
+            {[1].map(dummy => {
+              console.log(localStorage.getItem("photoUrl"));
+              if (this.props.photo === null) {
+                return (
+                  <img
+                    src={fotoProfil}
+                    className="my-2 marginLeft"
+                    alt=""
+                  ></img>
+                );
+              } else {
+                return (
+                  <img
+                    src={this.props.photo}
+                    className="my-2 marginLeft"
+                    alt=""
+                  ></img>
+                );
+              }
+            })}
           </div>
           <div className="col-6 p-0">
             <div className="row mt-1 px-2">

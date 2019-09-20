@@ -16,6 +16,7 @@ import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import NotificationButton from "../components/Notification.js";
 import firebase from "firebase";
+import { storage } from "../firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBro5GpyXQ3_co67zLvfYvPC17A9IL9gT4",
@@ -164,7 +165,7 @@ class Login extends React.Component {
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
-        .then(function (response) {
+        .then(function(response) {
           console.log("login as", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -176,7 +177,7 @@ class Login extends React.Component {
           localStorage.setItem("username", response.data.user["username"]);
           self.props.history.push("/home");
         })
-        .catch(function (error) {
+        .catch(function(error) {
           localStorage.setItem("google_token", response.tokenId);
           localStorage.setItem("email", email);
           localStorage.setItem("fullname", fullname);
@@ -235,7 +236,7 @@ class Login extends React.Component {
         password: self.state.password,
         token_broadcast: localStorage.getItem("token_broadcast")
       })
-      .then(response => {
+      .then(async response => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.user["user_id"]);
         localStorage.setItem("address", response.data.user["address"]);
@@ -248,6 +249,11 @@ class Login extends React.Component {
           "status_first_login",
           response.data.user["status_first_login"]
         );
+        let photo = await storage
+          .ref(`profile_pictures/${localStorage.getItem("username")}`)
+          .getDownloadURL();
+        console.log(photo);
+        localStorage.setItem("photoUrl", photo);
         self.props.history.push("/home");
         Toast.fire({
           type: "success",
@@ -258,60 +264,6 @@ class Login extends React.Component {
         Swal.fire("Error", "Invalid username/password or not match", "error");
       });
   };
-
-  // handleBroadcast = async e => {
-  //   e.preventDefault();
-
-  //   let config1 = {
-  //     url:
-  //       "https://iid.googleapis.com/iid/v1/" +
-  //       localStorage.getItem("token_broadcast") +
-  //       "/rel/topics/event_id",
-  //     method: "post",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization:
-  //         "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
-  //     }
-  //   };
-
-  //   await axios(config1)
-  //     .then(() => {
-  //       Swal.fire("Success", "Topic has been broadcasted", "success");
-  //       this.props.history.push("/");
-  //     })
-  //     .catch(() => {
-  //       Swal.fire("Error message", "error");
-  //     });
-
-  //   let config = {
-  //     url: "https://fcm.googleapis.com/fcm/send",
-  //     method: "post",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization:
-  //         "key=AAAAnktM3bQ:APA91bHXVzYRZx__6Iw7t_EvmPVlGzr6Juj2QphrjNl3UwUeJvk9P8aq4GUUw7_IvLE4Limh_xKsloZ_KysnXNub8Z0M_kI0DMcAC6jVDmgQ8vrFPrMYqU8PECfV7ysiYYQMIo_5BhyZ"
-  //     },
-  //     data: {
-  //       notification: {
-  //         title: "Invitation",
-  //         body: "You got some invitation from A",
-  //         click_action: "http://localhost:4000/",
-  //         icon: "http://pixsector.com/cache/6c0d32b0/av711d9b2225038847817.png"
-  //       },
-  //       to: "/topics/topic_name"
-  //     }
-  //   };
-
-  //   axios(config)
-  //     .then(() => {
-  //       Swal.fire("Success", "Notification has been broadcasted", "success");
-  //       this.props.history.push("/");
-  //     })
-  //     .catch(() => {
-  //       Swal.fire("Oops! Something Went Wrong", "Please Try Again", "error");
-  //     });
-  // };
 
   componentDidMount = () => {
     this.setState({ display: true });
@@ -402,7 +354,6 @@ class Login extends React.Component {
                   </div>
                 </div>
               </ValidatorForm>
-
               <span>or</span>
 
               <div className="row no-gutters justify-content-center animated fadeIn mt-1">
@@ -431,7 +382,7 @@ class Login extends React.Component {
             </div>
           </div>
         </div>
-      </CSSTransition >
+      </CSSTransition>
     );
   }
 }
