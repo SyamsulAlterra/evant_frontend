@@ -84,7 +84,7 @@ class Register extends React.Component {
       username: "",
       email: "",
       password: "",
-      confirmPassword: "",
+      // confirmPassword: "",
       phone: "",
       address: "",
       gender: "",
@@ -112,10 +112,10 @@ class Register extends React.Component {
     this.setState({ password: inputPassword });
   };
 
-  handleConfirmPassword = e => {
-    let inputConfirmPassword = e.target.value;
-    this.setState({ confirmPassword: inputConfirmPassword });
-  };
+  // handleConfirmPassword = e => {
+  //   let inputConfirmPassword = e.target.value;
+  //   this.setState({ confirmPassword: inputConfirmPassword });
+  // };
 
   handlePhone = async e => {
     let inputPhone = e.target.value;
@@ -200,14 +200,14 @@ class Register extends React.Component {
       );
       return false;
     }
-    if (this.state.confirmPassword !== this.state.password) {
-      Swal.fire(
-        "Error",
-        "Your passwords doesn't match, please re-check",
-        "warning"
-      );
-      return false;
-    }
+    // if (this.state.confirmPassword !== this.state.password) {
+    //   Swal.fire(
+    //     "Error",
+    //     "Your passwords doesn't match, please re-check",
+    //     "warning"
+    //   );
+    //   return false;
+    // }
     if (this.state.phone === "") {
       Swal.fire("Error", "Please fill your Phone Number", "warning");
       return false;
@@ -341,14 +341,14 @@ class Register extends React.Component {
                       value={this.state.password}
                       onChange={this.handlePassword}
                     ></PasswordInput>
-                    <br />
+                    {/* <br />
                     <PasswordInput
                       label="Password"
                       style={style}
                       name="password"
                       value={this.state.confirmPassword}
                       onChange={this.handleConfirmPassword}
-                    />
+                    /> */}
                     <br />
                     <TextValidator
                       style={style}
