@@ -101,16 +101,12 @@ class Suggestion extends React.Component {
       },
       data: {
         place_name: input.place,
-        place_location: input.place_location
+        place_location: input.place_location,
+        place_image: input.photo
       }
     };
 
     await Axios(config);
-
-    await firebase
-      .storage()
-      .ref(`places/${input.place}`)
-      .putString(input.photo);
     this.props.history.push("/transition/" + this.props.match.params.id);
   };
   render() {
@@ -140,20 +136,6 @@ class Suggestion extends React.Component {
                   user={value}
                   class={value.class}
                 ></ParticipantCard>
-                // <div className="mx-3 my-2 border">
-                //   <table className="mx-5">
-                //     <tr>
-                //       <td className="p-2 w-25">
-                //         <img alt="" src={avatar} className="avatar"></img>
-                //       </td>
-
-                //       <td className="p-2 w-75">
-                //         <p className="m-0">{user.fullname}</p>
-                //         <p className="m-0">@{user.username}</p>
-                //       </td>
-                //     </tr>
-                //   </table>
-                // </div>
               );
             })}
           </div>
@@ -163,6 +145,7 @@ class Suggestion extends React.Component {
           <div className="text-center mb-3 border p-3 places">
             <table className="">
               {this.props.place.map(num => {
+                console.log(num);
                 return (
                   <div className="m-3 suggestion">
                     <tr>

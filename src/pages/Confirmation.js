@@ -20,8 +20,7 @@ class Confirmation extends React.Component {
         category: "eat"
       },
       participant: [],
-      fullParticipant: [],
-      photoUrl: ""
+      fullParticipant: []
     };
   }
 
@@ -51,6 +50,8 @@ class Confirmation extends React.Component {
     let y = date.slice(6, 10);
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
+
+  //prepare variable before rendering
   componentWillMount = async () => {
     // get event
     let config = {
@@ -61,7 +62,6 @@ class Confirmation extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
     let response = await Axios(config);
     await this.setState({ event: response.data });
 
@@ -76,7 +76,6 @@ class Confirmation extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
     response = await Axios(config);
     await this.setState({ fullParticipant: response.data });
 
@@ -106,19 +105,6 @@ class Confirmation extends React.Component {
       }
     });
     await this.setState({ participant: confirmParticipant });
-
-    let url = await firebase
-      .storage()
-      .ref(`places/${this.state.event.place_name}`)
-      .getDownloadURL();
-
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = "blob";
-    xhr.onload = function(event) {
-      const blob = xhr.response;
-    };
-    xhr.open("GET", url);
-    xhr.send();
   };
 
   confirm = async status => {
@@ -212,7 +198,7 @@ class Confirmation extends React.Component {
         <Header></Header>
         <div className="container mobileView">
           <h3 className="text-center m-0 mt-3">
-            {this.state.event.event_name}
+            "{this.state.event.event_name}"
           </h3>
           <hr />
           <h6 className="text-center m-0">
@@ -235,19 +221,6 @@ class Confirmation extends React.Component {
                   user={value}
                   class={value.class}
                 ></ParticipantCard>
-                // <div className={`mx-3 my-2 ${user.class}`}>
-                //   <table>
-                //     <tr>
-                //       <td className="p-2 w-25">
-                //         <img src={avatar} alt="" className="avatar"></img>
-                //       </td>
-                //       <td className="p-2 w-75">
-                //         <p className="m-0">{user.fullname}</p>
-                //         <p className="m-0">@{user.username}</p>
-                //       </td>
-                //     </tr>
-                //   </table>
-                // </div>
               );
             })}
           </div>
@@ -255,13 +228,13 @@ class Confirmation extends React.Component {
             <h3 className="text-center">Venue:</h3>
           </div>
           <div className="text-center mb-3">
-            <table className="shadow m-3 border rounded">
+            <table className="shadow centering border rounded">
               <div className="m-3">
                 <tr>
                   <td className="p-3">
                     <img
                       alt=""
-                      src={this.state.photoUrl}
+                      src={this.state.event.place_image}
                       className="venue"
                     ></img>
                     <p className="text-center m-0 centering">

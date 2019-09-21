@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../images/imageedit_9_6450148750.png";
+import logo from "../images/imageedit.png";
 
 class Header extends React.Component {
   handleClick = () => {

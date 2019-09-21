@@ -96,7 +96,6 @@ const style = {
   width: "240px"
 };
 
-
 /*
 This is a statefull class to handle login page, and everything inside it
 */
@@ -115,7 +114,6 @@ class Login extends React.Component {
     };
   }
 
-
   /*
   this function to get every value in Change condition from input 
   field and passing it in local state
@@ -126,8 +124,7 @@ class Login extends React.Component {
     this.setState({ formData });
   };
 
-
-/* function to handle submitted form by google, submitted using time out for handling */
+  /* function to handle submitted form by google, submitted using time out for handling */
   handleSubmit = () => {
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
@@ -181,7 +178,7 @@ class Login extends React.Component {
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
-        .then(function (response) {
+        .then(function(response) {
           console.log("login as", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -193,7 +190,7 @@ class Login extends React.Component {
           localStorage.setItem("username", response.data.user["username"]);
           self.props.history.push("/home");
         })
-        .catch(function (error) {
+        .catch(function(error) {
           localStorage.setItem("google_token", response.tokenId);
           localStorage.setItem("email", email);
           localStorage.setItem("fullname", fullname);
@@ -392,7 +389,7 @@ class Login extends React.Component {
                     this is part of google signin, there is credential ID, and some handler for handling
                     */}
                     <GoogleLogin
-                      clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+                      clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       render={renderProps => (
                         <GoogleButton
                           type="light"
@@ -411,7 +408,6 @@ class Login extends React.Component {
                 </div>
               </div>
               <div className="row justify-content-center mt-3 mb-3 ">
-
                 {/* forgot password */}
                 <div className="col-6 text-center">
                   <Link to="/forgotPassword">
@@ -424,7 +420,7 @@ class Login extends React.Component {
                   <Link to="/register">
                     <small className="register-text">
                       Click here to register
-                      </small>
+                    </small>
                   </Link>
                 </div>
               </div>
