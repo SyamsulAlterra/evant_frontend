@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -34,17 +34,6 @@ class GoogleRegister extends React.Component {
     };
   }
 
-  handlePhone = async e => {
-    let inputPhone = e.target.value;
-    await this.setState({ phone: inputPhone });
-    console.log(typeof this.state.phone);
-  };
-
-  handleAddress = e => {
-    let inputAddress = e.target.value;
-    this.setState({ address: inputAddress });
-  };
-
   handleGender = e => {
     let inputGender = e.target.value;
     console.log(inputGender);
@@ -56,23 +45,10 @@ class GoogleRegister extends React.Component {
   };
 
   handleClick = async response => {
-    const number = /^[0-9]+$/;
-    if (this.state.phone === "") {
-      Swal.fire("Error", "Please fill your Phone Number", "warning");
-      return false;
-    }
-    if (
-      !this.state.phone.match(number) ||
-      this.state.phone.length > 13 ||
-      this.state.phone.length < 10
-    ) {
-      Swal.fire("Error", "Please fill a valid phone number", "warning");
-      return false;
-    }
-    if (this.state.address === "") {
-      Swal.fire("Error", "Please fill your address", "warning");
-      return false;
-    }
+    await this.setState({ phone: "Entry your phone" })
+
+    await this.setState({ address: "Entry your address" })
+
     if (this.state.gender === "") {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
@@ -88,13 +64,13 @@ class GoogleRegister extends React.Component {
         gender: this.state.gender,
         fullname: localStorage.getItem("fullname"),
         address: this.state.address,
-        phone: this.state.phone.toString()
+        phone: this.state.phone
       }
     };
 
     const self = this;
     await axios(req)
-      .then(function(response) {
+      .then(function (response) {
         console.log("login as", response.data);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -106,7 +82,7 @@ class GoogleRegister extends React.Component {
         localStorage.setItem("username", response.data.user["username"]);
         self.props.history.push("/home");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };
@@ -127,57 +103,29 @@ class GoogleRegister extends React.Component {
         <div className="container register mobileView">
           <div className="row justify-content-center mt-3">
             <div className="col text-center">
-              <div className="my-5">
+              <div className="my-5 grey">
+                <h4 className="underline home-evant animated fadeIn grey">
+                  {/* my-1 */}
+                  Evant
+                </h4>
+                {/* <hr className="animated fadeIn shadow" width="200px" /> */}
+                <h6 className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
+                  Decide When, Where, and Who
+                </h6>
                 <img
                   src={homeLogo}
                   alt=""
-                  className="text-center mt-5 mb-0"
-                  width="185px"
-                  height="185px"
+                  className="text-center animated bounceInDown delay-1s"
+                  width="50%"
+                  height="50%"
                 />
-                <h1 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
-                  Evant
-                </h1>
-                <hr className="animated fadeIn shadow" width="200px" />
-                <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
-                  Decide When, Where, and Who
-                </p>
+
                 <div className="col-12">
-                  {/* <form
-                    action=""
-                    className="register-form form-group animated fadeIn"
-                  > */}
                   <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
                     className="register-form form-group animated fadeIn"
                   >
-                    <br />
-                    <TextValidator
-                      style={style}
-                      label="Phone"
-                      onChange={this.handlePhone}
-                      name="Phone"
-                      value={this.state.phone}
-                      validators={["required"]}
-                      errorMessages={[
-                        "this field is required",
-                        "Fullname is not valid"
-                      ]}
-                    />
-                    <TextValidator
-                      style={style}
-                      label="Address"
-                      onChange={this.handleAddress}
-                      name="address"
-                      value={this.state.address}
-                      validators={["required"]}
-                      errorMessages={[
-                        "this field is required",
-                        "Fullname is not valid"
-                      ]}
-                    />
-                    <br />
                     <div className="text-left mx-4 mb-4 px-4 mt-3">
                       <input
                         type="radio"
