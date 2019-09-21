@@ -24,6 +24,7 @@ import Unmatch from "../components/Unmatch";
 import GoogleRegister from "../pages/RegisterWithGoogle";
 import LoadingGenerate from "../components/LoadingGenerate";
 import ForgotPassword from "../pages/ForgotPassword";
+import NotFound from "../pages/NotFound";
 
 class MyRoute extends React.Component {
   render() {
@@ -54,6 +55,7 @@ class MyRoute extends React.Component {
             <Route path="/unmatch/:id" component={Unmatch} />
             <Route path="/googleRegister" component={GoogleRegister} />
             <Route path="/calculate/:id" component={LoadingGenerate} />
+            <Route component={NotFound} />
           </Switch>
         </Provider>
       </Router>
