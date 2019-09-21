@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import axios from "axios";
-import loading from "../images/loading.gif";
+import loading from "../images/googlecalendar.gif";
 
 class LoadingGenerate extends React.Component {
   constructor(props) {

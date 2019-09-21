@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../components/Footer";
-import icon404 from "../images/404.png";
+import icon404 from "../images/logo_transparent.png";
 
 export default function NotFound() {
   return (
@@ -9,7 +9,7 @@ export default function NotFound() {
         <div className="row justify-content-center">
           <div className="col-12 text-center">
             <img src={icon404} className="w-100" height="300px" />
-            <h1>page not found</h1>
+            <h1>Page not found</h1>
           </div>
         </div>
       </div>
