@@ -9,6 +9,9 @@ import "bootstrap/dist/js/bootstrap.bundle";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 
+/*
+styling in input field
+*/
 const red300 = red["500"];
 
 const style = {
@@ -18,6 +21,10 @@ const style = {
   width: "240px"
   // marginTop: "-50px"
 };
+
+/*
+This is a statefull class to handle google register, and everything inside it
+*/
 class GoogleRegister extends React.Component {
   constructor(props) {
     super(props);
@@ -44,6 +51,10 @@ class GoogleRegister extends React.Component {
     }
   };
 
+  /*
+  this function has purpose to validation input/value,
+  and has purpose to send request for registering with google
+  */
   handleClick = async response => {
     await this.setState({ phone: "Entry your phone" })
 
@@ -53,6 +64,9 @@ class GoogleRegister extends React.Component {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
     }
+    /*
+    post some data from google+ into database
+    */
     const req = {
       method: "post",
       url: this.props.baseUrl + "users/register_with_google",
@@ -100,6 +114,9 @@ class GoogleRegister extends React.Component {
         unmountOnExit
         appear
       >
+        {/* 
+        this view has purpose for showing google register page 
+        */}
         <div className="container register mobileView">
           <div className="row justify-content-center mt-3">
             <div className="col text-center">
@@ -119,7 +136,6 @@ class GoogleRegister extends React.Component {
                   width="50%"
                   height="50%"
                 />
-
                 <div className="col-12">
                   <ValidatorForm
                     ref="form"

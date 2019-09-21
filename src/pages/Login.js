@@ -16,13 +16,18 @@ import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import firebase from "firebase";
 
-/* using firebase*/
+/*
+make cursor pointer when touch the field
+*/
 const styles = theme => ({
   eye: {
     cursor: "pointer"
   }
 });
 
+/*
+Class for handle hide and show password
+*/
 class PasswordInput extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +37,10 @@ class PasswordInput extends React.Component {
     };
   }
 
+  /*
+  for checking the current condition with previous, 
+  for example, (statePrevious = text, then currentState =  )
+  */
   togglePasswordMask = () => {
     this.setState(prevState => ({
       passwordIsMasked: !prevState.passwordIsMasked
@@ -44,6 +53,9 @@ class PasswordInput extends React.Component {
 
     return (
       <TextField
+        /*
+        tenari function to get user action (show password or hide)
+        */
         type={passwordIsMasked ? "password" : "text"}
         {...this.props}
         InputProps={{
@@ -61,6 +73,9 @@ class PasswordInput extends React.Component {
   }
 }
 
+/*
+This object to collect values in password handle state
+*/
 PasswordInput.propTypes = {
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -82,6 +97,9 @@ const style = {
 };
 
 
+/*
+This is a statefull class to handle login page, and everything inside it
+*/
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -97,33 +115,49 @@ class Login extends React.Component {
     };
   }
 
-  /* function to save input form to variable */
+
+  /*
+  this function to get every value in Change condition from input 
+  field and passing it in local state
+  */
   handleChange = event => {
     const { formData } = this.state;
     formData[event.target.name] = event.target.value;
     this.setState({ formData });
   };
 
-  /* function to handle submitted form by google, submitted using time out for handling */
+
+/* function to handle submitted form by google, submitted using time out for handling */
   handleSubmit = () => {
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
     });
   };
 
+  /*
+  to get client SDK token from Firebase, this token 
+  have purpose for subscribing the topic or recieve notification
+
+  and also to send google auth for signing using google account
+  */
   responseGoogle = async response => {
+    /*
+    Ask client SDK token
+  */
     try {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken();
       localStorage.setItem("token_broadcast", token);
       console.log("token do usuário:", token);
-
-      // return token;
     } catch (error) {
       console.error(error);
       localStorage.setItem("error", error);
     }
+
+    /*
+    config datas for request google auth signing.
+   */
 
     console.log(response);
     const email = response.profileObj.email;
@@ -141,6 +175,9 @@ class Login extends React.Component {
       }
     };
 
+    /*
+    send request get user value from request, and put it into localStarage
+    */
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
@@ -167,16 +204,27 @@ class Login extends React.Component {
     }
   };
 
+  /*
+  for handle username value in field input
+  */
   handleUsername = e => {
     let inputUsername = e.target.value;
     this.setState({ username: inputUsername });
   };
 
+  /*
+  for handle password value in field input
+  */
   handlePassword = e => {
     let inputPassword = e.target.value;
     this.setState({ password: inputPassword });
   };
 
+  /*
+  for handle click, but this fucntion has multiple purpose:
+    post request for asking client SDK token,
+    post request to get login token
+  */
   handleClick = async e => {
     e.preventDefault();
     const Toast = Swal.mixin({
@@ -194,20 +242,23 @@ class Login extends React.Component {
       return false;
     }
 
-    //Try to create token for client to fire base
+    /*
+    try to get client SDK token
+    */
     try {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken();
       localStorage.setItem("token_broadcast", token);
       console.log("token do usuário:", token);
-
-      // return token;
     } catch (error) {
       console.error(error);
       localStorage.setItem("error", error);
     }
 
+    /*
+    post request to get login token
+    */
     const self = this;
     await axios
       .post(this.props.baseUrl + "users/login", {
@@ -262,10 +313,12 @@ class Login extends React.Component {
         unmountOnExit
         appear
       >
+        {/* 
+        show view of login page 
+        */}
         <div class="container login mobileView align-items-center">
           <div class="row justify-content-center">
             <div class="col text-center">
-
               {/* home logo */}
               <div className="home-logo my-3">
                 <h4 className="underline home-evant animated fadeIn grey">
@@ -284,8 +337,9 @@ class Login extends React.Component {
                   height="50%"
                 />
               </div>
-
-              {/* user input */}
+              {/* 
+              form of input value, for instance username, password, and also there some event handler
+              */}
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <i class="icon-mobile-phone icon-large"></i>
                 <TextValidator
@@ -334,10 +388,11 @@ class Login extends React.Component {
               <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
                 <div className="row justify-content-center">
                   <div className="col text-center">
+                    {/* 
+                    this is part of google signin, there is credential ID, and some handler for handling
+                    */}
                     <GoogleLogin
-                      clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
-                      // DEPLOY = "47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
-                      // LOCAL = "47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                      clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
                       render={renderProps => (
                         <GoogleButton
                           type="light"
@@ -382,3 +437,5 @@ class Login extends React.Component {
 }
 
 export default connect("baseUrl")(withRouter(Login));
+// DEPLOY = "47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+// LOCAL = "47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
