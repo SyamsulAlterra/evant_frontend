@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "../images/avatar.png";
+import avatar from "../images/manager.png";
 import cancel from "../images/cancel.png";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
