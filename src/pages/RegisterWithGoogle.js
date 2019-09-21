@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -9,6 +9,9 @@ import "bootstrap/dist/js/bootstrap.bundle";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 
+/*
+styling in input field
+*/
 const red300 = red["500"];
 
 const style = {
@@ -18,6 +21,10 @@ const style = {
   width: "240px"
   // marginTop: "-50px"
 };
+
+/*
+This is a statefull class to handle google register, and everything inside it
+*/
 class GoogleRegister extends React.Component {
   constructor(props) {
     super(props);
@@ -34,17 +41,26 @@ class GoogleRegister extends React.Component {
     };
   }
 
+  /*
+  for handle phonenumber in field input
+  */
   handlePhone = async e => {
     let inputPhone = e.target.value;
     await this.setState({ phone: inputPhone });
     console.log(typeof this.state.phone);
   };
 
+  /*
+  for handle Address in field input
+  */
   handleAddress = e => {
     let inputAddress = e.target.value;
     this.setState({ address: inputAddress });
   };
 
+  /*
+  for handle Gender in field input
+  */
   handleGender = e => {
     let inputGender = e.target.value;
     console.log(inputGender);
@@ -55,6 +71,10 @@ class GoogleRegister extends React.Component {
     }
   };
 
+  /*
+  this function has purpose to validation input/value,
+  and has purpose to send request for registering with google
+  */
   handleClick = async response => {
     const number = /^[0-9]+$/;
     if (this.state.phone === "") {
@@ -77,6 +97,9 @@ class GoogleRegister extends React.Component {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
     }
+    /*
+    post some data from google+ into database
+    */
     const req = {
       method: "post",
       url: this.props.baseUrl + "users/register_with_google",
@@ -124,6 +147,9 @@ class GoogleRegister extends React.Component {
         unmountOnExit
         appear
       >
+        {/* 
+        this view has purpose for showing google register page 
+        */}
         <div className="container register mobileView">
           <div className="row justify-content-center mt-3">
             <div className="col text-center">
@@ -142,11 +168,10 @@ class GoogleRegister extends React.Component {
                 <p className="mt-0 p-0 mb-4 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
                 </p>
+                {/* 
+                this below is input form, that consist of password, address, and gender, and some event handler.
+                */}
                 <div className="col-12">
-                  {/* <form
-                    action=""
-                    className="register-form form-group animated fadeIn"
-                  > */}
                   <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
