@@ -13,6 +13,9 @@ import PropTypes from "prop-types";
 import red from "@material-ui/core/colors/red";
 import homeLogo from "../images/logo_transparent.png";
 
+/*
+styling in input field
+*/
 const red300 = red["500"];
 
 const style = {
@@ -29,6 +32,9 @@ const styles = theme => ({
   }
 });
 
+/*
+Class for handle hide and show password
+*/
 class PasswordInput extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +44,10 @@ class PasswordInput extends React.Component {
     };
   }
 
+  /*
+  for checking the current condition with previous, 
+  for example, (statePrevious = text, then currentState =  )
+  */
   togglePasswordMask = () => {
     this.setState(prevState => ({
       passwordIsMasked: !prevState.passwordIsMasked
@@ -50,6 +60,9 @@ class PasswordInput extends React.Component {
 
     return (
       <TextField
+        /*
+        tenari function to get user action (show password or hide)
+        */
         type={passwordIsMasked ? "password" : "text"}
         {...this.props}
         InputProps={{
@@ -66,7 +79,9 @@ class PasswordInput extends React.Component {
     );
   }
 }
-
+/*
+This object to collect values in password handle state
+*/
 PasswordInput.propTypes = {
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -76,32 +91,40 @@ PasswordInput.propTypes = {
 PasswordInput = withStyles(styles)(PasswordInput);
 
 /* --------------------------------------------------------- */
+
+/*
+This is a statefull class to handle forgot password page, and everything inside it
+*/
 class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: "",
-      confirmPassword: ""
+      password: ""
     };
   }
 
+  /*
+  for handle email value in field input
+  */
   handleEmail = async e => {
     let inputEmail = e.target.value;
     await this.setState({ email: inputEmail });
     console.log(typeof this.state.email);
   };
 
+  /*
+  for handle password value in field input
+  */
   handlePassword = e => {
     let inputPassword = e.target.value;
     this.setState({ password: inputPassword });
   };
 
-  handleConfirm = e => {
-    let inputConfirm = e.target.value;
-    this.setState({ confirmPassword: inputConfirm });
-  };
-
+  /*
+  this function has purpose to validation input/value,
+  and has purpose to send request for changing the password 
+  */
   handleClick = async response => {
     if (this.state.password === "") {
       Swal.fire("Error", "Please fill your password", "warning");
@@ -151,14 +174,6 @@ class ForgotPassword extends React.Component {
       );
       return false;
     }
-    if (this.state.confirmPassword !== this.state.password) {
-      Swal.fire(
-        "Error",
-        "Your passwords doesn't match, please re-check",
-        "warning"
-      );
-      return false;
-    }
     const req = {
       method: "post",
       url: this.props.baseUrl + "users/add_new_password",
@@ -193,6 +208,9 @@ class ForgotPassword extends React.Component {
         unmountOnExit
         appear
       >
+        {/* 
+        show view of login page 
+        */}
         <div className="container register mobileView">
           <div className="row justify-content-center mt-3">
             <div className="col text-center">
@@ -211,6 +229,10 @@ class ForgotPassword extends React.Component {
                   height="75px"
                 />
                 <div className="col-12">
+                  {/* 
+                  these are form input, consist of username, email, etc.
+                  password and there are some event handler for taking input/control of those 
+                  */}
                   <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
@@ -219,9 +241,9 @@ class ForgotPassword extends React.Component {
                     <br />
                     <TextValidator
                       style={style}
-                      label="Username"
+                      label="Email"
                       onChange={this.handleEmail}
-                      name="Username"
+                      name="Email"
                       value={this.state.email}
                       validators={["required"]}
                       errorMessages={[
