@@ -86,9 +86,7 @@ PasswordInput = withStyles(styles)(PasswordInput);
 
 /* --------------------------------------------------------- */
 
-/*
-styling in input field
-*/
+/* setting style for input form */
 const red300 = red["500"];
 
 const style = {
@@ -97,6 +95,7 @@ const style = {
   color: red300,
   width: "240px"
 };
+
 
 /*
 This is a statefull class to handle login page, and everything inside it
@@ -116,6 +115,7 @@ class Login extends React.Component {
     };
   }
 
+
   /*
   this function to get every value in Change condition from input 
   field and passing it in local state
@@ -126,9 +126,8 @@ class Login extends React.Component {
     this.setState({ formData });
   };
 
-  /*
-  to change "submitted" value with setting time out
-  */
+
+/* function to handle submitted form by google, submitted using time out for handling */
   handleSubmit = () => {
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
@@ -320,11 +319,16 @@ class Login extends React.Component {
         <div class="container login mobileView align-items-center">
           <div class="row justify-content-center">
             <div class="col text-center">
-              <div className="home-logo my-3 grey">
-                <h2 className="underline home-evant animated fadeIn">Evant</h2>
-                <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
+              {/* home logo */}
+              <div className="home-logo my-3">
+                <h4 className="underline home-evant animated fadeIn grey">
+                  {/* my-1 */}
+                  Evant
+                </h4>
+                {/* <hr className="animated fadeIn shadow" width="200px" /> */}
+                <h6 className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
-                </p>
+                </h6>
                 <img
                   src={homeLogo}
                   alt=""
@@ -360,25 +364,11 @@ class Login extends React.Component {
                   value={this.state.password}
                   onChange={this.handlePassword}
                 ></PasswordInput>
-                <div className="row justify-content-center mt-4">
-                  <div className="col-6 text-center">
-                    <Link to="/forgotPassword">
-                      <small className="register-text">Forgot password?</small>
-                    </Link>
-                  </div>
-                  <div className="col-6 text-center">
-                    <Link to="/register">
-                      <small className="register-text">
-                        Click here to register
-                      </small>
-                    </Link>
-                  </div>
-                </div>
                 <div className="row no-gutters justify-content-center animated fadeIn mt-4">
                   <div className="col-12 mb-2">
                     <button
                       color="primary"
-                      size="large"
+                      size="medium"
                       variant="contained"
                       type="submit"
                       onClick={this.handleClick}
@@ -394,6 +384,7 @@ class Login extends React.Component {
               </ValidatorForm>
               <span>or</span>
 
+              {/* google login */}
               <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
                 <div className="row justify-content-center">
                   <div className="col text-center">
@@ -417,6 +408,24 @@ class Login extends React.Component {
                       cookiePolicy={"single_host_origin"}
                     />
                   </div>
+                </div>
+              </div>
+              <div className="row justify-content-center mt-3 mb-3 ">
+
+                {/* forgot password */}
+                <div className="col-6 text-center">
+                  <Link to="/forgotPassword">
+                    <small className="register-text">Forgot password?</small>
+                  </Link>
+                </div>
+
+                {/* register account */}
+                <div className="col-6 text-center">
+                  <Link to="/register">
+                    <small className="register-text">
+                      Click here to register
+                      </small>
+                  </Link>
                 </div>
               </div>
             </div>

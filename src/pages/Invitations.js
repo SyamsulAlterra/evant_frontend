@@ -1,10 +1,10 @@
 import React from "react";
+import Axios from "axios";
+import { connect } from "unistore/react";
 import InvitationCard from "../components/InvitationCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { connect } from "unistore/react";
 import { actions } from "../Store";
-import Axios from "axios";
 
 class Invitations extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Invitations extends React.Component {
   }
 
   componentWillMount = async () => {
+    // to get invitaitons data from the database
     let config = {
       url: this.props.baseUrl + "invitations",
       method: "get",
@@ -29,11 +30,11 @@ class Invitations extends React.Component {
     window.scrollTo(0, 0);
   };
 
+  // method to search invitations
   search = async e => {
     let searchKey = e.target.value;
 
     let result = this.props.invitations.filter(invitation => {
-      console.log(invitation);
       let eventName = invitation.event_name;
       let category = this.props.verboseCategory[invitation.event_category];
       let inviteeName = invitation.username_creator;
@@ -42,31 +43,30 @@ class Invitations extends React.Component {
       let output2 = category.search(searchKey);
       let output3 = inviteeName.search(searchKey);
 
-      console.log(output1, output2, output3);
-
       return output1 !== -1 || output2 !== -1 || output3 !== -1;
     });
 
     await this.setState({ searchResult: result });
   };
+
   render() {
-    console.log(this.state.searchResult);
+    // condition if the user have any invitations or not
     if (this.props.invitations.length < 1) {
       return (
         <div className="Invitations">
-          <Header></Header>
+          <Header />
           <div className="h-400 my-5">
             <h3 className="text-center animated fadeIn p-3 f-15">
               You don't have any event invitation(s) yet
             </h3>
           </div>
-          <Footer></Footer>
+          <Footer />
         </div>
       );
     } else {
       return (
         <div className="Invitations mbForFooter">
-          <Header></Header>
+          <Header />
           <div className="invitationCardsMap mobileView container">
             <h2 className="text-center">My Invitations</h2>
             <div className="row">
@@ -83,7 +83,7 @@ class Invitations extends React.Component {
           {this.state.searchResult.map(invitation => {
             return <InvitationCard invitation={invitation}></InvitationCard>;
           })}
-          <Footer></Footer>
+          <Footer />
         </div>
       );
     }

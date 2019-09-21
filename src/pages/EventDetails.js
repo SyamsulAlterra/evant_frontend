@@ -1,9 +1,9 @@
 import React from "react";
+import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import axios from "axios";
-import ParticipantCard from "../components/ParticipantCard";
 import { actions } from "../Store";
+import ParticipantCard from "../components/ParticipantCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -20,6 +20,7 @@ class EventDetails extends React.Component {
   }
 
   componentWillMount = async () => {
+    // get event detail data
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -34,6 +35,7 @@ class EventDetails extends React.Component {
         console.log(error);
       });
 
+    // get participants of the event
     await axios
       .get(
         this.props.baseUrl +
@@ -42,7 +44,6 @@ class EventDetails extends React.Component {
         config
       )
       .then(response => {
-        console.log(response.data);
         let addClass = response.data.map(user => {
           let temp = user;
           if (temp.invitation_status === 1) {
@@ -61,8 +62,7 @@ class EventDetails extends React.Component {
         console.log(error);
       });
 
-    console.log(this.state.event);
-
+    // to display category options
     let getPreference = {
       url: this.props.baseUrl + "category",
       method: "get",
@@ -75,9 +75,9 @@ class EventDetails extends React.Component {
     };
 
     let responsePreference = await axios(getPreference);
-    console.log(responsePreference.data);
     await this.setState({ preferenceOptions: responsePreference.data });
 
+    // to display preference options
     let postPreference = {
       url: this.props.baseUrl + "users/preferences",
       method: "post",
@@ -91,9 +91,9 @@ class EventDetails extends React.Component {
     };
 
     let postResponse = await axios(postPreference);
-    console.log(postResponse.data);
   };
 
+  // to handle the change in preference input
   handlePreference = async e => {
     await this.setState({ preference: e.target.value });
 
@@ -110,9 +110,9 @@ class EventDetails extends React.Component {
     };
 
     let putResponse = await axios(putPreference);
-    console.log(putResponse.data);
   };
 
+  // method to change the date format
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -139,9 +139,9 @@ class EventDetails extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
 
+  // method to search participants
   search = e => {
     let keyword = e.target.value;
-    console.log(this.state.participants);
     let result = this.state.participants.filter(participant => {
       let keywordMatch1 = participant.fullname.search(keyword);
       let keywordMatch2 = participant.username.search(keyword);
@@ -155,8 +155,9 @@ class EventDetails extends React.Component {
   render() {
     return (
       <div className="eventDetailContent">
-        <Header></Header>
+        <Header />
         <div className="vh-100 mbForFooter">
+          {/* container event detail */}
           <div className="border container my-3 p-3 mobileView rounded">
             <h1 className="text-center">{this.state.event.event_name}</h1>
             <hr />
@@ -179,7 +180,6 @@ class EventDetails extends React.Component {
                     onChange={this.handlePreference}
                   >
                     {this.state.preferenceOptions.map((value, index) => {
-                      console.log(value);
                       return (
                         <option value={value.preference}>
                           {value.preference}
@@ -200,10 +200,7 @@ class EventDetails extends React.Component {
             <div className="row justify-content-center mb-3">
               <div className="button-add col-8 text-center">
                 <Link to={`/calculate/${this.state.event.event_id}`}>
-                  <button
-                    className="btn btn-primary m-1"
-                    // onClick={this.generateEvent}
-                  >
+                  <button className="btn btn-primary m-1">
                     Suggest Our Event
                   </button>
                 </Link>
@@ -231,17 +228,12 @@ class EventDetails extends React.Component {
             </div>
             <div className="participant p-3">
               {this.state.searchParticipants.map((value, index) => {
-                return (
-                  <ParticipantCard
-                    user={value}
-                    class={value.class}
-                  ></ParticipantCard>
-                );
+                return <ParticipantCard user={value} class={value.class} />;
               })}
             </div>
           </div>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }

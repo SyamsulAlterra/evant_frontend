@@ -1,13 +1,13 @@
 import React from "react";
+import Axios from "axios";
+import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import axios from "axios";
 import ParticipantCard from "../components/ParticipantCard";
-import checked from "../images/checked.png";
-import error from "../images/error.png";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Axios from "axios";
+import checked from "../images/checked.png";
+import error from "../images/error.png";
 
 class EventDetailParticipant extends React.Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class EventDetailParticipant extends React.Component {
     };
   }
   componentWillMount = async () => {
+    // get event detail data
     let config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -35,6 +36,7 @@ class EventDetailParticipant extends React.Component {
         console.log(error);
       });
 
+    // get the participants of the evnet
     await axios
       .get(
         this.props.baseUrl +
@@ -61,6 +63,7 @@ class EventDetailParticipant extends React.Component {
         console.log(error);
       });
 
+    // to display category options
     config = {
       url: this.props.baseUrl + "category",
       method: "get",
@@ -78,6 +81,8 @@ class EventDetailParticipant extends React.Component {
       preference: response.data[0].preference
     });
   };
+
+  // to change the date format
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -103,6 +108,8 @@ class EventDetailParticipant extends React.Component {
     let y = date.slice(6, 10);
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
+
+  // method to search participants of the event
   search = async e => {
     let searchKey = e.target.value;
 
@@ -116,6 +123,8 @@ class EventDetailParticipant extends React.Component {
 
     await this.setState({ searchResult: result });
   };
+
+  // method for user to decline an event
   declineEvent = async () => {
     let config = {
       url:
@@ -129,9 +138,13 @@ class EventDetailParticipant extends React.Component {
     await Axios(config);
     this.props.history.push("/events");
   };
+
+  // method to handle change in category field
   handleCategory = e => {
     this.setState({ preference: e.target.value });
   };
+
+  // method to post user preference of a particular event
   postPreference = async () => {
     let config = {
       url: this.props.baseUrl + "users/preferences",
@@ -152,8 +165,9 @@ class EventDetailParticipant extends React.Component {
   render() {
     return (
       <div className="eventDetailContentParticipant">
-        <Header></Header>
+        <Header />
         <div className="vh-100 mbForFooter">
+          {/* container event detail */}
           <div className="border shadow rounded container my-3 p-3 mobileView">
             <h1 className="text-center">{this.state.event.event_name}</h1>
             <h6 className="text-center m-0">
@@ -164,6 +178,7 @@ class EventDetailParticipant extends React.Component {
             </h6>
             <div className="row justify-content-center mb-0">
               <div className="preferenceSelect col-8 text-center">
+                {/* display available preferences */}
                 <label for="preference"></label>
                 <span>
                   <select
@@ -193,6 +208,7 @@ class EventDetailParticipant extends React.Component {
                 </span>
               </div>
             </div>
+            {/* display the projected date range for the event */}
             <div className="dateSection text-center mb-3">
               Range date :{" "}
               {this.formatDate(this.state.event.start_date_parameter)} -{" "}
@@ -202,6 +218,7 @@ class EventDetailParticipant extends React.Component {
             </div>
             <div className="row justify-content-center mb-0">
               <div className="button-add col-8 text-center">
+                {/* for users to manage their available date based on the range */}
                 <Link
                   to={"/editDate/" + this.state.event.event_id}
                   className="btn btn-primary m-1 w-100"
@@ -210,6 +227,7 @@ class EventDetailParticipant extends React.Component {
                 </Link>
               </div>
             </div>
+            {/* to search the participant of the evant */}
             <div className="row justify-content-center">
               <div className="search-user col-12 text-center my-3">
                 <input
@@ -222,14 +240,10 @@ class EventDetailParticipant extends React.Component {
             </div>
             <div className="participant p-3">
               {this.state.searchResult.map((value, index) => {
-                return (
-                  <ParticipantCard
-                    user={value}
-                    class={value.class}
-                  ></ParticipantCard>
-                );
+                return <ParticipantCard user={value} class={value.class} />;
               })}
             </div>
+            {/* accept or decline event */}
             <div className="container">
               <div className="row no-gutters">
                 <Link className="col-6 text-center">
@@ -254,7 +268,7 @@ class EventDetailParticipant extends React.Component {
             </div>
           </div>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }

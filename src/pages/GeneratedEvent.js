@@ -1,12 +1,9 @@
 import React from "react";
+import Axios from "axios";
 import { connect } from "unistore/react";
+import { withRouter } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Axios from "axios";
-import avatar from "../images/avatar.png";
-import { Link, withRouter } from "react-router-dom";
-import testImage from "../images/error.png";
-import { storage } from "../firebase/storage";
 import ParticipantCard from "../components/ParticipantCard";
 
 class GeneratedEvent extends React.Component {
@@ -22,6 +19,7 @@ class GeneratedEvent extends React.Component {
     };
   }
 
+  // to change the date foramt
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -47,8 +45,9 @@ class GeneratedEvent extends React.Component {
     let y = date.slice(6, 10);
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
+
   componentWillMount = async () => {
-    // get event
+    // to get event data from the database
     let config = {
       url:
         this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
@@ -61,7 +60,7 @@ class GeneratedEvent extends React.Component {
     let response = await Axios(config);
     await this.setState({ event: response.data });
 
-    //get participant confirmation
+    // to get participant confirmation
     config = {
       url:
         this.props.baseUrl +
@@ -92,9 +91,10 @@ class GeneratedEvent extends React.Component {
   render() {
     return (
       <div className="eventHistory pb-5">
-        <Header></Header>
+        <Header />
         <div className="vh-100 mbForFooter">
           <div className="container mobileView generatedEvent">
+            {/* container generated event */}
             <div class="row justify-content-center">
               <div className="col-12 text-center">
                 <h3 className="text-center m-0 mt-3">You have commited to</h3>
@@ -121,15 +121,10 @@ class GeneratedEvent extends React.Component {
                 </h6>
               </div>
               <h3 className="text-center mt-3">Participants</h3>
-
+              {/* to show list of participants */}
               <div className="col-12 generatedParticipant m-3 rounded">
                 {this.state.confirmParticipant.map((value, index) => {
-                  return (
-                    <ParticipantCard
-                      user={value}
-                      class={value.class}
-                    ></ParticipantCard>
-                  );
+                  return <ParticipantCard user={value} class={value.class} />;
                 })}
               </div>
               <div className="category">
@@ -160,7 +155,7 @@ class GeneratedEvent extends React.Component {
             </div>
           </div>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }

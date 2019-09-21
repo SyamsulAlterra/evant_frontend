@@ -103,6 +103,8 @@ class Register extends React.Component {
       username: "",
       email: "",
       password: "",
+      phone: "",
+      address: "",
       gender: "",
       display: false
     };
@@ -219,6 +221,16 @@ class Register extends React.Component {
       );
       return false;
     }
+
+    if (this.state.phone === "") {
+      this.setState({ phone: "Entry your phone" })
+      return false;
+    }
+    console.log(this.state.phone)
+    if (this.state.address === "") {
+      this.setState({ address: "Entry your address" })
+      return false;
+    }
     if (this.state.gender === "") {
       Swal.fire("Error", "Please choose a gender", "warning");
       return false;
@@ -231,7 +243,9 @@ class Register extends React.Component {
         email: this.state.email,
         password: this.state.password,
         gender: this.state.gender,
-        fullname: this.state.name
+        fullname: this.state.name,
+        address: this.state.address,
+        phone: this.state.phone
       }
     };
 
@@ -268,8 +282,10 @@ class Register extends React.Component {
         <div className="container register mobileView">
           <div className="row justify-content-center">
             <div className="col text-center">
-              <div className="my-5">
-                <h2 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
+
+              {/* home logo */}
+              <div className="my-5 grey">
+                <h2 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant grey">
                   Evant
                 </h2>
                 <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
@@ -278,7 +294,7 @@ class Register extends React.Component {
                 <img
                   src={homeLogo}
                   alt=""
-                  className="text-center mt-0 mb-0"
+                  className="text-center mt-0 mb-4"
                   width="75px"
                   height="75px"
                 />
