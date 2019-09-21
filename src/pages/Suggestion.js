@@ -107,11 +107,6 @@ class Suggestion extends React.Component {
     };
 
     await Axios(config);
-
-    await firebase
-      .storage()
-      .ref(`places/${input.place}`)
-      .putString(input.photo);
     this.props.history.push("/transition/" + this.props.match.params.id);
   };
   render() {
