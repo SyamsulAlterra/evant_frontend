@@ -157,10 +157,10 @@ class HomePage extends React.Component {
           steps={steps}
           styles={{
             options: {
-              arrowColor: "#dfd9e2",
-              backgroundColor: "#dfd9e2",
+              arrowColor: "#fff",
+              backgroundColor: "#fff",
               // overlayColor: "rgba(79, 26, 0, 0.4)",
-              primaryColor: "#000",
+              primaryColor: "#3b8ea5",
               textColor: "#000",
               width: 300,
               zIndex: 1000
