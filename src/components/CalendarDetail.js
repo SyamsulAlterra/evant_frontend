@@ -10,6 +10,8 @@ class CalendarDetail extends React.Component {
       events: []
     };
   }
+
+  // change format date from 02/10/2019 to Oct 02, 2019
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -40,12 +42,9 @@ class CalendarDetail extends React.Component {
               <p className="text-center mb-2 p-1 markedTitle">
                 Marked Event(s)
               </p>
+
+              {/* populate detail by all marked events */}
               {this.props.events.map(event => {
-                // let theDate = event.booked.filter((date, i) => {
-                //   return i === 0;
-                // });
-                // let month = theDate[0].slice(3, 5);
-                // if (month === this.props.selectedMonth) {
                 return (
                   <Link to={`/transition/${event.event_id}`}>
                     <div className="m-1 border shadow rounded p-1">
@@ -59,8 +58,6 @@ class CalendarDetail extends React.Component {
                       )}`}</p>
                     </div>
                   </Link>
-                  // );
-                  // }
                 );
               })}
             </div>

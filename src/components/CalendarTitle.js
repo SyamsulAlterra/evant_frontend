@@ -6,6 +6,7 @@ class CalendarTitle extends React.Component {
       <div className="calendarGrid centering">
         <table>
           <tr>
+            {/* one row of day */}
             {["S", "M", "T", "W", "T", "F", "S"].map(value => {
               return (
                 <td className="p-0">
@@ -22,19 +23,6 @@ class CalendarTitle extends React.Component {
           </tr>
         </table>
       </div>
-      // <div className="calendarTitle m-2">
-      //   <table>
-      //     <tr>
-      //       {["S", "M", "T", "W", "T", "F", "S"].map(num => {
-      //         return (
-      //           <td className="calendarCell text-right text-white bg-dark border px-2 m-1">
-      //             <p>{num}</p>
-      //           </td>
-      //         );
-      //       })}
-      //     </tr>
-      //   </table>
-      // </div>
     );
   }
 }
