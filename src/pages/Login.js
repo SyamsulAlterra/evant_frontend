@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import firebase from "firebase";
+import { Redirect } from "react-router-dom";
 
 /*
 make cursor pointer when touch the field
@@ -302,133 +303,138 @@ class Login extends React.Component {
   };
 
   render() {
-    return (
-      <CSSTransition
-        in={this.state.display}
-        timeout={22000}
-        classNames="display"
-        unmountOnExit
-        appear
-      >
-        {/* 
+    console.log("type", typeof localStorage.getItem("username"));
+    if (localStorage.getItem("username") == null) {
+      return (
+        <CSSTransition
+          in={this.state.display}
+          timeout={22000}
+          classNames="display"
+          unmountOnExit
+          appear
+        >
+          {/* 
         show view of login page 
         */}
-        <div class="container login mobileView align-items-center">
-          <div class="row justify-content-center">
-            <div class="col text-center">
-              {/* home logo */}
-              <div className="home-logo my-3">
-                <h4 className="underline home-evant animated fadeIn grey">
-                  {/* my-1 */}
-                  Evant
-                </h4>
-                {/* <hr className="animated fadeIn shadow" width="200px" /> */}
-                <h6 className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
-                  Decide When, Where, and Who
-                </h6>
-                <img
-                  src={homeLogo}
-                  alt=""
-                  className="text-center animated bounceInDown delay-1s"
-                  width="50%"
-                  height="50%"
-                />
-              </div>
-              {/* 
+          <div class="container login mobileView align-items-center">
+            <div class="row justify-content-center">
+              <div class="col text-center">
+                {/* home logo */}
+                <div className="home-logo my-3">
+                  <h4 className="underline home-evant animated fadeIn grey">
+                    {/* my-1 */}
+                    Evant
+                  </h4>
+                  {/* <hr className="animated fadeIn shadow" width="200px" /> */}
+                  <h6 className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
+                    Decide When, Where, and Who
+                  </h6>
+                  <img
+                    src={homeLogo}
+                    alt=""
+                    className="text-center animated bounceInDown delay-1s"
+                    width="50%"
+                    height="50%"
+                  />
+                </div>
+                {/* 
               form of input value, for instance username, password, and also there some event handler
               */}
-              <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
-                <i class="icon-mobile-phone icon-large"></i>
-                <TextValidator
-                  style={style}
-                  className="edit-button"
-                  label="Username"
-                  onChange={this.handleUsername}
-                  name="username"
-                  value={this.state.username}
-                  validators={["required"]}
-                  errorMessages={[
-                    "this field is required",
-                    "email is not valid"
-                  ]}
-                />
-                <br />
-                <i class="icon-unlock-alt"></i>
-                <PasswordInput
-                  label="Password"
-                  style={style}
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.handlePassword}
-                ></PasswordInput>
-                <div className="row no-gutters justify-content-center animated fadeIn mt-4">
-                  <div className="col-12 mb-2">
-                    <button
-                      color="primary"
-                      size="medium"
-                      variant="contained"
-                      type="submit"
-                      onClick={this.handleClick}
-                      disabled={this.state.submitted}
-                      type="button"
-                      class="btn btn-primary edit-button"
-                    >
-                      {(this.state.submitted && "Your form is submitted!") ||
-                        (!this.state.submitted && "SIGN IN")}
-                    </button>
+                <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
+                  <i class="icon-mobile-phone icon-large"></i>
+                  <TextValidator
+                    style={style}
+                    className="edit-button"
+                    label="Username"
+                    onChange={this.handleUsername}
+                    name="username"
+                    value={this.state.username}
+                    validators={["required"]}
+                    errorMessages={[
+                      "this field is required",
+                      "email is not valid"
+                    ]}
+                  />
+                  <br />
+                  <i class="icon-unlock-alt"></i>
+                  <PasswordInput
+                    label="Password"
+                    style={style}
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handlePassword}
+                  ></PasswordInput>
+                  <div className="row no-gutters justify-content-center animated fadeIn mt-4">
+                    <div className="col-12 mb-2">
+                      <button
+                        color="primary"
+                        size="medium"
+                        variant="contained"
+                        type="submit"
+                        onClick={this.handleClick}
+                        disabled={this.state.submitted}
+                        type="button"
+                        class="btn btn-primary edit-button"
+                      >
+                        {(this.state.submitted && "Your form is submitted!") ||
+                          (!this.state.submitted && "SIGN IN")}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </ValidatorForm>
-              <span>or</span>
+                </ValidatorForm>
+                <span>or</span>
 
-              {/* google login */}
-              <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
-                <div className="row justify-content-center">
-                  <div className="col text-center">
-                    {/* 
+                {/* google login */}
+                <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
+                  <div className="row justify-content-center">
+                    <div className="col text-center">
+                      {/* 
                     this is part of google signin, there is credential ID, and some handler for handling
                     */}
-                    <GoogleLogin
-                      clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
-                      render={renderProps => (
-                        <GoogleButton
-                          type="light"
-                          label="Sign In with Google"
-                          data-onsuccess="onSignIn"
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
-                        />
-                      )}
-                      buttonText="Login"
-                      onSuccess={this.responseGoogle}
-                      onFailure={this.responseGoogle}
-                      cookiePolicy={"single_host_origin"}
-                    />
+                      <GoogleLogin
+                        clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                        render={renderProps => (
+                          <GoogleButton
+                            type="light"
+                            label="Sign In with Google"
+                            data-onsuccess="onSignIn"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                          />
+                        )}
+                        buttonText="Login"
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.responseGoogle}
+                        cookiePolicy={"single_host_origin"}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="row justify-content-center mt-3 mb-3 ">
-                {/* forgot password */}
-                <div className="col-6 text-center">
-                  <Link to="/forgotPassword">
-                    <small className="register-text">Forgot password?</small>
-                  </Link>
-                </div>
+                <div className="row justify-content-center mt-3 mb-3 ">
+                  {/* forgot password */}
+                  <div className="col-6 text-center">
+                    <Link to="/forgotPassword">
+                      <small className="register-text">Forgot password?</small>
+                    </Link>
+                  </div>
 
-                {/* register account */}
-                <div className="col-6 text-center">
-                  <Link to="/register">
-                    <small className="register-text">
-                      Click here to register
-                    </small>
-                  </Link>
+                  {/* register account */}
+                  <div className="col-6 text-center">
+                    <Link to="/register">
+                      <small className="register-text">
+                        Click here to register
+                      </small>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </CSSTransition>
-    );
+        </CSSTransition>
+      );
+    } else {
+      return <Redirect to="/home" />;
+    }
   }
 }
 
