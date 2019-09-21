@@ -1,15 +1,14 @@
 import React from "react";
+import Axios from "axios";
+import firebase from "firebase";
 import { connect } from "unistore/react";
+import { Link, withRouter } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Axios from "axios";
-import avatar from "../images/avatar.png";
 import checked from "../images/checked.png";
 import error from "../images/error.png";
-import { Link, withRouter } from "react-router-dom";
-import { actions } from "../Store";
-import firebase from "firebase";
 import ParticipantCard from "../components/ParticipantCard";
+import { actions } from "../Store";
 
 class Confirmation extends React.Component {
   constructor(props) {
@@ -26,6 +25,7 @@ class Confirmation extends React.Component {
     };
   }
 
+  // change date format
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -80,6 +80,7 @@ class Confirmation extends React.Component {
     response = await Axios(config);
     await this.setState({ fullParticipant: response.data });
 
+    // to mark the user based on their confirmation status
     config = {
       url:
         this.props.baseUrl +
@@ -104,9 +105,7 @@ class Confirmation extends React.Component {
         return temp;
       }
     });
-    console.log(confirmParticipant);
     await this.setState({ participant: confirmParticipant });
-    console.log(this.state.participant, this.state.fullParticipant);
 
     let url = await firebase
       .storage()
@@ -120,16 +119,8 @@ class Confirmation extends React.Component {
     };
     xhr.open("GET", url);
     xhr.send();
-
-    console.log(xhr.response);
-
-    // Or inserted into an <img> element:
-    // const img = document.getElementById("myimg");
-    // img.src = url;
-
-    // await this.setState({ photoUrl: url });
-    // console.log(this.state.photoUrl);
   };
+
   confirm = async status => {
     let config = {
       url:

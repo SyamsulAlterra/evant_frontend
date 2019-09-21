@@ -1,23 +1,19 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
 import fotoProfil from "../images/manager.png";
 import plus from "../images/clipboard.png";
-import { Link, withRouter } from "react-router-dom";
 
 class FotoProfil extends React.Component {
   render() {
     return (
       <div className="container mobileView p-0 fotoProfil animated fadeIn">
         <div className="row mt-3 mx-3">
+          {/* check if the user has already a profile picture or not */}
           <div className="col-3 p-0">
             {[1].map(dummy => {
-              console.log(localStorage.getItem("photoUrl"));
               if (this.props.photo === null) {
                 return (
-                  <img
-                    src={fotoProfil}
-                    className="my-2 marginLeft"
-                    alt=""
-                  ></img>
+                  <img src={fotoProfil} className="my-2 marginLeft" alt="" />
                 );
               } else {
                 return (
@@ -25,7 +21,7 @@ class FotoProfil extends React.Component {
                     src={this.props.photo}
                     className="my-2 marginLeft"
                     alt=""
-                  ></img>
+                  />
                 );
               }
             })}
@@ -44,6 +40,7 @@ class FotoProfil extends React.Component {
               <br></br>
             </div>
           </div>
+          {/* button to crate new events */}
           <div className="col-3 p-0 text-center fontstyle boarding-create-event">
             <Link to="/events/create">
               <img src={plus} alt="" className="text-center mt-2"></img>
