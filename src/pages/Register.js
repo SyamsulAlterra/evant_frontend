@@ -12,6 +12,7 @@ import { InputAdornment, withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { RemoveRedEye } from "@material-ui/icons";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 /*
 make cursor pointer when touch the field
@@ -388,6 +389,18 @@ class Register extends React.Component {
                         </button>
                       </div>
                     </div>
+
+                    {/* login page */}
+                    <div className="row" >
+                      <div className="col-12 text-center mt-4">
+                        <Link to="/">
+                          <small className="register-text">
+                            Already have accout?
+                      </small>
+                        </Link>
+                      </div>
+                    </div>
+
                   </ValidatorForm>
                 </div>
               </div>
