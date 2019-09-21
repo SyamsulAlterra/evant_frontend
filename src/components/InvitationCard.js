@@ -1,12 +1,13 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import { connect } from "unistore/react";
-import { actions } from "../Store";
 import Axios from "axios";
 import Slide from "react-reveal/Slide";
 import Swal from "sweetalert2";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
+import { actions } from "../Store";
 
 class InvitationCard extends React.Component {
+  // method to decline an invitation
   declineEvent = async input => {
     let config = {
       url: this.props.baseUrl + "invitations/reject/" + input.toString(),
@@ -19,7 +20,7 @@ class InvitationCard extends React.Component {
     await Axios(config)
       .then(response => {
         Swal.fire("Success", "You have rejected this invitation", "success");
-        setTimeout(function () {
+        setTimeout(function() {
           window.location.reload();
         }, 1000);
       })
@@ -28,6 +29,7 @@ class InvitationCard extends React.Component {
       });
   };
 
+  // method to accept an invitation
   acceptEvent = async input => {
     let config = {
       url: this.props.baseUrl + "invitations/accept/" + input.toString(),
@@ -49,6 +51,7 @@ class InvitationCard extends React.Component {
   render() {
     return (
       <Slide left>
+        {/* container list invitations */}
         <div className="container mobileView invitationCard animated fadeIn">
           <div class="row justify-content-center">
             <div class="col-12 my-3 mx-4 text-left">
@@ -68,7 +71,7 @@ class InvitationCard extends React.Component {
                     Category:{" "}
                     {
                       this.props.verboseCategory[
-                      this.props.invitation.event_category
+                        this.props.invitation.event_category
                       ]
                     }{" "}
                   </p>

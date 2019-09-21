@@ -1,17 +1,18 @@
 import React from "react";
+import Axios from "axios";
+import Joyride from "react-joyride";
+import { connect } from "unistore/react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FotoProfil from "../components/FotoProfil";
-import Axios from "axios";
-import { connect } from "unistore/react";
-import { actions } from "../Store";
 import Calendar from "../components/Calendar";
-import Joyride from "react-joyride";
+import { actions } from "../Store";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // state for onboarding
       run: false,
       steps: [
         {
@@ -71,6 +72,7 @@ class HomePage extends React.Component {
   }
   componentWillMount = async () => {
     this.setState({ display: true });
+    // to check user's first login status to display onboarding or not
     if (
       localStorage.getItem("status_first_login") === 1 ||
       localStorage.getItem("status_first_login") === true ||
@@ -78,6 +80,8 @@ class HomePage extends React.Component {
     ) {
       this.setState({ run: true });
     }
+
+    // to get all available dates to mark them on calendar
     let config = {
       url: this.props.baseUrl + "date",
       method: "get",
@@ -89,6 +93,7 @@ class HomePage extends React.Component {
     let response = await Axios(config);
     await this.props.setAvailableDatesOnGlobal(response.data);
 
+    // to get all booked dates to mark them on calendar
     config = {
       url: this.props.baseUrl + "events/booked",
       method: "get",
@@ -120,6 +125,7 @@ class HomePage extends React.Component {
   };
 
   componentDidMount = async () => {
+    // to set user's first login status to false
     let config = {
       url: this.props.baseUrl + "users/after_first_login",
       method: "get",
@@ -139,6 +145,7 @@ class HomePage extends React.Component {
     return (
       <div className="HomePage mbForFooter">
         <Header />
+        {/* onboarding component */}
         <Joyride
           callback={this.handleJoyrideCallback}
           continuous={true}
@@ -161,8 +168,8 @@ class HomePage extends React.Component {
           }}
         />
         <FotoProfil photo={localStorage.getItem("photoUrl")}></FotoProfil>
-        <Calendar></Calendar>
-        <Footer></Footer>
+        <Calendar />
+        <Footer />
       </div>
     );
   }

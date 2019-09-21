@@ -1,16 +1,11 @@
 import React from "react";
-import CollapseEvent from "../components/CollapseEvents";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { connect } from "unistore/react";
 import axios from "axios";
-import Accordion from "react-bootstrap/Accordion";
-import Nav from "react-bootstrap/Nav";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import TabContainer from "react-bootstrap/TabContainer";
+import { connect } from "unistore/react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import CollapseEvent from "../components/CollapseEvents";
 
 class Events extends React.Component {
   constructor(props) {
@@ -25,6 +20,7 @@ class Events extends React.Component {
   }
 
   componentWillMount = async () => {
+    // to get ongoing and history events from the database
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -51,6 +47,7 @@ class Events extends React.Component {
       });
   };
 
+  // method for search
   search = e => {
     let keyword = e.target.value;
     let resultOnGoing = this.state.listEvent.filter(event => {
@@ -71,8 +68,9 @@ class Events extends React.Component {
   render() {
     return (
       <div>
-        <Header></Header>
+        <Header />
         <div className="container eventContent mobileView pb-5 animated fadeIn h-400 mbForFooter">
+          {/* search bar for events */}
           <div className="text-center">
             <h1 className="text-centerm mt-3 mb-2">My Event</h1>
             <input
@@ -87,6 +85,7 @@ class Events extends React.Component {
             transition={false}
             id="noanim-tab-example"
           >
+            {/* show ongoing events */}
             <Tab eventKey="home" title="On-Going">
               <div>
                 {this.state.searchListEvent.map(value => {
@@ -109,6 +108,7 @@ class Events extends React.Component {
                 })}
               </div>
             </Tab>
+            {/* show history events */}
             <Tab eventKey="profile" title="History">
               <div>
                 {this.state.searchPastEvent.map(value => {
@@ -130,7 +130,7 @@ class Events extends React.Component {
             </Tab>
           </Tabs>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }

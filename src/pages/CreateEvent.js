@@ -1,15 +1,14 @@
 import React from "react";
 import axios from "axios";
-import { connect } from "unistore/react";
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import { actions } from "../Store";
+import { connect } from "unistore/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import KickFriend from "../components/KickFriend";
-import Swal from "sweetalert2";
-import { async } from "q";
+import { actions } from "../Store";
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -26,30 +25,30 @@ class CreateEvent extends React.Component {
   }
 
   componentWillMount = async () => {
+    // to display search result
     await this.setState({ searchResult: this.props.participants });
-    // await this.props.setCategoryGlobal("vacation");
   };
 
+  // method to search
   componentWillUpdate = async (nextProps, prevState) => {
     if (this.props.participants !== nextProps.participants) {
       await this.setState({ searchResult: nextProps.participants });
     }
   };
 
+  // method to handle change in category field
   handleCategory = async e => {
     let inputCategory = e.target.value;
-    console.log(inputCategory);
     await this.props.setCategoryGlobal(inputCategory);
-    // await this.setState({ category: inputCategory });
   };
 
+  // method to handle change in event name field
   handleEventName = async e => {
     let inputEventName = e.target.value;
     await this.props.setEventNameGlobal(inputEventName);
-
-    // await this.setState({ eventName: inputEventName });
   };
 
+  // method to handle change in start date field
   handleStartDate = async date => {
     let start = date.getTime();
     let end = await this.props.endDate.getTime();
@@ -80,11 +79,11 @@ class CreateEvent extends React.Component {
     }
   };
 
+  // method to handle change in end date field
   handleEndDate = async date => {
     let start = await this.props.startDate.getTime();
     let end = date.getTime();
     let forwardTime = end - start;
-    console.log(forwardTime);
     let dayCount = (await Math.ceil(forwardTime / (24 * 3600 * 1000))) + 1;
     if (date < this.state.today) {
       Swal.fire(
@@ -111,6 +110,7 @@ class CreateEvent extends React.Component {
     }
   };
 
+  // method to handle duration change
   handleDuration = async e => {
     let duration = e.target.value;
     let re = /[0-9]+$/;
@@ -130,14 +130,18 @@ class CreateEvent extends React.Component {
     }
   };
 
+  // method to create event
   createEvent = async e => {
     e.preventDefault();
     const self = this;
     let re = /^[0-9]+$/;
+
+    // to set default category
     if (self.props.category === "" || self.props.category === undefined) {
       this.props.setCategoryGlobal("vacation");
     }
 
+    // validate duration
     if (!re.test(this.props.duration)) {
       Swal.fire("Warning", "Please enter valid number for duration", "warning");
       return false;
@@ -175,14 +179,18 @@ class CreateEvent extends React.Component {
         .then(response => {
           localStorage.setItem("event_id", response.data.event_id);
           localStorage.setItem("topic", response.data.event_name);
-          console.log(response);
         })
         .catch(error => {
-          console.log("terdapat eror ini :", error);
+          Swal.fire(
+            "Error",
+            "Oops! Something Went Wrong, Please Try Again",
+            "error"
+          );
         });
 
       let configInvite;
 
+      // sending invitations to selected users
       await this.props.participants.map(async participant => {
         configInvite = {
           url: this.props.baseUrl + "invitations",
@@ -196,9 +204,9 @@ class CreateEvent extends React.Component {
         };
 
         let response = await axios(configInvite);
-        console.log(response.data);
       });
 
+      // to give notifications to invited users
       await this.props.participants.map(async participant => {
         let config1 = {
           url:
@@ -221,7 +229,6 @@ class CreateEvent extends React.Component {
           .catch(() => {
             console.log("Error message", "error");
           });
-        console.log(self.props.inputEventName);
         let config = {
           url: "https://fcm.googleapis.com/fcm/send",
           method: "post",
@@ -237,7 +244,7 @@ class CreateEvent extends React.Component {
                 localStorage.getItem("username") +
                 " Invite you to join event " +
                 localStorage.getItem("topic"),
-              click_action: "https://myevant.com/", //masih pr buat diselesaikan
+              click_action: "https://myevant.com/",
               icon:
                 "http://pixsector.com/cache/6c0d32b0/av711d9b2225038847817.png"
             },
@@ -273,6 +280,7 @@ class CreateEvent extends React.Component {
     }
   };
 
+  // method to cancel create event
   cancelEvent = async () => {
     await this.props.clearParticipantsOnGlobal();
     await this.props.clearCreateEvent();
@@ -301,6 +309,7 @@ class CreateEvent extends React.Component {
     return [date[2], months[date[1]], date[3]].join("/");
   }
 
+  // method to search user to invite
   searchParticipant = e => {
     let key = e.target.value;
     let result = this.props.participants.filter(participant => {
@@ -313,6 +322,7 @@ class CreateEvent extends React.Component {
     this.setState({ searchResult: result });
   };
 
+  // to change format date
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -341,6 +351,7 @@ class CreateEvent extends React.Component {
 
   render() {
     console.log(this.state.duration);
+    // for date picker button
     const ExampleCustomInput1 = ({ value, onClick }) => (
       <button className="btn btn-primary" onClick={onClick}>
         Start Date
@@ -351,14 +362,14 @@ class CreateEvent extends React.Component {
         End Date
       </button>
     );
-    console.log(this.props.category);
     return (
       <div className="createEvent-content mbForFooter">
-        <Header></Header>
+        <Header />
         <div className="rounded container my-5 mobileView animated fadeIn">
           <h5 className="text-center mt-5">CREATE EVENT</h5>
           <hr></hr>
           <div className="">
+            {/* input event name */}
             <div className="row justify-content-center">
               <div className="event-name col-9 text-center mt-2 mb-3">
                 <label for="exampleFormControlSelect1">
@@ -375,6 +386,7 @@ class CreateEvent extends React.Component {
                 />
               </div>
             </div>
+            {/* select category */}
             <div className="row justify-content-center mt-1 mb-2">
               <div className="category-select col-9 text-center">
                 <label for="category">
@@ -406,6 +418,7 @@ class CreateEvent extends React.Component {
                 </span>
               </div>
             </div>
+            {/* display invited users */}
             <div className="row justify-content-center no-gutters">
               <div className="text-center">
                 <label for="friends" className="mt-4 mb-0 text-center">
@@ -431,6 +444,7 @@ class CreateEvent extends React.Component {
                 </Link>
               </div>
             </div>
+            {/* input start, end date, and event duration */}
             <div className="text-center">
               <label for="startDate" className="mt-4 text-center">
                 <b>Time Range and Duration</b>
@@ -502,7 +516,7 @@ class CreateEvent extends React.Component {
             </div>
           </div>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }

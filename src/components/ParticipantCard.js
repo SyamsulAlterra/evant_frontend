@@ -1,14 +1,12 @@
 import React from "react";
+import axios from "axios";
+import firebase from "firebase";
+import { connect } from "unistore/react";
+import { withRouter } from "react-router-dom";
 import avatar from "../images/manager.png";
 import crown from "../images/crown.png";
 import check from "../images/check.png";
-import { connect } from "unistore/react";
 import { actions } from "../Store";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
-import firebase from "firebase";
-
-// import { storage } from "../firebase/storage";
 
 class ParticipantCard extends React.Component {
   constructor(props) {
@@ -20,6 +18,7 @@ class ParticipantCard extends React.Component {
     };
   }
   componentWillMount = async () => {
+    // to check if user have filled their preference
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -41,8 +40,8 @@ class ParticipantCard extends React.Component {
       return preference.user_id === this.props.user.id_participant;
     });
     await this.setState({ userPreference: checkPreference });
-    console.log(this.props.user);
 
+    // to display profile picture in the participant list
     await firebase
       .storage()
       .ref(`profile_pictures/${this.props.user.username}`)
@@ -55,7 +54,7 @@ class ParticipantCard extends React.Component {
       });
   };
   render() {
-    console.log(this.props.user, this.state.userPreference);
+    // to mark if user is the creator of the event
     if (this.props.user.status === "creator") {
       return (
         <div className={`invitationCard`}>
@@ -65,6 +64,7 @@ class ParticipantCard extends React.Component {
                 <div class="row">
                   <div className="col-2 p-0">
                     {[1].map(dummy => {
+                      // check if user has profile picture or not
                       if (this.state.photo === "") {
                         return (
                           <img alt="" src={avatar} className="m-1 avatar"></img>
