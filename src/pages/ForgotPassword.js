@@ -170,11 +170,11 @@ class ForgotPassword extends React.Component {
 
     const self = this;
     await axios(req)
-      .then(function (response) {
+      .then(function(response) {
         console.log("login as", response.data);
         self.props.history.push("/");
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log("ERROR", error);
       });
   };

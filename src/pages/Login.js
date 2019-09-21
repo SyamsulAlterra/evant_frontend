@@ -15,38 +15,19 @@ import PropTypes from "prop-types";
 import homeLogo from "../images/logo_transparent.png";
 import red from "@material-ui/core/colors/red";
 import firebase from "firebase";
-// import { storage } from "../firebase/storage";
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBro5GpyXQ3_co67zLvfYvPC17A9IL9gT4",
-//   authDomain: "try-evant.firebaseapp.com",
-//   databaseURL: "https://try-evant.firebaseio.com",
-//   projectId: "try-evant",
-//   storageBucket: "gs://try-evant.appspot.com",
-//   messagingSenderId: "679868161460",
-//   appId: "1:679868161460:web:733059595e6aabae0f26e1"
-// };
-
-// export const initializeFirebase = () => {
-//   firebase.initializeApp(firebaseConfig);
-//   // firebase.initializeApp({
-//   //   messagingSenderId: "679868161460"
-//   // });
-//   // navigator.serviceWorker
-//   //   .register("../public/firebase-messaging-sw.js")
-//   //   .then(registration => {
-//   //     firebase.messaging().useServiceWorker(registration);
-//   //   });
-// };
-
-// export const storage = firebase.storage();
-
+/*
+make cursor pointer when touch the field
+*/
 const styles = theme => ({
   eye: {
     cursor: "pointer"
   }
 });
 
+/*
+Class for handle hide and show password
+*/
 class PasswordInput extends React.Component {
   constructor(props) {
     super(props);
@@ -56,6 +37,10 @@ class PasswordInput extends React.Component {
     };
   }
 
+  /*
+  for checking the current condition with previous, 
+  for example, (statePrevious = text, then currentState =  )
+  */
   togglePasswordMask = () => {
     this.setState(prevState => ({
       passwordIsMasked: !prevState.passwordIsMasked
@@ -68,6 +53,9 @@ class PasswordInput extends React.Component {
 
     return (
       <TextField
+        /*
+        tenari function to get user action (show password or hide)
+        */
         type={passwordIsMasked ? "password" : "text"}
         {...this.props}
         InputProps={{
@@ -85,6 +73,9 @@ class PasswordInput extends React.Component {
   }
 }
 
+/*
+This object to collect values in password handle state
+*/
 PasswordInput.propTypes = {
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -95,6 +86,9 @@ PasswordInput = withStyles(styles)(PasswordInput);
 
 /* --------------------------------------------------------- */
 
+/*
+styling in input field
+*/
 const red300 = red["500"];
 
 const style = {
@@ -102,9 +96,11 @@ const style = {
   fontSize: "12px",
   color: red300,
   width: "240px"
-  // marginTop: "-50px"
 };
 
+/*
+This is a statefull class to handle login page, and everything inside it
+*/
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -120,31 +116,49 @@ class Login extends React.Component {
     };
   }
 
+  /*
+  this function to get every value in Change condition from input 
+  field and passing it in local state
+  */
   handleChange = event => {
     const { formData } = this.state;
     formData[event.target.name] = event.target.value;
     this.setState({ formData });
   };
 
+  /*
+  to change "submitted" value with setting time out
+  */
   handleSubmit = () => {
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
     });
   };
 
+  /*
+  to get client SDK token from Firebase, this token 
+  have purpose for subscribing the topic or recieve notification
+
+  and also to send google auth for signing using google account
+  */
   responseGoogle = async response => {
+    /*
+    Ask client SDK token
+  */
     try {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken();
       localStorage.setItem("token_broadcast", token);
       console.log("token do usuário:", token);
-
-      // return token;
     } catch (error) {
       console.error(error);
       localStorage.setItem("error", error);
     }
+
+    /*
+    config datas for request google auth signing.
+   */
 
     console.log(response);
     const email = response.profileObj.email;
@@ -162,10 +176,13 @@ class Login extends React.Component {
       }
     };
 
+    /*
+    send request get user value from request, and put it into localStarage
+    */
     const self = this;
     if (response.profileObj.email) {
       await axios(req)
-        .then(function (response) {
+        .then(function(response) {
           console.log("login as", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user["user_id"]);
@@ -177,7 +194,7 @@ class Login extends React.Component {
           localStorage.setItem("username", response.data.user["username"]);
           self.props.history.push("/home");
         })
-        .catch(function (error) {
+        .catch(function(error) {
           localStorage.setItem("google_token", response.tokenId);
           localStorage.setItem("email", email);
           localStorage.setItem("fullname", fullname);
@@ -188,16 +205,27 @@ class Login extends React.Component {
     }
   };
 
+  /*
+  for handle username value in field input
+  */
   handleUsername = e => {
     let inputUsername = e.target.value;
     this.setState({ username: inputUsername });
   };
 
+  /*
+  for handle password value in field input
+  */
   handlePassword = e => {
     let inputPassword = e.target.value;
     this.setState({ password: inputPassword });
   };
 
+  /*
+  for handle click, but this fucntion has multiple purpose:
+    post request for asking client SDK token,
+    post request to get login token
+  */
   handleClick = async e => {
     e.preventDefault();
     const Toast = Swal.mixin({
@@ -215,20 +243,23 @@ class Login extends React.Component {
       return false;
     }
 
-    //Try to create token for client to fire base
+    /*
+    try to get client SDK token
+    */
     try {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken();
       localStorage.setItem("token_broadcast", token);
       console.log("token do usuário:", token);
-
-      // return token;
     } catch (error) {
       console.error(error);
       localStorage.setItem("error", error);
     }
 
+    /*
+    post request to get login token
+    */
     const self = this;
     await axios
       .post(this.props.baseUrl + "users/login", {
@@ -283,15 +314,14 @@ class Login extends React.Component {
         unmountOnExit
         appear
       >
+        {/* 
+        show view of login page 
+        */}
         <div class="container login mobileView align-items-center">
           <div class="row justify-content-center">
             <div class="col text-center">
               <div className="home-logo my-3 grey">
-                <h2 className="underline home-evant animated fadeIn">
-                  {/* my-1 */}
-                  Evant
-                </h2>
-                {/* <hr className="animated fadeIn shadow" width="200px" /> */}
+                <h2 className="underline home-evant animated fadeIn">Evant</h2>
                 <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
                   Decide When, Where, and Who
                 </p>
@@ -303,6 +333,9 @@ class Login extends React.Component {
                   height="50%"
                 />
               </div>
+              {/* 
+              form of input value, for instance username, password, and also there some event handler
+              */}
               <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
                 <i class="icon-mobile-phone icon-large"></i>
                 <TextValidator
@@ -364,10 +397,11 @@ class Login extends React.Component {
               <div className="row no-gutters justify-content-center animated fadeIn mt-1 mb-4">
                 <div className="row justify-content-center">
                   <div className="col text-center">
+                    {/* 
+                    this is part of google signin, there is credential ID, and some handler for handling
+                    */}
                     <GoogleLogin
                       clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
-                      // DEPLOY = "47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
-                      // LOCAL = "47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
                       render={renderProps => (
                         <GoogleButton
                           type="light"
@@ -394,3 +428,5 @@ class Login extends React.Component {
 }
 
 export default connect("baseUrl")(withRouter(Login));
+// DEPLOY = "47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
+// LOCAL = "47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"

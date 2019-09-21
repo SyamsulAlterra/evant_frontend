@@ -142,7 +142,6 @@ class GeneratedEvent extends React.Component {
                       <td className="p-3">
                         <img
                           alt=""
-                          // src={this.state.event.place_image}
                           src={this.state.photoUrl}
                           className="venue"
                         ></img>
