@@ -392,7 +392,7 @@ class Login extends React.Component {
                     this is part of google signin, there is credential ID, and some handler for handling
                     */}
                       <GoogleLogin
-                        clientId="47584810358-3c8hhvnt9d29ocouqfu2i2dr2v0u5fua.apps.googleusercontent.com"
+                        clientId="47584810358-te7tv0ja0itjca67lv67r38s4jmj4mva.apps.googleusercontent.com"
                         render={renderProps => (
                           <GoogleButton
                             type="light"
