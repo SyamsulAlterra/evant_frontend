@@ -56,27 +56,36 @@ class InviteFriends extends React.Component {
   };
 
   render() {
+    console.log(this.state.uninvitedUser);
     return (
       <div className="InviteFriends">
         <Header></Header>
-        <div className="text-center mobileView container">
-          <input
-            type="text"
-            placeholder="search by username"
-            className="text-center my-3"
-            onChange={this.searchUser}
-          ></input>
-          <img className="searchFriends mx-2" alt="" src={searchFriends}></img>
-        </div>
-        <div className="container mobileView text-center">
-          {this.state.searchResult.map(user => {
-            return <FriendsCard user={user}></FriendsCard>;
-          })}
-        </div>
-        <div className="text-center">
-          <Link to="/events/create" className="m-3 btn btn-primary">
-            Cancel
-          </Link>
+        <div className="vh-100 mbForFooter InviteFriendContent mt-0">
+          <div className="text-center mobileView container animated fadeIn">
+            <div className="text-center">
+              <Link to="/events/create" className="m-3 btn buttonCancelInvite">
+                Cancel
+              </Link>
+            </div>
+            <div className="row justify-content-center">
+              <input
+                type="text"
+                placeholder="search by username"
+                className="text-center my-3"
+                onChange={this.searchUser}
+              ></input>
+              {/* <img
+                className="searchFriends my-3 mx-2"
+                alt=""
+                src={searchFriends}
+              ></img> */}
+            </div>
+          </div>
+          <div className="container mobileView text-center">
+            {this.state.searchResult.map(user => {
+              return <FriendsCard user={user}></FriendsCard>;
+            })}
+          </div>
         </div>
         <Footer></Footer>
       </div>

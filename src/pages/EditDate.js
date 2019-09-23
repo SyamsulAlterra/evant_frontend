@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
-import FotoProfil from "../components/FotoProfil";
 import Axios from "axios";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
@@ -15,8 +13,12 @@ class EditDate extends React.Component {
     };
   }
   componentWillMount = async () => {
+    // to get the event data
     const config = {
-      url: this.props.baseUrl + "events/" + this.props.match.params.event_id,
+      url:
+        this.props.baseUrl +
+        "events/" +
+        this.props.match.params.event_id.toString(),
       method: "get",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -28,15 +30,13 @@ class EditDate extends React.Component {
   };
 
   render() {
-    // console.log(this.state.event);
     return (
       <div className="EditDate">
-        <Header></Header>
         <CalendarPrepareDate
           start_date={this.state.event.start_date_parameter}
           end_date={this.state.event.end_date_parameter}
         ></CalendarPrepareDate>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }

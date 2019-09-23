@@ -1,20 +1,26 @@
 import React from "react";
-import CollapseEvent from "../components/CollapseEvents";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { connect } from "unistore/react";
 import axios from "axios";
+import { connect } from "unistore/react";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import CollapseEvent from "../components/CollapseEvents";
 
 class Events extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       listEvent: [],
-      pastEvent: []
+      pastEvent: [],
+      searchListEvent: [],
+      searchPastEvent: [],
+      key: ""
     };
   }
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
+    // to get ongoing and history events from the database
     const config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
@@ -24,6 +30,7 @@ class Events extends React.Component {
       .get(this.props.baseUrl + "events/ongoing", config)
       .then(async response => {
         await this.setState({ listEvent: response.data });
+        await this.setState({ searchListEvent: response.data });
       })
       .catch(error => {
         console.log(error);
@@ -32,100 +39,98 @@ class Events extends React.Component {
       .get(this.props.baseUrl + "events/history", config)
       .then(async response => {
         await this.setState({ pastEvent: response.data });
-        console.log(this.state.pastEvent);
+        await this.setState({ searchPastEvent: response.data });
+        await console.log("past evnet", response.data);
       })
       .catch(error => {
         console.log(error);
       });
   };
 
+  // method for search
+  search = e => {
+    let keyword = e.target.value;
+    let resultOnGoing = this.state.listEvent.filter(event => {
+      let keywordMatch = event.event_name.search(keyword);
+      return keywordMatch !== -1;
+    });
+
+    let resultHistory = this.state.pastEvent.filter(event => {
+      let keywordMatch = event.event.event_name.search(keyword);
+      return keywordMatch !== -1;
+    });
+    this.setState({
+      searchListEvent: resultOnGoing,
+      searchPastEvent: resultHistory
+    });
+  };
+
   render() {
     return (
       <div>
-        <Header></Header>
-        <div className="container eventContent mobileView p-0">
-          <h1 className="text-center">My Event</h1>
-          <div className="accordion ongoingEvent" id="accordionExample">
-            <div className="card">
-              <div className="card-header" id="headingOne">
-                <h2 className="mb-0">
-                  <button
-                    className="btn btn-link"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
-                  >
-                    Ongoing Events ({this.state.listEvent.length})
-                  </button>
-                </h2>
+        <Header />
+        <div className="container eventContent mobileView pb-5 animated fadeIn h-400 mbForFooter">
+          {/* search bar for events */}
+          <div className="text-center">
+            <h1 className="text-centerm mt-3 mb-2">My Event</h1>
+            <input
+              type="text"
+              placeholder="search event"
+              className="mb-5"
+              onChange={this.search}
+            ></input>
+          </div>
+          <Tabs
+            defaultActiveKey="home"
+            transition={false}
+            id="noanim-tab-example"
+          >
+            {/* show ongoing events */}
+            <Tab eventKey="home" title="On-Going">
+              <div>
+                {this.state.searchListEvent.map(value => {
+                  if (value.creator_confirmation === 1) {
+                    if (value.place_name === null) {
+                      return (
+                        <div className="row justify-content-center">
+                          <CollapseEvent
+                            id={value.event_id}
+                            creatorName={value.creator_name}
+                            eventName={value.event_name}
+                            category={value.category}
+                            startDateParameter={value.start_date_parameter}
+                            endDateParameter={value.end_date_parameter}
+                          />
+                        </div>
+                      );
+                    }
+                  }
+                })}
               </div>
-
-              <div
-                id="collapseOne"
-                className="collapse"
-                aria-labelledby="headingOne"
-                data-parent="#accordionExample"
-              >
-                {this.state.listEvent.map(value => {
+            </Tab>
+            {/* show history events */}
+            <Tab eventKey="profile" title="History">
+              <div>
+                {this.state.searchPastEvent.map(value => {
+                  console.log(value);
                   return (
-                    <div className="border">
+                    <div className="row justify-content-center">
                       <CollapseEvent
-                        id={value.event_id}
+                        id={value.event.event_id}
+                        eventName={value.event.event_name}
                         creatorName={value.creator_name}
-                        eventName={value.event_name}
-                        category={value.category}
-                        startDateParameter={value.start_date_parameter}
-                        endDateParameter={value.end_date_parameter}
+                        category={value.event.category}
+                        startDateParameter={value.event.start_date_parameter}
+                        endDateParameter={value.event.end_date_parameter}
                       />
                     </div>
                   );
                 })}
               </div>
-            </div>
-          </div>
-          <div className="accordion pastEvent" id="accordionExample">
-            <div className="card">
-              <div className="card-header" id="headingOne">
-                <h2 className="mb-0">
-                  <button
-                    className="btn btn-link"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseTwo"
-                    aria-expanded="true"
-                    aria-controls="collapseTwo"
-                  >
-                    Events History ({this.state.pastEvent.length})
-                  </button>
-                </h2>
-              </div>
-
-              <div
-                id="collapseTwo"
-                className="collapse"
-                aria-labelledby="headingTwo"
-                data-parent="#accordionExample"
-              >
-                {this.state.pastEvent.map(value => {
-                  return (
-                    <div className="border">
-                      <CollapseEvent
-                        id={value.event_id}
-                        eventName={value.event_name}
-                        category={value.category}
-                        startDateParameter={value.start_date_parameter}
-                        endDateParameter={value.end_date_parameter}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-          <Footer></Footer>
+            </Tab>
+          </Tabs>
         </div>
+        <Footer />
       </div>
     );
   }

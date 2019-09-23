@@ -5,11 +5,13 @@ class CalendarGrid extends React.Component {
   render() {
     return (
       <div className="calendarGrid centering">
+        {/* one row table for a week in calendar */}
         <table>
           <tr>
+            {/* populate grid with calendar cell component */}
             {this.props.dates.map(day => {
               return (
-                <td className="p-0">
+                <td className="p-0 boarding-mark-calendar">
                   <CalendarCell
                     dates={day}
                     month={this.props.month}

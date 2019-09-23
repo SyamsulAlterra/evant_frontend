@@ -4,9 +4,98 @@ import axios from "axios";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
-import { TransitonGroup, CSSTransition } from "react-transition-group";
-import homeLogo from "../images/e.png";
+import { CSSTransition } from "react-transition-group";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import homeLogo from "../images/logo_transparent.png";
+import red from "@material-ui/core/colors/red";
+import { InputAdornment, withStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import { RemoveRedEye } from "@material-ui/icons";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
+/*
+make cursor pointer when touch the field
+*/
+const styles = theme => ({
+  eye: {
+    cursor: "pointer"
+  }
+});
+
+/*
+Class for handle hide and show password
+*/
+class PasswordInput extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      passwordIsMasked: true
+    };
+  }
+
+  /*
+  for checking the current condition with previous, 
+  for example, (statePrevious = text, then currentState =  )
+  */
+  togglePasswordMask = () => {
+    this.setState(prevState => ({
+      passwordIsMasked: !prevState.passwordIsMasked
+    }));
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { passwordIsMasked } = this.state;
+
+    return (
+      <TextField
+        type={passwordIsMasked ? "password" : "text"}
+        {...this.props}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <RemoveRedEye
+                className={classes.eye}
+                onClick={this.togglePasswordMask}
+              />
+            </InputAdornment>
+          )
+        }}
+      />
+    );
+  }
+}
+
+/*
+This object to collect values in password handle state
+*/
+PasswordInput.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired
+};
+
+PasswordInput = withStyles(styles)(PasswordInput);
+
+/* --------------------------------------------------------- */
+
+const red300 = red["500"];
+
+/*
+styling in input field
+*/
+const style = {
+  right: 0,
+  fontSize: "12px",
+  color: red300,
+  width: "240px"
+};
+
+/*
+This is a statefull class to handle register page, and everything inside it
+*/
 class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +104,6 @@ class Register extends React.Component {
       username: "",
       email: "",
       password: "",
-      confirmPassword: "",
       phone: "",
       address: "",
       gender: "",
@@ -23,42 +111,41 @@ class Register extends React.Component {
     };
   }
 
+  /*
+  for handle name value in field input
+  */
   handleName = e => {
     let inputName = e.target.value;
     this.setState({ name: inputName });
   };
 
+  /*
+  for handle username value in field input
+  */
   handleUsername = e => {
     let inputUsername = e.target.value;
     this.setState({ username: inputUsername });
   };
 
+  /*
+  for handle email value in field input
+  */
   handleEmail = e => {
     let inputEmail = e.target.value;
     this.setState({ email: inputEmail });
   };
 
+  /*
+  for handle password value in field input
+  */
   handlePassword = e => {
     let inputPassword = e.target.value;
     this.setState({ password: inputPassword });
   };
 
-  handleConfirmPassword = e => {
-    let inputConfirmPassword = e.target.value;
-    this.setState({ confirmPassword: inputConfirmPassword });
-  };
-
-  handlePhone = async e => {
-    let inputPhone = e.target.value;
-    await this.setState({ phone: inputPhone });
-    console.log(typeof this.state.phone);
-  };
-
-  handleAddress = e => {
-    let inputAddress = e.target.value;
-    this.setState({ address: inputAddress });
-  };
-
+  /*
+  for handle gender value in field input
+  */
   handleGender = e => {
     let inputGender = e.target.value;
     console.log(inputGender);
@@ -69,6 +156,10 @@ class Register extends React.Component {
     }
   };
 
+  /*
+  this function has purpose to validation input/value,
+  and has purpose to send request for registering 
+  */
   handleClick = async () => {
     const number = /^[0-9]+$/;
     if (this.state.name === "") {
@@ -87,28 +178,58 @@ class Register extends React.Component {
       Swal.fire("Error", "Please fill your password", "warning");
       return false;
     }
-    if (this.state.confirmPassword !== this.state.password) {
+    if (this.state.password.length < 6) {
       Swal.fire(
         "Error",
-        "Your passwords doesn't match, please re-check",
+        "Password must contain at least six characters!",
         "warning"
       );
       return false;
     }
+    let re = /[0-9]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one number!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[!@#\$%\^&]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one special character!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[a-z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one lowercase letter!",
+        "warning"
+      );
+      return false;
+    }
+    re = /[A-Z]/;
+    if (!re.test(this.state.password)) {
+      Swal.fire(
+        "Error",
+        "password must contain at least one uppercase letter!",
+        "warning"
+      );
+      return false;
+    }
+
     if (this.state.phone === "") {
-      Swal.fire("Error", "Please fill your Phone Number", "warning");
+      this.setState({ phone: "Entry your phone" })
       return false;
     }
-    if (
-      !this.state.phone.match(number) ||
-      this.state.phone.length > 13 ||
-      this.state.phone.length < 10
-    ) {
-      Swal.fire("Error", "Please fill a valid phone number", "warning");
-      return false;
-    }
+    console.log(this.state.phone)
     if (this.state.address === "") {
-      Swal.fire("Error", "Please fill your address", "warning");
+      this.setState({ address: "Entry your address" })
       return false;
     }
     if (this.state.gender === "") {
@@ -125,7 +246,7 @@ class Register extends React.Component {
         gender: this.state.gender,
         fullname: this.state.name,
         address: this.state.address,
-        phone: this.state.phone.toString()
+        phone: this.state.phone
       }
     };
 
@@ -156,73 +277,84 @@ class Register extends React.Component {
         unmountOnExit
         appear
       >
+        {/* 
+        show view of login page 
+        */}
         <div className="container register mobileView">
           <div className="row justify-content-center">
             <div className="col text-center">
-              <div className="my-5">
+
+              {/* home logo */}
+              <div className="my-5 grey">
+                <h2 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant grey">
+                  Evant
+                </h2>
+                <p className="mt-0 p-0 mb-0 animated fadeInDownBig delay-1s">
+                  Decide When, Where, and Who
+                </p>
                 <img
                   src={homeLogo}
                   alt=""
-                  className="text-center mt-5 mb-0"
+                  className="text-center mt-0 mb-4"
                   width="75px"
                   height="75px"
                 />
-                <h1 className="underline mt-1 mb-0 animated fadeInDownBig delay-1s register-evant">
-                  Evant
-                </h1>
-                <hr className="animated fadeIn shadow" width="200px" />
-                <p className="mt-0 p-0 mb-5 animated fadeInDownBig delay-1s">
-                  Decide When, Where, and Who
-                </p>
                 <div className="col-12">
-                  <form
-                    action=""
+                  {/* 
+                  these are form input, consist of username, email, etc.
+                  password and there are some event handler for taking input/control of those 
+                  */}
+                  <ValidatorForm
+                    ref="form"
+                    onSubmit={this.handleSubmit}
                     className="register-form form-group animated fadeIn"
                   >
-                    <input
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Full Name"
-                      onChange={this.handleName}
-                    />
-                    <input
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Username"
+                    <TextValidator
+                      style={style}
+                      label="Username"
                       onChange={this.handleUsername}
+                      name="username"
+                      value={this.state.username}
+                      validators={["required"]}
+                      errorMessages={[
+                        "this field is required",
+                        "email is not valid"
+                      ]}
                     />
-                    <input
-                      type="email"
-                      className="mb-3 col-12"
-                      placeholder="Email"
+                    <TextValidator
+                      style={style}
+                      label="Fullname"
+                      onChange={this.handleName}
+                      name="name"
+                      value={this.state.name}
+                      validators={["required"]}
+                      errorMessages={[
+                        "this field is required",
+                        "Fullname is not valid"
+                      ]}
+                    />
+                    <TextValidator
+                      style={style}
+                      label="Email"
                       onChange={this.handleEmail}
-                    />
-                    <input
-                      type="password"
-                      className="mb-3 col-12"
-                      placeholder="Password"
-                      onChange={this.handlePassword}
-                    />
-                    <input
-                      type="password"
-                      className="mb-3 col-12"
-                      placeholder="Confirm password"
-                      onChange={this.handleConfirmPassword}
-                    />
-                    <input
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Phone"
-                      onChange={this.handlePhone}
-                    />
-                    <textarea
-                      type="text"
-                      className="mb-3 col-12"
-                      placeholder="Address"
-                      onChange={this.handleAddress}
+                      name="email"
+                      value={this.state.email}
+                      validators={["required", "isEmail"]}
+                      errorMessages={[
+                        "this field is required",
+                        "Email is not valid"
+                      ]}
                     />
                     <br />
-                    <div className="text-left mx-4 mb-4 px-4">
+                    <PasswordInput
+                      label="Password"
+                      style={style}
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.handlePassword}
+                    ></PasswordInput>
+                    <br />
+                    <div className="text-left mx-4 mb-4 px-4 mt-3">
                       <input
                         type="radio"
                         name="gender"
@@ -239,16 +371,37 @@ class Register extends React.Component {
                       />
                       Female <br />
                     </div>
-                  </form>
-                </div>
-                <div className="col-12">
-                  <button
-                    className="btn btn-block text-center register-button mb-5"
-                    onClick={this.handleClick}
-                    width="100%"
-                  >
-                    Register
-                  </button>
+                    <div className="row no-gutters justify-content-center animated fadeIn mt-2">
+                      <div className="col-auto">
+                        <button
+                          color="primary"
+                          size="large"
+                          variant="contained"
+                          type="submit"
+                          onClick={this.handleClick}
+                          disabled={this.state.submitted}
+                          type="button"
+                          class="btn btn-primary edit-button"
+                        >
+                          {(this.state.submitted &&
+                            "Your form is submitted!") ||
+                            (!this.state.submitted && "REGISTER")}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* login page */}
+                    <div className="row" >
+                      <div className="col-12 text-center mt-4">
+                        <Link to="/">
+                          <small className="register-text">
+                            Already have accout?
+                      </small>
+                        </Link>
+                      </div>
+                    </div>
+
+                  </ValidatorForm>
                 </div>
               </div>
             </div>

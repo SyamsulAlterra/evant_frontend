@@ -40,6 +40,7 @@ class CalendarPrepareDate extends React.Component {
     };
   }
 
+  // change format from 02/10/2019 to Oct 02, 2019
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -66,6 +67,7 @@ class CalendarPrepareDate extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
 
+  // change 1 digit number to 2 digit string format (1 -> 01)
   twoDigitString = number => {
     if (number < 10) {
       return `0${number}`;
@@ -74,10 +76,13 @@ class CalendarPrepareDate extends React.Component {
     }
   };
 
+  //populate calendar
   populateCalendar = async (month, year) => {
-    //populate calendar table
+    // get current date and assign it to state
     let date = new Date(year, month - 1);
     this.setState({ offset: date.getDay() });
+
+    //check if leap year
     if (this.isLeapYear(year)) {
       await this.setState({
         dayInMonth: [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -90,8 +95,8 @@ class CalendarPrepareDate extends React.Component {
     await this.setState({ totalDays: this.state.dayInMonth[month - 1] });
   };
 
+  // check if leap year
   isLeapYear = year => {
-    //check wether year is leap year
     if (year % 4 === 0 && year % 100 !== 0) {
       return true;
     } else if (year % 4 === 0 && (year % 100 === 0 && year % 400 === 0)) {
@@ -101,17 +106,21 @@ class CalendarPrepareDate extends React.Component {
     }
   };
 
+  // get user picked month
   handleMonth = e => {
     let pickedMonth = e.target.value;
     this.setState({ month: pickedMonth });
   };
 
+  // get user picked year
   handleYear = e => {
     let pickedYear = e.target.value;
     this.setState({ year: parseInt(pickedYear) });
   };
 
+  // prepare variable before render and mounting
   componentWillMount = async () => {
+    //today date, month, and year
     let today = new Date();
     await this.setState({ todayDate: today.getDate() });
     await this.setState({
@@ -121,6 +130,7 @@ class CalendarPrepareDate extends React.Component {
       currentYear: today.getFullYear()
     });
 
+    //configuration to get the event that need to be prepared
     let config = {
       url: this.props.baseUrl + "events/" + this.props.match.params.event_id,
       method: "get",
@@ -128,10 +138,10 @@ class CalendarPrepareDate extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
     let response = await Axios(config);
     await this.setState({ event: response.data });
 
+    //count all dates need with the event
     config = {
       url: this.props.baseUrl + "events/count",
       method: "post",
@@ -140,7 +150,6 @@ class CalendarPrepareDate extends React.Component {
         end_date: this.state.event.end_date_parameter
       }
     };
-
     response = await Axios(config);
     await this.setState({
       months: response.data.month,
@@ -149,6 +158,7 @@ class CalendarPrepareDate extends React.Component {
       year: parseInt(response.data.year[0])
     });
 
+    //get all marked date and set it to global state
     config = {
       url: this.props.baseUrl + "date",
       method: "get",
@@ -156,10 +166,10 @@ class CalendarPrepareDate extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
     response = await Axios(config);
     await this.props.setAvailableDatesOnGlobal(response.data);
 
+    //get all booked date from another event and set it to global
     config = {
       url: this.props.baseUrl + "events/booked",
       method: "get",
@@ -167,7 +177,6 @@ class CalendarPrepareDate extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
     response = await Axios(config);
     await this.props.setEventsAndBookedDatesOnGlobal(
       response.data.booked_event,
@@ -177,6 +186,7 @@ class CalendarPrepareDate extends React.Component {
     this.populateCalendar(this.state.month, this.state.year);
   };
 
+  // listen to changing year and month of calendar
   componentDidUpdate = (prevProps, prevState) => {
     if (
       this.state.month !== prevState.month ||
@@ -185,7 +195,9 @@ class CalendarPrepareDate extends React.Component {
       this.populateCalendar(this.state.month, this.state.year);
     }
   };
+
   render() {
+    // variable preparation before rendering
     let weeks;
     if (this.state.offset + this.state.totalDays > 35) {
       weeks = [1, 2, 3, 4, 5, 6];
@@ -193,15 +205,17 @@ class CalendarPrepareDate extends React.Component {
       weeks = [1, 2, 3, 4, 5];
     }
     const dates = [1, 2, 3, 4, 5, 6, 7];
-    console.log(this.state.year, this.state.months);
 
     return (
-      <div className="CalendarPrepareDate container mobileView p-0 mt-0">
+      <div className="CalendarPrepareDate container mobileView p-0 my-5">
+        {/* please prepare ... day from ... to .... (information at top) */}
         <div className="row justify-content-center">
-          <div className="col-8">
+          <div className="col-10">
             {" "}
             <br></br>
-            <h6 className="text-center">Your Available Date on</h6>
+            <h6 className="text-center">
+              Please prepare {this.state.event.duration} days between
+            </h6>
             <h6 className="text-center">
               {`${this.formatDate(
                 this.state.event.start_date_parameter
@@ -209,8 +223,9 @@ class CalendarPrepareDate extends React.Component {
             </h6>
           </div>
         </div>
+        {/* drowpdown */}
         <div className="text-right mx-5">
-          <img src="" alt=""></img>
+          {/* month dropdown */}
           <select
             className="button centering p-0 mx-1 my-3 optionMonth"
             onChange={this.handleMonth}
@@ -231,6 +246,7 @@ class CalendarPrepareDate extends React.Component {
               }
             })}
           </select>
+          {/* year dropdown */}
           <select
             className="button centering p-0 mx-1 my-3"
             onChange={this.handleYear}
@@ -241,6 +257,8 @@ class CalendarPrepareDate extends React.Component {
           </select>
         </div>
         <CalendarTitle></CalendarTitle>
+
+        {/* //fill each row of calendar with needed data */}
         {weeks.map(week => {
           const tes = dates.map(date => {
             let currentDate = 7 * (week - 1) + date;
@@ -268,10 +286,11 @@ class CalendarPrepareDate extends React.Component {
           );
         })}
         <br></br>
+        {/* done button */}
         <div className="row justify-content-center">
           <div className="col-6 text-center">
             <Link
-              to={"/participant/" + this.state.event.event_id}
+              to={"/transition/" + this.state.event.event_id}
               class="btn btn-outline-info"
               role="button"
             >

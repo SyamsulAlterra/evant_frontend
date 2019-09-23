@@ -1,20 +1,39 @@
 import createStore from "unistore";
 
+const fakeToday = new Date();
+const month = fakeToday.getMonth();
+const year = fakeToday.getFullYear();
+const date = fakeToday.getDate();
+const today = new Date(year, month, date);
+const oneDayLapse = 24 * 3600 * 1000;
+const tomorrow = new Date(today.getTime() + oneDayLapse);
+const dayAfterTomorrow = new Date(today.getTime() + 2 * oneDayLapse);
+
 export let Store = createStore({
-  baseUrl: "http://0.0.0.0:5000/api/",
+  baseUrl: "https://api.myevant.com/api/",
   availableDates: ["dummy"],
   invitations: [],
   participants: [],
-  eventName: "",
-  category: "",
-  startDate: "",
-  endDate: "",
-  duration: null,
+  place: [],
+  eventName: "My Event",
+  category: "vacation",
+  startDate: tomorrow,
+  endDate: dayAfterTomorrow,
+  duration: "",
   events: [],
-  allBookedDates: []
+  allBookedDates: [],
+  verboseCategory: {
+    vacation: "Holiday",
+    eat: "Eat Out",
+    hiking: "Hiking"
+  },
+  preference: ""
 });
 
 export const actions = Store => ({
+  setPreferenceOnGlobal: (state, preference) => {
+    return { preference: preference };
+  },
   setEventsAndBookedDatesOnGlobal: (state, events, bookedDate) => {
     return { events: events, allBookedDates: bookedDate };
   },
@@ -54,11 +73,14 @@ export const actions = Store => ({
   },
   clearCreateEvent: state => {
     return {
-      eventName: "",
-      category: "",
-      startDate: "",
-      endDate: "",
+      eventName: "My Event",
+      category: "vacation",
+      startDate: tomorrow,
+      endDate: dayAfterTomorrow,
       duration: null
     };
+  },
+  setPlaceOnGlobal: (state, input) => {
+    return { place: input };
   }
 });

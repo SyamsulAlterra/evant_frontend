@@ -1,9 +1,12 @@
 import React from "react";
 import { connect } from "unistore/react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Axios from "axios";
 import avatar from "../images/avatar.png";
+import { actions } from "../Store";
+import firebase from "firebase";
+// import { storage } from "../firebase/storage";
+import ParticipantCard from "../components/ParticipantCard";
 
 class Suggestion extends React.Component {
   constructor(props) {
@@ -25,9 +28,10 @@ class Suggestion extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
+    console.log(this.props.place);
     let response = await Axios(config);
     await this.setState({ event: response.data });
+    console.log(response.data);
 
     config = {
       url:
@@ -40,8 +44,70 @@ class Suggestion extends React.Component {
       }
     };
 
+    let generatePlace = {
+      url:
+        this.props.baseUrl +
+        "recommendation/" +
+        this.state.event.category +
+        "/" +
+        this.props.match.params.id,
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    let placeResponse = await Axios(generatePlace);
+
+    await this.props.setPlaceOnGlobal(placeResponse.data);
+    console.log(placeResponse.data);
+
     response = await Axios(config);
     await this.setState({ participant: response.data });
+  };
+  formatDate = date => {
+    const dateDictionary = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    if (date === undefined) {
+      return "halo";
+    } else if (date === null) {
+      return date;
+    }
+    let d = date.slice(0, 2);
+    let m = parseInt(date.slice(3, 5));
+    let y = date.slice(6, 10);
+    return `${dateDictionary[m - 1]} ${d}, ${y}`;
+  };
+  choosePlace = async input => {
+    console.log(input);
+    let config = {
+      url:
+        this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      data: {
+        place_name: input.place,
+        place_location: input.place_location,
+        place_image: input.photo
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/transition/" + this.props.match.params.id);
   };
   render() {
     return (
@@ -51,7 +117,7 @@ class Suggestion extends React.Component {
           <h3 className="text-center m-0 mt-3">
             {this.state.event.event_name}
           </h3>
-          <p className="text-center m-0">===========================</p>
+          <hr></hr>
           <h6 className="text-center m-0">
             creator: @{this.state.event.creator_username}
           </h6>
@@ -60,25 +126,16 @@ class Suggestion extends React.Component {
           </h6>
           <h6 className="text-center m-0">
             Suggestion date: <br></br>
-            {this.state.event.start_date} - {this.state.event.end_date}
+            {this.formatDate(this.state.event.start_date)} -{" "}
+            {this.formatDate(this.state.event.end_date)}
           </h6>
-          <div className="participant m-3 border">
-            {this.state.participant.map((user, index) => {
+          <div className="participant m-3">
+            {this.state.participant.map((value, index) => {
               return (
-                <div className="mx-3 my-2 border">
-                  <table className="mx-5">
-                    <tr>
-                      <td className="p-2 w-25">
-                        <img alt="" src={avatar} className="avatar"></img>
-                      </td>
-
-                      <td className="p-2 w-75">
-                        <p className="m-0">{user.fullname}</p>
-                        <p className="m-0">@{user.username}</p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                <ParticipantCard
+                  user={value}
+                  class={value.class}
+                ></ParticipantCard>
               );
             })}
           </div>
@@ -87,17 +144,26 @@ class Suggestion extends React.Component {
           </div>
           <div className="text-center mb-3 border p-3 places">
             <table className="">
-              {[...Array(4).keys()].map(num => {
+              {this.props.place.map(num => {
+                console.log(num);
                 return (
-                  <div className="m-3">
+                  <div className="m-3 suggestion">
                     <tr>
-                      <td className="p-3 border">
-                        <img alt="" src={avatar} className="venue"></img>
-                        <p className="text-center m-0 centering">
-                          $places name and address
+                      <td className="p-1 border">
+                        <img alt="" src={num.photo} className="venue"></img>
+                        <p className="text-center m-0 centering suggestion">
+                          {num.place}
                         </p>
-                        {/* <br></br> */}
-                        <button className="btn btn-success">Choose</button>
+
+                        <button
+                          className="btn btn-success"
+                          onClick={() => this.choosePlace(num)}
+                        >
+                          Choose
+                        </button>
+                        <p className="text-center m-0 centering">
+                          {num.place_location}
+                        </p>
                       </td>
                     </tr>
                   </div>
@@ -111,4 +177,7 @@ class Suggestion extends React.Component {
   }
 }
 
-export default connect("baseUrl")(Suggestion);
+export default connect(
+  "baseUrl, place",
+  actions
+)(Suggestion);

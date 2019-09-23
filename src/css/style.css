@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Cinzel:400,700|Montserrat:400,700|Noto+Sans:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Muli:400,600,700&display=swap");
+body {
+  font-family: "Montserrat", "Noto sans", sans-serif;
+}
 .login {
   font-family: "Montserrat";
 }
@@ -12,8 +16,8 @@
   background-color: white;
 }
 .mobileView {
-  width: 375px;
-  font-family: "Montserrat";
+  width: 360px;
+  font-family: "Montserrat", "Noto sans", sans-serif;
 }
 .calendarCell {
   height: 40px;
@@ -30,20 +34,28 @@ table {
 .today {
   background-color: orange !important;
 }
+.Invitations {
+  font-family: "Montserrat";
+}
 .invitationCard {
-  font-size: 10px;
+  font-size: 1em;
 }
 .invitationCard a {
   font-size: 10px;
 }
 .calendarDetail {
   width: 280px;
-  height: 200px;
   margin: 0px auto;
-  overflow: scroll;
+}
+.eventDetailTitle {
+  font-size: 16px;
 }
 .eventDetail {
-  font-size: 8px;
+  font-size: 13px;
+}
+.eventDetailButton {
+  background-color: black;
+  color: white;
 }
 .todayButton {
   height: 20px;
@@ -59,6 +71,13 @@ table {
   height: 30px;
   width: 30px;
 }
+.footer {
+  z-index: 99999;
+  color: black;
+  background-color: #dfd9e2;
+  position: fixed;
+  bottom: 0;
+}
 .footer img {
   height: 30px;
   width: 30px;
@@ -73,6 +92,7 @@ table {
 .fotoProfil .plain {
   text-decoration: none;
   color: black;
+  font-size: 15px;
 }
 .avatar {
   width: 25px;
@@ -88,10 +108,6 @@ table {
 .searchFriends {
   width: 26px;
   height: 26px;
-}
-.participant {
-  height: 400px;
-  overflow: scroll;
 }
 .checked,
 .cross {
@@ -123,16 +139,11 @@ table {
   font-weight: bold;
   color: black;
 }
-.invitedBox {
-  height: 300px;
-  overflow: scroll;
+.smallDetail {
+  font-size: 12px;
 }
 .venue {
-  width: 100px;
-}
-.places {
-  height: 300px;
-  overflow: scroll;
+  width: 200px;
 }
 .change-pass-button {
   background-color: black;
@@ -152,17 +163,213 @@ table {
   opacity: 0;
   transition: opacity 200ms;
 }
+.edit-header {
+  height: 100px;
+  margin: auto;
+}
 .header-style {
   /* -webkit-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
   -moz-box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73);
   box-shadow: -5px 5px 14px -2px rgba(164, 222, 243, 0.73); */
+  height: 100px;
 }
 .header-style h4 {
   font-family: "Roboto", sans-serif;
+  height: 100px;
+}
+.header {
+  height: 100px;
+  background-color: #3b8ea5;
 }
 .size-select {
   width: 1000px;
 }
 select.form-control:not([size]):not([multiple]) {
   height: 34px;
+}
+.suggestion {
+  width: 200px;
+}
+.h-50 {
+  height: 50px !important;
+}
+.todayMark {
+  width: 50px;
+  font-size: 12px;
+}
+.markedTitle {
+  font-size: 15px;
+}
+.mbForFooter {
+  margin-bottom: 150px;
+}
+.position {
+  height: 100vh;
+}
+.MuiButton-sizeLarge {
+  padding: 8px 99px;
+  font-size: 0.9375rem;
+}
+.edit-button {
+  padding: 8px 93px;
+}
+.calendarCell p {
+  font-size: 15px !important;
+}
+.search-user input {
+  height: 40px;
+}
+.fontstyle {
+  font-family: "Muli", sans-serif;
+  font-size: 15px;
+}
+.eventDetailContentParticipant hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+.eventDetailContent hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+.invitationAccDec .btn {
+  background-color: black;
+  color: white;
+}
+.generatedEvent hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+}
+@media screen and (max-width: 728px) {
+  .mobileView {
+    width: none;
+    font-family: "Montserrat", "Noto sans", sans-serif;
+    overflow: none;
+  }
+  .header {
+    height: none;
+    width: auto;
+  }
+}
+.f-15 {
+  font-size: 20px;
+}
+.invitationSearch {
+  width: 300px;
+}
+.grey {
+  color: #1e4e5f !important;
+}
+.BiruTua {
+  color: #2d72df !important;
+}
+.bgBiruTua {
+  background-color: #2d72df !important;
+}
+.BiruMuda {
+  color: #3b8ea5 !important;
+}
+.bgBiruMuda {
+  background-color: #3b8ea5 !important;
+}
+.Pastel {
+  color: #f5ee9e;
+}
+.bgPastel {
+  background-color: #f5ee9e;
+}
+.Oren {
+  color: #f49e4c !important;
+}
+.bgOren {
+  background-color: #f49e4c !important;
+}
+.Merah {
+  color: #ff0000 !important;
+}
+.bgMerah {
+  background-color: #df5454 !important;
+}
+.span1 {
+  font-size: 22px;
+}
+.span2 {
+  font-size: 15px;
+}
+.borad {
+  border-radius: 20%;
+}
+.black {
+  background-color: black;
+}
+.InviteFriendContent {
+  margin-top: 50px;
+}
+.InviteFriendContent .buttonCancelInvite {
+  background-color: #3b8ea5;
+  color: white;
+}
+.calenderDetailContent {
+  text-decoration: none;
+}
+.calenderDetailContent link,
+.calenderDetailContent link:hover,
+.calenderDetailContent link:focus {
+  text-decoration: none;
+}
+.calenderDetailContent p,
+.calenderDetailContent p:hover,
+.calenderDetailContent p:focus {
+  text-decoration: none;
+  color: black;
+}
+.icon-mobile-phone:before {
+  content: "\f10b";
+  position: relative;
+  right: 7px;
+  top: 20px;
+}
+.icon-unlock-alt:before {
+  content: "\f13e";
+  position: relative;
+  right: 7px;
+  top: 22px;
+}
+.bgWhite {
+  background-color: white;
+}
+.modal-backdrop {
+  z-index: -1;
+}
+.toEventDetails a {
+  color: black;
+}
+.calendarDetailContent a,
+.calendarDetailContent a:hover,
+.calendarDetailContent a:focus {
+  text-decoration: none;
+  color: black;
 }

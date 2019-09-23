@@ -1,11 +1,31 @@
 import React from "react";
-import avatar from "../images/avatar.png";
+import avatar from "../images/manager.png";
 import cancel from "../images/cancel.png";
 import { connect } from "unistore/react";
 import { actions } from "../Store";
 import { withRouter } from "react-router-dom";
+import firebase from "firebase";
 
 class KickFriend extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      photo: ""
+    };
+  }
+
+  componentWillMount = async () => {
+    await firebase
+      .storage()
+      .ref(`profile_pictures/${this.props.user.username}`)
+      .getDownloadURL()
+      .then(url => {
+        this.setState({ photo: url });
+      })
+      .catch(() => {
+        this.setState({ photo: "" });
+      });
+  };
   addFriend = input => {
     console.log(input);
     this.props.setParticipantsOnGlobal(input);
@@ -18,13 +38,27 @@ class KickFriend extends React.Component {
           <div class="card-body p-2">
             <div class="row">
               <div className="col-2 p-0">
-                <img alt="" src={avatar} className="m-1 avatar"></img>
+                {[1].map(dummy => {
+                  if (this.state.photo === "") {
+                    return (
+                      <img alt="" src={avatar} className="m-1 avatar"></img>
+                    );
+                  } else {
+                    return (
+                      <img
+                        alt=""
+                        src={this.state.photo}
+                        className="m-1 avatar"
+                      ></img>
+                    );
+                  }
+                })}
               </div>
-              <div className="col-6 p-0">
-                <p class="m-0 text-left">{this.props.user.fullname}</p>
-                <p class="m-0 text-left">@{this.props.user.username}</p>
+              <div className="col-8 p-0">
+                <p class="m-0 text-left span2">{this.props.user.fullname}</p>
+                <p class="m-0 text-left span2">@{this.props.user.username}</p>
               </div>
-              <div className="col-4 p-0">
+              <div className="col-2 p-0">
                 <img
                   alt=""
                   src={cancel}

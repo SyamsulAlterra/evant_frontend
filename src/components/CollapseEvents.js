@@ -1,19 +1,25 @@
 import React from "react";
+import Slide from "react-reveal/Slide";
 import { Link } from "react-router-dom";
 
 class CollapseEvents extends React.Component {
   render() {
+    console.log(this.props.creatorName);
     return (
-      <div class="card-body">
-        Event Name: {this.props.eventName} <br />
-        Category: {this.props.category} <br />
-        Created by: {this.props.creatorName}
-        <div className="button-detail">
-          <Link to={"/transition/" + this.props.id.toString()}>
-            <button className="btn">See Event Detail</button>
-          </Link>
+      <Slide left>
+        <div className="col-12 text-left my-3 border shadow p-3 rounded">
+          <div className="text-center">
+            <b>{this.props.eventName}</b> <br />
+          </div>
+          Category: {this.props.category} <br />
+          Created by: <b>@{this.props.creatorName}</b>
+          <div className="button-detail text-right toEventDetails">
+            <Link to={"/transition/" + this.props.id.toString()}>
+              <small>See details..</small>
+            </Link>
+          </div>
         </div>
-      </div>
+      </Slide>
     );
   }
 }

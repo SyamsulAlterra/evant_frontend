@@ -7,9 +7,9 @@ class ProfilePage extends React.Component {
   render() {
     return (
       <div className="profilePage">
-        <Header></Header>
-        <Profile></Profile>
-        <Footer></Footer>
+        <Header />
+        <Profile />
+        <Footer />
       </div>
     );
   }

@@ -1,12 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "unistore/react";
+import Axios from "axios";
 import axios from "axios";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
 import ParticipantCard from "../components/ParticipantCard";
-import checked from "../images/checked.png";
-import error from "../images/error.png";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import checked from "../images/checked.png";
+import error from "../images/error.png";
 
 class EventDetailParticipant extends React.Component {
   constructor(props) {
@@ -14,11 +15,14 @@ class EventDetailParticipant extends React.Component {
     this.state = {
       event: [],
       participants: [],
-      searchResult: []
+      searchResult: [],
+      categories: [],
+      preference: ""
     };
   }
-  componentDidMount = async () => {
-    const config = {
+  componentWillMount = async () => {
+    // get event detail data
+    let config = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
@@ -32,6 +36,7 @@ class EventDetailParticipant extends React.Component {
         console.log(error);
       });
 
+    // get the participants of the evnet
     await axios
       .get(
         this.props.baseUrl +
@@ -40,15 +45,44 @@ class EventDetailParticipant extends React.Component {
         config
       )
       .then(response => {
+        console.log(response.data);
+        let marked = response.data.map(user => {
+          let temp = user;
+          temp.class = "";
+          if (temp.invitation_status === -1) {
+            temp.class = "text-danger";
+          }
+          return temp;
+        });
         this.setState({
-          participants: response.data,
-          searchResult: response.data
+          participants: marked,
+          searchResult: marked
         });
       })
       .catch(error => {
         console.log(error);
       });
+
+    // to display category options
+    config = {
+      url: this.props.baseUrl + "category",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      params: {
+        category: this.state.event.category
+      }
+    };
+
+    let response = await Axios(config);
+    await this.setState({
+      categories: response.data,
+      preference: response.data[0].preference
+    });
   };
+
+  // to change the date format
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -74,6 +108,8 @@ class EventDetailParticipant extends React.Component {
     let y = date.slice(6, 10);
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
+
+  // method to search participants of the event
   search = async e => {
     let searchKey = e.target.value;
 
@@ -88,90 +124,156 @@ class EventDetailParticipant extends React.Component {
     await this.setState({ searchResult: result });
   };
 
+  // method for user to decline an event
+  declineEvent = async () => {
+    let config = {
+      url:
+        this.props.baseUrl + "invitations/reject/" + this.props.match.params.id,
+      method: "put",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/events");
+  };
+
+  // method to handle change in category field
+  handleCategory = e => {
+    this.setState({ preference: e.target.value });
+  };
+
+  // method to post user preference of a particular event
+  postPreference = async () => {
+    let config = {
+      url: this.props.baseUrl + "users/preferences",
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      data: {
+        preference: this.state.preference,
+        event_id: this.props.match.params.id
+      }
+    };
+
+    await Axios(config);
+    this.props.history.push("/events");
+  };
+
   render() {
-    console.log(this.state.event);
     return (
-      <div className="eventDetailContent">
-        <Header></Header>
-        <div className="border container my-3 p-3 mobileView">
-          <h1 className="text-center">{this.state.event.event_name}</h1>
-          <h6 className="text-center m-0">
-            ======================<br></br>
-            creator: @{this.state.event.creator_username}
-            <br></br>
-            category :{this.state.event.category}
-          </h6>
-          <div className="row justify-content-center mb-0">
-            <div className="preferenceSelect col-8 text-center">
-              <label for="preference"></label>
-              <span>
-                <select
-                  className="form-control"
-                  id="category"
-                  onChange={this.handleCategory}
-                  value={this.props.category}
-                >
-                  <option selected value="vacation">
-                    Select your preference
-                  </option>
-                  <option value="Culture">Culture</option>
-                  <option value="Religion">Religion</option>
-                  <option value="Museum">Museum</option>
-                </select>
-              </span>
-            </div>
-          </div>
-          <div className="dateSection text-center">
-            Range date :{" "}
-            {this.formatDate(this.state.event.start_date_parameter)} -{" "}
-            {this.formatDate(this.state.event.end_date_parameter)}
-            <br />
-            Event Duration : {this.state.event.duration} days
-          </div>
-          <div className="row justify-content-center mb-0">
-            <div className="button-add col-8 text-center">
-              <Link
-                to={"/editDate/" + this.state.event.event_id}
-                className="btn btn-primary m-1 w-100"
-              >
-                Manage my date
-              </Link>
-            </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="search-user col-12 text-center my-3">
-              <input
-                type="text"
-                placeholder="search username or fullname"
-                className="my-0 w-100 text-center"
-                onChange={this.search}
-              ></input>
-            </div>
-          </div>
-          <div className="participant border border-secondary p-3">
-            {this.state.searchResult.map((value, index) => {
-              return <ParticipantCard user={value}></ParticipantCard>;
-            })}
-          </div>
-          <div className="container">
-            <div className="row no-gutters">
-              <div className="col-6 text-center">
-                <img alt="" src={error} className="cross m-3"></img>
-                <br></br>
-                Decline
+      <div className="eventDetailContentParticipant">
+        <Header />
+        <div className="vh-100 mbForFooter">
+          {/* container event detail */}
+          <div className="border shadow rounded container my-3 p-3 mobileView">
+            <h1 className="text-center">{this.state.event.event_name}</h1>
+            <h6 className="text-center m-0">
+              <hr />
+              creator: @{this.state.event.creator_username}
+              <br></br>
+              category: {this.state.event.category}
+            </h6>
+            <div className="row justify-content-center mb-0">
+              <div className="preferenceSelect col-8 text-center">
+                {/* display available preferences */}
+                <label for="preference"></label>
+                <span>
+                  <select
+                    className="form-control h-50 mb-3"
+                    id="category"
+                    onChange={this.handleCategory}
+                  >
+                    {this.state.categories.map((category, i) => {
+                      if (i === 0) {
+                        return (
+                          <option
+                            value={category.preference}
+                            selected="selected"
+                          >
+                            {category.preference}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option value={category.preference}>
+                            {category.preference}
+                          </option>
+                        );
+                      }
+                    })}
+                  </select>
+                </span>
               </div>
-              <div className="col-6 text-center">
-                <img alt="" src={checked} className="checked m-3"></img>
-                <br></br>
-                Ok
+            </div>
+            {/* display the projected date range for the event */}
+            <div className="dateSection text-center mb-3">
+              Range date :{" "}
+              {this.formatDate(this.state.event.start_date_parameter)} -{" "}
+              {this.formatDate(this.state.event.end_date_parameter)}
+              <br />
+              Event Duration : {this.state.event.duration} days
+            </div>
+            <div className="row justify-content-center mb-0">
+              <div className="button-add col-8 text-center">
+                {/* for users to manage their available date based on the range */}
+                <Link
+                  to={"/editDate/" + this.state.event.event_id}
+                  className="btn btn-primary m-1 w-100"
+                >
+                  Manage my date
+                </Link>
+              </div>
+            </div>
+            {/* to search the participant of the evant */}
+            <div className="row justify-content-center">
+              <div className="search-user col-12 text-center my-3">
+                <input
+                  type="text"
+                  placeholder="search username or fullname"
+                  className="my-0 w-100 text-center"
+                  onChange={this.search}
+                ></input>
+              </div>
+            </div>
+            <div className="participant p-3">
+              {this.state.searchResult.map((value, index) => {
+                return <ParticipantCard user={value} class={value.class} />;
+              })}
+            </div>
+            {/* accept or decline event */}
+            <div className="container">
+              <div className="row no-gutters">
+                <Link className="col-6 text-center">
+                  <img
+                    alt=""
+                    src={error}
+                    className="cross m-3"
+                    onClick={this.declineEvent}
+                  ></img>
+                  <br></br>
+                  Decline
+                </Link>
+                <Link
+                  className="col-6 text-center"
+                  onClick={this.postPreference}
+                >
+                  <img alt="" src={checked} className="checked m-3"></img>
+                  <br></br>
+                  Ok
+                </Link>
               </div>
             </div>
           </div>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }
 }
 
-export default connect("baseUrl, eventName")(EventDetailParticipant);
+export default connect("baseUrl, eventName, verboseCategory, preference")(
+  withRouter(EventDetailParticipant)
+);

@@ -13,6 +13,8 @@ class CalendarCell extends React.Component {
       date: ""
     };
   }
+
+  // change format from 02/10/2019 to Oct 02, 2019
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -34,6 +36,7 @@ class CalendarCell extends React.Component {
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
 
+  // check wether date2 is bigger than date1
   forwardDate = (date1, date2) => {
     let dates = [date1, date2];
     let d = dates.map(date => {
@@ -58,44 +61,55 @@ class CalendarCell extends React.Component {
       return false;
     }
   };
+
+  // change state if marked/unmarked
   componentWillUpdate = async (prevProps, prevState) => {
     if (prevProps !== this.props) {
+      // today date and cell date in dd/mm/yyyy format
       await this.setState({ cellClass: "" });
       const todayDate = await `${this.props.today}/${this.props.currentMonth}/${this.props.currentYear}`;
       const date = await `${this.props.dates}/${this.props.month}/${this.props.year}`;
 
+      // check if cell is marked
       let available = this.props.availableDates.filter(availableDate => {
         return availableDate === date;
       });
 
+      // check if cell is booked
       let booked = this.props.allBookedDates.filter(bookedDate => {
         return bookedDate === date;
       });
 
+      //check if passed date
       if (!this.forwardDate(todayDate, date) && this.props.dates !== "") {
         this.setState({
-          cellClass: "bg-secondary",
+          cellClass: "Merah",
           modalMessage: "cannot mark passed date"
         });
       } else {
+        // check if today cell
         if (todayDate === date) {
-          this.setState({ cellClass: "today" });
+          this.setState({ cellClass: "bgOren" });
           this.setState({
             modalMessage: "Sorry, you cannot mark today's date"
           });
+          // check if blank cell
         } else if (this.props.dates === "") {
           this.setState({ cellClass: "" });
           this.setState({ modalMessage: "Oops, invalid date" });
+          // check if cell is booked
         } else if (booked.length > 0) {
           this.setState({
-            cellClass: "bg-danger",
+            cellClass: "bgMerah text-white",
             modalMessage: "this date is currently booked"
           });
+          // check if cell is marked
         } else if (available.length > 0) {
           this.setState({
             cellClass: "bg-success",
             modalMessage: `unmark ${this.formatDate(date)}`
           });
+          // check if cell is standard cell
         } else if (available.length === 0) {
           this.setState({
             cellClass: "",
@@ -107,9 +121,12 @@ class CalendarCell extends React.Component {
   };
 
   handleMark = async input => {
+    // today date in dd/mm/yyyy format
     const date = await `${input}/${this.props.month}/${this.props.year}`;
 
+    //check if we need to mark
     if (this.state.modalMessage.split(" ")[0] === "mark") {
+      //configuration to mark date in database
       let configMark = {
         url: this.props.baseUrl + "date",
         method: "post",
@@ -120,7 +137,10 @@ class CalendarCell extends React.Component {
           date: date
         }
       };
+      // mark database with axios
+      await Axios(configMark);
 
+      //get newly marked date after marking in step (line 131 - 142)
       let configGet = {
         url: this.props.baseUrl + "date",
         method: "get",
@@ -129,10 +149,13 @@ class CalendarCell extends React.Component {
         }
       };
 
-      await Axios(configMark);
+      //get new respond and set it to global state(store)
       let responseGet = await Axios(configGet);
       await this.props.setAvailableDatesOnGlobal(responseGet.data);
+
+      //check if we need to unmark
     } else {
+      //unmark configuration
       let configUnmark = {
         url: this.props.baseUrl + "date",
         method: "delete",
@@ -143,7 +166,10 @@ class CalendarCell extends React.Component {
           date: date
         }
       };
+      // unmark the database
+      await Axios(configUnmark);
 
+      //get new information after unmark the database
       let configGet = {
         url: this.props.baseUrl + "date",
         method: "get",
@@ -152,59 +178,74 @@ class CalendarCell extends React.Component {
         }
       };
 
-      await Axios(configUnmark);
+      //new data receive and set it to global state (store)
       let responseGet = await Axios(configGet);
       await this.props.setAvailableDatesOnGlobal(responseGet.data);
     }
   };
 
   render() {
-    return (
-      <div>
-        <div
-          className={`calendarCell border text-right m-0 px-0 ${this.state.cellClass}`}
-          data-toggle="modal"
-          data-target={`#date${this.props.dates}`}
-        >
-          <p className="px-2 m-0 calendarCell">{this.props.dates}</p>
+    // check if cell is unmarked or marked, return cell with no mdal
+    if (this.state.cellClass === "" || this.state.cellClass === "bg-success") {
+      return (
+        <div className="borad">
+          <div
+            className={`calendarCell border text-center m-1 px-0 py-1 borad ${this.state.cellClass}`}
+            data-toggle="modal"
+            data-target={`#date${this.props.dates}`}
+            onClick={() => this.handleMark(this.props.dates)}
+          >
+            <p className="px-2 m-0 calendarCell">{this.props.dates}</p>
+          </div>
         </div>
-        <div
-          class="modal fade"
-          id={`date${this.props.dates}`}
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                  {this.state.modalMessage}
-                </h5>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onClick={() => this.handleMark(this.props.dates)}
-                  data-dismiss="modal"
-                >
-                  Yes
-                </button>
+      );
+      // if cell is not umarked or marked cell, return modal with corresponding message modal
+    } else {
+      return (
+        <div>
+          {/* calendar cell */}
+          <div
+            className={`calendarCell border text-center m-1 px-0 py-1 borad ${this.state.cellClass}`}
+            data-toggle="modal"
+            data-target={`#tesdate${this.props.dates}`}
+          >
+            <p className="px-2 m-0 calendarCell">{this.props.dates}</p>
+          </div>
+          {/* modal */}
+          <div
+            class="modal fade"
+            id={`tesdate${this.props.dates}`}
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                {/* modal header */}
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    {this.state.modalMessage}
+                  </h5>
+                </div>
+
+                {/* modal footer */}
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={() => this.handleMark(this.props.dates)}
+                    data-dismiss="modal"
+                  >
+                    Oke
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

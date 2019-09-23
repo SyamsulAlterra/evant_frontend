@@ -1,28 +1,52 @@
 import React from "react";
-import fotoProfil from "../images/users.png";
-import plus from "../images/plus.png";
 import { Link, withRouter } from "react-router-dom";
+import fotoProfil from "../images/manager.png";
+import plus from "../images/clipboard.png";
 
 class FotoProfil extends React.Component {
   render() {
     return (
-      <div className="container mobileView p-0 fotoProfil">
+      <div className="container mobileView p-0 fotoProfil animated fadeIn">
         <div className="row mt-3 mx-3">
+          {/* check if the user has already a profile picture or not */}
           <div className="col-3 p-0">
-            <img className="my-2 marginLeft" src={fotoProfil} alt=""></img>
+            {[1].map(dummy => {
+              if (this.props.photo === null) {
+                return (
+                  <img src={fotoProfil} className="my-2 marginLeft" alt="" />
+                );
+              } else {
+                return (
+                  <img
+                    src={this.props.photo}
+                    className="my-2 marginLeft"
+                    alt=""
+                  />
+                );
+              }
+            })}
           </div>
-          <div className="col-5 p-0">
-            <div className="mt-2">
-              <span className="px-2">{localStorage.getItem("fullname")}</span>
-              <br></br>
-              <span className="px-2">@{localStorage.getItem("username")}</span>
+          <div className="col-6 p-0">
+            <div className="row mt-1 px-2">
+              <div className="fontstyle text-left">
+                <span className="px-2 span1">
+                  {localStorage.getItem("fullname").split(" ")[0]}
+                </span>
+                <br></br>
+                <span className="px-2 span2">
+                  @{localStorage.getItem("username")}
+                </span>
+              </div>
               <br></br>
             </div>
           </div>
-          <Link to="/events/create" className="col-4 p-0 text-center plain">
-            <img src={plus} alt="" className="text-center mt-2"></img>
-            <p className="m-0 text-center plain">create</p>
-          </Link>
+          {/* button to crate new events */}
+          <div className="col-3 p-0 text-center fontstyle boarding-create-event">
+            <Link to="/events/create">
+              <img src={plus} alt="" className="text-center mt-2"></img>
+              <p className="m-0 text-center plain">create</p>
+            </Link>
+          </div>
         </div>
       </div>
     );

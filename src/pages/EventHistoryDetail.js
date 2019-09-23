@@ -1,8 +1,8 @@
 import React from "react";
+import Axios from "axios";
 import { connect } from "unistore/react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Axios from "axios";
 import avatar from "../images/avatar.png";
 
 class EventHistoryDetail extends React.Component {
@@ -13,10 +13,14 @@ class EventHistoryDetail extends React.Component {
         event_name: "",
         creator_name: ""
       },
-      participant: []
+      participant: [],
+      title: "",
+      startDate: "",
+      endDate: ""
     };
   }
 
+  // method to change the date format
   formatDate = date => {
     const dateDictionary = [
       "Jan",
@@ -42,8 +46,10 @@ class EventHistoryDetail extends React.Component {
     let y = date.slice(6, 10);
     return `${dateDictionary[m - 1]} ${d}, ${y}`;
   };
+
   componentWillMount = async () => {
     let config = {
+      // to get the event data
       url:
         this.props.baseUrl + "events/" + this.props.match.params.id.toString(),
       method: "get",
@@ -53,8 +59,13 @@ class EventHistoryDetail extends React.Component {
     };
 
     let response = await Axios(config);
-    await this.setState({ event: response.data });
+    await this.setState({
+      event: response.data,
+      startDate: response.data.start_date,
+      endDate: response.data.end_date
+    });
 
+    // to get the participant list of a particualr event
     config = {
       url:
         this.props.baseUrl +
@@ -68,27 +79,63 @@ class EventHistoryDetail extends React.Component {
 
     response = await Axios(config);
     await this.setState({ participant: response.data });
+    // to check if an event has a matching date and matching place
+    if (
+      this.state.startDate === null ||
+      this.state.startDate === undefined ||
+      this.state.startDate === ""
+    ) {
+      this.setState({
+        title: `don't have match date`,
+        startDate: "-"
+      });
+    } else if (
+      this.state.event.place_name === null ||
+      this.state.event.place_name === undefined ||
+      this.state.event.place_name === ""
+    ) {
+      this.setState({ title: `don't have match place` });
+    } else {
+      this.setState({ title: `Success` });
+    }
+    console.log(this.state.startDate);
   };
+
   render() {
+    console.log(this.state.event);
     return (
       <div className="eventHistory">
-        <Header></Header>
+        <Header />
         <div className="container mobileView">
+          {/* container event history detail */}
           <h3 className="text-center m-0 mt-3">
-            {this.state.event.event_name}
+            <b>{this.state.event.event_name}</b>
+            <br></br>
+            <h6>{this.state.title}</h6>
           </h3>
-          <p className="text-center m-0">===========================</p>
+          <hr />
           <h6 className="text-center m-0">
-            creator: @{this.state.event.creator_username}
+            Creator: <b>@{this.state.event.creator_username}</b>
           </h6>
+          <br></br>
           <h6 className="text-center m-0">
-            category: {this.state.event.category}
+            Category: {this.state.event.category}
           </h6>
+          <br></br>
           <h6 className="text-center m-0">
-            date: {this.formatDate(this.state.event.start_date)} -{" "}
-            {this.formatDate(this.state.event.end_date)}
+            Date:{" "}
+            {`${
+              this.state.startDate === "-"
+                ? this.state.startDate
+                : this.formatDate(this.state.startDate)
+            } - ${
+              this.state.startDate === "-"
+                ? this.state.startDate
+                : this.formatDate(this.state.endDate)
+            }`}
           </h6>
-          <div className="participant m-3 border">
+          {/* to show the list of participants */}
+          <div className="participant m-3 border shadow rounded">
             {this.state.participant.map((user, index) => {
               return (
                 <div className="mx-5 my-2">
@@ -110,23 +157,24 @@ class EventHistoryDetail extends React.Component {
           <div className="category">
             <h3 className="text-center">Venue:</h3>
           </div>
-          <div className="text-center mb-3">
-            <table className="border">
+          <div className="text-center rounded mb-3">
+            <table className="border shadow rounded">
               <div className="m-3">
                 <tr>
                   <td className="p-3">
-                    <img alt="" src={avatar} className="venue"></img>
                     <p className="text-center m-0 centering">
-                      $places name and address
+                      {this.state.event.place_name}
                     </p>
-                    {/* <br></br> */}
+                    <p className="text-center m-0 centering">
+                      {this.state.event.location}
+                    </p>
                   </td>
                 </tr>
               </div>
             </table>
           </div>
         </div>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }
