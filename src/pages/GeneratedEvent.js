@@ -14,8 +14,7 @@ class GeneratedEvent extends React.Component {
         event_name: "",
         creator_name: ""
       },
-      confirmParticipant: [],
-      photoUrl: ""
+      confirmParticipant: []
     };
   }
 
@@ -137,7 +136,7 @@ class GeneratedEvent extends React.Component {
                       <td className="p-3">
                         <img
                           alt=""
-                          src={this.state.photoUrl}
+                          src={this.state.event.place_image}
                           className="venue"
                         ></img>
                         <p className="text-center m-0 centering">
